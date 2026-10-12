@@ -432,6 +432,10 @@ html[data-theme="jour"] .ovr.t1{color:#5f6a73}html[data-theme="jour"] .ovr.t2{co
 .mgrtr button.on{border-color:var(--accent);background:var(--accent-soft)}.mgrtr b{font-size:calc(15px*var(--tz))}.mgrtr span{font-size:calc(13.5px*var(--tz))}.mgrtr small{color:var(--muted);font-size:calc(12.5px*var(--tz))}.mgrtr button.on small{color:var(--text)}
 .mgrmic{background:var(--panel2)!important;overflow:hidden;width:44px!important;height:44px!important}.mgrmic svg{width:44px;height:44px;display:block}
 #cine .cine-crest{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0}#cine .cine-mgr{height:52%;max-height:300px}#cine .cine-mgr>svg{height:100%;width:auto;filter:drop-shadow(0 12px 20px rgba(0,0,0,.6))}
+.tbmini{display:grid;grid-template-columns:auto 1fr auto;gap:4px 10px;align-items:center;width:100%;padding:8px 10px;border-radius:12px;background:var(--panel2);margin-bottom:6px}
+.pface.lg{width:46px;height:46px}.pface.lg svg{width:46px;height:46px}.tbm-h{display:flex;flex-direction:column;min-width:0}.tbm-h b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tbm-h .muted{font-size:calc(12.5px*var(--tz))}
+.tbm-o{font-size:calc(26px*var(--tz));font-weight:800;color:var(--accent)}.tbm-a{grid-column:1/-1;display:grid;grid-template-columns:repeat(6,1fr);gap:4px;text-align:center}.tbm-a span{display:flex;flex-direction:column;font-size:calc(11px*var(--tz))}.tbm-a i{font-style:normal;color:var(--muted);font-weight:700;letter-spacing:.04em}
+.tbbar{flex-wrap:wrap}
 .bench{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px}
 .bench .pcard{width:100%}
 /* fiche joueur */
@@ -848,7 +852,7 @@ function newGame(cid,mode){const dm=mode==='district';
   for(const k of ['a_hor','a_efa']){const c=entrantClub(k);G.clubs[c.id]=c;G.l2.push(c.id)}
   for(const id in G.clubs)if(!G.clubs[id].pl.length)G.clubs[id].pl=genSquad(id,G.clubs[id].tier);
   G.start=dm?'district':'pro';G.prologue='pending';G.role='head';G.atClub=0;G.profit=0;
-  if(dm){const c=entrantClub(cid);for(const id of c.pl)delete G.players[id];c.pl=[];c.autoRot=false;G.club=c.id;G.u18=[];G.inv=districtInvestors(c);G.cash=G.inv.reduce((s,x)=>s+x.amt,0);G.fac={train:2,acad:1,proj:0};G.rep.caf=2;G.lastDiv=0}
+  if(dm){const c=entrantClub(cid);for(const id of c.pl)delete G.players[id];c.pl=[];c.autoRot=false;G.club=c.id;G.u18=distBaseSquad(c);G.inv=districtInvestors(c);G.cash=G.inv.reduce((s,x)=>s+x.amt,0);G.fac={train:2,acad:1,proj:0};G.rep.caf=2;G.lastDiv=0}
   else{const c=me();c.autoRot=false;if(c.tier<=2){c.form='4-4-2';c.tactic='bloc'}
     G.fac.train=c.tier>=4?3:2;G.fac.acad=c.tier>=4?2:1;G.cash=[0,35e6,60e6,120e6,220e6,400e6][c.tier];G.rep.caf=[0,4,8,14,22,32][c.tier];G.inv=[];G.lastDiv=1}
   // qualifiés saison 1 : selon le rang de force
@@ -1398,6 +1402,11 @@ const DSC_PERS={trav:['Travailleur','Premier arrivé, dernier parti.'],lead:['Le
 const DSC_FAM={argent:'« La famille compte sur lui. Il faut qu\'on voie que le club est sérieux. »',ecole:'« Le football oui, mais il doit finir l\'école. Qui va payer ? »',jeu:'« Il ne vient pas pour s\'asseoir sur le banc. Il veut jouer. »',quartier:'« C\'est le quartier qui l\'a formé. Pensez au terrain et aux petits. »',pct:'« Nous l\'avons formé pendant des années. Ça a un prix. »'};
 const DSC_WANT={argent:'une bonne prime',ecole:'la scolarité payée',jeu:'du temps de jeu promis',quartier:'un geste pour le quartier',pct:'un pourcentage sur un futur transfert'};
 const DSC_X={ecole:{n:'Scolarité payée',c:3e5},loge:{n:'Transport et logement',c:2.5e5},jeu:{n:'Temps de jeu promis',c:0},quartier:{n:'Geste pour le quartier',c:1.5e5},pct:{n:'10 % sur un futur transfert',c:0}};
+function distBaseSquad(c){const city=c.city.split(' · ')[0],pf=(distBase(c.id)||{}).prof,need=[['GB',2],['DEF',5],['MIL',5],['ATT',4]],L=[];
+  for(const [pos,n] of need)for(let i=0;i<n;i++){const age=ri(15,18),ovr=clamp(Math.round(46.5+(age-16.5)*.8+gauss()*2.6),40,54),at=genAttrs(pos,ovr);
+    const tw={physique:{phy:3},technique:{tec:3},vitesse:{vit:4}}[pf]||{};for(const k in tw)at[k]=clamp(at[k]+tw[k],25,99);
+    L.push({id:'u'+(G.uid++),n:genUniq(R()<.85?zoneOf(c.city):null,L),pos,age,ovr,pot:clamp(ovr+ri(4,17)+(18-age),ovr+2,82),at,from:`Équipe du quartier · ${city}`,pers:pick(Object.keys(DSC_PERS))})}
+  return L}
 function dscHome(){const c=me(),city=c.city.split(' · ')[0];return city==='Abidjan'?null:{k:'home',n:city,pool:4,z:[zoneOf(city)||'akan'],prof:(distBase(G.club)||{}).prof||'equilibre',mar:'Maracana du quartier',com:'Comité de vacances de '+city,d:'Chez toi : tu connais tout le monde, pas de frais de transport.'}}
 function dscZones(){const h=dscHome();return h?[h,...COMMUNES]:COMMUNES}
 function dscZ(k){return dscZones().find(z=>z.k===k)}
@@ -1405,7 +1414,7 @@ function dscTravel(k){return dscHome()&&k!=='home'?1.5e5:0}
 function dscInit(ev){if(ev.d)return ev.d;const zs=dscZones(),nick=['Tonton','Coach','Le vieux','Grand frère','Maître'];
   const sc=[0,1,2].map(i=>{const z=pick(zs);return{id:i,n:nick[(i+ri(0,4))%5]+' '+genName(pick(z.z)).split(' ').slice(1).join(' '),eye:[4,3,2][i]+(R()<.3?1:0)-(i===0&&R()<.4?1:0),net:z.k,fee:[1.6e5,1.2e5,0.9e5][i]}});
   const asg={};sc.forEach((s,i)=>asg[s.id]={c:s.net,l:i===2?'com':'mar',f:'ALL'});
-  ev.d={wk:1,W:4,sc,asg,P:[],tri:[],dep:{},log:[],tab:'sc',flt:'ALL'};return ev.d}
+  ev.d={wk:1,W:4,sc,asg,P:[],tri:[],dep:{},log:[],tab:'grp',flt:'ALL'};return ev.d}
 function dscPos(f){if(f!=='ALL'&&R()<.8)return f;let r=R();for(const k in DSC_POSW){r-=DSC_POSW[k];if(r<0)return k}return 'MIL'}
 function dscProspect(d,z,l,sc,f){const L=LIEUX[l],age=ri(15,18),pos=dscPos(f);let ovr=clamp(Math.round(L.mu+gauss()*L.sd+(age-16.5)*1.2),44,69);
   const pot=clamp(ovr+ri(L.pot[0],L.pot[1])+(18-age),ovr+2,88),at=genAttrs(pos,ovr);
@@ -1502,7 +1511,7 @@ function dscNego(ev,id,st){const d=ev.d,x=d.P.find(y=>y.id===id);if(!x)return;co
     if(x.fam.pat<=0){x.fam.closed=1;st.msg=`« Merci, mais c'est fini. Nous allons voir ailleurs. »`;if(x.riv&&R()<.6)x.st='gone'}
     save();dscNego(ev,id,st);refresh()}}
 function evDrec(el,ev){const c=me(),dB=distBase(G.club),d=dscInit(ev),n=G.u18.length,need=dscNeed(),zs=dscZones(),over=d.wk>d.W;
-  const tabs=[['sc','Recruteurs'],['rep',`Repérés · ${d.P.filter(x=>x.st==='rep').length}`],['grp',`Mon groupe · ${n}`]];
+  const tabs=[['grp',`Mon équipe · ${n}`],['sc','Recruteurs'],['rep',`Repérés · ${d.P.filter(x=>x.st==='rep').length}`]];
   const tabH=`<div class="tabs" id="dtabs">${tabs.map(([k,l])=>`<button data-dt="${k}" class="${d.tab===k?'on':''}">${l}</button>`).join('')}</div>`;
   let body='';
   if(d.tab==='sc'){
@@ -1523,12 +1532,14 @@ function evDrec(el,ev){const c=me(),dB=distBase(G.club),d=dscInit(ev),n=G.u18.le
   else if(d.tab==='rep'){const L=d.P.filter(x=>d.flt==='ALL'||x.pos===d.flt).sort((a,b)=>(a.st==='rep'?0:1)-(b.st==='rep'?0:1)||dscEst(b).c-dscEst(a).c);
     body=`<div class="sel wrap" style="margin-bottom:10px">${['ALL','GB','DEF','MIL','ATT'].map(f=>`<button data-fl="${f}" class="${d.flt===f?'on':''}">${f==='ALL'?'Tous':f}</button>`).join('')}</div>
      <div class="panel" style="padding:6px 0">${L.length?`<div class="phead"><span>Poste · joueur</span><span>Note est.</span></div>${L.map(x=>dscRow(x,d)).join('')}`:`<p class="muted" style="margin:10px 16px">Personne pour l'instant. Envoie tes recruteurs sur le terrain puis lance la semaine.</p>`}</div>`}
-  else{body=`<div class="panel"><div class="row"><h3 style="margin:0">Ton groupe U18</h3><span class="sp"></span><span class="chip ${n>=16?'good':n>=11?'warn':''}">${n} / 23</span></div>
-     <div class="needs">${[['GB',2],['DEF',5],['MIL',5],['ATT',4]].map(([p,m])=>`<span class="${need[p]>=m?'ok':''}">${posTag(p)} ${need[p]} / ${m}</span>`).join('')}</div>
-     ${n?`<div class="bench" style="margin-top:12px">${G.u18.map(y=>pcardHTML({...y,inj:0},{attr:`data-yo="${y.id}"`})).join('')}</div>`:'<p class="muted" style="margin:10px 0 0">Personne pour l\'instant. Repère des joueurs, fais-les suivre ou essayer, puis négocie avec leur famille.</p>'}</div>`}
+  else{const xi=nouXI(),avg=Math.round(xi.reduce((t,p)=>t+p.ovr,0)/Math.max(1,xi.length)),best=G.u18.slice().sort((p,q)=>q.ovr-p.ovr)[0];
+    body=`<div class="panel teamsum"><div class="row"><div><div class="lbl">Ton équipe actuelle</div><h3 style="margin:4px 0 0">${n} joueurs · niveau moyen du onze ${avg}</h3></div><span class="sp"></span><span class="chip ${n>=23?'bad':''}">${n} / 23</span></div>
+     <p class="muted" style="margin:8px 0 0;font-size:calc(13.5px*var(--tz))">Ce sont les jeunes du quartier qui jouaient déjà sous les couleurs du club. ${avg<52?'Pour viser le top 2 des districts, il te faut des talents plus forts : envoie tes recruteurs, puis fais de la place en libérant les plus faibles.':'Une base solide. Les recruteurs peuvent encore trouver la pépite qui fera la différence.'}${best?` Meilleur joueur : <b style="color:var(--text)">${esc(best.n)}</b> (${best.ovr}).`:''}</p>
+     <div class="needs">${[['GB',2],['DEF',5],['MIL',5],['ATT',4]].map(([p,m])=>`<span class="${need[p]>=m?'ok':''}">${posTag(p)} ${need[p]} / ${m}</span>`).join('')}</div></div>
+     <div class="panel">${tbPanel('u18')}</div>`}
   const wkTxt=over?'Détection terminée':`Semaine ${d.wk} sur ${d.W}`;
   el.innerHTML=`<div class="event dsc"><div class="hero"><div class="kita"></div><div class="in"><div class="eyebrow">Juin · ${wkTxt}</div><h2>Détection dans le Grand Abidjan</h2>
-    <p class="pitchline" style="font-size:calc(15px*var(--tz))">Envoie tes recruteurs dans les communes, fais suivre ou essayer les jeunes repérés, puis négocie avec leur famille. ${over?'':`Il reste ${d.W-d.wk+1} semaine${d.W-d.wk?'s':''} avant la Noushi League.`}</p>
+    <p class="pitchline" style="font-size:calc(15px*var(--tz))">Ton club a déjà une équipe de quartier. Pour la renforcer, envoie tes recruteurs dans les communes, fais suivre ou essayer les jeunes repérés, puis négocie avec leur famille. ${over?'':`Il reste ${d.W-d.wk+1} semaine${d.W-d.wk?'s':''} avant la Noushi League.`}</p>
     <div class="dstat"><span><b class="num">${money(G.cash)}</b>caisse</span><span><b class="num">${n}/23</b>signés</span><span><b class="num">${d.P.filter(x=>x.st==='rep').length}</b>repérés</span></div></div></div>
    ${coachCard('drec')}${d.wk===1?distGoalHTML():''}
    ${tabH}${body}
@@ -1538,6 +1549,7 @@ function evDrec(el,ev){const c=me(),dB=distBase(G.club),d=dscInit(ev),n=G.u18.le
   el.querySelectorAll('[data-fl]').forEach(b=>b.onclick=()=>{d.flt=b.dataset.fl;refresh()});
   el.querySelectorAll('[data-pr]').forEach(b=>b.onclick=()=>dscOpen(ev,b.dataset.pr));
   el.querySelectorAll('[data-yo]').forEach(b=>b.onclick=()=>openYouth(b.dataset.yo));
+  bindTB(el);
   el.querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>{d.act=+b.dataset.act;save();refresh()});
   el.querySelectorAll('[data-mz]').forEach(b=>b.onclick=()=>{const a=d.asg[d.sc[d.act].id];if(!a||a.follow)return;a.c=b.dataset.mz;if(a.l==='aca'&&!dscZ(a.c).aca)a.l='com';save();refresh()});
   el.querySelectorAll('[data-zc]').forEach(s=>s.onchange=()=>{const a=d.asg[s.dataset.zc];a.c=s.value;if(a.l==='aca'&&!dscZ(a.c).aca)a.l='com';save();refresh()});
@@ -1565,8 +1577,9 @@ function dscFinish(ev){const d=ev.d,n=G.u18.length,gb=G.u18.some(y=>y.pos==='GB'
 /* pour les tests automatiques */
 function drecAuto(ev,keep=6e6){const d=dscInit(ev);while(d.wk<=d.W){d.sc.forEach(s=>{const z=pick(dscZones());d.asg[s.id]={c:z.k,l:z.aca&&R()<.4?'aca':pick(['mar','com']),f:s.id===0&&d.wk<=2?'GB':'ALL'}});dscWeek(ev)}
   const L=d.P.filter(x=>x.st==='rep').sort((a,b)=>dscEst(b).c-dscEst(a).c);
-  for(const x of L){if(G.u18.length>=16)break;const cost=dscDemand(x);if(G.cash-cost<keep)continue;if(x.pos==='GB'&&dscNeed().GB>=2)continue;dscSign(ev,x,cost,{})}
-  drecFill(16)}
+  let k=0;for(const x of L){if(k>=12)break;const cost=dscDemand(x);if(G.cash-cost<keep)continue;const same=G.u18.filter(y=>y.pos===x.pos).sort((a,b)=>a.ovr-b.ovr),w=same[0];
+    if(w&&dscEst(x).c<=w.ovr+2)continue;if(G.u18.length>=23||(w&&same.length>=({GB:2,DEF:6,MIL:6,ATT:5})[x.pos])){G.u18=G.u18.filter(y=>y!==w)}dscSign(ev,x,cost,{});k++}
+  G.u18xs=null;if(G.u18.length<16)drecFill(16)}
 
 /* --- fin du prologue (Noushi League d'ouverture) --- */
 function finishPrologue(choice){const S=G.S;if(G.prologue!=='pending')return false;G.prologue='done';
@@ -2199,7 +2212,8 @@ function renderTop(){
 function go(v,arg){if(SUBVIEW[v]){arg=SUBVIEW[v][1];v=SUBVIEW[v][0]}VIEW=v;VIEWARG=arg??null;if(!G)return;renderSide();renderTop();
   const f={home:vHome,event:vEvent,squad:vSquad,comp:vComp,scout:vScout,club:vClubHub}[v]||vHome;
   const V=$('#view');V.innerHTML='';try{f(V)}catch(e){console.error(e);V.innerHTML=`<div class="card"><h3>Cet écran n'a pas pu s'afficher</h3><p class="muted">Ta partie est sauvegardée. Touche « Accueil » ou recharge la page.</p><p class="muted" style="font-size:calc(12px*var(--tz))">${esc(String(e&&e.message||e))}</p></div>`}window.scrollTo(0,0)}
-function refresh(){go(VIEW,VIEWARG)}
+function viewKey(){return VIEW+'|'+(VIEWARG||'')+'|'+(G&&G.ev?G.ev.t+(G.ev.k||'')+(G.ev.j??'')+(G.ev.phase||'')+(G.ev.d?G.ev.d.wk+G.ev.d.tab:''):'')+'|'+(G&&G.S?G.S.si:'')}
+function refresh(){const y=window.scrollY,k=viewKey();go(VIEW,VIEWARG);if(viewKey()===k)window.scrollTo(0,y)}
 function bindPl(root){root.querySelectorAll('[data-pl]').forEach(e=>e.onclick=ev=>{ev.stopPropagation();openPlayer(+e.dataset.pl)})}
 function pl(p){return `<span class="pl" data-pl="${p.id}" tabindex="0">${esc(p.n)}</span>`}
 function posTag(pos){return `<span class="pos pos-${pos}">${pos}</span>`}
@@ -2458,10 +2472,13 @@ function tbPanel(key){const st=tbState(key),co=tbCoords(st.form),E=tbEntente(st.
   return `<div class="tbhead row"><div class="sel" data-tbforms="${key}">${Object.keys(FORMS).map(k=>`<button data-tbf="${k}" class="${st.form===k?'on':''}">${k}</button>`).join('')}</div><span class="sp"></span>
     <div class="ent"><span class="lbl">Entente</span><b class="num ${E.score>=70?'good':E.score<45?'bad':''}">${E.score}</b><span class="muted">/ 100</span></div></div>
    <div class="tpitch" data-tbkey="${key}"><div class="mk"></div><svg class="links" viewBox="0 0 100 100" preserveAspectRatio="none">${lk}</svg>${cards}</div>
-   <div class="tbbar">${sp?`<b>${esc(sp.n)}</b> · ${need} · <span class="muted">touche un remplaçant ou un autre titulaire pour l'échanger.</span><span class="sp"></span><button class="btn ghost sm" data-tbopen="${sp.id}">Voir la fiche</button><button class="btn ghost sm" data-tbcancel>Annuler</button>`
+   <div class="tbbar">${sp?`${tbMini(sp,key)}<span class="muted">Touche un remplaçant ou un autre titulaire pour l'échanger (poste ${need}).</span><span class="sp"></span><button class="btn ghost sm" data-tbopen="${sp.id}">Voir la fiche</button><button class="btn ghost sm" data-tbcancel>Annuler</button>`
      :sel?`<span class="muted">Poste vide (${need}) : touche un remplaçant.</span>`:'<span class="muted">Touche un joueur pour le remplacer ou voir sa fiche. Vert : même région ou même formation. Rouge : joueur hors de son poste.</span>'}</div>
    <div class="lbl" style="margin:12px 0 8px">Remplaçants · ${bench.length}</div>
    <div class="bench">${bench.map(p=>pcardHTML(p,{sel:false,oop:!!(sel&&need&&p.pos!==need),attr:`data-tbb="${p.id}" ${p.inj>0?'disabled':''}`})).join('')||'<span class="muted">Aucun remplaçant.</span>'}</div>`}
+function tbMini(p,key){if(!p.at)p.at=genAttrs(p.pos,p.ovr);const a=p.at;
+  return `<div class="tbmini"><span class="pface lg">${faceSVG(p,me())}</span><div class="tbm-h"><b>${esc(p.n)}</b><span class="muted">${p.pos} · ${p.age} ans${p.pot?` · potentiel ~${p.pot}`:''}</span></div><span class="tbm-o num">${p.ovr}</span>
+   <div class="tbm-a">${RADAR.map(([k,l])=>`<span><i>${l.slice(0,3).toUpperCase()}</i><b class="num" style="color:${a[k]>=70?'var(--good)':a[k]>=55?'var(--text)':'var(--muted)'}">${a[k]}</b></span>`).join('')}</div></div>`}
 function bindTB(root){root.querySelectorAll('[data-tbkey]').forEach(pt=>{const key=pt.dataset.tbkey,host=pt.parentElement;
   host.querySelectorAll('[data-tbf]').forEach(b=>b.onclick=()=>{const st=tbState(key);st.setForm(b.dataset.tbf);TB_SEL=null;refresh()});
   host.querySelectorAll('[data-ts]').forEach(b=>b.onclick=()=>{const i=+b.dataset.ts,st=tbState(key);
@@ -2495,8 +2512,9 @@ function openYouth(id){const y=nouPool().find(x=>x.id===id)||Object.values((G.S.
   if(!y.at)y.at=genAttrs(y.pos,y.ovr);const N=G.S.nou,s=N&&N.st[y.id];
   modal(`${ficheTop(y,{sub:`${y.age} ans · ${y.pos} · ${esc(y.from||'groupe U18')} · potentiel ${y.pot-3}–${y.pot+3}`})}
    <div class="list" style="margin-top:12px"><div class="item"><span class="muted">Noushi League</span><span class="sp"></span><b>${s?`${s.apps} match${s.apps>1?'s':''} · ${s.g} but${s.g>1?'s':''} · note ${(s.rs.reduce((a,b)=>a+b,0)/s.rs.length).toFixed(1)}`:'pas encore joué'}</b></div></div>
-   <div class="row" style="margin-top:14px"><button class="btn" id="mclose">Fermer</button></div>`);
-  const b=document.querySelector('#mclose');if(b)b.onclick=closeModal}
+   <div class="row" style="margin-top:14px;gap:8px"><button class="btn" id="mclose">Fermer</button>${G.ev&&G.ev.t==='drec'&&G.u18.some(x=>x.id===y.id)?'<button class="btn ghost" id="yrel">Libérer du groupe</button>':''}</div>`);
+  const b=document.querySelector('#mclose');if(b)b.onclick=closeModal;
+  const rl=document.querySelector('#yrel');if(rl)rl.onclick=()=>{if(!rl.dataset.sure){rl.dataset.sure=1;rl.textContent='Confirmer : il rentre au quartier';return}G.u18=G.u18.filter(x=>x.id!==y.id);if(Array.isArray(G.u18xs))G.u18xs=G.u18xs.map(x=>x===y.id?null:x);TB_SEL=null;newsAdd(`${y.n} quitte le groupe et retourne jouer au quartier.`,'scout');save();closeModal();refresh()}}
 
 /* --- l'adversaire de Noushi League --- */
 function nouOppInfo(i){const N=G.S.nou,t=N.teams[i];if(!t.info){const city=t.kind==='dist'?(distBase(t.k)||{}).city:(T(t.club)||{}).city,z=zoneOf(city),s=nouStr(i);
@@ -3509,7 +3527,7 @@ function renderTitle(saved){
    <div id="m-dis" hidden><button class="btn ghost sm" data-back style="margin-bottom:12px">‹ Changer de carrière</button><h3 class="mtitle">Carrière District · choisis ta région</h3><p class="muted" style="margin:0 0 14px">Les opérateurs économiques et les supporters financent l'équipe du district. Détecte tes U18 dans les communes du Grand Abidjan, puis joue la Noushi League : les 2 meilleures équipes de district montent en Ligue 2. Sinon, un club de Ligue des Pros te proposera son équipe B.</p>
    <div class="clubpick">${DISTRICTS.map(d=>`<button data-d="${d.id}">${kit({c1:d.c[0],c2:d.c[1],pat:d.c[2]},52)}<span style="min-width:0"><b>${esc(d.name)}</b><small>${esc(d.dist)}</small><small>${esc(d.city)} · profil ${PROF_L[d.prof]||'équilibre'}</small></span></button>`).join('')}</div></div></div>
    <div class="row" style="gap:8px"><label class="btn ghost sm" style="cursor:pointer">Importer une partie<input type="file" id="impsave" accept=".json,application/json" hidden></label></div>
-   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 35${cloudDb?' · sauvegarde en ligne active':''}</p>
+   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 36${cloudDb?' · sauvegarde en ligne active':''}</p>
    <p class="muted" style="font-size:calc(13.5px*var(--tz));margin:0">Projet original. Clubs, joueurs, compétitions et montants de jeu sont fictifs, à l'échelle du football ivoirien réel. Aucune affiliation avec une fédération, une confédération ou un éditeur de jeux.</p>
   </div></div>`;
   $('#app').style.display='block';
