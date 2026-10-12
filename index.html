@@ -330,6 +330,46 @@ html[data-theme="jour"]{--bg:#F3EDE1;--panel:#FBF8F2;--panel2:#F2EBDD;--raise:#E
 html[data-theme="jour"] .pitchline{color:var(--muted)}
 html[data-theme="jour"] .pos-GB{color:#8a6410}html[data-theme="jour"] .pos-DEF{color:#2c6496}html[data-theme="jour"] .pos-MIL{color:#2f7a52}html[data-theme="jour"] .pos-ATT{color:#b4471a}
 html[data-theme="jour"] .ovr.t1{color:#5f6a73}html[data-theme="jour"] .ovr.t2{color:#2f7a52}html[data-theme="jour"] .ovr.t3{color:#8a6410}html[data-theme="jour"] .ovr.t4{color:#b4471a}
+
+/* cartes de joueurs et terrain de composition */
+.tbhead{gap:8px;margin-bottom:10px}.ent{display:flex;align-items:baseline;gap:6px}.ent b{font-family:var(--f-disp);font-size:calc(24px*var(--tz))}.ent b.good{color:var(--good)}.ent b.bad{color:var(--bad)}
+.tpitch{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:.74/1;max-width:520px;margin:0 auto;background:repeating-linear-gradient(0deg,var(--grass1) 0 8.33%,var(--grass2) 8.33% 16.66%);box-shadow:inset 0 0 40px rgba(0,0,0,.25)}
+.tpitch .mk{position:absolute;inset:3.5%;border:2px solid rgba(238,240,234,.35);border-radius:2px;pointer-events:none}
+.tpitch .mk:before{content:"";position:absolute;left:0;right:0;top:50%;border-top:2px solid rgba(238,240,234,.35)}
+.tpitch .mk:after{content:"";position:absolute;left:50%;top:50%;width:24%;aspect-ratio:1;border:2px solid rgba(238,240,234,.35);border-radius:50%;transform:translate(-50%,-50%)}
+.tpitch svg.links{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.tpitch svg line{stroke-width:.9;vector-effect:non-scaling-stroke;stroke-width:3;stroke-linecap:round;opacity:.9}
+.tpitch .lk2{stroke:#4ade80}.tpitch .lk1{stroke:#f5b942}.tpitch .lk0{stroke:#ef4444}
+.pslot{position:absolute;transform:translate(-50%,-50%);width:19%;min-width:58px;max-width:88px;z-index:1}
+.pcard{all:unset;box-sizing:border-box;position:relative;width:100%;aspect-ratio:.7/1;border-radius:10px 10px 16px 16px;display:flex;flex-direction:column;align-items:center;padding:4px 3px 4px;cursor:pointer;box-shadow:0 5px 12px rgba(0,0,0,.4);color:#1b1408;background:linear-gradient(160deg,#f7dd8c 0%,#d9a93a 55%,#b9861f 100%);overflow:hidden}
+.pcard:before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.35) 0 18%,transparent 30%);pointer-events:none}
+.pcard.t-br{background:linear-gradient(160deg,#e4b086 0%,#b97a48 55%,#8f5a2f 100%);color:#2a1606}
+.pcard.t-ag{background:linear-gradient(160deg,#f1f4f6 0%,#b9c3c9 55%,#8e9aa1 100%);color:#1c2328}
+.pcard.t-el{background:linear-gradient(160deg,#ff9a5c 0%,#f15a1a 50%,#a83a0b 100%);color:#fff7ee}
+.pcard.empty{background:rgba(10,20,15,.55);color:#F8F1E1;border:2px dashed rgba(248,241,225,.5);justify-content:center;gap:4px}
+.pcard.sel{outline:3px solid #fff;outline-offset:2px}
+.pcard.oop{box-shadow:0 0 0 3px #ef4444,0 5px 12px rgba(0,0,0,.4)}
+.pcard.inj{filter:grayscale(.8);opacity:.7}.pcard[disabled]{cursor:not-allowed}
+.pcard .pc-top{display:flex;width:100%;justify-content:space-between;align-items:flex-start;padding:0 3px}
+.pcard .pc-ovr{font-family:var(--f-disp);font-weight:800;font-size:calc(17px*var(--tz));line-height:1}
+.pcard .pc-pos{font-size:calc(9.5px*var(--tz));font-weight:800;letter-spacing:.04em;margin-top:2px}
+.pcard .pc-kit{flex:1;display:grid;place-items:center;min-height:0}.pcard .pc-kit svg{width:auto;height:100%;max-height:34px}
+.pcard .pc-nm{font-size:calc(10.5px*var(--tz));font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;padding:0 2px;line-height:1.2}
+.pcard .pc-ch{display:flex;gap:2px;margin-top:2px}.pcard .pc-ch i{width:6px;height:6px;border-radius:50%;background:rgba(0,0,0,.25)}.pcard .pc-ch i.on{background:#15803d}.pcard.t-el .pc-ch i.on{background:#bbf7d0}
+.pcard .pc-tag{font-size:calc(9.5px*var(--tz));font-weight:700;opacity:.8}
+.tbbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin-top:10px;font-size:calc(13.5px*var(--tz))}
+.bench{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px}
+.bench .pcard{width:100%}
+/* fiche joueur */
+.ftop{display:flex;gap:14px;align-items:flex-start}.ftop .fcard{width:86px;flex:none}
+.ftraits{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:8px;font-size:calc(13px*var(--tz));color:var(--muted)}.ftraits b{color:var(--text)}
+.stars{letter-spacing:1px}.stars i{font-style:normal;color:var(--line2)}.stars i.on{color:var(--gold)}
+.fgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;align-items:center;margin-top:12px}
+@media (max-width:620px){.fgrid{grid-template-columns:1fr}}
+.radar{width:100%;max-width:300px;margin:0 auto;display:block}.radar .rg{fill:none;stroke:var(--line2);stroke-width:1}
+.radar .rp{fill:rgba(241,90,26,.35);stroke:var(--accent);stroke-width:2}.radar .rp.est{fill:rgba(160,160,160,.15);stroke:var(--muted);stroke-dasharray:4 3}
+.radar .rl{fill:var(--muted);font-size:10px;font-family:var(--f-body)}.radar .rv{fill:var(--text);font-size:11px;font-weight:700;font-family:var(--f-num)}
+.fbars{display:flex;flex-direction:column;gap:6px}.fbar{display:grid;grid-template-columns:78px 1fr 28px;align-items:center;gap:8px;font-size:calc(13px*var(--tz))}.fbar b{text-align:right}
 </style>
 
 <div id="app"></div>
@@ -360,7 +400,7 @@ const MONTHS=['Août','Septembre','Octobre','Novembre','Décembre','Janvier','F�
 const MAX_SEASONS=12;
 
 /* ============================ DONNÉES ============================ */
-const FIRST=['Yao','Kouadio','Ange','Serge','Arsène','Wilfried','Franck','Hervé','Christian','Abdoulaye','Mamadou','Ismaël','Cédric','Romaric','Kader','Souleymane','Fabrice','Éric','Moussa','Jean-Eudes','Prince','Désiré','Guy-Roland','Habib','Aboubacar','Marius','Junior','Stéphane','Brice','Noël','Patrice','Yannick','Landry','Axel','Évrard','Raoul','Kassoum','Zié','Nanga','Tiémoko','Gnamien','Koffi','Ahoua','Bertin','Ulrich','Josué','Kévin','Samuel','Elvis','Dramane'];
+const FIRST=['Ghislain','Hermann','Jonathan','Lassina','Ousmane','Rodrigue','Sékou','Siriki','Yann','Zakaria','Inza','Fousseni','Aristide','Blaise','Cheick','Constant','Élie','Firmin','Gaoussou','Hamed','Idriss','Karamoko','Lamine','Parfait','Rachid','Salif','Sidiki','Théodore','Vamara','Zoumana','Arnaud','Brahima','Christ','Dylan','Emmanuel','Fabien','Gédéon','Josias','Kévin-Junior','Martial','Odilon','Prosper','Romuald','Stéphane-Désiré','Tidiane','Yasser','Yao','Kouadio','Ange','Serge','Arsène','Wilfried','Franck','Hervé','Christian','Abdoulaye','Mamadou','Ismaël','Cédric','Romaric','Kader','Souleymane','Fabrice','Éric','Moussa','Jean-Eudes','Prince','Désiré','Guy-Roland','Habib','Aboubacar','Marius','Junior','Stéphane','Brice','Noël','Patrice','Yannick','Landry','Axel','Évrard','Raoul','Kassoum','Zié','Nanga','Tiémoko','Gnamien','Koffi','Ahoua','Bertin','Ulrich','Josué','Kévin','Samuel','Elvis','Dramane'];
 const LAST=['Kouassi','Koné','Traoré','Bamba','Konan','Diabaté','Kouadio','Ouattara','Cissé','Gnahoré','Zadi','Tanoh','Aka','N\'Guessan','Dago','Coulibaly','Kacou','Gbané','Amani','Brou','Digbeu','Lago','Yéo','Soro','Silué','Kamagaté','Tiéhi','Bléhoué','Guéi','Gogoua','Zoh','Assalé','Ehui','Kipré','Djédjé','Akpa','Boni','Adjé','Koua','Nanan','Beugré','Gbadjé','Aboa','Toualy','Kra','Loukou','Yapi','Anoh','Kobenan','Ahua'];
 const NICKS=['Petit Piment','Gaou Pro','Le Sorcier','Bébé Lion','Djo Semelle','Commissaire','Cartouche','Zouglouman','Môgô Fort','Kpakpato','Rasta','Le Doyen','Tonton Lucarne','Gbê','Yôrô','Petit Zidane','Garba','Attiéké','Kôrô','Tchapalo','Bôrô','Grand Frère','Le Chirurgien','Vitesse'];
 const FOREIGN_NAMES={nord:['Benali','El Idrissi','Haddad','Mansour','Trabelsi','Fathy','Zaki','Saïdi','Bennani','Chakir'],sud:['Mokoena','Dlamini','Nkosi','Khumalo','Mabaso','Ngcobo','Zulu','Mthethwa','Banda','Phiri'],ouest:['Diallo','Ndiaye','Mensah','Okafor','Sow','Camara','Asante','Keïta','Adeyemi','Ba'],out:['Agbo','Houngbo','Issoufou','Kpodo','Sesay','Kamara','Ould Ahmed','Jallow','Mendes','Akakpo'],euro:['Martin','Dubois','Peeters','Silva','Müller','Rossi','García','Novak','Jensen','Moreau'],monde:['Fernández','Sato','Herrera','Tanaka','Gómez','Kimura']};
@@ -569,6 +609,7 @@ const NAME_ZONES={
 const CITY_ZONE={Korhogo:'gur',Ferkessédougou:'gur',Boundiali:'gur',Katiola:'gur',Bondoukou:['akan','gur'],Odienné:'mande_n',Séguéla:'mande_n',Man:'mande_s',Sinfra:'mande_s',Daloa:'krou',Gagnoa:'krou',Soubré:'krou',Sassandra:'krou','San-Pédro':'krou',Divo:'krou',Bouaké:'akan',Yamoussoukro:'akan',Kossou:'akan',Dimbokro:'akan',Abengourou:'akan',Aboisso:'akan',Agboville:'akan',Dabou:'akan','Grand-Bassam':'akan',Bingerville:'akan',Tiassalé:'akan'};
 // Abidjan et ses communes : brassage de tout le pays (pas de zone)
 function zoneOf(city){if(!city)return null;const z=CITY_ZONE[String(city).split(' · ')[0]];return Array.isArray(z)?pick(z):z||null}
+function genUniq(zone,list){const ls=new Set(list.map(x=>x.n.split(' ').slice(1).join(' '))),fs=new Set(list.map(x=>x.n.split(' ')[0]));let n;for(let k=0;k<30;k++){n=genName(zone);if(!ls.has(n.split(' ').slice(1).join(' '))&&!fs.has(n.split(' ')[0]))return n}return n}
 function genName(zone){const Z=zone&&NAME_ZONES[zone];let n;do{n=(Z&&R()<.55?pick(Z.f):pick(FIRST))+' '+(Z&&R()<.8?pick(Z.l):pick(LAST))}while(BLOCK.has(n));return n}
 function altPos(p){const a=p.at,o=[];if(p.pos==='DEF'&&a.pas>=62&&a.tec>=60)o.push('MIL');if(p.pos==='MIL'&&a.fin>=62)o.push('ATT');if(p.pos==='MIL'&&a.def>=62)o.push('DEF');if(p.pos==='ATT'&&a.pas>=63)o.push('MIL');return o}
 function profileOf(p){const a=p.at,sk=(a.tec+a.vit)/2;if(p.pos==='GB')return{k:'gb',l:'Gardien',d:'Spécialiste du poste.'};
@@ -655,7 +696,8 @@ function evAlea(el,ev){
   el.querySelectorAll('[data-al]').forEach(b=>b.onclick=()=>{aleaChoose(ev,+b.dataset.al);refresh()});
   const ok=el.querySelector('#ok');if(ok)ok.onclick=complete}
 function lockedHG(){if(G.lockHG===false||!G.S)return null;const need=G.sn===1?1:G.sn===2?2:3;if(squad(G.club).filter(p=>homegrown(p)&&p.apps>=10).length>=need)return null;return hgCandidate()||null}
-function userXI(){const c=me();let xi=(c.xi||[]).filter(id=>P(id)&&P(id).club===G.club&&P(id).inj<=0);
+function userXI(){const c=me();const old=(c.xi||[]).filter(id=>P(id)&&P(id).club===G.club);let xi=old.filter(id=>P(id).inj<=0);
+  if(!c.autoRot&&old.length===11&&xi.length<11){for(const id of old){if(xi.includes(id))continue;const pos=P(id).pos;const rep=squad(G.club).filter(p=>p.inj<=0&&!xi.includes(p.id)).sort((a,b)=>(b.pos===pos)-(a.pos===pos)||b.ovr-a.ovr)[0];if(rep){xi.push(rep.id);if(c.xs)c.xs=c.xs.map(x=>x===id?rep.id:x)}}}
   if(c.autoRot||xi.length!==11){xi=autoXI(G.club,c.autoRot);}
   const L=lockedHG();if(L&&!xi.includes(L.id)){const same=xi.map(P).filter(p=>p.pos===L.pos).sort((a,b)=>a.ovr-b.ovr)[0]||xi.map(P).filter(p=>p.pos!=='GB'&&L.pos!=='GB').sort((a,b)=>a.ovr-b.ovr)[0];if(same)xi=xi.map(id=>id===same.id?L.id:id)}
   c.xi=xi;return xi}
@@ -675,7 +717,7 @@ function attentionHTML(xi){const out=[];
 function xiRating(ids,cid){const ps=ids.map(P);if(!ps.length)return 55;
   let r=ps.reduce((s,p)=>s+p.ovr*(cid===G.club?(.9+.1*p.cond/100):.985)*formMult(p),0)/ps.length;
   const f=FORMS[G.clubs[cid].form||'4-3-3'],n=lineCounts(ids);LINES.forEach((l,i)=>r-=Math.abs(n[l]-f[i])*.8);
-  if(n.GB!==1)r-=6;if(ps.length<11)r-=(11-ps.length)*3;return r}
+  if(n.GB!==1)r-=6;if(ps.length<11)r-=(11-ps.length)*3;if(cid===G.club)r+=tbBonusFirst(ids);return r}
 function teamStr(id){if(isCI(id))return xiRating(id===G.club?userXI():autoXI(id,false),id);const f=FX[id];return (G.fstr[id]??f.base)}
 
 /* ---------------- kits ---------------- */
@@ -732,8 +774,8 @@ function newGame(cid,mode){const dm=mode==='district';
   for(const k of ['a_hor','a_efa']){const c=entrantClub(k);G.clubs[c.id]=c;G.l2.push(c.id)}
   for(const id in G.clubs)if(!G.clubs[id].pl.length)G.clubs[id].pl=genSquad(id,G.clubs[id].tier);
   G.start=dm?'district':'pro';G.prologue='pending';G.role='head';G.atClub=0;G.profit=0;
-  if(dm){const c=entrantClub(cid);for(const id of c.pl)delete G.players[id];c.pl=[];c.autoRot=true;G.club=c.id;G.u18=[];G.inv=districtInvestors(c);G.cash=G.inv.reduce((s,x)=>s+x.amt,0);G.fac={train:2,acad:1,proj:0};G.rep.caf=2;G.lastDiv=0}
-  else{const c=me();c.autoRot=true;if(c.tier<=2){c.form='4-4-2';c.tactic='bloc'}
+  if(dm){const c=entrantClub(cid);for(const id of c.pl)delete G.players[id];c.pl=[];c.autoRot=false;G.club=c.id;G.u18=[];G.inv=districtInvestors(c);G.cash=G.inv.reduce((s,x)=>s+x.amt,0);G.fac={train:2,acad:1,proj:0};G.rep.caf=2;G.lastDiv=0}
+  else{const c=me();c.autoRot=false;if(c.tier<=2){c.form='4-4-2';c.tactic='bloc'}
     G.fac.train=c.tier>=4?3:2;G.fac.acad=c.tier>=4?2:1;G.cash=[0,35e6,60e6,120e6,220e6,400e6][c.tier];G.rep.caf=[0,4,8,14,22,32][c.tier];G.inv=[];G.lastDiv=1}
   // qualifiés saison 1 : selon le rang de force
   const order=[...G.l1].sort((a,b)=>teamStr(b)-teamStr(a)+rf(-1,1));
@@ -1195,7 +1237,7 @@ function l2Offer(excl){const pool=G.l2.filter(id=>id!==excl&&id!==G.club&&T(id).
 // changer de club : la trésorerie, les installations et le sponsor restent à l'ancien club ; ton staff te suit
 function takeClub(id,role){const old=G.club,oc=G.clubs[old];G.club=id;G.role=role||'head';const c=me();
   if(old&&old!==id){G.moves=(G.moves||0)+1;G.atClub=0}
-  c.autoRot=true;c.xi=null;if(!c.pl.length)c.pl=genSquad(id,c.tier);
+  c.autoRot=false;c.xi=null;if(!c.pl.length)c.pl=genSquad(id,c.tier);
   G.u18=null;G.sponsor=null;G.board={conf:62,dlost:0};G.ferveur=35;G.sellOn=[];G.inv=[];
   G.fac={train:c.tier>=4?3:2,acad:c.tier>=4?2:1,proj:0};G.inf=null;migrate();
   G.cash=[0,35e6,60e6,120e6,220e6,400e6][c.tier]||30e6;G.rep.caf=[0,4,8,14,22,32][c.tier]||4;
@@ -1250,16 +1292,16 @@ function heritageHTML(final){const H=heritage();
 /* --- départ District : recrutement de l'équipe U18 --- */
 const PROF_L={vitesse:'vitesse',physique:'physique',technique:'technique',equilibre:'équilibre'};
 function drecPool(){const c=me(),d=distBase(G.club),city=c.city.split(' · ')[0],L=[];const acs=shuffle(ACADEMIES.slice()).slice(0,4);
-  for(let i=0;i<7;i++){const a=acs[i%acs.length],ovr=ri(53,61),pot=clamp(ovr+ri(6,14),ovr,86);L.push({id:'r'+(G.uid++),src:'aca',n:genName(R()<.5?zoneOf(a.city):null),pos:pick(['GB','DEF','DEF','MIL','MIL','ATT','ATT']),age:ri(16,18),ovr,pot,from:a.name,fee:Math.round((1.2e6+(ovr-53)*3e5+Math.max(0,pot-64)*1e5)/1e5)*1e5})}
-  for(let i=0;i<9;i++){const ovr=ri(48,57),pot=clamp(ovr+ri(6,22),ovr,90);L.push({id:'r'+(G.uid++),src:'com',n:genName(R()<.85?zoneOf(c.city):null),pos:pick(['GB','DEF','DEF','MIL','MIL','ATT','ATT','ATT']),age:ri(15,18),ovr,pot,from:`${pick(['Comité de vacances','Maracana du marché','Maracana de la gare','Tournoi des quartiers'])} · ${city}`,fee:ri(2,8)*1e5})}
+  for(let i=0;i<7;i++){const a=acs[i%acs.length],ovr=ri(53,61),pot=clamp(ovr+ri(6,14),ovr,86);L.push({id:'r'+(G.uid++),src:'aca',n:genUniq(R()<.5?zoneOf(a.city):null,L.concat(G.u18||[])),pos:pick(['GB','DEF','DEF','MIL','MIL','ATT','ATT']),age:ri(16,18),ovr,pot,from:a.name,fee:Math.round((1.2e6+(ovr-53)*3e5+Math.max(0,pot-64)*1e5)/1e5)*1e5})}
+  for(let i=0;i<9;i++){const ovr=ri(48,57),pot=clamp(ovr+ri(6,22),ovr,90);L.push({id:'r'+(G.uid++),src:'com',n:genUniq(R()<.85?zoneOf(c.city):null,L.concat(G.u18||[])),pos:pick(['GB','DEF','DEF','MIL','MIL','ATT','ATT','ATT']),age:ri(15,18),ovr,pot,from:`${pick(['Comité de vacances','Maracana du marché','Maracana de la gare','Tournoi des quartiers'])} · ${city}`,fee:ri(2,8)*1e5})}
   return{L,prof:d?d.prof:'equilibre'}}
-function drecFill(n){const need={GB:2,DEF:5,MIL:5,ATT:4};while(G.u18.length<n){const pos=['GB','DEF','MIL','ATT'].find(p=>G.u18.filter(y=>y.pos===p).length<need[p])||pick(['DEF','MIL','ATT']);const ovr=ri(45,50);G.u18.push({id:'u'+(G.uid++),n:genName(R()<.85?zoneOf(me().city):null),pos,age:ri(15,18),ovr,pot:clamp(ovr+ri(5,15),ovr,80)})}
+function drecFill(n){const need={GB:2,DEF:5,MIL:5,ATT:4};while(G.u18.length<n){const pos=['GB','DEF','MIL','ATT'].find(p=>G.u18.filter(y=>y.pos===p).length<need[p])||pick(['DEF','MIL','ATT']);const ovr=ri(45,50);G.u18.push({id:'u'+(G.uid++),n:genUniq(R()<.85?zoneOf(me().city):null,G.u18),pos,age:ri(15,18),ovr,pot:clamp(ovr+ri(5,15),ovr,80)})}
   if(!G.u18.some(y=>y.pos==='GB')){const ovr=ri(42,47);G.u18.push({id:'u'+(G.uid++),n:genName(zoneOf(me().city)),pos:'GB',age:ri(16,18),ovr,pot:ovr+ri(4,10)})}}
-function drecSign(ev,id){const x=ev.pool.L.find(y=>y.id===id);if(!x||x.done||G.cash<x.fee||G.u18.length>=18)return;x.done=1;addMoney(-x.fee,'rec');G.u18.push({id:'u'+(G.uid++),n:x.n,pos:x.pos,age:x.age,ovr:x.ovr,pot:x.pot,from:x.from});save()}
+function drecSign(ev,id){const x=ev.pool.L.find(y=>y.id===id);if(!x||x.done||G.cash<x.fee||G.u18.length>=23)return;x.done=1;addMoney(-x.fee,'rec');G.u18.push({id:'u'+(G.uid++),n:x.n,pos:x.pos,age:x.age,ovr:x.ovr,pot:x.pot,from:x.from});save()}
 function distGoalHTML(){return `<div class="panel" style="border-color:var(--accent)"><div class="lbl">Ton objectif</div><h3 style="margin:6px 0 8px">Finir parmi les 2 meilleures équipes de district</h3><p class="muted" style="margin:0;font-size:calc(14px*var(--tz))">Pas besoin de gagner la Noushi League : il suffit d'aller plus loin que 14 des 15 autres districts. Les équipes jeunes de Ligue des Pros ne comptent pas. <b style="color:var(--text)">Top 2 des districts</b> : ton club monte en Ligue 2. <b style="color:var(--text)">Vainqueur de la Noushi</b> : en plus, un club de Ligue des Pros t'appelle. <b style="color:var(--text)">Sinon</b> : une équipe B de Ligue des Pros te tend la main.</p></div>`}
 function nouDistRank(){const N=G.S.nou,rk=nouRank().filter(i=>N.teams[i].isD||N.teams[i].kind==='dist');return rk.indexOf(N.me)+1}
 function evDrec(el,ev){const c=me(),d=distBase(G.club),n=G.u18.length,inv=G.inv||[];
-  const row=x=>`<div class="item" style="flex-wrap:wrap;font-size:calc(14px*var(--tz))">${posTag(x.pos)}<span style="flex:1;min-width:150px"><b>${esc(x.n)}</b><span class="muted" style="display:block;font-size:calc(12.5px*var(--tz))">${x.age} ans · ${esc(x.from)} · niveau ${x.ovr} · pot. ${x.pot-4}–${x.pot+4}</span></span>${x.done?'<span class="chip good">Recruté</span>':`<button class="btn sec sm" data-dr="${x.id}" ${G.cash<x.fee||n>=18?'disabled':''}>Recruter · ${money(x.fee)}</button>`}</div>`;
+  const row=x=>`<div class="item" style="flex-wrap:wrap;font-size:calc(14px*var(--tz))">${posTag(x.pos)}<span style="flex:1;min-width:150px"><b>${esc(x.n)}</b><span class="muted" style="display:block;font-size:calc(12.5px*var(--tz))">${x.age} ans · ${esc(x.from)} · niveau ${x.ovr} · pot. ${x.pot-4}–${x.pot+4}</span></span>${x.done?'<span class="chip good">Recruté</span>':`<button class="btn sec sm" data-dr="${x.id}" ${G.cash<x.fee||n>=23?'disabled':''}>Recruter · ${money(x.fee)}</button>`}</div>`;
   el.innerHTML=`<div class="event"><div class="hero"><div class="kita"></div><div class="in"><div class="eyebrow">Juin · ${esc(d?d.dist:'')}</div><h2>Monte l'équipe de ${esc(c.name)}</h2>
     <p class="pitchline" style="font-size:calc(16px*var(--tz))">Le club est financé par les opérateurs économiques de la région et par les supporters. Recrute ton groupe U18 dans les académies privées et les comités de quartier, puis joue la Noushi League. Les 2 meilleures équipes de district montent en Ligue 2.</p></div></div>
    ${distGoalHTML()}
@@ -1267,12 +1309,12 @@ function evDrec(el,ev){const c=me(),d=distBase(G.club),n=G.u18.length,inv=G.inv|
     <p class="muted" style="margin:10px 0 0;font-size:calc(13.5px*var(--tz))">Profil des jeunes du district : <b style="color:var(--text)">${PROF_L[ev.pool.prof]||'équilibre'}</b>. Les jeunes des comités coûtent peu, avec un potentiel très variable.</p></div>
    <div class="panel"><h3>Académies privées</h3><div class="list">${ev.pool.L.filter(x=>x.src==='aca').map(row).join('')}</div></div>
    <div class="panel"><h3>Comités et Maracanas du district</h3><div class="list">${ev.pool.L.filter(x=>x.src==='com').map(row).join('')}</div></div>
-   <div class="panel"><div class="row"><h3 style="margin:0">Ton groupe</h3><span class="sp"></span><span class="chip ${n>=11?'good':''}">${n} / 18</span></div>
+   <div class="panel"><div class="row"><h3 style="margin:0">Ton groupe</h3><span class="sp"></span><span class="chip ${n>=11?'good':''}">${n} / 23</span></div>
     ${n?`<div class="nxi" style="margin-top:10px">${G.u18.map(y=>`<div>${posTag(y.pos)}<b>${esc(shortN(y))}</b><span class="num">${y.ovr}</span></div>`).join('')}</div>`:'<p class="muted" style="margin:8px 0 0">Personne pour l\'instant.</p>'}
-    <p class="muted" style="margin:10px 0 0;font-size:calc(13.5px*var(--tz))">En validant, le groupe est complété à 16 joueurs avec des jeunes du district, gratuitement mais d'un niveau plus faible.</p></div>
+    <p class="muted" style="margin:10px 0 0;font-size:calc(13.5px*var(--tz))">En validant, le groupe est complété à 18 joueurs avec des jeunes du district, gratuitement mais d'un niveau plus faible.</p></div>
    <div class="row"><button class="btn" data-primary id="ok">Valider le groupe et lancer la Noushi League ›</button></div></div>`;
   el.querySelectorAll('[data-dr]').forEach(b=>b.onclick=()=>{drecSign(ev,b.dataset.dr);refresh()});
-  el.querySelector('#ok').onclick=()=>{drecFill(16);newsAdd(`${c.name} présente son groupe U18 : ${G.u18.length} joueurs.`,'scout');complete()}}
+  el.querySelector('#ok').onclick=()=>{drecFill(18);newsAdd(`${c.name} présente son groupe U18 : ${G.u18.length} joueurs.`,'scout');complete()}}
 
 /* --- fin du prologue (Noushi League d'ouverture) --- */
 function finishPrologue(choice){const S=G.S;if(G.prologue!=='pending')return false;G.prologue='done';
@@ -1365,7 +1407,7 @@ function distKey(d){for(let n=1;n<=7;n++){const k=n===1?d.id:d.id+'_'+n;if(!G.cl
 /* --- U18 du club --- */
 const U18_COMP={GB:2,DEF:6,MIL:6,ATT:4};
 function u18New(age,pos){const ovr=clamp(Math.round(43+G.fac.acad*2.5+me().tier*.8+(age-15)*2+gauss()*4),36,64);
-  return{id:'u'+(G.uid++),n:genName(R()<.75?zoneOf(me().city):null),pos,age,ovr,pot:clamp(ovr+ri(8,20)+G.fac.acad,ovr,88)}}
+  return{id:'u'+(G.uid++),n:genUniq(R()<.75?zoneOf(me().city):null,G.u18||[]),pos,age,ovr,pot:clamp(ovr+ri(8,20)+G.fac.acad,ovr,88)}}
 function u18Fill(young){while(G.u18.length<18){let best='MIL',gap=-99;for(const pos in U18_COMP){const g=U18_COMP[pos]-G.u18.filter(y=>y.pos===pos).length;if(g>gap){gap=g;best=pos}}G.u18.push(u18New(young?ri(15,16):ri(15,18),best))}}
 function u18Init(){if(G.u18)return;G.u18=[];u18Fill(false)}
 function u18Season(){if(!G.u18)return;const gone=[];
@@ -1375,12 +1417,11 @@ function u18Season(){if(!G.u18)return;const gone=[];
 function u18Panel(){u18Init();const ys=G.u18.slice().sort((a,b)=>b.pot-a.pot);
   return `<div class="panel" style="margin-top:16px"><div class="row" style="margin-bottom:8px"><h3 style="margin:0">Tes U18 · Noushi League</h3><span class="sp"></span><button class="btn ghost sm" data-gonou>Voir la compétition</button></div>
    <p class="muted" style="margin-top:0">${G.u18.length} joueurs de 15 à 18 ans. ${G.l1.includes(G.club)||inPrologue()?'Ils jouent la Noushi League en juin et juillet. À la fin du tournoi, tu peux faire signer pro les meilleurs.':'Ton club joue en Ligue 2 : ses U18 ne disputent pas la Noushi League, réservée aux équipes jeunes de Ligue des Pros et aux districts.'}</p>
-   <div class="list">${ys.slice(0,6).map(y=>`<div class="item">${posTag(y.pos)}<b style="flex:1;min-width:0">${esc(y.n)}</b><span class="muted" style="font-size:calc(13px*var(--tz))">${y.age} ans · pot. ${y.pot-3}–${y.pot+3}</span><span class="num">${y.ovr}</span></div>`).join('')}</div></div>`}
+   <div class="list">${ys.map(y=>`<div class="item">${posTag(y.pos)}<b style="flex:1;min-width:0">${esc(y.n)}</b><span class="muted" style="font-size:calc(13px*var(--tz))">${y.age} ans · pot. ${y.pot-3}–${y.pot+3}</span><span class="num">${y.ovr}</span></div>`).join('')}</div></div>`}
 function nouPool(){u18Init();const pro=squad(G.club).filter(p=>p.age<=18&&p.inj<=0).sort((a,b)=>b.ovr-a.ovr).slice(0,3).map(p=>({id:'p'+p.id,ref:p.id,n:p.n,pos:p.pos,age:p.age,ovr:p.ovr,pot:p.pot,pro:1}));return G.u18.concat(pro)}
-function nouXI(){const pool=nouPool().slice().sort((a,b)=>b.ovr-a.ovr),xi=[],need={GB:1,DEF:4,MIL:3,ATT:3};
-  for(const pos in need)pool.filter(p=>p.pos===pos).slice(0,need[pos]).forEach(p=>xi.push(p));
-  for(const p of pool)if(xi.length<11&&!xi.includes(p)&&p.pos!=='GB')xi.push(p);return xi}
-function nouMyStr(){const xi=nouXI(),N=G.S&&G.S.nou,dist=N&&N.me>=0&&N.teams[N.me].isD;return xi.reduce((s,p)=>s+p.ovr,0)/Math.max(1,xi.length)+.3*G.fac.train-1.5-(11-xi.length)*3+(dist?3.5:0)}
+function nouXI(){const st=tbState('u18');const xi=st.arr.filter(Boolean).map(st.getP).filter(Boolean);return xi.length?xi:nouAutoXI()}
+function nouEntBonus(){try{const st=tbState('u18');return clamp((tbEntente(st.arr,st.form,st.getP,st.same).score-50)/25,-2,2)}catch(e){return 0}}
+function nouMyStr(){const xi=nouXI(),N=G.S&&G.S.nou,dist=N&&N.me>=0&&N.teams[N.me].isD;return xi.reduce((s,p)=>s+p.ovr,0)/Math.max(1,xi.length)+.3*G.fac.train-1.5-(11-xi.length)*3+(dist?3.5:0)+nouEntBonus()}
 
 /* --- tournoi --- */
 function nouInit(){const S=G.S;u18Init();G.dStr=G.dStr||{};G.yStr=G.yStr||{};const st=cur(),pro=!!(st&&st.pro),dm=pro&&G.start==='district',hasMe=dm||G.l1.includes(G.club);
@@ -1474,19 +1515,20 @@ function evNou(el,ev){if(ev.k==='bilan')return evNouBilan(el,ev);
   const N=G.S.nou,f=nouStage(ev.k)[ev.j],opp=f.h===N.me?f.a:f.h,lbl=`Noushi League ${N.yr} · ${NOU_STAGE[ev.k]}`;
   if(ev.phase==='pre'){const xi=nouXI();
     el.innerHTML=`<div class="event"><div class="hero"><div class="kita"></div><div class="in"><div class="eyebrow">${esc(lbl)} · ${esc(dateLabel())}</div><h2>${esc(nouTName(N.me))} contre ${esc(nouTName(opp))}</h2><p class="pitchline" style="font-size:calc(16px*var(--tz))">${esc(nouOppLine(opp))}</p></div></div>
+     ${nouOppPanel(opp)}
      <div class="panel"><h3>Consigne</h3><div class="list nplan">${Object.entries(NOU_PLAN).map(([k,p])=>`<button class="item achoice ${ev.plan===k?'on':''}" data-np="${k}" aria-pressed="${ev.plan===k}"><span style="flex:1;min-width:0;text-align:left"><b>${esc(p.l)}</b><span class="muted" style="display:block;font-size:calc(13.5px*var(--tz))">${esc(p.d)}</span></span></button>`).join('')}</div></div>
-     <div class="panel"><h3>Onze de départ <span class="muted" style="font-weight:400;font-size:.8em">· niveau moyen ${Math.round(xi.reduce((s,p)=>s+p.ovr,0)/xi.length)}</span></h3><div class="nxi">${xi.map(p=>`<div>${posTag(p.pos)}<b>${esc(shortN(p))}</b><span class="num">${p.ovr}</span></div>`).join('')}</div>
-      <p class="muted" style="margin:10px 0 0;font-size:calc(13px*var(--tz))">Les meilleurs U18 du club${xi.some(p=>p.pro)?', et tes pros de 18 ans ou moins,':''} sont alignés automatiquement.</p></div>
+     <div class="panel"><h3>Ton onze <span class="muted" style="font-weight:400;font-size:.8em">· niveau moyen ${Math.round(xi.reduce((s,p)=>s+p.ovr,0)/Math.max(1,xi.length))}</span></h3>${tbPanel('u18')}</div>
      ${N.teams[N.me]&&N.teams[N.me].isD?`<div class="panel" style="border-color:var(--accent)"><div class="lbl">Ton objectif</div><p style="margin:6px 0 0">Finir parmi les <b>2 meilleures équipes de district</b>. ${ev.k==='g0'?'Le tournoi commence.':`Aujourd'hui : <b>${nouDistRank()}e district sur 16</b>${nouDistRank()<=2?' · qualifié si ça s\'arrêtait maintenant':''}.`} Gagner la Noushi te vaudrait en plus l'appel d'un club de Ligue des Pros.</p></div>`:''}
      ${ev.k[0]==='g'?`<div class="panel">${nouGroupHTML(N.gfx[ev.k][ev.j].gi)}</div>`:''}
      <div class="row"><button class="btn" data-primary id="nplay">Jouer le match ›</button></div></div>`;
     el.querySelectorAll('[data-np]').forEach(b=>b.onclick=()=>{ev.plan=b.dataset.np;save();refresh()});
-    el.querySelector('#nplay').onclick=()=>{nouPlay(ev,ev.plan||'simple');refresh()};return}
+    el.querySelector('#nplay').onclick=()=>{nouPlay(ev,ev.plan||'simple');refresh()};bindTB(el);return}
   const r=ev.res,won=nouMyWon(f),draw=r.my===r.op&&!r.p;
   const verdict=won?(r.p?'Qualifié aux tirs au but':'Victoire'):draw?'Match nul':r.p?'Éliminé aux tirs au but':'Défaite';
   const ko=ev.k[0]!=='g',nxt={r16:'quarts de finale',qf:'demi-finales',sf:'la finale'}[ev.k];
-  const ctx=ev.k==='g2'?(N.out[N.me]===undefined?'Ton U18 sort de la poule et jouera les huitièmes de finale.':'Ton U18 est éliminé en poule. Le tournoi continue sans lui, le bilan arrive à la fin de juillet.')
-    :ko?(won?(ev.k==='f'?'Ton U18 remporte la Noushi League.':`Ton U18 passe en ${nxt}.`):`Ton U18 est éliminé en ${NOU_STAGE[ev.k].toLowerCase()}. Le bilan arrive à la fin du tournoi.`):'';
+  const who=N.teams[N.me].isD?'Ton équipe':'Ton U18';
+  const ctx=ev.k==='g2'?(N.out[N.me]===undefined?`${who} sort de la poule et jouera les huitièmes de finale.`:`${who} est éliminée en poule. Le tournoi continue sans elle, le bilan arrive à la fin de juillet.`)
+    :ko?(won?(ev.k==='f'?`${who} remporte la Noushi League !`:`${who} passe en ${nxt}.`):`${who} est éliminée en ${NOU_STAGE[ev.k].toLowerCase()}. Le bilan arrive à la fin du tournoi.`):'';
   el.innerHTML=`<div class="event"><div class="hero"><div class="kita"></div><div class="in"><div class="row"><div class="eyebrow">${esc(lbl)}</div><span class="sp"></span><span class="chip ${won?'good':draw?'':'bad'}">${verdict}</span></div>
     <div class="vs" style="margin-top:14px"><div class="side-t">${nouKit(f.h,56)}<b>${esc(nouTName(f.h))}</b></div><div class="score">${r.hg} - ${r.ag}</div><div class="side-t">${nouKit(f.a,56)}<b>${esc(nouTName(f.a))}</b></div></div>
     ${r.p?`<p style="text-align:center;margin:8px 0 0" class="muted">Tirs au but : <b style="color:var(--text)">${r.p[0]} - ${r.p[1]}</b></p>`:''}</div></div>
@@ -1859,7 +1901,7 @@ const TIPS={
  mara2:'L\'avis d\'un recruteur reste une opinion. L\'essai, lui, mesure vraiment le joueur.',
  mara3:'Signer un mineur engage le club envers sa famille : salaire, école, temps de jeu. Tiens tes promesses.',
  review:'Le bilan, c\'est là que le club grandit : prolongations, progression des jeunes et investissements dans les installations.',
- squad:'Coche les joueurs pour choisir ton onze. Avec la rotation automatique, les joueurs fatigués soufflent sans que tu y penses.',
+ squad:'Touche une carte puis une autre pour échanger deux joueurs. Le onze reste celui que tu as choisi. Coche « Rotation automatique » seulement si tu veux que je fasse tourner l’effectif à ta place.',
  club:'Ici, tu investis. Chaque installation a un effet concret et un coût d\'entretien. Un club moderne se construit aussi en dehors du terrain.',
  scout:'Ta cellule de recrutement et tes jeunes. Suis le parcours de chaque pépite : la plupart ne deviendront pas pros, l\'école est leur plan B.'};
 function coachCard(key){if(!G.guide)G.guide={};if(G.guide[key]||!TIPS[key])return'';
@@ -1948,7 +1990,7 @@ function openPlayer(id){const p=P(id);if(!p)return;const mine=p.club===G.club,pr
   const xiNow=mine&&G.S?userXI().includes(p.id):false,L=mine&&lockedHG()&&lockedHG().id===p.id;
   const role=!mine?'':L?`Titulaire sous clause de formation : ${p.apps} matchs sur les 10 demandés par le président.`:p.asp?'Aspirant : joue en Ligue des Espoirs, peut passer pro au bilan s\'il progresse.':xiNow?'Titulaire dans ton onze actuel.':`Remplaçant${p.mins?` · ${Math.round(p.mins/90)} matchs joués cette saison`:''}.`;
   const endY=2025+G.sn+p.ctr;
-  const m=modal(`<div class="phero">${posTag(p.pos)}<h2>${esc(p.n)}</h2><div class="muted">${p.age} ans${p.nick?` · « ${esc(p.nick)} »`:''} · ${from} · valeur ${eur(valueEUR(p))}</div><div class="pbig">${p.known?p.ovr:'~'+(p.scoutNote??p.ovr)}</div></div>
+  const m=modal(`${ficheTop(p,{known:p.known,sub:`${p.age} ans${p.nick?` · « ${esc(p.nick)} »`:''} · ${from} · valeur ${eur(valueEUR(p))}`})}
    <div class="grid g2" style="margin-top:12px"><div class="panel tight"><div class="lbl">Profil et qualités</div>${keyQ.map(([l,v])=>`<div class="row qrow"><span>${l}</span><span class="sp"></span><b class="num">${p.known?v:'?'}</b></div>`).join('')}<div class="row qrow"><span>Note de rue</span><span class="sp"></span><b class="num">${streetR(p)}</b></div><p class="muted" style="margin:8px 0 0;font-size:calc(13px*var(--tz))"><b style="color:var(--text)">${profileOf(p).l}.</b> ${esc(profileOf(p).d)}</p></div>
     ${mine?`<div class="panel tight"><div class="lbl">Contrat actuel</div><p style="margin:6px 0 8px;font-size:calc(14px*var(--tz))">${role}</p><div class="row qrow"><span>Salaire</span><span class="sp"></span><b class="num">${money(p.sal)}/mois</b></div><div class="row qrow"><span>Échéance</span><span class="sp"></span><b>Juin ${endY} (${p.ctr} an${p.ctr>1?'s':''})</b></div>${p.asp?'':`<button class="btn ghost" id="mrenew" style="margin-top:10px;width:100%;justify-content:center">Prolonger le contrat</button>`}</div>`:''}</div>
    <details class="more" style="margin-top:12px"><summary class="btn ghost sm">Tous les attributs et le détail</summary>
@@ -2047,7 +2089,7 @@ function vHome(el){
       ${k('Ferveur',Math.round(G.ferveur),'Supporters au stade')}
       ${k('Modernisation',modLevel()+'<span class="muted" style="font-size:.5em"> / 5</span>',MOD_LEVELS[modLevel()-1])}
       ${k('Jeunes devenus pros',youthStats().pro+'<span class="muted" style="font-size:.5em"> / '+youthStats().signed+'</span>','Formés ou détectés par le club')}</div></div>
-    <div class="panel"><h3>Joueurs à suivre</h3><div class="list">${best.map(p=>`<div class="item">${posTag(p.pos)}<div style="min-width:0;flex:1">${pl(p)}<div class="muted" style="font-size:calc(13.5px*var(--tz))">${p.age} ans · ${eur(valueEUR(p))}</div></div>${ovrTag(p)}</div>`).join('')}</div></div>
+    <div class="panel"><h3>Joueurs à suivre</h3><div class="list">${best.length?best.map(p=>`<div class="item">${posTag(p.pos)}<div style="min-width:0;flex:1">${pl(p)}<div class="muted" style="font-size:calc(13.5px*var(--tz))">${p.age} ans · ${eur(valueEUR(p))}</div></div>${ovrTag(p)}</div>`).join(''):(G.u18||[]).slice().sort((a,b)=>b.pot-a.pot).slice(0,3).map(y=>`<div class="item">${posTag(y.pos)}<div style="min-width:0;flex:1"><b>${esc(y.n)}</b><div class="muted" style="font-size:calc(13.5px*var(--tz))">${y.age} ans · potentiel ${y.pot-3}–${y.pot+3}</div></div><span class="num">${y.ovr}</span></div>`).join('')||'<span class="muted">Recrute ton groupe pour voir tes meilleurs joueurs ici.</span>'}</div></div>
    </div>
    <div class="panel news" style="margin-top:16px"><div class="row" style="margin-bottom:12px"><h3 style="margin:0">Dernières nouvelles</h3><span class="sp"></span><button class="btn ghost sm" id="allnews">Tout voir</button></div><div class="list">${G.news.slice(0,4).map(n=>`<div class="item"><span class="d">${esc(n.d)}</span><span style="min-width:0">${n.hot?'<b>':''}${esc(n.t)}${n.hot?'</b>':''}</span></div>`).join('')}</div></div>`;
   el.querySelector('#hgo').onclick=()=>{if(G.pending||G.over)go('event');else advance()};
@@ -2068,7 +2110,7 @@ function sixVars(){const v=[
 function repTxt(v,w){if(w)return v<5?'Nulle':v<20?'Discrète':v<45?'Remarquée':v<70?'Établie':'Mondiale';return v<10?'Inconnue':v<30?'Émergente':v<55?'Respectée':v<80?'Redoutée':'Légendaire'}
 
 /* ---------------- Effectif ---------------- */
-function vSquad(el){if(inPrologue()&&G.start==='district'){el.innerHTML=`<div class="vhead"><div><div class="eyebrow">Noushi League</div><h2>Ton groupe U18</h2></div></div>${u18Panel()}`;el.querySelectorAll('[data-gonou]').forEach(b=>b.onclick=()=>go('comp','nou'));return}
+function vSquad(el){if(inPrologue()&&G.start==='district'){el.innerHTML=`<div class="vhead"><div><div class="eyebrow">Noushi League</div><h2>Ton groupe U18</h2></div></div><div class="panel" style="margin-bottom:14px"><h3>Ton onze pour la Noushi League</h3>${tbPanel('u18')}</div>${u18Panel()}`;el.querySelectorAll('[data-gonou]').forEach(b=>b.onclick=()=>go('comp','nou'));bindTB(el);return}
   const c=me(),xi=userXI(),sq=squad(G.club).sort((a,b)=>LINES.indexOf(a.pos)-LINES.indexOf(b.pos)||b.ovr-a.ovr);
   const n=lineCounts(xi),f=FORMS[c.form];const ok=LINES.every((l,i)=>n[l]===f[i])&&xi.length===11;
   const wage=proWage(),cap=wageCap();
@@ -2076,9 +2118,9 @@ function vSquad(el){if(inPrologue()&&G.start==='district'){el.innerHTML=`<div cl
     <div class="row"><label class="row" style="gap:6px"><input type="checkbox" id="rot" ${c.autoRot?'checked':''}> Rotation automatique avant chaque match</label><label class="row" style="gap:6px"><input type="checkbox" id="lockhg" ${G.lockHG!==false?'checked':''}> Formé au club titulaire jusqu'à 10 matchs</label><button class="btn sec sm" id="best">Meilleur XI</button></div></div>
   <div class="grid g2" style="margin-bottom:14px">
     <div class="panel"><div class="row" style="margin-bottom:10px"><h3 style="margin:0">Composition</h3><span class="sp"></span>
-      <div class="sel" id="forms">${Object.keys(FORMS).map(k=>`<button data-f="${k}" class="${c.form===k?'on':''}">${k}</button>`).join('')}</div></div>
-      ${pitchHTML(xi,c.form)}
-      ${lockedHG()?`<p class="tadv" style="margin:10px 0 0"><b>${esc(shortN(lockedHG()))}</b> est verrouillé titulaire : c'est le formé au club, ${lockedHG().apps} matchs sur 10. Après, tu décides.</p>`:''}<p class="muted" style="font-size:calc(14.5px*var(--tz));margin:10px 0 0">${ok?'Composition valide.':`<span class="bad">Composition incomplète ou déséquilibrée pour le ${c.form}.</span> Elle sera corrigée automatiquement avant le match.`} Coche les joueurs dans le tableau pour changer le onze. Force du onze : <b class="num">${xiRating(xi,G.club).toFixed(1)}</b>.</p></div>
+</div>
+      ${tbPanel('first')}
+      ${lockedHG()?`<p class="tadv" style="margin:10px 0 0"><b>${esc(shortN(lockedHG()))}</b> est verrouillé titulaire : c'est le formé au club, ${lockedHG().apps} matchs sur 10. Après, tu décides.</p>`:''}<p class="muted" style="font-size:calc(14.5px*var(--tz));margin:10px 0 0">${ok?'Composition valide.':`<span class="bad">Composition incomplète ou déséquilibrée pour le ${c.form}.</span> Elle sera corrigée automatiquement avant le match.`} Touche les cartes pour changer le onze. Force du onze : <b class="num">${xiRating(xi,G.club).toFixed(1)}</b>.</p></div>
     <div class="panel"><h3>Tactique par défaut</h3><div class="sel" id="tacs">${Object.entries(TACTICS).map(([k,t])=>`<button data-t="${k}" class="${c.tactic===k?'on':''}">${t.l}</button>`).join('')}</div>${tacCost(c.tactic)}
       ${tacAdvice()}<p class="muted" style="font-size:calc(13.5px*var(--tz));margin:8px 0 0">Chiffres comparés à l'équilibré, pour une saison moyenne. Tu peux changer à la mi-temps des matchs en direct.</p>
       <div class="lbl" style="margin-top:14px">Masse salariale hors aspirants</div><div class="row" style="margin:6px 0"><b class="num">${money(wage)}</b><span class="muted">/ mois sur un plafond de</span><b class="num">${money(cap)}</b></div>
@@ -2097,17 +2139,120 @@ function vSquad(el){if(inPrologue()&&G.start==='district'){el.innerHTML=`<div cl
   {const cc=coachCard('squad');if(cc){el.insertAdjacentHTML('afterbegin',cc);bindCoach(el)}}
   el.querySelector('#rot').onchange=e=>{c.autoRot=e.target.checked;save();refresh()};
   {const lk=el.querySelector('#lockhg');if(lk)lk.onchange=()=>{G.lockHG=lk.checked;save();refresh()}}
-  el.querySelector('#best').onclick=()=>{c.autoRot=false;c.xi=autoXI(G.club,true);save();refresh()};
+  el.querySelector('#best').onclick=()=>{c.autoRot=false;c.xi=autoXI(G.club,true);c.xs=null;TB_SEL=null;save();refresh()};
   el.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{c.form=b.dataset.f;if(c.autoRot)c.xi=[];save();refresh()});
   el.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{c.tactic=b.dataset.t;save();refresh()});
-  el.querySelectorAll('[data-xi]').forEach(b=>b.onchange=()=>{c.autoRot=false;let x=(c.xi||[]).filter(id=>P(id));const id=+b.dataset.xi;if(b.checked){if(!x.includes(id))x.push(id)}else x=x.filter(i=>i!==id);c.xi=x;save();refresh()});
-  bindPl(el)}
+  el.querySelectorAll('[data-xi]').forEach(b=>b.onchange=()=>{c.autoRot=false;let x=(c.xi||[]).filter(id=>P(id));const id=+b.dataset.xi;if(b.checked){if(!x.includes(id))x.push(id)}else x=x.filter(i=>i!==id);c.xi=x;c.xs=null;save();refresh()});
+  bindTB(el);bindPl(el)}
 function cupPlayed(){return G.S.cup.rounds.flat().filter(f=>f.r&&(f.h===G.club||f.a===G.club)).length}
 function contPlayed(){let n=0;for(const k of ['c1','c2']){const C=G.S[k];[C.prelim,...(C.gfx||[]),C.qf||[],C.sf||[],C.f||[]].forEach(l=>l.forEach(f=>{if(f.r&&(f.h===G.club||f.a===G.club))n++}))}return n}
 function pitchHTML(xi,form){const ps=xi.map(P).filter(Boolean);let html='<div class="pitch" role="img" aria-label="Composition">';
   LINES.forEach((pos,li)=>{const line=ps.filter(p=>p.pos===pos);const x=[90,68,42,18][li];line.forEach((p,i)=>{const y=(i+1)/(line.length+1)*100;
     html+=`<div class="pdot" style="--x:${100-x};--y:${y.toFixed(1)}"><i>${p.known?p.ovr:'?'}</i><span>${esc(shortN(p))}</span></div>`})});
   return html+'</div>'}
+/* ======================= COMPOSITION EN CARTES · ENTENTE · FICHES ======================= */
+// emplacements d'une formation, du gardien aux attaquants
+function tbSlots(form){const f=FORMS[form]||FORMS['4-3-3'],out=[];LINES.forEach((pos,i)=>{for(let k=0;k<f[i];k++)out.push(pos)});return out}
+// coordonnées (en %) de chaque emplacement sur un terrain vertical
+function tbCoords(form){const f=FORMS[form]||FORMS['4-3-3'],ys=[88,68,44,20],out=[];
+  LINES.forEach((pos,li)=>{const n=f[li];for(let k=0;k<n;k++){const x=n===1?50:10+80*(k/(n-1));out.push({x:n===1?50:(n===2?(k?66:34):x),y:ys[li]})}});return out}
+// range des joueurs dans les emplacements : d'abord à leur poste, puis là où il reste de la place
+function tbNormalize(ids,form,getP){const slots=tbSlots(form),arr=Array(slots.length).fill(null),left=ids.filter(id=>id!=null&&getP(id));
+  slots.forEach((pos,i)=>{const j=left.findIndex(id=>getP(id).pos===pos);if(j>=0)arr[i]=left.splice(j,1)[0]});
+  slots.forEach((pos,i)=>{if(arr[i]==null&&left.length)arr[i]=left.shift()});return arr}
+function pZone(p){if(!p)return null;if(p.z!==undefined)return p.z;const ln=p.n.split(' ').slice(1).join(' ');let z=null;for(const k in NAME_ZONES)if(NAME_ZONES[k].l.includes(ln)){z=k;break}p.z=z;return z}
+function pTier(o){return o>=80?'el':o>=70?'or':o>=60?'ag':'br'}
+// liens d'entente : même région ou même formation = vert, à son poste = orange, hors poste = rouge
+function tbEntente(arr,form,getP,same){const slots=tbSlots(form),co=tbCoords(form),f=FORMS[form]||FORMS['4-3-3'],rows=[];let k=0;
+  LINES.forEach((_,li)=>{const r=[];for(let j=0;j<f[li];j++)r.push(k++);rows.push(r)});
+  const pairs=[];rows.forEach((r,ri)=>{for(let j=0;j+1<r.length;j++)pairs.push([r[j],r[j+1]]);const nx=rows[ri+1];if(nx)for(const a of r){const b=nx.slice().sort((u,v)=>Math.abs(co[u].x-co[a].x)-Math.abs(co[v].x-co[a].x))[0];pairs.push([a,b])}});
+  const oop=i=>{const p=arr[i]!=null?getP(arr[i]):null;return !p||(p.pos!==slots[i]&&!(p.at&&altPos(p).includes(slots[i])))};
+  const links=pairs.map(([a,b])=>{const pa=arr[a]!=null?getP(arr[a]):null,pb=arr[b]!=null?getP(arr[b]):null;let c=1;
+    if(!pa||!pb||oop(a)||oop(b))c=0;else if((pZone(pa)&&pZone(pa)===pZone(pb))||same(pa,pb))c=2;return{a,b,c}});
+  const chem=arr.map((_,i)=>{if(oop(i))return 0;const g=links.filter(l=>(l.a===i||l.b===i)&&l.c===2).length;return Math.min(3,1+g)});
+  const score=Math.round(chem.reduce((s,x)=>s+x,0)/(arr.length*3)*100);return{links,chem,score,oop}}
+function tbSameFirst(a,b){return (homegrown(a)&&homegrown(b))||(a.origin&&a.origin===b.origin&&['maracana','district','expat'].includes(a.origin))}
+function tbSameYouth(a,b){return !!(a.from&&a.from===b.from)}
+
+/* --- état des deux compositions : équipe première et U18 --- */
+let TB_SEL=null;
+function tbState(key){
+  if(key==='u18'){const pool=nouPool(),byId={};pool.forEach(y=>byId[y.id]=y);const getP=id=>byId[id];G.u18form=G.u18form||'4-3-3';
+    let arr=Array.isArray(G.u18xs)&&G.u18xs.length===tbSlots(G.u18form).length&&G.u18xs.every(id=>id==null||byId[id])?G.u18xs.slice():null;
+    if(!arr||arr.filter(Boolean).length<Math.min(11,pool.length))arr=tbNormalize(nouAutoXI().map(y=>y.id),G.u18form,getP);
+    return{key,form:G.u18form,arr,pool:pool.map(y=>y.id),getP,same:tbSameYouth,
+      save(a){G.u18xs=a;save()},setForm(f){G.u18form=f;G.u18xs=tbNormalize(this.arr.filter(Boolean),f,getP);save()},open(id){openYouth(id)}}}
+  const c=me(),xi=userXI();c.form=c.form||'4-3-3';
+  let arr=Array.isArray(c.xs)&&c.xs.length===tbSlots(c.form).length&&c.xs.filter(Boolean).length===xi.length&&c.xs.filter(Boolean).every(id=>xi.includes(id))?c.xs.slice():tbNormalize(xi,c.form,P);
+  return{key,form:c.form,arr,pool:squad(G.club).map(p=>p.id),getP:P,same:tbSameFirst,
+    save(a){c.xs=a;c.xi=a.filter(Boolean);c.autoRot=false;save()},setForm(f){c.form=f;const a=tbNormalize(this.arr.filter(Boolean),f,P);c.xs=a;c.xi=a.filter(Boolean);save()},open(id){openPlayer(id)}}}
+function nouAutoXI(){const pool=nouPool().slice().sort((a,b)=>b.ovr-a.ovr),xi=[],need={GB:1,DEF:4,MIL:3,ATT:3};
+  for(const pos in need)pool.filter(p=>p.pos===pos).slice(0,need[pos]).forEach(p=>xi.push(p));
+  for(const p of pool)if(xi.length<11&&!xi.includes(p)&&p.pos!=='GB')xi.push(p);return xi}
+function pcardHTML(p,{chem=null,sel=false,oop=false,kitClub=null,attr=''}={}){const known=p.known!==false,o=known?p.ovr:(p.scoutNote??p.ovr);
+  return `<button class="pcard t-${pTier(o)}${sel?' sel':''}${oop?' oop':''}${p.inj>0?' inj':''}" ${attr} aria-label="${esc(p.n)}, ${p.pos}, note ${known?o:'estimée '+o}">
+   <span class="pc-top"><span class="pc-ovr">${known?o:'~'+o}</span><span class="pc-pos">${p.pos}</span></span>
+   <span class="pc-kit">${kit(kitClub||me(),30)}</span><span class="pc-nm">${esc(shortN(p))}</span>
+   ${chem!=null?`<span class="pc-ch">${[1,2,3].map(i=>`<i class="${i<=chem?'on':''}"></i>`).join('')}</span>`:p.inj>0?'<span class="pc-tag">blessé</span>':`<span class="pc-tag">${p.age||''} ans</span>`}</button>`}
+function tbPanel(key){const st=tbState(key),co=tbCoords(st.form),E=tbEntente(st.arr,st.form,st.getP,st.same),sel=TB_SEL&&TB_SEL.key===key?TB_SEL:null;
+  const lk=E.links.filter(l=>st.arr[l.a]&&st.arr[l.b]).map(l=>`<line x1="${co[l.a].x}" y1="${co[l.a].y}" x2="${co[l.b].x}" y2="${co[l.b].y}" class="lk${l.c}"/>`).join('');
+  const cards=st.arr.map((id,i)=>{const p=id!=null?st.getP(id):null;const pos=tbSlots(st.form)[i];
+    return `<div class="pslot" style="left:${co[i].x}%;top:${co[i].y}%">${p?pcardHTML(p,{chem:E.chem[i],sel:sel&&sel.slot===i,oop:E.oop(i),attr:`data-ts="${i}"`}):`<button class="pcard empty" data-ts="${i}"><span class="pc-pos">${pos}</span><span class="pc-nm">Vide</span></button>`}</div>`}).join('');
+  const inXI=new Set(st.arr.filter(Boolean)),bench=st.pool.filter(id=>!inXI.has(id)).map(id=>st.getP(id)).filter(Boolean).sort((a,b)=>LINES.indexOf(a.pos)-LINES.indexOf(b.pos)||b.ovr-a.ovr);
+  const sp=sel&&st.arr[sel.slot]!=null?st.getP(st.arr[sel.slot]):null,need=sel?tbSlots(st.form)[sel.slot]:null;
+  return `<div class="tbhead row"><div class="sel" data-tbforms="${key}">${Object.keys(FORMS).map(k=>`<button data-tbf="${k}" class="${st.form===k?'on':''}">${k}</button>`).join('')}</div><span class="sp"></span>
+    <div class="ent"><span class="lbl">Entente</span><b class="num ${E.score>=70?'good':E.score<45?'bad':''}">${E.score}</b><span class="muted">/ 100</span></div></div>
+   <div class="tpitch" data-tbkey="${key}"><div class="mk"></div><svg class="links" viewBox="0 0 100 100" preserveAspectRatio="none">${lk}</svg>${cards}</div>
+   <div class="tbbar">${sp?`<b>${esc(sp.n)}</b> · ${need} · <span class="muted">touche un remplaçant ou un autre titulaire pour l'échanger.</span><span class="sp"></span><button class="btn ghost sm" data-tbopen="${sp.id}">Voir la fiche</button><button class="btn ghost sm" data-tbcancel>Annuler</button>`
+     :sel?`<span class="muted">Poste vide (${need}) : touche un remplaçant.</span>`:'<span class="muted">Touche un joueur pour le remplacer ou voir sa fiche. Vert : même région ou même formation. Rouge : joueur hors de son poste.</span>'}</div>
+   <div class="lbl" style="margin:12px 0 8px">Remplaçants · ${bench.length}</div>
+   <div class="bench">${bench.map(p=>pcardHTML(p,{sel:false,oop:!!(sel&&need&&p.pos!==need),attr:`data-tbb="${p.id}" ${p.inj>0?'disabled':''}`})).join('')||'<span class="muted">Aucun remplaçant.</span>'}</div>`}
+function bindTB(root){root.querySelectorAll('[data-tbkey]').forEach(pt=>{const key=pt.dataset.tbkey,host=pt.parentElement;
+  host.querySelectorAll('[data-tbf]').forEach(b=>b.onclick=()=>{const st=tbState(key);st.setForm(b.dataset.tbf);TB_SEL=null;refresh()});
+  host.querySelectorAll('[data-ts]').forEach(b=>b.onclick=()=>{const i=+b.dataset.ts,st=tbState(key);
+    if(TB_SEL&&TB_SEL.key===key&&TB_SEL.slot!==i){const a=st.arr.slice();[a[i],a[TB_SEL.slot]]=[a[TB_SEL.slot],a[i]];st.save(a);TB_SEL=null}
+    else TB_SEL=TB_SEL&&TB_SEL.key===key&&TB_SEL.slot===i?null:{key,slot:i};refresh()});
+  host.querySelectorAll('[data-tbb]').forEach(b=>b.onclick=()=>{const st=tbState(key);const id=key==='u18'?b.dataset.tbb:+b.dataset.tbb;
+    if(!TB_SEL||TB_SEL.key!==key){st.open(id);return}const a=st.arr.slice();a[TB_SEL.slot]=id;st.save(a);TB_SEL=null;refresh()});
+  host.querySelectorAll('[data-tbopen]').forEach(b=>b.onclick=()=>{const st=tbState(key);st.open(key==='u18'?b.dataset.tbopen:+b.dataset.tbopen)});
+  host.querySelectorAll('[data-tbcancel]').forEach(b=>b.onclick=()=>{TB_SEL=null;refresh()})})}
+// bonus d'entente sur la force de l'équipe : de −2 à +2
+function tbBonusFirst(ids){try{const c=me(),arr=Array.isArray(c.xs)&&c.xs.filter(Boolean).length===ids.length&&c.xs.filter(Boolean).every(id=>ids.includes(id))?c.xs:tbNormalize(ids,c.form||'4-3-3',P);return clamp((tbEntente(arr,c.form||'4-3-3',P,tbSameFirst).score-50)/25,-2,2)}catch(e){return 0}}
+
+/* --- fiche joueur : radar à six qualités --- */
+const RADAR=[['vit','Vitesse'],['fin','Finition'],['pas','Passe'],['tec','Dribble'],['def','Défense'],['phy','Physique']];
+function radarSVG(at,known){const cx=110,cy=100,R=72,pt=(i,v)=>{const a=-Math.PI/2+i*Math.PI/3,r=R*clamp(v,0,99)/99;return[cx+r*Math.cos(a),cy+r*Math.sin(a)]};
+  const grid=[.25,.5,.75,1].map(f=>`<polygon points="${RADAR.map((_,i)=>pt(i,99*f).join(',')).join(' ')}" class="rg"/>`).join('');
+  const axes=RADAR.map((_,i)=>{const [x,y]=pt(i,99);return `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" class="rg"/>`}).join('');
+  const poly=RADAR.map(([k],i)=>pt(i,at[k]).join(',')).join(' ');
+  const lab=RADAR.map(([k,l],i)=>{const [x,y]=pt(i,99*1.32);return `<text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="middle" class="rl">${l}</text><text x="${x}" y="${y+12}" text-anchor="middle" dominant-baseline="middle" class="rv">${known?at[k]:'?'}</text>`}).join('');
+  return `<svg class="radar" viewBox="0 0 220 210" role="img" aria-label="Radar des qualités">${grid}${axes}<polygon points="${poly}" class="rp ${known?'':'est'}"/>${lab}</svg>`}
+function starsHTML(n){return `<span class="stars">${[1,2,3,4,5].map(i=>`<i class="${i<=n?'on':''}">★</i>`).join('')}</span>`}
+function hashN(s){let h=0;for(const ch of String(s))h=(h*31+ch.charCodeAt(0))|0;return Math.abs(h)}
+function extraTraits(p){const a=p.at,h=hashN(p.id+p.n);return{foot:h%4===0?'Gauche':'Droit',weak:1+h%3+(a.tec>=70?1:0),skills:clamp(Math.round((a.tec-35)/12),1,5),
+  att:a.fin+a.vit>140?'Élevé':a.fin+a.vit>115?'Moyen':'Faible',dfn:a.def+a.phy>140?'Élevé':a.def+a.phy>115?'Moyen':'Faible'}}
+function ficheTop(p,{known=true,sub=''}={}){const a=p.at,o=known?p.ovr:(p.scoutNote??p.ovr),t=extraTraits(p);
+  const bars=[...RADAR,['men','Placement']].map(([k,l])=>{const v=a[k];return `<div class="fbar"><span>${l}</span><div class="bar"><i style="width:${known?v:0}%;background:${v>=75?'var(--good)':v>=60?'var(--warn)':'var(--bad)'}"></i></div><b class="num">${known?v:'?'}</b></div>`}).join('');
+  return `<div class="ftop"><div class="fcard">${pcardHTML(p,{kitClub:p.club&&T(p.club)?T(p.club):me()})}</div><div style="min-width:0;flex:1"><h2 style="margin:0">${esc(p.n)}</h2><div class="muted" style="font-size:calc(14px*var(--tz))">${sub}</div>
+     <div class="ftraits"><span>Pied fort <b>${t.foot}</b></span><span>Mauvais pied ${starsHTML(t.weak)}</span><span>Gestes techniques ${starsHTML(t.skills)}</span><span>Travail offensif <b>${t.att}</b></span><span>Travail défensif <b>${t.dfn}</b></span></div></div></div>
+    <div class="fgrid">${radarSVG(a,known)}<div class="fbars">${bars}${known?'':'<p class="muted" style="margin:6px 0 0;font-size:calc(12.5px*var(--tz))">Qualités exactes inconnues : elles se révèlent après quelques matchs.</p>'}</div></div>`}
+function openYouth(id){const y=nouPool().find(x=>x.id===id)||Object.values((G.S.nou&&G.S.nou.sgn)||{}).find(x=>x.id===id);if(!y)return;if(y.ref){openPlayer(y.ref);return}
+  if(!y.at)y.at=genAttrs(y.pos,y.ovr);const N=G.S.nou,s=N&&N.st[y.id];
+  modal(`${ficheTop(y,{sub:`${y.age} ans · ${y.pos} · ${esc(y.from||'groupe U18')} · potentiel ${y.pot-3}–${y.pot+3}`})}
+   <div class="list" style="margin-top:12px"><div class="item"><span class="muted">Noushi League</span><span class="sp"></span><b>${s?`${s.apps} match${s.apps>1?'s':''} · ${s.g} but${s.g>1?'s':''} · note ${(s.rs.reduce((a,b)=>a+b,0)/s.rs.length).toFixed(1)}`:'pas encore joué'}</b></div></div>
+   <div class="row" style="margin-top:14px"><button class="btn" id="mclose">Fermer</button></div>`);
+  const b=document.querySelector('#mclose');if(b)b.onclick=closeModal}
+
+/* --- l'adversaire de Noushi League --- */
+function nouOppInfo(i){const N=G.S.nou,t=N.teams[i];if(!t.info){const city=t.kind==='dist'?(distBase(t.k)||{}).city:(T(t.club)||{}).city,z=zoneOf(city),s=nouStr(i);
+  t.info={style:pick(['Jeu de rue','Passes courtes','Costaud','Contre-attaque']),keys:[...Array(3)].map(()=>({n:genName(R()<.8?z:null),pos:pick(['ATT','ATT','MIL','DEF','GB']),ovr:clamp(Math.round(s+3+Math.abs(gauss())*4),45,76)})).sort((a,b)=>b.ovr-a.ovr)}}return t.info}
+function nouOppPanel(i){const N=G.S.nou,t=N.teams[i],inf=nouOppInfo(i),s=nouStr(i),stars=clamp(Math.round((s-44)/4),1,5);
+  const res=[];for(const k of ['g0','g1','g2'])for(const f of N.gfx[k])if(f.r&&(f.h===i||f.a===i)){const my=f.h===i?f.r.hg:f.r.ag,op=f.h===i?f.r.ag:f.r.hg;res.push(my>op?'V':my<op?'D':'N')}
+  return `<div class="panel"><div class="row"><h3 style="margin:0">L'adversaire</h3><span class="sp"></span>${nouKit(i,30)}</div>
+   <div class="list" style="margin-top:10px"><div class="item"><span class="muted">Niveau</span><span class="sp"></span>${starsHTML(stars)}</div><div class="item"><span class="muted">Style</span><span class="sp"></span><b>${inf.style}</b></div>
+    <div class="item"><span class="muted">Forme</span><span class="sp"></span>${res.length?formTag(res):'<span class="muted">premier match</span>'}</div></div>
+   <div class="lbl" style="margin:12px 0 8px">Joueurs à surveiller</div><div class="list">${inf.keys.map(k=>`<div class="item">${posTag(k.pos)}<b style="flex:1;min-width:0">${esc(k.n)}</b><span class="num">${k.ovr}</span></div>`).join('')}</div></div>`}
+
 /* ---------------- Compétitions ---------------- */
 function vComp(el){const tab=VIEWARG||(G.S.div===2?'l2':'l1');const S=G.S;
   const tabs=[['l1','Ligue des Pros'],['l2','Ligue 2'],['acad','Académies'],['nou','Noushi League'],['nl','Ligue des Espoirs'],['cal','Mon calendrier'],['cup','Coupe du Père Fondateur'],['c1','C1 Afrique'],['c2','Coupe des Confédérations'],['sc','Buteurs']];
@@ -2897,7 +3042,7 @@ function renderTitle(saved){
    <div id="m-dis" hidden><p class="muted" style="margin:0 0 14px">Choisis ta région. Les opérateurs économiques et les supporters financent l'équipe du district. Recrute tes U18 dans les académies et les comités, puis joue la Noushi League : les 2 meilleures équipes de district montent en Ligue 2. Sinon, un club de Ligue des Pros te proposera son équipe B.</p>
    <div class="clubpick">${DISTRICTS.map(d=>`<button data-d="${d.id}">${kit({c1:d.c[0],c2:d.c[1],pat:d.c[2]},52)}<span style="min-width:0"><b>${esc(d.name)}</b><small>${esc(d.dist)}</small><small>${esc(d.city)} · profil ${PROF_L[d.prof]||'équilibre'}</small></span></button>`).join('')}</div></div></div>
    <div class="row" style="gap:8px"><label class="btn ghost sm" style="cursor:pointer">Importer une partie<input type="file" id="impsave" accept=".json,application/json" hidden></label></div>
-   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 29${cloudDb?' · sauvegarde en ligne active':''}</p>
+   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 31${cloudDb?' · sauvegarde en ligne active':''}</p>
    <p class="muted" style="font-size:calc(13.5px*var(--tz));margin:0">Projet original. Clubs, joueurs, compétitions et montants de jeu sont fictifs, à l'échelle du football ivoirien réel. Aucune affiliation avec une fédération, une confédération ou un éditeur de jeux.</p>
   </div></div>`;
   $('#app').style.display='block';
