@@ -469,6 +469,22 @@ html[data-theme="jour"] .ovr.t1{color:#5f6a73}html[data-theme="jour"] .ovr.t2{co
 .txstamp{position:absolute;top:96px;left:50%;transform:translate(-50%,0) rotate(-12deg) scale(2.4);opacity:0;padding:6px 14px;border:3px solid var(--good);color:var(--good);font-weight:900;letter-spacing:.14em;border-radius:8px;font-size:calc(20px*var(--tz));animation:stamp .45s 2s cubic-bezier(.2,1.6,.4,1) forwards;background:color-mix(in srgb,var(--panel) 70%,transparent)}
 @keyframes stamp{to{opacity:1;transform:translate(-50%,0) rotate(-12deg) scale(1)}}
 @media (prefers-reduced-motion:reduce){.txfc{animation:none;left:calc(50% - 42px)}.txstamp{animation:none;opacity:1;transform:translate(-50%,0) rotate(-12deg)}}
+.augrid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:14px;margin-top:12px;align-items:center}@media (max-width:560px){.augrid{grid-template-columns:minmax(0,1fr)}}
+.auline{margin-bottom:10px}.auline b{font-size:calc(14px*var(--tz))}.auline .num{font-weight:800;font-size:calc(16px*var(--tz))}.auline .num.good{color:var(--good)}.auline .num.bad{color:var(--bad)}.auline small{font-size:calc(11.5px*var(--tz))}
+.aubar{position:relative;height:8px;border-radius:4px;background:var(--line2);margin:5px 0 3px}.aubar i{display:block;height:100%;border-radius:4px}.aubar em{position:absolute;top:-4px;width:3px;height:16px;background:var(--text);border-radius:2px;transform:translateX(-1px)}
+.auradar .radar{max-width:240px;margin:0 auto;display:block}
+.aulist{margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}.aulist p{margin:0 0 6px;display:flex;gap:8px;align-items:baseline;font-size:calc(13.5px*var(--tz))}.aulist i{font-style:normal;font-weight:900;width:14px;flex:none;text-align:center}.aulist i.ok{color:var(--good)}.aulist i.ko{color:var(--warn)}
+.aurecs{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr))}.aurec{display:flex;flex-direction:column;gap:4px;padding:10px 12px;border-radius:12px;background:var(--panel2);border:1px solid var(--line2)}.aurec .muted{font-size:calc(12.5px*var(--tz))}.aurec .btn{align-self:flex-start;margin-top:4px}
+.srtabs{display:flex;border-bottom:1px solid var(--line);margin-bottom:0;overflow-x:auto}.srtabs button{all:unset;cursor:pointer;padding:10px 16px;font-weight:800;font-size:calc(15px*var(--tz));color:var(--muted);border-bottom:3px solid transparent}.srtabs button.on{color:var(--accent);border-color:var(--accent)}
+.srhead{display:flex;flex-direction:column;gap:2px;padding:12px 14px;margin:0 0 10px;background:var(--panel);border-radius:0 0 12px 12px;border:1px solid var(--line);border-top:0}.srhead b{font-family:var(--f-disp);font-size:calc(22px*var(--tz));color:var(--accent);text-transform:uppercase;letter-spacing:.02em}.srhead span{font-weight:650;font-size:calc(13.5px*var(--tz))}
+.srgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,170px),1fr));gap:8px}
+.srcard{all:unset;box-sizing:border-box;cursor:pointer;position:relative;display:flex;gap:8px;align-items:flex-end;padding:10px 8px 8px 6px;border-radius:12px;background:var(--panel);border:1px solid var(--line2);min-height:104px;overflow:hidden}.srcard:hover,.srcard:focus-visible{border-color:var(--accent);background:var(--accent-soft)}.srcard.off{opacity:.55}
+.srface{width:62px;height:72px;flex:none;display:grid;place-items:end center}.srface svg{width:72px;height:72px;display:block}
+.srtxt{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}.srtxt b{color:var(--accent);font-size:calc(14px*var(--tz));line-height:1.12}.srtxt>span{font-size:calc(12px*var(--tz));display:flex;align-items:center;gap:4px}.srnote{font-weight:800;font-size:calc(15px*var(--tz))!important}
+.srnew{position:absolute;top:6px;left:6px;font-style:normal;font-size:calc(9.5px*var(--tz));font-weight:900;letter-spacing:.06em;color:#fff;background:var(--good);padding:2px 6px;border-radius:999px}.srst{position:absolute;bottom:6px;right:6px}.srst .chip{font-size:calc(10.5px*var(--tz));padding:2px 7px}
+.rtab{display:flex;flex-direction:column;gap:5px}.rrow{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:calc(13.5px*var(--tz));padding:3px 0;border-bottom:1px solid var(--line)}.rbs{display:flex;align-items:center;gap:3px}
+.rb{min-width:30px;text-align:center;padding:2px 4px;font-weight:800;border-radius:4px;color:#fff;font-size:calc(13px*var(--tz))}.rb.r70{background:#2e9e4f}.rb.r58{background:#c9a227}.rb.r46{background:#d9772b}.rb.r0{background:#c63b2b}.rb.unk{background:#6b6f78}.rdash{color:var(--muted)}
+.cmpbox{margin:10px 0 0;padding:9px 12px;border-radius:10px;background:var(--panel2);font-size:calc(13.5px*var(--tz));border-left:3px solid var(--line2)}.cmpbox.good{border-color:var(--good)}.cmpbox.warn{border-color:var(--warn)}
 .bench{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px}
 .bench .pcard{width:100%}
 /* fiche joueur */
@@ -1489,7 +1505,7 @@ function dscRow(x,d){const e=dscEst(x);const v=x.st==='signed'?`${x.ovr}`:`${e.l
   return `<button class="prow ${x.st!=='rep'?'off':''}" data-pr="${x.id}"><span class="pface">${faceSVG(x,{c1:'#3a4a44',c2:'#9fb3a8'})}</span>${posTag(x.pos)}<span class="pn"><b>${esc(x.n)}</b><span class="muted">${x.age} ans · ${esc(dscZ(x.c).n)} · ${LIEUX[x.l].n}</span><span class="muted prole">${(()=>{const e=dscEst(x),q={id:x.id,n:x.n,pos:x.pos,ovr:e.c,at:Object.fromEntries(Object.keys(ATTR).map(k=>[k,dscAttr(x,k).c]))};const rk=bestRole(q),nd=sysNeeds().includes(rk);return `Profil : ${ROLES[rk].n}${nd?' · <b style="color:var(--good)">recherché</b>':''}`})()}</span></span><span class="pv num ${e.c>=58?'good':e.c>=52?'':'muted'}">${v}</span>${dscStatus(x,d)}</button>`}
 function dscOpen(ev,id){const d=ev.d,x=d.P.find(y=>y.id===id);if(!x)return;const e=dscEst(x),z=dscZ(x.c),known=x.k>=88||x.st==='signed';
   const card={...x,known:false,scoutNote:e.c,at:Object.fromEntries(Object.keys(ATTR).map(k=>[k,dscAttr(x,k).c]))};
-  const bars=[...RADAR,['men','Placement']].map(([k,l])=>{const a=dscAttr(x,k);return `<div class="fbar"><span>${l}</span><div class="bar rngbar"><i class="rng" style="left:${a.lo}%;width:${Math.max(2,a.hi-a.lo)}%"></i></div><b class="num">${a.lo===a.hi?a.c:a.lo+'–'+a.hi}</b></div>`}).join('');
+  const cmp=dscCompare(x),bars=`<div class="rtab">${[...RADAR,['men','Placement']].map(([k,l])=>{const a=dscAttr(x,k);return `<div class="rrow"><span>${l}</span><span class="rbs">${rangeBox(a.lo,a.hi,dscUnknown(x,k))}</span></div>`}).join('')}</div>`;
   const pers=x.k>=60||x.trial?`<div class="item"><span class="muted">Caractère</span><span class="sp"></span><b>${DSC_PERS[x.pers][0]}</b></div><p class="muted" style="margin:4px 2px 0;font-size:calc(13px*var(--tz))">${DSC_PERS[x.pers][1]}</p>`:`<div class="item"><span class="muted">Caractère</span><span class="sp"></span><span class="muted">à découvrir (suivi ou essai)</span></div>`;
   const live=x.st==='rep'&&!x.fam.closed,weeks=d.wk<=d.W,inTri=d.tri.includes(x.id),fol=d.sc.find(s=>d.asg[s.id]&&d.asg[s.id].follow===x.id);
   modal(`<div class="dsc"><div class="ftop"><div class="fcard">${pcardHTML(card)}</div><div style="min-width:0;flex:1"><h2 style="margin:0">${esc(x.n)}</h2>
@@ -1497,6 +1513,7 @@ function dscOpen(ev,id){const d=ev.d,x=d.P.find(y=>y.id===id);if(!x)return;const
     <div class="list" style="margin-top:8px"><div class="item"><span class="muted">Note estimée</span><span class="sp"></span><b class="num">${x.st==='signed'?x.ovr:e.lo+'–'+e.hi}</b></div><div class="item"><span class="muted">Potentiel</span><span class="sp"></span><b class="num">${dscPotTxt(x)}</b></div></div></div></div>
    <div class="know"><span>Ce qu'on sait de lui</span><div class="bar"><i style="width:${x.k}%"></i></div><b class="num">${x.k} %</b></div>
    <blockquote class="snote">« ${esc(dscNote(x))} »<span>${esc(x.by)}, recruteur</span></blockquote>
+   <div class="cmpbox ${cmp.c}">${cmp.t}</div>
    <div class="fgrid">${radarSVG(card.at,known,true)}<div class="fbars">${bars}</div></div>
    <div class="list" style="margin-top:10px">${pers}
     <div class="item"><span class="muted">Qui décide</span><span class="sp"></span><b>${esc(x.fam.who)}</b></div>
@@ -1566,13 +1583,15 @@ function evDrec(el,ev){const c=me(),dB=distBase(G.club),d=dscInit(ev),n=G.u18.le
       <button class="btn" data-primary id="wk" style="margin-top:12px;width:100%" ${G.cash<dscWeekCost(d)?'disabled':''}>Lancer la semaine ${d.wk} sur ${d.W} ›</button></div>`}
   else if(d.tab==='tac'){body=`<div class="panel">${sysPanel('u18')}</div>`}
   else if(d.tab==='rep'){const L=d.P.filter(x=>d.flt==='ALL'||x.pos===d.flt).sort((a,b)=>(a.st==='rep'?0:1)-(b.st==='rep'?0:1)||dscEst(b).c-dscEst(a).c);
-    body=`<div class="sel wrap" style="margin-bottom:10px">${['ALL','GB','DEF','MIL','ATT'].map(f=>`<button data-fl="${f}" class="${d.flt===f?'on':''}">${f==='ALL'?'Tous':f}</button>`).join('')}</div>
-     <div class="panel" style="padding:6px 0">${L.length?`<div class="phead"><span>Poste · joueur</span><span>Note est.</span></div>${L.map(x=>dscRow(x,d)).join('')}`:`<p class="muted" style="margin:10px 16px">Personne pour l'instant. Envoie tes recruteurs sur le terrain puis lance la semaine.</p>`}</div>`}
+    const posN={ALL:'Tous les postes',GB:'Gardiens',DEF:'Défenseurs',MIL:'Milieux',ATT:'Attaquants'},nd=sysNeeds().filter(rk=>d.flt==='ALL'||ROLES[rk].pos===d.flt);
+    body=`<div class="srtabs">${['ALL','ATT','MIL','DEF','GB'].map(f=>`<button data-fl="${f}" class="${d.flt===f?'on':''}">${f==='ALL'?'Tous':f}</button>`).join('')}</div>
+     <div class="srhead"><b>${posN[d.flt]}</b><span>${nd.length?'Profils recherchés : '+nd.slice(0,3).map(r=>ROLES[r].n).join(', '):'Aucun besoin urgent à ce poste'}</span></div>
+     ${L.length?`<div class="srgrid">${L.map(x=>dscCard(x,d)).join('')}</div>`:`<div class="panel"><p class="muted" style="margin:0">Personne pour l'instant. Envoie tes recruteurs sur le terrain puis lance la semaine.</p></div>`}`}
   else{const xi=nouXI(),avg=Math.round(xi.reduce((t,p)=>t+p.ovr,0)/Math.max(1,xi.length)),best=G.u18.slice().sort((p,q)=>q.ovr-p.ovr)[0];
     body=`<div class="panel teamsum"><div class="row"><div><div class="lbl">Ton équipe actuelle</div><h3 style="margin:4px 0 0">${n} joueurs · niveau moyen du onze ${avg}</h3></div><span class="sp"></span><span class="chip ${n>=23?'bad':''}">${n} / 23</span></div>
      <p class="muted" style="margin:8px 0 0;font-size:calc(13.5px*var(--tz))">Ce sont les jeunes du quartier qui jouaient déjà sous les couleurs du club. ${avg<52?'Pour viser le top 2 des districts, il te faut des talents plus forts : envoie tes recruteurs, puis fais de la place en libérant les plus faibles.':'Une base solide. Les recruteurs peuvent encore trouver la pépite qui fera la différence.'}${best?` Meilleur joueur : <b style="color:var(--text)">${esc(best.n)}</b> (${best.ovr}).`:''}</p>
      <div class="needs">${[['GB',2],['DEF',5],['MIL',5],['ATT',4]].map(([p,m])=>`<span class="${need[p]>=m?'ok':''}">${posTag(p)} ${need[p]} / ${m}</span>`).join('')}</div></div>
-     <div class="panel">${tbPanel('u18')}</div>`}
+     <div class="panel">${tbPanel('u18')}</div><div class="panel">${auditPanel('u18')}</div>`}
   const wkTxt=over?'Détection terminée':`Semaine ${d.wk} sur ${d.W}`;
   el.innerHTML=`<div class="event dsc"><div class="hero"><div class="kita"></div><div class="in"><div class="eyebrow">Juin · ${wkTxt}</div><h2>Détection dans le Grand Abidjan</h2>
     <p class="pitchline" style="font-size:calc(15px*var(--tz))">Ton club a déjà une équipe de quartier. Pour la renforcer, envoie tes recruteurs dans les communes, fais suivre ou essayer les jeunes repérés, puis négocie avec leur famille. ${over?'':`Il reste ${d.W-d.wk+1} semaine${d.W-d.wk?'s':''} avant la Noushi League.`}</p>
@@ -1585,7 +1604,7 @@ function evDrec(el,ev){const c=me(),dB=distBase(G.club),d=dscInit(ev),n=G.u18.le
   el.querySelectorAll('[data-fl]').forEach(b=>b.onclick=()=>{d.flt=b.dataset.fl;refresh()});
   el.querySelectorAll('[data-pr]').forEach(b=>b.onclick=()=>dscOpen(ev,b.dataset.pr));
   el.querySelectorAll('[data-yo]').forEach(b=>b.onclick=()=>openYouth(b.dataset.yo));
-  bindTB(el);if(d.tab==='tac')bindSys(el,'u18');
+  bindTB(el);bindAudit(el);if(d.tab==='tac')bindSys(el,'u18');
   el.querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>{d.act=+b.dataset.act;save();refresh()});
   el.querySelectorAll('[data-mz]').forEach(b=>b.onclick=()=>{const a=d.asg[d.sc[d.act].id];if(!a||a.follow)return;a.c=b.dataset.mz;if(a.l==='aca'&&!dscZ(a.c).aca)a.l='com';save();refresh()});
   el.querySelectorAll('[data-zc]').forEach(s=>s.onchange=()=>{const a=d.asg[s.dataset.zc];a.c=s.value;if(a.l==='aca'&&!dscZ(a.c).aca)a.l='com';save();refresh()});
@@ -2415,7 +2434,7 @@ function sixVars(){const v=[
 function repTxt(v,w){if(w)return v<5?'Nulle':v<20?'Discrète':v<45?'Remarquée':v<70?'Établie':'Mondiale';return v<10?'Inconnue':v<30?'Émergente':v<55?'Respectée':v<80?'Redoutée':'Légendaire'}
 
 /* ---------------- Effectif ---------------- */
-function vSquad(el){if(inPrologue()&&G.start==='district'){el.innerHTML=`<div class="vhead"><div><div class="eyebrow">Noushi League</div><h2>Ton groupe U18</h2></div></div><div class="panel" style="margin-bottom:14px"><h3>Ton onze pour la Noushi League</h3>${tbPanel('u18')}</div><div class="panel" style="margin-bottom:14px"><h3>Plan de jeu</h3>${sysPanel('u18')}</div>${u18Panel()}`;el.querySelectorAll('[data-gonou]').forEach(b=>b.onclick=()=>go('comp','nou'));bindTB(el);bindSys(el,'u18');return}
+function vSquad(el){if(inPrologue()&&G.start==='district'){el.innerHTML=`<div class="vhead"><div><div class="eyebrow">Noushi League</div><h2>Ton groupe U18</h2></div></div><div class="panel" style="margin-bottom:14px"><h3>Ton onze pour la Noushi League</h3>${tbPanel('u18')}</div><div class="panel" style="margin-bottom:14px">${auditPanel('u18')}</div><div class="panel" style="margin-bottom:14px"><h3>Plan de jeu</h3>${sysPanel('u18')}</div>${u18Panel()}`;el.querySelectorAll('[data-gonou]').forEach(b=>b.onclick=()=>go('comp','nou'));bindTB(el);bindSys(el,'u18');return}
   const c=me(),xi=userXI(),sq=squad(G.club).sort((a,b)=>LINES.indexOf(a.pos)-LINES.indexOf(b.pos)||b.ovr-a.ovr);
   const n=lineCounts(xi),f=FORMS[c.form];const ok=LINES.every((l,i)=>n[l]===f[i])&&xi.length===11;
   const wage=proWage(),cap=wageCap();
@@ -2426,6 +2445,7 @@ function vSquad(el){if(inPrologue()&&G.start==='district'){el.innerHTML=`<div cl
 </div>
       ${tbPanel('first')}
       ${lockedHG()?`<p class="tadv" style="margin:10px 0 0"><b>${esc(shortN(lockedHG()))}</b> est verrouillé titulaire : c'est le formé au club, ${lockedHG().apps} matchs sur 10. Après, tu décides.</p>`:''}<p class="muted" style="font-size:calc(14.5px*var(--tz));margin:10px 0 0">${ok?'Composition valide.':`<span class="bad">Composition incomplète ou déséquilibrée pour le ${c.form}.</span> Elle sera corrigée automatiquement avant le match.`} Touche les cartes pour changer le onze. Force du onze : <b class="num">${xiRating(xi,G.club).toFixed(1)}</b>.</p></div>
+    <div class="panel">${auditPanel('first')}</div>
     <div class="panel"><h3>Plan de jeu</h3>${sysPanel('first')}</div>
     <div class="panel"><h3>Tactique par défaut</h3><div class="sel" id="tacs">${Object.entries(TACTICS).map(([k,t])=>`<button data-t="${k}" class="${c.tactic===k?'on':''}">${t.l}</button>`).join('')}</div>${tacCost(c.tactic)}
       ${tacAdvice()}<p class="muted" style="font-size:calc(13.5px*var(--tz));margin:8px 0 0">Chiffres comparés à l'équilibré, pour une saison moyenne. Tu peux changer à la mi-temps des matchs en direct.</p>
@@ -2724,6 +2744,48 @@ function bindSys(root,key){const S=sysGet(),sy=()=>S.L[S.act],st=()=>tbState(key
   root.querySelectorAll('[data-sdf]').forEach(b=>b.onclick=()=>{sy().def=b.dataset.sdf;if(key==='first')me().tactic=sy().def;save();refresh()});
   root.querySelectorAll('[data-sr]').forEach(b=>b.onclick=()=>{const i=+b.dataset.sr;SYS_SEL=SYS_SEL===i?null:i;refresh()});
   root.querySelectorAll('[data-srole]').forEach(b=>b.onclick=()=>{sy().roles[SYS_SEL]=b.dataset.srole;save();refresh()})}
+
+/* --- bilan de l'équipe : ce qu'il faut améliorer --- */
+const LINE_N={GB:'Gardien',DEF:'Défense',MIL:'Milieu',ATT:'Attaque'};
+function auditTarget(key){if(key==='u18'){const N=G.S&&G.S.nou;const v={GB:55,DEF:54,MIL:54,ATT:54};return{v,lbl:'niveau des meilleurs districts'}}
+  const ids=(G.S&&G.S.div===2?G.l2:G.l1).filter(id=>id!==G.club&&G.clubs[id]),acc={GB:[],DEF:[],MIL:[],ATT:[]};
+  for(const id of ids){try{for(const p of autoXI(id,false).map(P))if(p&&acc[p.pos])acc[p.pos].push(p.ovr)}catch(e){}}
+  const v={};for(const k in acc)v[k]=acc[k].length?Math.round(acc[k].reduce((s,x)=>s+x,0)/acc[k].length):60;return{v,lbl:'moyenne des titulaires de ta division'}}
+function teamAudit(key){const st=tbState(key),xi=st.arr.map(id=>id!=null?st.getP(id):null).filter(Boolean),pool=st.pool.map(st.getP).filter(Boolean),T=auditTarget(key),sy=sysAct();
+  const lines=['GB','DEF','MIL','ATT'].map(pos=>{const xs=xi.filter(p=>p.pos===pos),all=pool.filter(p=>p.pos===pos).sort((a,b)=>b.ovr-a.ovr);const avg=xs.length?Math.round(xs.reduce((s,p)=>s+p.ovr,0)/xs.length):0;
+    const bench=all.filter(p=>!xs.includes(p)),gap=avg-T.v[pos];return{pos,avg,tgt:T.v[pos],gap,n:all.length,bench:bench.length,bestBench:bench[0]?bench[0].ovr:null}});
+  const at={};for(const k of Object.keys(ATTR))at[k]=xi.length?Math.round(xi.reduce((s,p)=>s+(p.at||(p.at=genAttrs(p.pos,p.ovr)))[k],0)/xi.length):0;
+  const imp=[],good=[];const worst=lines.slice().sort((a,b)=>a.gap-b.gap)[0],best=lines.slice().sort((a,b)=>b.gap-a.gap)[0];
+  for(const l of lines){if(l.gap<=-4)imp.push(`${LINE_N[l.pos]} trop faible : ${l.avg} contre ${l.tgt} visé (${l.gap}).`);else if(l.gap>=2)good.push(`${LINE_N[l.pos]} au niveau : ${l.avg} pour ${l.tgt} visé.`);
+    const need={GB:2,DEF:6,MIL:6,ATT:4}[l.pos];if(l.n<need-1)imp.push(`Pas assez de ${({GB:'gardiens',DEF:'défenseurs',MIL:'milieux',ATT:'attaquants'})[l.pos]} : ${l.n} dans le groupe.`);
+    if(l.bestBench!=null&&l.avg-l.bestBench>=6)imp.push(`Grosse différence entre titulaires et remplaçants au poste ${l.pos} (${l.avg} contre ${l.bestBench}).`)}
+  const S=STYLES[sy.st];for(const k of S.k)if(at[k]<56)imp.push(`${ATTR[k]} faible (${at[k]}) alors que ton style « ${S.n} » en a besoin.`);
+  const nd=sysNeeds();if(nd.length)imp.push(`Rôles mal tenus dans ton système : ${nd.slice(0,3).map(r=>ROLES[r].n).join(', ')}.`);
+  if(!imp.length)good.push('Pas de point faible évident. Cherche la pépite qui fera la différence.');
+  const recs=[];if(worst&&worst.gap<0){const rk=nd.find(r=>ROLES[r].pos===worst.pos)||Object.keys(ROLES).find(r=>ROLES[r].pos===worst.pos&&ROLES[r].k.some(k=>S.k.includes(k)))||Object.keys(ROLES).find(r=>ROLES[r].pos===worst.pos);recs.push(rk)}
+  for(const r of nd)if(!recs.includes(r)&&recs.length<3)recs.push(r);
+  return{lines,at,imp,good,recs,T}}
+function auditPanel(key){const A=teamAudit(key),canScout=G.ev&&G.ev.t==='drec'&&G.ev.d&&G.ev.d.wk<=G.ev.d.W;
+  return `<div class="audit"><div class="row"><div><div class="lbl">Bilan de l'équipe</div><h3 style="margin:4px 0 0">Ce qu'il faut améliorer</h3></div></div>
+   <div class="augrid"><div class="aulines">${A.lines.map(l=>{const w=v=>clamp((v-35)/45*100,2,100);return `<div class="auline"><div class="row"><b>${LINE_N[l.pos]}</b><span class="sp"></span><span class="num ${l.gap>=0?'good':l.gap<=-4?'bad':''}">${l.avg||'—'}</span><span class="muted" style="font-size:calc(12px*var(--tz))">&nbsp;/ ${l.tgt}</span></div>
+     <div class="aubar"><i style="width:${w(l.avg)}%;background:${l.gap>=0?'var(--good)':l.gap<=-4?'var(--bad)':'var(--warn)'}"></i><em style="left:${w(l.tgt)}%"></em></div><small class="muted">${l.n} joueur${l.n>1?'s':''} · ${l.bench} remplaçant${l.bench>1?'s':''}</small></div>`}).join('')}
+     <p class="muted" style="margin:6px 0 0;font-size:calc(12px*var(--tz))">Le trait vertical : ${A.T.lbl}.</p></div>
+    <div class="auradar">${radarSVG(A.at,true)}<p class="muted" style="text-align:center;margin:0;font-size:calc(12px*var(--tz))">Profil moyen de ton onze</p></div></div>
+   <div class="aulist">${A.imp.map(t=>`<p><i class="ko">!</i>${esc(t)}</p>`).join('')}${A.good.map(t=>`<p><i class="ok">✓</i>${esc(t)}</p>`).join('')}</div>
+   ${A.recs.length?`<div class="lbl" style="margin:12px 0 8px">Ton adjoint recommande de chercher</div><div class="aurecs">${A.recs.map(rk=>`<div class="aurec"><b>${ROLES[rk].pos} · ${ROLES[rk].n}</b><span class="muted">${ROLES[rk].k.map(k=>ATTR[k]).join(', ')}</span>${canScout?`<button class="btn sec sm" data-aurec="${rk}">Envoyer un recruteur</button>`:''}</div>`).join('')}</div>`:''}</div>`}
+function bindAudit(root){root.querySelectorAll('[data-aurec]').forEach(b=>b.onclick=()=>{const d=G.ev&&G.ev.d;if(!d)return;const rk=b.dataset.aurec;
+  const s=d.sc.find(q=>{const a=d.asg[q.id];return a&&!a.follow&&a.f!=='R:'+rk&&(!a.f||a.f==='ALL')})||d.sc.find(q=>{const a=d.asg[q.id];return a&&!a.follow})||d.sc[0];
+  const a=d.asg[s.id]&&!d.asg[s.id].follow?d.asg[s.id]:(d.asg[s.id]={c:s.net,l:'mar',f:'ALL'});a.f='R:'+rk;d.act=s.id;d.tab='sc';save();refresh();toast(`<b>${esc(s.n)}</b> cherchera des profils « ${esc(ROLES[rk].n)} » cette semaine.`)})}
+/* --- rapport de recrutement : cartes et fourchettes --- */
+function rangeBox(lo,hi,unk){const col=v=>v>=70?'r70':v>=58?'r58':v>=46?'r46':'r0';return unk?`<span class="rb unk">??</span><span class="rdash">-</span><span class="rb unk">??</span>`:lo===hi?`<span class="rb ${col(lo)}">${lo}</span>`:`<span class="rb ${col(lo)}">${lo}</span><span class="rdash">-</span><span class="rb ${col(hi)}">${hi}</span>`}
+function dscUnknown(x,k){return x.st!=='signed'&&x.k<88&&(hashN(x.id+'u'+k)%100)>x.k*1.7}
+function dscCompare(x){const e=dscEst(x),same=G.u18.filter(y=>y.pos===x.pos).sort((a,b)=>b.ovr-a.ovr),slots={GB:1,DEF:4,MIL:3,ATT:3}[x.pos],last=same[slots-1],top=same[0];
+  if(!same.length)return{t:'Tu n\'as personne à ce poste : il serait titulaire.',c:'good'};
+  if(!last||e.c>last.ovr+1)return{t:`Il serait titulaire : ton ${slots>1?`${slots}e meilleur `:''}${x.pos} actuel est ${esc((last||top).n)} (${(last||top).ovr}).`,c:'good'};
+  if(e.hi>=last.ovr)return{t:`À la lutte pour une place : ${esc(last.n)} (${last.ovr}) tient le poste.`,c:'warn'};
+  return{t:`Il serait remplaçant : tes titulaires ${x.pos} sont à ${last.ovr} ou plus.`,c:'muted'}}
+function dscCard(x,d){const e=dscEst(x),isNew=x.wk===d.wk-1&&x.st==='rep';
+  return `<button class="srcard ${x.st!=='rep'?'off':''}" data-pr="${x.id}"><span class="srface">${faceSVG(x,{c1:'#3a4a44',c2:'#9fb3a8'})}</span><span class="srtxt"><b>${esc(x.n.split(' ')[0])}<br>${esc(x.n.split(' ').slice(1).join(' '))}</b><span>Âge ${x.age} · ${posTag(x.pos)}</span><span class="srnote num">${x.st==='signed'?x.ovr:e.lo+'–'+e.hi}</span></span>${isNew?'<i class="srnew">NOUVEAU</i>':''}${(()=>{const t=dscStatus(x,d);return t&&!t.includes('>Nouveau<')?`<span class="srst">${t}</span>`:''})()}</button>`}
 
 function nouMatchupVal(){const ev=G.ev;if(!ev||ev.t!=='nou'||ev.k==='bilan')return 0;try{const N=G.S.nou,f=nouStage(ev.k)[ev.j];if(!f||(f.h!==N.me&&f.a!==N.me))return 0;return sysMatchup(nouOppInfo(f.h===N.me?f.a:f.h).style)[0]}catch(e){return 0}}
 function sysFirstBonus(ids){try{if(sysKey()!=='first')return 0;const c=me(),sy=sysAct();if(sy.form!==(c.form||'4-3-3'))return 0;const arr=Array.isArray(c.xs)&&c.xs.filter(Boolean).length===ids.length&&c.xs.filter(Boolean).every(id=>ids.includes(id))?c.xs:tbNormalize(ids,c.form||'4-3-3',P);return sysBonusArr(arr,P,sy)}catch(e){return 0}}
@@ -3700,7 +3762,7 @@ function renderTitle(saved){
    <div id="m-dis" hidden><button class="btn ghost sm" data-back style="margin-bottom:12px">‹ Changer de carrière</button><h3 class="mtitle">Carrière District · choisis ta région</h3><p class="muted" style="margin:0 0 14px">Les opérateurs économiques et les supporters financent l'équipe du district. Détecte tes U18 dans les communes du Grand Abidjan, puis joue la Noushi League : les 2 meilleures équipes de district montent en Ligue 2. Sinon, un club de Ligue des Pros te proposera son équipe B.</p>
    <div class="clubpick">${DISTRICTS.map(d=>`<button data-d="${d.id}">${kit({c1:d.c[0],c2:d.c[1],pat:d.c[2]},52)}<span style="min-width:0"><b>${esc(d.name)}</b><small>${esc(d.dist)}</small><small>${esc(d.city)} · profil ${PROF_L[d.prof]||'équilibre'}</small></span></button>`).join('')}</div></div></div>
    <div class="row" style="gap:8px"><label class="btn ghost sm" style="cursor:pointer">Importer une partie<input type="file" id="impsave" accept=".json,application/json" hidden></label></div>
-   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 38${cloudDb?' · sauvegarde en ligne active':''}</p>
+   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 39${cloudDb?' · sauvegarde en ligne active':''}</p>
    <p class="muted" style="font-size:calc(13.5px*var(--tz));margin:0">Projet original. Clubs, joueurs, compétitions et montants de jeu sont fictifs, à l'échelle du football ivoirien réel. Aucune affiliation avec une fédération, une confédération ou un éditeur de jeux.</p>
   </div></div>`;
   $('#app').style.display='block';
