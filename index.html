@@ -396,6 +396,25 @@ html[data-theme="jour"] .ovr.t1{color:#5f6a73}html[data-theme="jour"] .ovr.t2{co
 @media (prefers-reduced-motion:reduce){#cine *,.tw,.ball,.tv{animation:none!important}}
 .ivp{border-color:var(--accent)}.ivp .mic{width:40px;height:40px;border-radius:50%;background:var(--accent-soft);display:grid;place-items:center;font-size:20px;flex:none;margin-right:10px}
 .mor{display:inline-flex;gap:2px;vertical-align:middle}.mor i{width:6px;height:10px;border-radius:2px;background:var(--line2)}.mor i.z{background:var(--dim)}.mor i.up{background:var(--good)}.mor i.dn{background:var(--bad)}
+.careers{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:720px){.careers{grid-template-columns:1fr}}
+.career{all:unset;box-sizing:border-box;position:relative;overflow:hidden;cursor:pointer;min-height:300px;border-radius:20px;display:block;isolation:isolate;box-shadow:0 14px 34px rgba(0,0,0,.35);transition:transform .25s ease,box-shadow .25s ease}
+.career:hover,.career:focus-visible{transform:translateY(-3px);box-shadow:0 20px 44px rgba(0,0,0,.45)}.career:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.car-d{background:linear-gradient(135deg,#e8692c 0%,#c4511d 60%,#8f3510 100%)}
+.car-p{background:linear-gradient(135deg,#1f7a46 0%,#14583a 55%,#0b2f20 100%)}
+.career .cbg{position:absolute;inset:0;width:100%;height:100%;z-index:-2}
+.career .cshade{position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(0,0,0,.42) 0%,rgba(0,0,0,.18) 55%,rgba(0,0,0,0) 100%)}
+.career .flagbar{position:absolute;left:0;top:0;bottom:0;width:7px;display:flex;flex-direction:column;z-index:2}.career .flagbar i{flex:1}.career .flagbar i:nth-child(1){background:#f77f00}.career .flagbar i:nth-child(2){background:#fff}.career .flagbar i:nth-child(3){background:#009e60}
+.career .ctext{position:relative;z-index:1;display:flex;flex-direction:column;gap:10px;padding:24px 20px 22px 26px;max-width:58%;color:#fff}
+.career .ckick{font-size:calc(11.5px*var(--tz));letter-spacing:.22em;text-transform:uppercase;font-weight:800;color:#ffe2b8}
+.career b{font-family:var(--f-disp);font-size:calc(32px*var(--tz));line-height:1.02;letter-spacing:-.01em;text-shadow:0 2px 12px rgba(0,0,0,.3)}
+.career .cdesc{font-size:calc(14px*var(--tz));line-height:1.45;color:#fbf3e6}
+.career .cgo{margin-top:6px;align-self:flex-start;padding:9px 14px;border-radius:999px;background:#fff;color:#1b1408;font-weight:800;font-size:calc(14px*var(--tz))}
+.car-p .cgo{color:#0b2f20}
+.career .cfigw{position:absolute;right:0;bottom:0;height:90%;width:44%;display:flex;align-items:flex-end;justify-content:flex-end;z-index:0;filter:drop-shadow(0 10px 18px rgba(0,0,0,.45));transition:transform .4s ease}
+.career:hover .cfigw{transform:translateY(-4px) scale(1.02)}
+.career .cfig{height:100%;width:auto;max-width:100%;display:block}
+.mtitle{margin:0 0 6px;font-size:calc(18px*var(--tz))}
 .bench{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px}
 .bench .pcard{width:100%}
 /* fiche joueur */
@@ -3337,6 +3356,49 @@ function evReview(el,ev){const y=P(ev.youth);ev.family=ev.family||[];ev.resales=
   el.querySelector('#ok').onclick=()=>{for(const r of ev.renew)if(r.dec==='go'){const p=P(r.id);if(p){newsAdd(`${p.n} quitte le club en fin de contrat.`,'transfer');removeFromClub(p)}}
     for(const f of ev.family)if(f.dec==='release'){const p=P(f.id);if(p){newsAdd(`La famille de ${p.n} reprend son enfant. Le quartier s'en souviendra.`,'club',true);G.rep.form=clamp(G.rep.form-5,0,100);G.ferveur=clamp(G.ferveur-5,0,100);removeFromClub(p)}}
     G.lastLedger={...G.S.ledger};G.pending=false;G.ev=null;startNextSeason()}}
+/* --- écran de départ : cartes de carrière --- */
+function headSVG(p,kc,x,y,w){return faceSVG(p,kc).replace('<svg viewBox="0 0 100 100" class="face"',`<svg x="${x}" y="${y}" width="${w}" height="${w}" viewBox="0 0 100 100"`)}
+function figCoach(){const sk='#5a3822',suit='#1b2230',sl='#252e40';
+  return `<svg viewBox="0 0 200 300" class="cfig" aria-hidden="true">
+   <path d="M34 300 L40 146 Q46 104 100 96 Q154 104 160 146 L166 300 Z" fill="${suit}"/>
+   <path d="M84 96 L100 138 L116 96 Z" fill="#f2efe8"/><path d="M96 104 L104 104 L108 156 L100 166 L92 156 Z" fill="#1f7a46"/><path d="M96 104 L104 104 L102 112 L98 112 Z" fill="#165c34"/>
+   <path d="M84 96 L74 112 L92 150 L100 138 Z" fill="${sl}"/><path d="M116 96 L126 112 L108 150 L100 138 Z" fill="${sl}"/>
+   <path d="M128 132 L142 130 L141 136 L129 138 Z" fill="#e8692c"/>
+   <path d="M40 176 Q100 156 160 176 L158 206 Q100 190 42 206 Z" fill="${sl}"/><path d="M42 206 Q100 192 158 206" stroke="#0f141e" stroke-width="2" fill="none"/>
+   <ellipse cx="56" cy="178" rx="10" ry="8" fill="${sk}"/><ellipse cx="146" cy="184" rx="10" ry="8" fill="${sk}"/>
+   <rect x="88" y="78" width="24" height="24" rx="7" fill="${sk}"/>
+   ${headSVG({id:'coach',n:'Le coach',age:40},{c1:suit,c2:'#f2efe8'},52,6,96)}</svg>`}
+function figPlayer(){const sk='#4a2e1c',c1='#e8692c',c2='#f6efe0';
+  return `<svg viewBox="0 0 200 300" class="cfig" aria-hidden="true">
+   <rect x="62" y="226" width="26" height="62" rx="8" fill="${sk}"/><rect x="112" y="226" width="26" height="62" rx="8" fill="${sk}"/>
+   <rect x="60" y="248" width="30" height="34" rx="6" fill="${c1}"/><rect x="110" y="248" width="30" height="34" rx="6" fill="${c1}"/><rect x="60" y="252" width="30" height="4" fill="${c2}"/><rect x="110" y="252" width="30" height="4" fill="${c2}"/>
+   <path d="M54 176 L146 176 L150 234 L106 234 L100 212 L94 234 L50 234 Z" fill="#1d1d22"/>
+   <path d="M34 146 L54 116 L60 150 L46 168 Z" fill="${c1}"/><path d="M166 146 L146 116 L140 150 L154 168 Z" fill="${c1}"/>
+   <path d="M50 180 L54 120 Q62 98 100 94 Q138 98 146 120 L150 180 Z" fill="${c1}"/>
+   <g fill="${c2}" opacity=".9"><rect x="70" y="104" width="9" height="76"/><rect x="96" y="96" width="9" height="84"/><rect x="122" y="104" width="9" height="76"/></g>
+   <path d="M86 96 L100 112 L114 96" stroke="#1d1d22" stroke-width="4" fill="none"/>
+   <path d="M40 166 L36 214" stroke="${sk}" stroke-width="13" stroke-linecap="round"/><path d="M160 166 Q170 190 156 208" stroke="${sk}" stroke-width="13" stroke-linecap="round" fill="none"/>
+   <circle cx="152" cy="214" r="23" fill="#f7f4ec"/><path d="M152 203 L162 210 L158 222 L146 222 L142 210 Z" fill="#1d1d22"/><path d="M152 191 L152 203 M162 210 L174 206 M158 222 L165 233 M146 222 L139 233 M142 210 L130 206" stroke="#1d1d22" stroke-width="2"/>
+   <rect x="88" y="78" width="24" height="24" rx="7" fill="${sk}"/>
+   ${headSVG({id:'pepite7',n:'La pépite',age:16},{c1,c2},52,6,96)}</svg>`}
+function kitaBG(id,cols,op){const [a,b,c,d]=cols;
+  return `<svg class="cbg" aria-hidden="true" preserveAspectRatio="none"><defs><pattern id="${id}" width="48" height="48" patternUnits="userSpaceOnUse" patternTransform="rotate(-12)">
+   <rect width="48" height="48" fill="${a}"/><rect width="24" height="8" y="4" fill="${b}"/><rect x="24" y="28" width="24" height="8" fill="${b}"/><rect x="4" y="16" width="6" height="8" fill="${c}"/><rect x="14" y="16" width="6" height="8" fill="${d}"/>
+   <rect x="28" y="40" width="6" height="8" fill="${c}"/><rect x="38" y="40" width="6" height="8" fill="${d}"/><rect x="30" y="0" width="14" height="3" fill="${c}"/><rect x="2" y="44" width="14" height="3" fill="${d}"/></pattern></defs>
+   <rect width="100%" height="100%" fill="url(#${id})" opacity="${op}"/></svg>`}
+function waxBG(id,cols,op){const [a,b,c]=cols;
+  return `<svg class="cbg" aria-hidden="true"><defs><pattern id="${id}" width="64" height="64" patternUnits="userSpaceOnUse">
+   <rect width="64" height="64" fill="${a}"/><circle cx="16" cy="16" r="13" fill="none" stroke="${b}" stroke-width="3"/><circle cx="16" cy="16" r="6" fill="${c}"/><circle cx="48" cy="48" r="13" fill="none" stroke="${b}" stroke-width="3"/><circle cx="48" cy="48" r="6" fill="${c}"/>
+   <path d="M40 8 L56 8 L48 22 Z" fill="${b}"/><path d="M8 40 L24 40 L16 54 Z" fill="${b}"/></pattern></defs><rect width="100%" height="100%" fill="url(#${id})" opacity="${op}"/></svg>`}
+function careerCards(){
+  return `<div class="careers">
+   <button class="career car-d" data-mode="district"><span class="flagbar"><i></i><i></i><i></i></span>${kitaBG('kd',['#c4511d','#f2b33d','#1d1d22','#1f7a46'],.18)}<span class="cshade"></span>
+    <span class="ctext"><span class="ckick">Depuis le quartier</span><b>Carrière<br>District</b><span class="cdesc">Pars de rien. Envoie tes recruteurs d'Abobo à Port-Bouët, convaincs les familles et hisse le club de ta région jusqu'en Ligue 2.</span><span class="cgo">Choisir ma région ›</span></span>
+    <span class="cfigw">${figPlayer()}</span></button>
+   <button class="career car-p" data-mode="pro"><span class="flagbar"><i></i><i></i><i></i></span>${waxBG('kp',['#0f3d27','#d9a93a','#e8692c'],.22)}<span class="cshade"></span>
+    <span class="ctext"><span class="ckick">Sur le banc</span><b>Carrière<br>Ligue des Pros</b><span class="cdesc">Prends les rênes d'un club professionnel : tactique, budget, mercato, formation. Le président et toute la ville te regardent.</span><span class="cgo">Choisir mon club ›</span></span>
+    <span class="cfigw">${figCoach()}</span></button></div>`}
+
 /* ======================= ÉCRAN TITRE ======================= */
 function renderTitle(saved){
   const has=saved&&saved.club&&saved.clubs,rec=PROMUS;
@@ -3346,15 +3408,15 @@ function renderTitle(saved){
    <div class="grid" style="gap:14px"><div class="row tmark" style="gap:16px;flex-wrap:nowrap;align-items:center">${gMark(84)}<h1>GOUDR<em>ON</em></h1></div><div class="lbl" style="letter-spacing:.32em;font-size:calc(13px*var(--tz))">De la rue au stade</div>
    <p class="pitchline">Commence par la Noushi League, avec l'équipe jeune d'un club de Ligue des Pros ou avec l'équipe de ton district. Signe tes pépites, trouve des investisseurs, et laisse un héritage en douze saisons. Chaque décision a des conséquences, comme dans la réalité.</p></div>
    ${has?`<div class="nextcard" style="max-width:640px"><div class="ico" style="background:none">${kit(saved.clubs[saved.club],52)}</div><div style="min-width:0"><div class="lbl">Partie en cours</div><h2 style="margin:4px 0;font-size:calc(21px*var(--tz))">${esc(saved.clubs[saved.club].name)}</h2><div class="muted">Saison ${saved.sn} · trésorerie ${money(saved.cash)}</div></div><button class="btn lg go2" id="cont">Reprendre ${icon('next',18)}</button><button class="btn ghost sm" id="wipe" style="margin-top:8px">Effacer cette partie</button></div>`:''}
-   <div><h2 style="font-size:calc(22px*var(--tz));margin-bottom:10px">${has?'Ou commence une nouvelle carrière':'Choisis ton départ'}</h2>
-   <div class="sel modes" style="margin:0 0 14px"><button data-mode="pro" class="on">Ligue des Pros</button><button data-mode="district">District</button></div>
-   <div id="m-pro"><p class="muted" style="margin:0 0 14px">Prends un club de Ligue des Pros. Ta carrière commence en juin par la Noushi League avec son équipe U18. Ces quatre clubs viennent de monter : petit budget, beaucoup à construire.</p>
+   <div><h2 style="font-size:calc(22px*var(--tz));margin-bottom:12px">${has?'Ou commence une nouvelle carrière':'Nouvelle carrière'}</h2>
+   <div id="m-choose">${careerCards()}</div>
+   <div id="m-pro" hidden><button class="btn ghost sm" data-back style="margin-bottom:12px">‹ Changer de carrière</button><h3 class="mtitle">Carrière Ligue des Pros · choisis ton club</h3><p class="muted" style="margin:0 0 14px">Prends un club de Ligue des Pros. Ta carrière commence en juin par la Noushi League avec son équipe U18. Ces quatre clubs viennent de monter : petit budget, beaucoup à construire.</p>
    <div class="clubpick big">${CI_CLUBS.filter(a=>rec.includes(a[0])).map(card).join('')}</div>
    <details style="margin-top:14px"><summary class="btn ghost sm" style="list-style:none;display:inline-flex">Mode libre : les 12 autres clubs</summary><div class="clubpick" style="margin-top:12px">${CI_CLUBS.filter(a=>!rec.includes(a[0])).sort((a,b)=>a[4]-b[4]).map(card).join('')}</div></details></div>
-   <div id="m-dis" hidden><p class="muted" style="margin:0 0 14px">Choisis ta région. Les opérateurs économiques et les supporters financent l'équipe du district. Recrute tes U18 dans les académies et les comités, puis joue la Noushi League : les 2 meilleures équipes de district montent en Ligue 2. Sinon, un club de Ligue des Pros te proposera son équipe B.</p>
+   <div id="m-dis" hidden><button class="btn ghost sm" data-back style="margin-bottom:12px">‹ Changer de carrière</button><h3 class="mtitle">Carrière District · choisis ta région</h3><p class="muted" style="margin:0 0 14px">Les opérateurs économiques et les supporters financent l'équipe du district. Détecte tes U18 dans les communes du Grand Abidjan, puis joue la Noushi League : les 2 meilleures équipes de district montent en Ligue 2. Sinon, un club de Ligue des Pros te proposera son équipe B.</p>
    <div class="clubpick">${DISTRICTS.map(d=>`<button data-d="${d.id}">${kit({c1:d.c[0],c2:d.c[1],pat:d.c[2]},52)}<span style="min-width:0"><b>${esc(d.name)}</b><small>${esc(d.dist)}</small><small>${esc(d.city)} · profil ${PROF_L[d.prof]||'équilibre'}</small></span></button>`).join('')}</div></div></div>
    <div class="row" style="gap:8px"><label class="btn ghost sm" style="cursor:pointer">Importer une partie<input type="file" id="impsave" accept=".json,application/json" hidden></label></div>
-   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 33${cloudDb?' · sauvegarde en ligne active':''}</p>
+   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 34${cloudDb?' · sauvegarde en ligne active':''}</p>
    <p class="muted" style="font-size:calc(13.5px*var(--tz));margin:0">Projet original. Clubs, joueurs, compétitions et montants de jeu sont fictifs, à l'échelle du football ivoirien réel. Aucune affiliation avec une fédération, une confédération ou un éditeur de jeux.</p>
   </div></div>`;
   $('#app').style.display='block';
@@ -3363,7 +3425,8 @@ function renderTitle(saved){
   document.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{if(has&&!b.dataset.sure){b.dataset.sure=1;b.querySelector('b').textContent='Confirmer : écraser la partie en cours ?';return}newGame(b.dataset.c);startUI(true)});
   {const f=$('#impsave');if(f)f.onchange=async()=>{const file=f.files&&f.files[0];if(!file)return;try{const g=JSON.parse(await file.text());if(!g||!g.club||!g.clubs)throw 0;G=g;save();startUI();toast('<b>Partie importée</b>')}catch(e){toast('<b>Fichier illisible</b><br>Choisis un fichier exporté depuis GOUDRON.')}}}
   {const w=$('#wipe');if(w)w.onclick=()=>{if(!w.dataset.sure){w.dataset.sure=1;w.textContent='Confirmer : effacer définitivement ?';return}try{localStorage.removeItem(LS);localStorage.removeItem('mdc-season-start')}catch(e){}if(cloudDb&&cloudUid)cloudDb.doc('data/users/'+cloudUid+'/save').delete().catch(()=>{});G=null;renderTitle(null)}}
-  document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-mode]').forEach(x=>x.classList.toggle('on',x===b));$('#m-pro').hidden=b.dataset.mode!=='pro';$('#m-dis').hidden=b.dataset.mode==='pro'});
+  document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{$('#m-choose').hidden=true;$('#m-pro').hidden=b.dataset.mode!=='pro';$('#m-dis').hidden=b.dataset.mode==='pro';($('#m-pro').hidden?$('#m-dis'):$('#m-pro')).scrollIntoView({behavior:'smooth',block:'start'})});
+  document.querySelectorAll('[data-back]').forEach(b=>b.onclick=()=>{$('#m-choose').hidden=false;$('#m-pro').hidden=true;$('#m-dis').hidden=true});
   document.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{if(has&&!b.dataset.sure){b.dataset.sure=1;b.querySelector('b').textContent='Confirmer : écraser la partie en cours ?';return}newGame(b.dataset.d,'district');startUI(true)})}
 function startUI(fresh){migrate();$('#app').style.display='';shell();if(fresh){save();advance();go('home');if(!G.cineDone&&!window.NOCINE)introCine();clearTimeout(cloudT);if(cloudDb)cloudPush()}else go('home')}
 
