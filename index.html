@@ -1037,7 +1037,7 @@ function roundRobin(ids){const n=ids.length,arr=[...ids],rounds=[];
   return shuffle(rounds).concat(rounds.map(m=>m.map(x=>({h:x.a,a:x.h,r:null}))))}
 function buildSteps(){const st=[],first=G.sn===1,skip=G.skipWin===G.sn;const aleaAt=new Set();while(aleaAt.size<4)aleaAt.add(3+7*aleaAt.size+ri(0,4));
   const nouSteps=pro=>NOU_ORDER.map(k=>({t:'nou',k,m:NOU_DATES[k][0],d:NOU_DATES[k][1],...(pro?{pro:1}:{})})).concat([{t:'nou',k:'bilan',m:NOU_DATES.bilan[0],d:NOU_DATES.bilan[1],...(pro?{pro:1}:{})}]);
-  if(G.prologue==='pending'&&G.start==='district')return[{t:'intro',m:0,d:1,pro:1},{t:'drec',m:0,d:2,pro:1},{t:'prep',m:2,d:1,pro:1},...nouSteps(1)];
+  if(G.prologue==='pending'&&G.start==='district')return[G.introDone?{t:'regq',m:0,d:1,pro:1}:{t:'intro',m:0,d:1,pro:1},{t:'drec',m:0,d:2,pro:1},{t:'prep',m:2,d:1,pro:1},...nouSteps(1)];
   if(!skip){if(first&&!G.introDone)st.push({t:'intro',m:0,d:1});
     st.push({t:'inv',m:0,d:4});if(!first)st.push({t:'mara1',m:0,d:12},{t:'mara2',m:0,d:26},{t:'mara3',m:1,d:9});st.push({t:'mercato',m:1,d:20});
     st.push({t:'pre',m:2,d:1});if(first&&!G.vacDone)st.push({t:'comite',m:2,d:4},{t:'tournoi',m:2,d:12},{t:'mara3',m:2,d:18});st.push({t:'prep',m:2,d:8});
@@ -1175,7 +1175,7 @@ function dayResults(iso){const S=G.S,out=[];if(!S)return out;
   S.steps.forEach(st=>{if(st.t==='md'&&isoD(stepDate(st))===iso){const L=S.league.fx[st.i]||[];for(const f of L)if(f.r)out.push({c:`${divName()} · J${st.i+1}`,h:T(f.h).name,a:T(f.a).name,s:`${f.r.hg} - ${f.r.ag}`,me:f.h===G.club||f.a===G.club})}});
   return out}
 function upcoming(n){const S=G.S,out=[];for(let i=S.si;i<S.steps.length&&out.length<n;i++){const st=S.steps[i];out.push({st,d:stepDate(st),t:stepTitle(st)})}return out}
-function stepTitle(st){const N={intro:'Présentation du club',drec:'Recrutement de l\'équipe',prep:'Préparation d\'avant-saison',inv:'Investisseurs',mara1:'Maracanas : envoi des recruteurs',mara2:'Maracanas : essais',mara3:'Maracanas : signatures',mercato:'Mercato',pre:'Ouverture de la saison',comite:'Comités de vacances',tournoi:'Tournoi de vacances',md:'Championnat',cup:'Coupe nationale',co:'Coupe d\'Afrique',mondial:'Mondial des clubs',end:'Fin du championnat',review:'Bilan de saison',alea:'Imprévu',esp:'Ligue des Espoirs',interim:'Proposition',nou:'Noushi League'};
+function stepTitle(st){const N={regq:'Tournoi régional',dseason:'Championnat régional',dyear:'Fin de saison au district',intro:'Présentation du club',drec:'Recrutement de l\'équipe',prep:'Préparation d\'avant-saison',inv:'Investisseurs',mara1:'Maracanas : envoi des recruteurs',mara2:'Maracanas : essais',mara3:'Maracanas : signatures',mercato:'Mercato',pre:'Ouverture de la saison',comite:'Comités de vacances',tournoi:'Tournoi de vacances',md:'Championnat',cup:'Coupe nationale',co:'Coupe d\'Afrique',mondial:'Mondial des clubs',end:'Fin du championnat',review:'Bilan de saison',alea:'Imprévu',esp:'Ligue des Espoirs',interim:'Proposition',nou:'Noushi League'};
   if(st.t==='md')return `${N.md} · journée ${st.i+1}`;if(st.t==='nou')return st.k==='bilan'?'Noushi League · bilan':`Noushi League · ${NOU_STAGE[st.k]}`;return N[st.t]||'Événement'}
 function evCal(el){const st=cur(),d0=todayD(),dE=stepDate(st),n=Math.round((dE-d0)/864e5),res=dayResults(G.today),up=upcoming(6);
   const marks=new Set(G.S.steps.slice(G.S.si).map(s=>isoD(stepDate(s))));
@@ -1268,7 +1268,7 @@ function prepare(st){
       G.scoutMarket=scoutCandidates();
       newsAdd(`Saison ${seasonLabel()} : subvention de ${money(oi.sub)} et droits TV de ${money(oi.tv)} versés.`,'fin');break}
     case 'mercato':Object.assign(ev,buildMercato());try{aiMercato('ete');coachSummer()}catch(e){}break;
-    case 'md':{const list=S.league.fx[st.i];const m=myFixture(list);ev.match={comp:'l1',h:m.f.h,a:m.f.a,ref:{k:'l1',i:st.i,j:m.j},label:`${divName()} · Journée ${st.i+1}`};ev.phase='pre';break}
+    case 'md':{const list=S.league.fx[st.i];const m=myFixture(list);if(!m){list.forEach(f=>{if(!f.r)f.r=quickMatch(f.h,f.a,false)});return false}ev.match={comp:'l1',h:m.f.h,a:m.f.a,ref:{k:'l1',i:st.i,j:m.j},label:`${divName()} · Journée ${st.i+1}`};ev.phase='pre';break}
     case 'cup':{const rd=cupRound(st.r);const m=myFixture(rd);if(!m){rd.forEach(f=>simKO(f,false));cupClose(st.r);return false}
       ev.match={comp:'cup',h:m.f.h,a:m.f.a,ko:true,ref:{k:'cup',r:st.r,j:m.j},label:`Coupe du Père Fondateur · ${CUP_ROUND[st.r]}`};ev.phase='pre';break}
     case 'co':{let mine=null;for(const kind of ['c1','c2']){const C=S[kind];const list=stageFixtures(C,st.k);const m=myFixture(list);if(m&&!m.f.r)mine={kind,m}}
@@ -1540,7 +1540,7 @@ function startNextSeason(){
   if(G.nextJob){const j=G.nextJob;G.nextJob=null;if(j.club===G.club){G.role=j.role;G.board={conf:62,dlost:0};newsAdd(`Le président te confie l'équipe première de ${me().name}.`,'club',true)}else if(G.clubs[j.club]){takeClub(j.club,j.role);newsAdd(`Tu deviens entraîneur principal de ${me().name}.`,'club',true)}}
   aiRefresh();
   // compléter l'effectif utilisateur
-  while(me().pl.length<16){const pos=pick(['DEF','MIL','ATT']);const p=newPlayer({zone:R()<.7?zoneOf(me().city):null,pos,age:ri(17,19),ovr:ri(50,56),pot:ri(58,68),club:G.club,ctr:2,sal:50000,origin:'centre'});me().pl.push(p.id)}
+  while(!(G.start==='district'&&G.prologue==='pending')&&me().pl.length<16){const pos=pick(['DEF','MIL','ATT']);const p=newPlayer({zone:R()<.7?zoneOf(me().city):null,pos,age:ri(17,19),ovr:ri(50,56),pot:ri(58,68),club:G.club,ctr:2,sal:50000,origin:'centre'});me().pl.push(p.id)}
   G.sn++;u18Season();
   if(G.sn>MAX_SEASONS){G.over={kind:'end'};save();go('event');return}
   newSeason();save();advance()}
@@ -1840,12 +1840,21 @@ function drecAuto(ev,keep=6e6){const d=dscInit(ev);if(d.sc.length<3){const c=scC
 function finishPrologue(choice){const S=G.S;if(G.prologue!=='pending')return false;G.prologue='done';
   if(G.start!=='district'){if(S.nou&&S.nou.pro){S.nouPro=S.nou;delete S.nou}return false}
   const N=S.nou,dc=G.club,c=me();G.vacDone=1;
-  const qual=!!(N&&N.qual&&N.qual.includes(dc));if(choice==='l2'&&!qual)choice='B';if(choice==='l1'&&!(N&&N.offerL1))choice=qual?'l2':'B';
+  if(choice==='stay'){G.role='head';G.distYear=(G.distYear||1)+1;newsAdd(`Le comité garde confiance : tu restes à ${c.name}. Nouvelle saison au district, puis une nouvelle chance en Noushi League.`,'club',true);
+    while(G.l2.length<16){const k=nouQualified(4).find(k=>!G.clubs[k]);if(!k)break;G.l2.push(entrantClub(k).id)}
+    G.skipWin=G.sn;newSeason();const S2=G.S;S2.steps=S2.steps.filter(x=>['md','cup','co','mondial'].includes(x.t)).concat([{t:'dseason',m:4,d:20},{t:'dyear',m:11,d:28}]).map((x,i)=>({x,i})).sort((a,b)=>(a.x.m-b.x.m)||(a.x.d-b.x.d)||(a.i-b.i)).map(o=>o.x);S2.si=0;
+    G.prologue='pending';save();advance();if(!G.pending)go('home');return true}
+  if(choice&&typeof choice==='object'){const grp=(G.u18||[]).slice(),fol=grp.filter(y=>(choice.follow||[]).includes(y.id)),dn=c.name;takeClub(choice.club,choice.role);const nc=me();
+    for(const y of fol){const p=youthToPlayer(y,nc.id,{ctr:3,sal:Math.round(Math.max(1.2e5,marketSal(y.ovr)*.6)/5e3)*5e3,origin:'academie'});nc.pl.push(p.id);if(p.stH&&p.stH[p.stH.length-1].s!=='pro')p.stH.push({y:yearNow(),s:'pro',w:nc.name});try{txPlayer(p,{n:dn,s:'DIS'},nc.id,0)}catch(e){}trackStart(p,`Suit son entraîneur de ${dn} à ${nc.name}.`)}
+    for(const y of grp)if(!fol.includes(y)){try{archivePlayer({...y,club:null,apps:0,last:dn},'Reste au district · '+dn)}catch(e){}}
+    newsAdd(choice.role==='B'?`Tu prends l'équipe B de ${nc.name}${fol.length?` avec ${fol.length} joueur${fol.length>1?'s':''} de ton groupe`:''}.`:`Tu deviens entraîneur principal de ${nc.name} (${G.l2.includes(nc.id)?'Ligue 2':'Ligue des Pros'})${fol.length?`. ${fol.length} joueur${fol.length>1?'s':''} de ton groupe te sui${fol.length>1?'vent':'t'}`:''}.`,'club',true)}
+  else{  const qual=!!(N&&N.qual&&N.qual.includes(dc));if(choice==='l2'&&!qual)choice='B';if(choice==='l1'&&!(N&&N.offerL1))choice=qual?'l2':'B';
   if(choice==='l2'){G.role='head';const grp=promoteGroup(c);if(!G.l2.includes(dc))G.l2.push(dc);
     newsAdd(`${c.name} monte en Ligue 2 avec son groupe : ${grp.length} joueurs signent leur premier contrat professionnel. Budget de Ligue 2, nouveaux sponsors : tu peux renforcer l'effectif au mercato.`,'club',true)}
   else{if(qual){promoteGroup(c);if(c.pl.length<16)c.pl=c.pl.concat(genSquad(dc,1).slice(0,16-c.pl.length));if(!G.l2.includes(dc))G.l2.push(dc)}
     const tgt=choice==='l1'?N.offerL1:(N&&N.offerB)||bOffer();takeClub(tgt,choice==='l1'?'head':'B');
     newsAdd(choice==='l1'?`${T(tgt).name} t'appelle directement en Ligue des Pros après ta Noushi League.`:`${T(tgt).name} te confie son équipe B en Ligue des Espoirs.`,'club',true)}
+  }
   while(G.l2.length<16){const k=nouQualified(4).find(k=>!G.clubs[k]);if(!k)break;G.l2.push(entrantClub(k).id)}
   G.skipWin=G.sn;newSeason();save();advance();if(!G.pending)go('home');return true}
 
@@ -1903,11 +1912,12 @@ function evNouBilan2(el,ev){const N=G.S.nou,dp=N.pro&&G.start==='district',q=dp&
   const qualP=`<div class="panel"><h3>Montent en Ligue 2</h3><div class="list">${N.qual.map(k=>{const i=N.teams.findIndex(t=>t.k===k);return `<div class="item">${i>=0?nouKit(i,26):''}<b style="flex:1;min-width:0">${esc(nouQName(k))}</b><span class="muted">${i>=0?esc(NOU_REACH[N.out[i]??0]):''}</span></div>`}).join('')}</div></div>`;
   let fut='';
   if(dp)fut=`<div class="panel"><h3>Ton avenir</h3><p style="margin-top:0">${q?`${esc(me().name)} finit parmi les 2 meilleures équipes de district : le club monte en Ligue 2.${N.offerL1?` Ta Noushi League a impressionné : ${esc(T(N.offerL1).name)} te propose de diriger son équipe en Ligue des Pros.`:''}`:`${esc(me().name)} n'est pas qualifié pour la Ligue 2. ${esc(T(N.offerB).name)} te propose de prendre son équipe B en Ligue des Espoirs. Si l'équipe première va mal, le président pourrait te confier l'intérim.`}</p>
-    <div class="row">${q?`<button class="btn" data-primary data-fin="l2">Monter en Ligue 2 avec ${esc(me().name)} ›</button>${N.offerL1?`<button class="btn sec" data-fin="l1">Accepter ${esc(T(N.offerL1).name)}</button>`:''}`:`<button class="btn" data-primary data-fin="B">Prendre l'équipe B de ${esc(T(N.offerB).name)} ›</button>`}</div></div>`;
+    <div class="row">${q?`<button class="btn" data-primary data-fin="l2">Monter en Ligue 2 avec ${esc(me().name)} ›</button>${N.offerL1?`<button class="btn sec" data-fin="l1">Accepter ${esc(T(N.offerL1).name)}</button>`:''}`:''}</div></div>`;
+  if(dp&&!q)fut=fut4HTML(N);
   el.innerHTML=`<div class="event"><div class="hero"><div class="kita"></div><div class="in"><div class="eyebrow">Noushi League ${N.yr} · bilan</div><h2>${esc(nouTName(N.champ))} remporte la Noushi League</h2>
     <p class="pitchline" style="font-size:calc(16px*var(--tz))">${dp?`${esc(me().name)} : ${esc(NOU_REACH[my.reach??0].toLowerCase())}.${my.prize?` Prime : ${money(my.prize)}.`:''}`:`${esc(me().name)} joue en ${divName()} : ses jeunes ne disputent pas la Noushi League, réservée aux équipes jeunes de Ligue des Pros et aux équipes de district.`}</p></div></div>
    ${qualP}${fut}${dp?'':'<div class="row"><button class="btn" data-primary id="ok">Continuer ›</button></div>'}</div>`;
-  el.querySelectorAll('[data-fin]').forEach(b=>b.onclick=()=>finishPrologue(b.dataset.fin));const ok=el.querySelector('#ok');if(ok)ok.onclick=complete}
+  el.querySelectorAll('[data-fin]').forEach(b=>b.onclick=()=>finishPrologue(b.dataset.fin));if(dp&&!q)fut4Bind(el,ev);const ok=el.querySelector('#ok');if(ok)ok.onclick=complete}
 
 /* ======================= NOUSHI LEAGUE · détection des talents (25 juillet – 26 août) ======================= */
 const NOU_STAGE={g0:'Poules · journée 1',g1:'Poules · journée 2',g2:'Poules · journée 3',r16:'Huitièmes de finale',qf:'Quarts de finale',sf:'Demi-finales',f:'Finale'};
@@ -1932,7 +1942,7 @@ function u18Fill(young){while(G.u18.length<18){let best='MIL',gap=-99;for(const 
 function u18Init(){if(G.u18)return;G.u18=[];u18Fill(false)}
 function u18Season(){if(!G.u18)return;const gone=[];
   for(const y of G.u18){y.age++;archInit(y);archGrow(y,0);y.ovr=Math.min(y.pot,y.ovr+ri(0,3)+(G.fac.train>=3?1:0)+(mgrT('form')&&R()<.5?1:0))}
-  G.u18=G.u18.filter(y=>{if(y.age>20){gone.push(y);return false}return true});u18Fill(true);
+  G.u18=G.u18.filter(y=>{if(y.age>20){gone.push(y);return false}return true});if(!(G.start==='district'&&G.prologue==='pending'))u18Fill(true);
   if(gone.length)newsAdd(`${gone.length} joueur${gone.length>1?'s':''} des U20 atteigne${gone.length>1?'nt':''} la limite d'âge sans contrat pro et quitte${gone.length>1?'nt':''} le club. Le groupe U20 est complété par des 15-16 ans.`,'scout')}
 function u18Panel(){u18Init();const ys=G.u18.slice().sort((a,b)=>b.pot-a.pot);
   return `<div class="panel" style="margin-top:16px"><div class="row" style="margin-bottom:8px"><h3 style="margin:0">Tes U20 · Noushi League</h3><span class="sp"></span><button class="btn ghost sm" data-gonou>Voir la compétition</button></div>
@@ -3244,7 +3254,7 @@ function vEvent(el){
   if(!G.pending||!G.ev){el.innerHTML=`<div class="panel"><h3>Rien en attente</h3><p class="muted">Clique sur Continuer pour avancer jusqu'à la prochaine décision.</p><button class="btn" id="adv">Continuer ›</button></div>`;el.querySelector('#adv').onclick=advance;return}
   const ev=G.ev;
   if(calBefore())return evCal(el);
-  ({intro:evIntro,prep:evPrep,alea:evAlea,comite:evComite,tournoi:evTournoi,pre:evPre,mercato:evMercato,md:evMatch,cup:evMatch,co:evMatch,mondial:evMatch,end:evEnd,mara1:evMara1,mara2:evMara2,mara3:evMara3,review:evReview,nou:evNou,inv:evInv,drec:evDrec,esp:evEsp,interim:evInterim}[ev.t])(el,ev);
+  ({intro:evIntro,prep:evPrep,alea:evAlea,comite:evComite,tournoi:evTournoi,pre:evPre,mercato:evMercato,md:evMatch,cup:evMatch,co:evMatch,mondial:evMatch,end:evEnd,mara1:evMara1,mara2:evMara2,mara3:evMara3,review:evReview,nou:evNou,inv:evInv,drec:evDrec,esp:evEsp,interim:evInterim,regq:evRegQ,dseason:evDSeason,dyear:evDYear}[ev.t])(el,ev);
   const ck=ev.match?(ev.phase==='post'?'post':'md'):ev.t;const cc=coachCard(ck);if(cc){const host=el.querySelector('.event')||el;host.insertAdjacentHTML('afterbegin',cc);bindCoach(el)}
   bindPl(el);const pb=el.querySelector('[data-primary]');if(pb)setTimeout(()=>pb.focus({preventScroll:true}),30)}
 function evPre(el,ev){const S=G.S,c1=S.c1.ci.includes(G.club),c2=S.c2.ci.includes(G.club);const needS=ev.offers&&!ev.chosen,needG=!S.goal&&!ev.gk,need=needS||needG;
@@ -3575,7 +3585,7 @@ function eSimAll(E){let r;while(!E.done){r=eRun(E,5400);if(r==='ht')eResume(E)}e
 
 /* ---------- Match en direct : vue tactique ---------- */
 function liveTactical(spec,done){
-  const M=spec.M||prepMatch(spec),E=newEngine(M),us=E.uside;E.live=true;if(spec.bench)E.bench=spec.bench.slice();if(spec.block)E.ins[us].block=spec.block;const ov=$('#ov');ov.dataset.lock='1';ov.style.background='var(--bg)';ov.style.alignItems='flex-start';
+  const M=spec.M||prepMatch(spec),E=newEngine(M),us=E.uside;E.live=true;if(spec.bench)E.bench=spec.bench.slice();if(spec.block)E.ins[us].block=spec.block;const ov=$('#ov');ov.dataset.lock='1';ov.dataset.skip='';ov.style.background='var(--bg)';ov.style.alignItems='flex-start';
   const th=T(M.h),ta=T(M.a),col=[{c1:th.c1,c2:th.c2},{c1:ta.c1,c2:ta.c2}];if(colDist(th.c1,ta.c1)<120){col[1]={c1:ta.c2,c2:ta.c1};if(colDist(th.c1,ta.c2)<120)col[1]={c1:'#f4f1e8',c2:'#1d1d1d'}}
   let paused=false,raf,last=performance.now(),clock=0,sel=null,drag=null,ended=false;
   if(!SPEEDS[G.pref.speed])G.pref.speed=4;const rate=()=>(SPEEDS[G.pref.speed]||SPEEDS[4]).r;
@@ -3604,7 +3614,7 @@ function liveTactical(spec,done){
   E.onLog=e=>{if(e.k==='drib'&&R()<.5)return;const f=ov.querySelector('#feed');if(!f)return;const d=document.createElement('div');
     d.className='e'+(e.k==='adj'?' adj':'')+(e.k==='goal'?' goal':'')+(e.k==='card'?' yc':'')+(e.k==='red'?' rc':'');const TT={goal:`But pour ${T(eSide(E,e.s)).short} !`,card:'Carton jaune',red:'Carton rouge',sub:'Changement',inj:'Blessure',chance:'Occasion',pen:'Penalty',mgr:'Banc',adj:'Adjoint'}[e.k];d.innerHTML=`<span class="m">${e.m}'</span><span>${TT?`<b>${esc(TT)}</b>`:''}<span class="${TT?'d':''}">${esc(e.txt)}</span></span>`;f.prepend(d);
     if(['goal','chance','pen'].includes(e.k)){mom.v=clamp(mom.v+(e.s===0?1:-1)*(e.k==='goal'?10:6),5,95)}
-    if(e.k==='goal'){const fl=document.createElement('div');fl.className='flash';fl.innerHTML='<div>BUT !</div>';document.body.appendChild(fl);setTimeout(()=>fl.remove(),1600)}
+    if(e.k==='goal'&&!ov.dataset.skip){const fl=document.createElement('div');fl.className='flash';fl.innerHTML='<div>BUT !</div>';document.body.appendChild(fl);setTimeout(()=>fl.remove(),1600)}
     if(e.k==='mgr'||e.k==='sub'||e.k==='red'||e.k==='inj'||e.k==='adj')panels()};
   const locked=()=>eLocked(E)||ended;
   let ctab=null,subOut=null,hlKey=null;
@@ -3703,7 +3713,7 @@ function liveTactical(spec,done){
   addEventListener('keydown',keys);
   ov.querySelectorAll('#spd button').forEach(b=>b.onclick=()=>{G.pref.speed=+b.dataset.sp;ov.querySelectorAll('#spd button').forEach(x=>x.classList.toggle('on',x===b))});
   ov.querySelector('#lpause').onclick=()=>{paused=!paused;ov.querySelector('#lpause').textContent=paused?'Reprendre':'Pause'};
-  ov.querySelector('#lskip').onclick=()=>{if(ended)return;const hb=$('#htbox');if(hb)hb.remove();if(E.half===1.5)eResume(E);eSimAll(E);clock=5400;finish()};
+  ov.querySelector('#lskip').onclick=()=>{if(ended)return;ov.dataset.skip='1';const hb=$('#htbox');if(hb)hb.remove();if(E.half===1.5)eResume(E);eSimAll(E);clock=5400;finish()};
   panels();raf=requestAnimationFrame(loop);
   return E}
 function interviewFor(M){const E=M.E;if(!E)return null;const m=E.mgr;
@@ -4098,7 +4108,7 @@ function renderTitle(saved){
    <div id="m-dis" hidden><button class="btn ghost sm" data-back style="margin-bottom:12px">‹ Changer de carrière</button><h3 class="mtitle">Carrière District · choisis ta région</h3><p class="muted" style="margin:0 0 14px">Les opérateurs économiques et les supporters financent l'équipe du district. Détecte tes U20 dans les communes du Grand Abidjan, puis joue la Noushi League : les 2 meilleures équipes de district montent en Ligue 2. Sinon, un club de Ligue des Pros te proposera son équipe B.</p>
    <div class="clubpick">${DISTRICTS.map(d=>`<button data-d="${d.id}">${kit({c1:d.c[0],c2:d.c[1],pat:d.c[2]},52)}<span style="min-width:0"><b>${esc(d.name)}</b><small>${esc(d.dist)}</small><small>${esc(d.city)} · profil ${PROF_L[d.prof]||'équilibre'}</small></span></button>`).join('')}</div></div></div>
    <div class="row" style="gap:8px"><label class="btn ghost sm" style="cursor:pointer">Importer une partie<input type="file" id="impsave" accept=".json,application/json" hidden></label></div>
-   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 51${cloudDb?' · sauvegarde en ligne active':''}</p>
+   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 52${cloudDb?' · sauvegarde en ligne active':''}</p>
    <p class="muted" style="font-size:calc(13.5px*var(--tz));margin:0">Projet original. Clubs, joueurs, compétitions et montants de jeu sont fictifs, à l'échelle du football ivoirien réel. Aucune affiliation avec une fédération, une confédération ou un éditeur de jeux.</p>
   </div></div>`;
   $('#app').style.display='block';
@@ -4205,9 +4215,9 @@ const REG_OTHERS=[['Toumodi Bélier FC','Toumodi','Bélier'],['Danané Cascade F
 Object.assign(CITY_ZONE,{Toumodi:'C',Danané:'O',Tengréla:'N',Bouaflé:'O',Issia:'O',Daoukro:'E',Bongouanou:'E',Adzopé:'S',Tabou:'O',Mankono:'N',Touba:'N',Guiglo:'O',Lakota:'O',Tanda:'E',Bouna:'N',Méagui:'O'});
 const REG_DATES={g:['2026-03-07','2026-03-14','2026-03-21'],r16:'2026-04-04',qf:'2026-04-11',sf:'2026-04-18',f:'2026-04-25'};
 const REG_ST={r16:'Huitièmes de finale',qf:'Quarts de finale',sf:'Demi-finales',f:'Finale'};
-function regQ(){if(G.regQ)return G.regQ;if(G.start!=='district')return null;try{regBuild()}catch(e){console.error(e);return null}return G.regQ}
+function regQ(){if(G.regQ&&G.start==='district'&&G.prologue==='pending'&&(G.regQ.yr||2026)!==2025+G.sn){(G.regH=G.regH||[]).push(G.regQ);G.regQ=null}if(G.regQ)return G.regQ;if(G.start!=='district')return null;try{regBuild()}catch(e){console.error(e);return null}return G.regQ}
 function regBuild(){const c=me(),mb=distBase(G.club),T0=[];
-  T0.push({name:c.name,city:c.city.split(' · ')[0],dist:mb?mb.dist:'',d:1,me:1,str:56});
+  const ga=(G.u18||[]).length?(G.u18||[]).reduce((s,y)=>s+y.ovr,0)/G.u18.length:48;T0.push({name:c.name,city:c.city.split(' · ')[0],dist:mb?mb.dist:'',d:1,me:1,str:G.sn>1?Math.round(ga+6):56});
   DISTRICTS.filter(d=>d!==mb).forEach(d=>{const sp=distSpec(distKey(d))||d;T0.push({name:sp.name,city:d.city.split(' · ')[0],dist:d.dist,d:1,str:ri(51,60)})});
   REG_OTHERS.forEach(o=>T0.push({name:o[0],city:o[1],dist:o[2],d:0,str:ri(43,52)}));
   const byS=a=>a.sort((x,y)=>y.str-x.str),ix=T0.map((t,i)=>i),D=byS(ix.filter(i=>T0[i].d)),O=byS(ix.filter(i=>!T0[i].d));
@@ -4228,7 +4238,7 @@ function regBuild(){const c=me(),mb=distBase(G.club),T0=[];
   const sc=n=>{const out=[];for(let k=0;k<n;k++){const p=wpick(fld,fld.map(y=>({ATT:5,MIL:3,DEF:1})[y.pos]*(y.ovr/50)));out.push({id:p.id,m:ri(3,90)});(st[p.id]=st[p.id]||{j:0,b:0,n:p.n}).b++}return out.sort((a,b)=>a.m-b.m)};
   const mine=f=>T0[f.h].me||T0[f.a].me;
   [...gm,...ko.r16,...ko.qf,...ko.sf,...ko.f].forEach(f=>{if(!mine(f))return;f.sc=sc(T0[f.h].me?f.hg:f.ag);xi.slice(0,11).concat(shuffle(xi.slice(11)).slice(0,3)).forEach(y=>{(st[y.id]=st[y.id]||{j:0,b:0,n:y.n}).j++})});
-  G.regQ={T:T0,pots,groups,gm,tab,ko,st,me:0};regPath()}
+  G.regQ={T:T0,pots,groups,gm,tab,ko,st,me:0,yr:2025+G.sn};regPath()}
 function regPath(){const Q=G.regQ,g=Q.groups.findIndex(x=>x.includes(0)),pos=Q.tab[g].findIndex(r=>r.i===0)+1,pts=Q.tab[g][pos-1].pts,W=f=>f.hg>f.ag||(f.p&&f.p[0]>f.p[1])?f.h:f.a;
   let out='',lost=null;for(const k of ['r16','qf','sf','f']){const f=Q.ko[k].find(x=>x.h===0||x.a===0);if(!f)break;if(W(f)!==0){lost={k,f};break}}
   const L='ABCDEFGH'[g],P1=pos===1?'1er':pos+'e';Q.gl=L;
@@ -4238,9 +4248,9 @@ function regPath(){const Q=G.regQ,g=Q.groups.findIndex(x=>x.includes(0)),pos=Q.t
 function regFx(f,Q){const h=Q.T[f.h],a=Q.T[f.a],W=f.hg>f.ag||(f.p&&f.p[0]>f.p[1])?f.h:f.a,mine=h.me||a.me;
   const sc=f.sc&&f.sc.length?`<span class="muted" style="font-size:calc(12px*var(--tz));flex-basis:100%">⚽ ${f.sc.map(s=>{const y=regWho(s.id);return y?`${esc(y.n)} ${s.m}'`:''}).filter(Boolean).join(', ')}</span>`:'';
   return `<div class="item regfx${mine?' me':''}"><span class="rgt" style="${W!==f.h?'opacity:.6':''}">${esc(h.name)}</span><b class="num">${f.hg} - ${f.ag}${f.p?` <small class="muted">(${f.p[0]}-${f.p[1]} tab)</small>`:''}</b><span class="rgt r" style="${W!==f.a?'opacity:.6':''}">${esc(a.name)}</span>${sc}</div>`}
-function regPanel(){const Q=regQ();if(!Q)return '<p class="muted">Pas de tournoi régional dans cette carrière.</p>';const L='ABCDEFGH',fd=d=>fmtD(new Date(d+'T00:00:00Z'));
+function regPanel(){const Q=regQ();if(!Q)return '<p class="muted">Pas de tournoi régional dans cette carrière.</p>';const L='ABCDEFGH',fd=d=>fmtD(new Date(String(d).replace('2026',Q.yr||2026)+'T00:00:00Z'));
   const mg=Q.groups.findIndex(x=>x.includes(0)),top=Object.entries(Q.st).filter(([,v])=>v.b).sort((a,b)=>b[1].b-a[1].b).slice(0,3).map(([id,v])=>{const y=regWho(id);return y?`${esc(y.n)} (${v.b})`:''}).filter(Boolean);
-  return `<div class="panel iobj" style="margin-bottom:14px"><div class="lbl">Ton parcours · mars-avril 2026</div><p>${esc(Q.path)}</p>${top.length?`<p class="muted" style="margin:6px 0 0">Buteurs du club : ${top.join(', ')}</p>`:''}</div>
+  return `<div class="panel iobj" style="margin-bottom:14px"><div class="lbl">Ton parcours · mars-avril ${Q.yr||2026}</div><p>${esc(Q.path)}</p>${top.length?`<p class="muted" style="margin:6px 0 0">Buteurs du club : ${top.join(', ')}</p>`:''}</div>
    <div class="panel" style="margin-bottom:14px"><h3>Le format</h3><p class="muted" style="margin:0">32 clubs de toute la Côte d'Ivoire. Tirage au sort en 4 chapeaux, 8 groupes de 4. Les 2 premiers de chaque groupe (16 clubs) sont qualifiés pour la Noushi League, puis le tournoi continue en élimination directe pour le titre régional.</p>
     <div class="regpots">${Q.pots.map((p,i)=>`<div><b>Chapeau ${i+1}</b>${p.map(t=>`<span class="${Q.T[t].me?'me':''}">${esc(Q.T[t].name)}</span>`).join('')}</div>`).join('')}</div></div>
    <div class="grid g2" style="margin-bottom:14px">${Q.groups.map((g,gi)=>`<details class="panel regg${gi===mg?' regme':''}" ${gi===mg?'open':''}><summary data-nolk><h3>Groupe ${L[gi]}</h3><span class="muted">${Q.tab[gi].slice(0,2).map(r=>esc(Q.T[r.i].name)).join(' · ')}</span></summary><div class="tw" style="margin-top:10px"><table><thead><tr><th>#</th><th>Club</th><th class="r">J</th><th class="r">Diff</th><th class="r">Pts</th></tr></thead><tbody>${Q.tab[gi].map((r,k)=>`<tr class="${Q.T[r.i].me?'me':''}"><td><span class="zone ${k<2?'z-c1':''}"></span>${k+1}</td><td style="white-space:normal">${esc(Q.T[r.i].name)}</td><td class="r num">${r.J}</td><td class="r num">${r.bp-r.bc>0?'+':''}${r.bp-r.bc}</td><td class="r num"><b>${r.pts}</b></td></tr>`).join('')}</tbody></table></div>
@@ -4399,14 +4409,14 @@ function archGrow(p,apps){if(!p||p.mat==null)return;const y=p.age<=21;p.mat=clam
 const MENT=[['mat','Maturité tactique','Comprend vite un plan de jeu et garde ses alignements.'],['cnc','Concentration','Reste attentif jusqu\'au bout du match.'],['disc','Discipline','Respecte les consignes, l\'arbitre et l\'entraînement.'],['adp','Adaptabilité','Suit un changement de système sans se perdre.']];
 function mentalHTML(p){archInit(p);const hid=p.known===false;
   return `<div class="lbl" style="margin:12px 0 6px">Profil mental</div>${MENT.map(([k,l,d])=>{const v=Math.round(p[k]??50);return `<div class="row" style="flex-wrap:nowrap" title="${esc(d)}"><span style="width:132px;flex:none" class="muted">${l}</span><div class="bar" style="flex:1"><i style="width:${hid?0:v}%;background:${v>=70?'var(--good)':v>=45?'var(--warn)':'var(--bad)'}"></i></div><span class="num" style="width:26px;text-align:right">${hid?'?':v}</span></div>`}).join('')}`}
-function youthHist(p){const r=p.reg,n=p.nou,rows=[];
+function youthHist(p){const r=p.reg,n=p.nou,rows=[];if(p.dst&&p.dst.j)rows.push([`Championnat régional ${p.dst.y}`,`${p.dst.j} matchs · ${p.dst.b} but${p.dst.b>1?'s':''}`]);
   if(r&&r.j)rows.push(['Qualification régionale 2026',`${r.j} match${r.j>1?'s':''} · ${r.b} but${r.b>1?'s':''}`]);
   if(n&&n.apps)rows.push([`Noushi League${p.nouYr?' '+p.nouYr:''}`,`${n.apps} match${n.apps>1?'s':''} · ${n.g} but${n.g>1?'s':''}${n.rs&&n.rs.length?' · note '+(n.rs.reduce((a,b)=>a+b,0)/n.rs.length).toFixed(1):''}`]);
   return rows.length?`<div class="lbl" style="margin:12px 0 6px">Chez les jeunes</div><div class="list">${rows.map(([a,b])=>`<div class="item"><span class="muted" style="flex:1">${a}</span><b>${b}</b></div>`).join('')}</div>`:''}
 // un jeune du groupe devient joueur du club : même personne, mêmes attributs, même caractère, même histoire
 function youthToPlayer(y,cid,o){o=o||{};archInit(y);ostInit(y);
   const p=newPlayer({n:y.n,pos:y.pos,age:y.age,ovr:y.ovr,pot:y.pot,club:cid,ctr:o.ctr||3,sal:o.sal||marketSal(y.ovr),origin:o.origin||'academie',known:true,disc:y.disc,from:y.from||''});
-  Object.assign(p,{at:{...y.at},mat:y.mat,cnc:y.cnc,adp:y.adp,yid:y.id,ost:y.ost,ostr:y.ostr,nat:y.nat||'ci'});if(y.trf)p.trf=y.trf.slice();if(y.pers)p.pers=y.pers;if(y.endu!=null)p.endu=y.endu;if(y.num)p.num=y.num;if(y.promise)p.promise=true;
+  Object.assign(p,{at:{...y.at},mat:y.mat,cnc:y.cnc,adp:y.adp,yid:y.id,dst:y.dst||null,ost:y.ost,ostr:y.ostr,nat:y.nat||'ci'});if(y.trf)p.trf=y.trf.slice();if(y.pers)p.pers=y.pers;if(y.endu!=null)p.endu=y.endu;if(y.num)p.num=y.num;if(y.promise)p.promise=true;
   const N=G.S&&(G.S.nou||G.S.nouPro);p.nou=(N&&N.st&&N.st[y.id])||null;if(N&&N.yr)p.nouYr=N.yr;p.reg=(G.regQ&&G.regQ.st[y.id])||null;
   (G.idMap=G.idMap||{})[y.id]=p.id;p.stH=(y.stH||[{y:yearNow()-(y.age>17?1:0),s:y.ost,w:y.ostr||''}]).slice();stTrack(p,T(cid)?T(cid).name:'');return p}
 function regWho(id){const y=(G.u18||[]).find(x=>x.id===id);if(y)return y;const p=G.idMap&&G.idMap[id]!=null?P(G.idMap[id]):null;if(p)return p;const s=G.regQ&&G.regQ.st[id];return s&&s.n?{n:s.n}:null}
@@ -4450,11 +4460,14 @@ function eReform(E,s,form){const f=FORMS[form];if(!f)return false;const act=eAct
 function eAI(E,m){const D=DIFF[diffK()],s=E.uside,o=1-s,ins=E.ins[s],oi=E.ins[o];
   const sig=[ins.block,ins.lanes,ins.direct,ins.calm,E.form[s]].join('|');if(E.uSig==null)E.uSig=sig;
   if(sig!==E.uSig){E.uSig=sig;E.uChg=m;E.aiDone=0}
-  if(E.uChg!=null&&!E.aiDone&&D.counter&&m-E.uChg>=(D.counter>=1?3:8)){E.aiDone=1;if(R()<D.counter){let did='';
-      if((ins.block==='press'||ins.block==='tout')&&!oi.direct){oi.direct=true;oi.calm=false;did='jouer long dans ton dos'}
-      else if(ins.block==='bloc'&&!oi.calm){oi.calm=true;oi.direct=false;did='faire tourner le ballon'}
-      else if(ins.lanes&&!oi.calm){oi.calm=true;did='passer par l\'axe'}
-      if(did){eChange(E,o,'toggle');eLog(E,'amb',o,null,`${T(eSide(E,o)).short} s'adapte : l'adversaire décide de ${did}.`)}}}}
+  if(E.uChg!=null&&!E.aiDone&&D.counter&&m-E.uChg>=(D.counter>=1?3:8)){E.aiDone=1;if(R()<D.counter){const f=FORMS[E.form[s]]||[1,4,3,3],opts=[];
+      if(f[1]<=3)opts.push(['direct',true,'jouer long dans le dos de ta défense à trois'],['block','press','presser ta relance à trois']);
+      if(f[1]>=5)opts.push(['block','press','monter presser ta défense à cinq'],['lanes',true,'fermer les couloirs de tes pistons']);
+      if(ins.block==='press'||ins.block==='tout')opts.push(['direct',true,'jouer long dans ton dos']);
+      if(ins.block==='bloc')opts.push(['calm',true,'faire tourner le ballon devant ton bloc'],['block','press','monter d\'un cran']);
+      if(ins.lanes)opts.push(['calm',true,'passer par l\'axe']);
+      if(ins.direct)opts.push(['block','bloc','reculer pour couper tes longs ballons']);
+      const ch=opts.find(([k,v])=>oi[k]!==v);if(ch){const [k,v,did]=ch;oi[k]=v;if(k==='direct'&&v)oi.calm=false;if(k==='calm'&&v)oi.direct=false;eChange(E,o,k==='block'?'block':'toggle');eLog(E,'amb',o,null,`${T(eSide(E,o)).short} s'adapte : l'adversaire décide de ${did}.`)}}}}
 
 // en résultat immédiat (ou coach en tribune), l'adjoint applique les corrections avec un temps de retard
 function eAutoCoach(E,m){const s=E.uside,ins=E.ins[s],dl=G.staff&&G.staff.adj&&G.staff.adj.sk?clamp(Math.round(9-adjSk('tac')/3),3,8):7;
@@ -4508,6 +4521,82 @@ function goneSheet(id){const g=G.gone&&G.gone[id];if(!g)return false;const p={..
 // statut actuel : il évolue avec la carrière (l'origine, elle, ne change jamais)
 function stNow(p){if(!p)return 'amateur';if(p.club&&(G.l1.includes(p.club)||G.l2.includes(p.club)))return p.asp?'semipro':'pro';if(p.yid==null&&p.id&&String(p.id).startsWith('u'))return p.ost==='semipro'||!(G.start==='district'&&inPrologue())?'semipro':'amateur';return (p.stH&&p.stH.length?p.stH[p.stH.length-1].s:null)||p.ost||'amateur'}
 function stTrack(p,where){if(!p)return;ostInit(p);const now=stNow(p),h=p.stH=p.stH||[{y:p.stY0||yearNow(),s:p.ost,w:p.ostr||''}];if(h[h.length-1].s!==now){h.push({y:yearNow(),s:now,w:where||(p.club&&T(p.club)?T(p.club).name:'')});if(h.length>8)h.splice(1,1)}}
+/* ---------- Lot 4 : après un échec en Noushi League — ta performance décide ---------- */
+const ARG_L={res:['Résultats','Ce que ton équipe a obtenu sur le terrain.'],youth:['Formation des jeunes','Les joueurs que tu as fait éclore.'],style:['Style de jeu','Une équipe qui attaque, qui a une identité.'],gestion:['Gestion','Budget tenu, effectif construit avec peu.'],rep:['Réputation','Ce qu\'on dit de toi dans le football ivoirien.']};
+function coachEval(){const N=G.S.nou,me_=N&&N.me,r=N&&me_>=0?(N.out[me_]??0):0,st=N?N.st||{}:{};
+  const res=[22,38,56,70,82,92,100][r]+({win:8,f:6,sf:4,qf:2}[G.regQ&&G.regQ.best]||0);
+  const rated=Object.values(st).filter(s=>s.rs&&s.rs.length).map(s=>s.rs.reduce((a,b)=>a+b,0)/s.rs.length),stars=rated.filter(a=>a>=7).length,best=rated.length?Math.max(...rated):6.2;
+  const youth=clamp(Math.round(28+stars*14+(best-6.5)*22),5,100);
+  let gf=0,mj=0;if(N)for(const k of NOU_ORDER){const L=nouStage(k)||[];for(const f of L)if(f.r&&(f.h===me_||f.a===me_)){mj++;gf+=f.h===me_?f.r.hg:f.r.ag}}
+  const style=clamp(Math.round(30+(mj?gf/mj:0)*28+(sysAct&&sysAct().def==='press'?6:0)),5,100);
+  const gestion=G.cash>=0?clamp(Math.round(62+Math.min(30,G.cash/2e6)),0,100):25;
+  const rep=clamp(Math.round(30+r*9+(G.regQ&&G.regQ.best==='win'?10:0)+(G.ferveur||30)/5),5,100);
+  const v={res:clamp(Math.round(res),5,100),youth,style,gestion,rep},score=Math.round(v.res*.4+v.youth*.25+v.style*.15+v.gestion*.1+v.rep*.1);
+  const txt={res:N?`${NOU_REACH[r]} en Noushi League${G.regQ?', '+(G.regQ.best==='win'?'champion régional':'qualifié au régional'):''}`:'',youth:`${stars} joueur${stars>1?'s':''} à 7 de moyenne ou plus`,style:`${mj?(gf/mj).toFixed(1):'0'} but${gf/mj>=2?'s':''} par match`,gestion:G.cash>=0?`Caisse positive (${money(G.cash)})`:'Caisse dans le rouge',rep:`Ferveur ${G.ferveur||30}`};
+  return{v,score,txt}}
+// postes à pourvoir : chaque club a ses priorités
+function openPosts(score){const out=[],pr=()=>{const k=Object.keys(ARG_L),w={};k.forEach(x=>w[x]=.2+R());const s=Object.values(w).reduce((a,b)=>a+b,0);k.forEach(x=>w[x]=+(w[x]/s).toFixed(2));return w};
+  const l2=shuffle(G.l2.filter(id=>id!==G.club&&T(id).origin!=='academie')).slice(0,2),l1=shuffle(G.l1.filter(id=>id!==G.club)).slice(0,2);
+  for(const id of l2){const w=pr();w.res+=.2;out.push({club:id,role:'head',div:'Ligue 2',need:60,prio:w})}
+  for(const id of l1){const w=pr();w.youth+=.25;out.push({club:id,role:'B',div:'Équipe B · Ligue des Espoirs',need:46,prio:w})}
+  return out}
+function prioTop(w){return Object.entries(w).sort((a,b)=>b[1]-a[1]).slice(0,2).map(x=>x[0])}
+function applyPost(post,args,E){const w=post.prio,tot=prioTop(w).concat(Object.keys(w).sort((a,b)=>w[b]-w[a])[2]).reduce((s,k)=>s+w[k],0);
+  const fit=args.reduce((s,k)=>s+w[k]*E.v[k],0)/Math.max(.01,tot);const val=fit*.75+E.score*.25+rf(-6,6);const ok=val>=post.need;
+  const top=prioTop(w),miss=top.filter(k=>!args.includes(k)),weak=args.filter(k=>E.v[k]<45);
+  const why=ok?`Le président a retenu ${args.filter(k=>top.includes(k)).map(k=>ARG_L[k][0].toLowerCase()).join(' et ')||'ton projet'}. Le poste est à toi s'il te convient.`
+    :`Refus. ${miss.length?`Ce club cherchait surtout : ${miss.map(k=>ARG_L[k][0].toLowerCase()).join(' et ')}. `:''}${weak.length?`Ton argument « ${ARG_L[weak[0]][0].toLowerCase()} » n'a pas convaincu.`:'D\'autres candidats avaient un meilleur dossier.'}`;
+  return{ok,why,val:Math.round(val)}}
+function fut4HTML(N){const E=N.eval||(N.eval=coachEval()),O=N.opps||(N.opps=(()=>{const o=[],sc=E.score;
+    if(sc>=30)o.push({k:'stay',l:`Rester à ${me().name} et rejouer le district`,d:'Le comité te garde. Tu gardes ton groupe (jusqu\'à 20 ans), tu recrutes à nouveau en mai et tu retentes la Noushi League.'});
+    if(sc>=45&&R()<(sc>=55?.95:.55)){const b=N.offerB||bOffer();o.push({k:'job',club:b,role:'B',l:`${T(b).name} t'offre son équipe B`,d:'Ligue des Espoirs. L\'équipe première peut te revenir si tu brilles.'})}
+    if(sc>=62&&R()<(sc>=72?.85:.35)){const c=l2Offer();o.push({k:'job',club:c,role:'head',l:`${T(c).name} t'offre son banc en Ligue 2`,d:'Entraîneur principal d\'un club professionnel.'})}
+    return o})()),P=N.posts||(N.posts=openPosts(E.score)),apps=N.apps||(N.apps={});
+  const bars=Object.keys(ARG_L).map(k=>`<div class="row" style="flex-wrap:nowrap;font-size:calc(13.5px*var(--tz))"><span style="width:150px;flex:none" class="muted">${ARG_L[k][0]}</span><div class="bar" style="flex:1"><i style="width:${E.v[k]}%;background:${E.v[k]>=65?'var(--good)':E.v[k]>=45?'var(--warn)':'var(--bad)'}"></i></div><span class="num" style="width:28px;text-align:right">${E.v[k]}</span></div><div class="muted" style="font-size:calc(12px*var(--tz));margin:-2px 0 6px 150px">${esc(E.txt[k])}</div>`).join('');
+  const offers=O.concat(Object.entries(apps).filter(([,a])=>a.ok).map(([i,a])=>({k:'job',club:P[i].club,role:P[i].role,l:`${T(P[i].club).name} accepte ta candidature`,d:P[i].div})));
+  const left=2-Object.keys(apps).length;
+  return `<div class="panel"><h3>Ton bilan de coach · ${E.score} / 100</h3><p class="muted" style="margin-top:0">${esc(me().name)} ne monte pas. La suite dépend de ce que tu as montré : c'est ce que les clubs regardent.</p>${bars}</div>
+   <div class="panel"><h3>Propositions</h3>${offers.length?`<div class="list">${offers.map((o,i)=>`<div class="item" style="flex-wrap:wrap"><span style="flex:1;min-width:0"><b>${esc(o.l)}</b><span class="muted" style="display:block;font-size:calc(13px*var(--tz))">${esc(o.d)}</span></span><button class="btn sm" data-take="${i}" ${i===0?'data-primary':''}>Accepter</button></div>`).join('')}</div>`:'<p class="muted" style="margin:0">Aucune proposition pour l\'instant. Tu peux candidater ci-dessous.</p>'}</div>
+   <div class="panel"><h3>Postes ouverts</h3><p class="muted" style="margin-top:0">Défends ta candidature avec tes meilleurs arguments. ${left>0?`Encore ${left} candidature${left>1?'s':''} possible${left>1?'s':''}.`:'Plus de candidature possible cette année.'}</p>
+    <div class="list">${P.map((p,i)=>{const a=apps[i];return `<div class="item" style="flex-wrap:wrap"><span style="flex:1;min-width:0"><b>${esc(T(p.club).name)}</b><span class="muted" style="display:block;font-size:calc(13px*var(--tz))">${esc(p.div)}</span>${a?`<span class="${a.ok?'good':'bad'}" style="display:block;font-size:calc(13px*var(--tz));margin-top:4px">${esc(a.why)}</span>`:''}</span>${a?'':`<button class="btn sec sm" data-app="${i}" ${left<=0?'disabled':''}>Candidater</button>`}</div>`}).join('')}</div></div>`}
+function fut4Bind(el,ev){const N=G.S.nou,E=N.eval,P=N.posts;
+  el.querySelectorAll('[data-app]').forEach(b=>b.onclick=()=>{const i=+b.dataset.app,p=P[i],sel=new Set();
+    const draw=()=>{modal(`<div class="csheet"><div class="lbl">Candidature · ${esc(p.div)}</div><h2>${esc(T(p.club).name)}</h2><p class="muted">Choisis jusqu'à 3 arguments. Le président les compare à ce que son club recherche.</p>
+      <div class="list">${Object.keys(ARG_L).map(k=>`<button class="item achoice ${sel.has(k)?'on':''}" data-arg="${k}" style="all:unset;box-sizing:border-box;display:flex;gap:10px;padding:10px 12px;border-radius:10px;border:1px solid ${sel.has(k)?'var(--accent)':'var(--line)'};background:var(--panel2);cursor:pointer;width:100%"><span style="flex:1"><b>${ARG_L[k][0]}</b><span class="muted" style="display:block;font-size:calc(12.5px*var(--tz))">${esc(E.txt[k])}</span></span><b class="num">${E.v[k]}</b></button>`).join('')}</div>
+      <div class="row" style="margin-top:12px;gap:8px"><button class="btn" id="send" ${sel.size?'':'disabled'}>Envoyer la candidature</button><button class="btn ghost" id="mclose">Annuler</button></div></div>`);
+      const o=$('#ov');o.querySelector('#mclose').onclick=closeModal;o.querySelectorAll('[data-arg]').forEach(x=>x.onclick=()=>{const k=x.dataset.arg;if(sel.has(k))sel.delete(k);else if(sel.size<3)sel.add(k);draw()});
+      o.querySelector('#send').onclick=()=>{N.apps[i]=applyPost(p,[...sel],E);closeModal();save();refresh();toast(N.apps[i].ok?`<b>${esc(T(p.club).name)}</b> accepte ta candidature.`:`<b>${esc(T(p.club).name)}</b> refuse.`)}};draw()});
+  el.querySelectorAll('[data-take]').forEach(b=>b.onclick=()=>{const i=+b.dataset.take,O=N.opps.concat(Object.entries(N.apps).filter(([,a])=>a.ok).map(([j])=>({k:'job',club:P[j].club,role:P[j].role}))),o=O[i];if(!o)return;
+    if(o.k==='stay'){finishPrologue('stay');return}
+    // jusqu'à 3 joueurs du groupe peuvent te suivre
+    const ys=(G.u18||[]).filter(y=>y.age>=16).sort((a,b)=>b.pot-a.pot),pick3=new Set();
+    const draw=()=>{modal(`<div class="csheet"><div class="lbl">Ils peuvent te suivre</div><h2>${esc(T(o.club).name)}</h2><p class="muted">Jusqu'à 3 joueurs de ton groupe signent avec toi leur premier contrat. Les autres restent au district.</p>
+      <div class="list">${ys.slice(0,10).map(y=>`<button class="item" data-fy="${y.id}" style="all:unset;box-sizing:border-box;display:flex;gap:10px;align-items:center;padding:9px 12px;border-radius:10px;border:1px solid ${pick3.has(y.id)?'var(--accent)':'var(--line)'};background:var(--panel2);cursor:pointer;width:100%">${posTag(y.pos)}<span style="flex:1">${esc(y.n)} <span class="muted">· ${y.age} ans</span></span><b class="num">${y.ovr}</b></button>`).join('')}</div>
+      <div class="row" style="margin-top:12px;gap:8px"><button class="btn" id="go">Signer à ${esc(T(o.club).name)}${pick3.size?` avec ${pick3.size} joueur${pick3.size>1?'s':''}`:''}</button><button class="btn ghost" id="mclose">Retour</button></div></div>`);
+      const m=$('#ov');m.querySelector('#mclose').onclick=closeModal;m.querySelectorAll('[data-fy]').forEach(x=>x.onclick=()=>{const k=x.dataset.fy;if(pick3.has(k))pick3.delete(k);else if(pick3.size<3)pick3.add(k);draw()});
+      m.querySelector('#go').onclick=()=>{closeModal();finishPrologue({club:o.club,role:o.role,follow:[...pick3]})}};draw()})}
+// année au district : championnat régional de septembre à avril, puis nouvelle chance
+function evDSeason(el,ev){const c=me(),ys=G.u18||[];if(!ev.d){for(const y of ys)y.dst={y:seasonLabel(),j:0,b:0};const opp=shuffle(REG_OTHERS.map(x=>x[0])).slice(0,9),avg=ys.length?ys.reduce((s,y)=>s+y.ovr,0)/ys.length:48,rows=[];let W=0,D=0,L=0,gf=0,ga=0;
+    for(const o of opp)for(const home of [1,0]){const d=(avg+2-ri(44,53))/6;const a=poisson(clamp(1.3*Math.exp(d/2.5)+(home?.15:0),.3,3.5)),b=poisson(clamp(1.3*Math.exp(-d/2.5),.3,3.5));gf+=a;ga+=b;if(a>b)W++;else if(a===b)D++;else L++;
+      for(let k=0;k<a;k++){const y=wpick(ys,ys.map(q=>({ATT:5,MIL:3,DEF:1,GB:.01})[q.pos]));if(y)y.dst.b++}}
+    for(const y of ys){const s=y.dst;s.j=ri(10,18);const g=ri(0,2)+(G.fac.train>=3?1:0);y.ovr=Math.min(y.pot,y.ovr+g);archGrow(y,s.j)}
+    ev.d={W,D,L,gf,ga,pts:W*3+D,n:18};save()}
+  const d=ev.d,top=ys.filter(y=>y.dst).sort((a,b)=>b.dst.b-a.dst.b).slice(0,3);
+  el.innerHTML=`<div class="event"><div class="hero"><div class="kita"></div><div class="in"><div class="eyebrow">Saison ${seasonLabel()} · district</div><h2>Championnat régional</h2>
+   <p class="pitchline" style="font-size:calc(16px*var(--tz))">${esc(c.name)} joue la saison au district : ${d.W} victoires, ${d.D} nuls, ${d.L} défaites (${d.gf} buts marqués, ${d.ga} encaissés). Le groupe prend de l'expérience et progresse.</p></div></div>
+   <div class="panel"><h3>Meilleurs buteurs</h3><div class="list">${top.map(y=>`<div class="item">${posTag(y.pos)}<span style="flex:1">${esc(y.n)}</span><b>${y.dst.b} but${y.dst.b>1?'s':''}</b></div>`).join('')||'<span class="muted">—</span>'}</div></div>
+   <div class="row"><button class="btn" data-primary id="ok">Continuer ›</button></div></div>`;el.querySelector('#ok').onclick=complete}
+function evDYear(el,ev){const c=me(),ys=G.u18||[],leave=ys.filter(y=>y.age>=20);if(ev.inv==null){ev.inv=Math.round(ri(6,14)*1e6);addMoney(ev.inv,'inv');save()}
+  el.innerHTML=`<div class="event"><div class="hero"><div class="kita"></div><div class="in"><div class="eyebrow">Fin de saison · ${seasonLabel()}</div><h2>Nouvelle chance</h2>
+   <p class="pitchline" style="font-size:calc(16px*var(--tz))">Le comité de ${esc(c.name)} renouvelle sa confiance et apporte ${money(ev.inv)} pour la nouvelle saison. En mai : tournoi régional, recrutement jusqu'au 30 juin, puis la Noushi League.</p></div></div>
+   ${leave.length?`<div class="panel"><h3>Ils atteignent la limite d'âge</h3><p class="muted" style="margin-top:0">À 21 ans, ils ne peuvent plus jouer la Noushi League et quittent le groupe.</p><div class="list">${leave.map(y=>`<div class="item">${posTag(y.pos)}<span style="flex:1">${esc(y.n)}</span><span class="muted">${y.age} ans</span></div>`).join('')}</div></div>`:''}
+   <div class="row"><button class="btn" data-primary id="ok">Commencer la nouvelle saison ›</button></div></div>`;
+  el.querySelector('#ok').onclick=()=>{for(const y of leave){try{archivePlayer({...y,club:G.club,apps:0},'Limite d\'âge de la Noushi League')}catch(e){}}distSeasonClose();try{reviewPrep()}catch(e){console.error(e)}G.lastLedger={...G.S.ledger};G.pending=false;G.ev=null;startNextSeason()}}
+function distSeasonClose(){const role=G.role,nh=G.hist.length;G.role='B';try{seasonEnd()}catch(e){console.error(e)}G.role=role;G.hist.length=nh;G.over=null;G.news=(G.news||[]).filter(n=>!/termine 0e/.test(n.t||n.txt||''))}
+function evRegQ(el,ev){const Q=regQ();el.innerHTML=`<div class="event"><div class="hero"><div class="kita"></div><div class="in"><div class="eyebrow">Mars-avril ${Q.yr||2026} · tournoi régional</div><h2>Qualification pour la Noushi League</h2>
+   <p class="pitchline" style="font-size:calc(16px*var(--tz))">${esc(Q.path)}</p></div></div><div class="row" style="gap:8px"><button class="btn ghost" id="see">Voir le tournoi</button><button class="btn" data-primary id="ok">Continuer ›</button></div></div>`;
+  el.querySelector('#see').onclick=()=>go('comp','reg');el.querySelector('#ok').onclick=complete}
+
 try{window.claude?.hot?.snapshot?.(()=>({save:G?JSON.stringify(G):null,view:VIEW}))}catch(e){}
 (window.claude?.hot?.ready?window.claude.hot.ready(start):start(window.claude?.hot?.data??{}));
 </script>
