@@ -2659,7 +2659,8 @@ function sixVars(){const v=[
 function repTxt(v,w){if(w)return v<5?'Nulle':v<20?'Discrète':v<45?'Remarquée':v<70?'Établie':'Mondiale';return v<10?'Inconnue':v<30?'Émergente':v<55?'Respectée':v<80?'Redoutée':'Légendaire'}
 
 /* ---------------- Effectif ---------------- */
-function vSquad(el){if(inPrologue()&&G.start==='district'){el.innerHTML=`<div class="vhead"><div><div class="eyebrow">Noushi League</div><h2>Ton groupe</h2></div></div><div class="panel" style="margin-bottom:14px"><h3>Ton onze pour la Noushi League</h3>${tbPanel('u18')}</div><div class="panel" style="margin-bottom:14px">${auditPanel('u18')}</div><div class="panel" style="margin-bottom:14px"><h3>Plan de jeu</h3>${sysPanel('u18')}</div>${u18Panel()}`;el.querySelectorAll('[data-gonou]').forEach(b=>b.onclick=()=>go('comp','nou'));bindTB(el);bindSys(el,'u18');return}
+function vSquad(el){if(VIEWARG==='ana')return vAnalyse(el);vSquadMain(el);const vh=el.querySelector('.vhead');if(vh)vh.insertAdjacentHTML('afterend',sqTabs(''));else el.insertAdjacentHTML('afterbegin',sqTabs(''));bindSqTabs(el)}
+function vSquadMain(el){if(inPrologue()&&G.start==='district'){el.innerHTML=`<div class="vhead"><div><div class="eyebrow">Noushi League</div><h2>Ton groupe</h2></div></div><div class="panel" style="margin-bottom:14px"><h3>Ton onze pour la Noushi League</h3>${tbPanel('u18')}</div><div class="panel" style="margin-bottom:14px">${anaTeaser('u18')}</div><div class="panel" style="margin-bottom:14px"><h3>Plan de jeu</h3>${sysPanel('u18')}</div>${u18Panel()}`;el.querySelectorAll('[data-gonou]').forEach(b=>b.onclick=()=>go('comp','nou'));bindTB(el);bindSys(el,'u18');return}
   const c=me(),xi=userXI(),sq=squad(G.club).sort((a,b)=>LINES.indexOf(a.pos)-LINES.indexOf(b.pos)||b.ovr-a.ovr);
   const n=lineCounts(xi),f=FORMS[c.form];const ok=LINES.every((l,i)=>n[l]===f[i])&&xi.length===11;
   const wage=proWage(),cap=wageCap();
@@ -2670,7 +2671,7 @@ function vSquad(el){if(inPrologue()&&G.start==='district'){el.innerHTML=`<div cl
 </div>
       ${tbPanel('first')}
       ${lockedHG()?`<p class="tadv" style="margin:10px 0 0"><b>${esc(shortN(lockedHG()))}</b> est verrouillé titulaire : c'est le formé au club, ${lockedHG().apps} matchs sur 10. Après, tu décides.</p>`:''}<p class="muted" style="font-size:calc(14.5px*var(--tz));margin:10px 0 0">${ok?'Composition valide.':`<span class="bad">Composition incomplète ou déséquilibrée pour le ${c.form}.</span> Elle sera corrigée automatiquement avant le match.`} Touche les cartes pour changer le onze. Force du onze : <b class="num">${xiRating(xi,G.club).toFixed(1)}</b>.</p></div>
-    <div class="panel">${auditPanel('first')}</div>
+    <div class="panel">${anaTeaser('first')}</div>
     <div class="panel"><h3>Plan de jeu</h3>${sysPanel('first')}</div>
     <div class="panel"><h3>Tactique par défaut</h3><div class="sel" id="tacs">${Object.entries(TACTICS).map(([k,t])=>`<button data-t="${k}" class="${c.tactic===k?'on':''}">${t.l}</button>`).join('')}</div>${tacCost(c.tactic)}
       ${tacAdvice()}<p class="muted" style="font-size:calc(13.5px*var(--tz));margin:8px 0 0">Chiffres comparés à l'équilibré, pour une saison moyenne. Tu peux changer à la mi-temps des matchs en direct.</p>
@@ -4111,7 +4112,7 @@ function renderTitle(saved){
    <div id="m-dis" hidden><button class="btn ghost sm" data-back style="margin-bottom:12px">‹ Changer de carrière</button><h3 class="mtitle">Carrière District · choisis ta région</h3><p class="muted" style="margin:0 0 14px">Les opérateurs économiques et les supporters financent l'équipe du district. Détecte tes U18 dans les communes du Grand Abidjan, puis joue la Noushi League : les 2 meilleures équipes de district montent en Ligue 2. Sinon, un club de Ligue des Pros te proposera son équipe B.</p>
    <div class="clubpick">${DISTRICTS.map(d=>`<button data-d="${d.id}">${kit({c1:d.c[0],c2:d.c[1],pat:d.c[2]},52)}<span style="min-width:0"><b>${esc(d.name)}</b><small>${esc(d.dist)}</small><small>${esc(d.city)} · profil ${PROF_L[d.prof]||'équilibre'}</small></span></button>`).join('')}</div></div></div>
    <div class="row" style="gap:8px"><label class="btn ghost sm" style="cursor:pointer">Importer une partie<input type="file" id="impsave" accept=".json,application/json" hidden></label></div>
-   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 46${cloudDb?' · sauvegarde en ligne active':''}</p>
+   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 47${cloudDb?' · sauvegarde en ligne active':''}</p>
    <p class="muted" style="font-size:calc(13.5px*var(--tz));margin:0">Projet original. Clubs, joueurs, compétitions et montants de jeu sont fictifs, à l'échelle du football ivoirien réel. Aucune affiliation avec une fédération, une confédération ou un éditeur de jeux.</p>
   </div></div>`;
   $('#app').style.display='block';
@@ -4149,8 +4150,8 @@ function linkIndex(){const m=new Map(),add=(n,v)=>{if(n&&n.length>=4&&!m.has(n))
   COMP_LINKS.forEach(([n,a])=>add(n,'go:'+a));
   const keys=[...m.keys()].sort((a,b)=>b.length-a.length).map(s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));
   return{m,re:keys.length?new RegExp('(?<![\\p{L}\\p{N}])('+keys.join('|')+')(?![\\p{L}\\p{N}])','gu'):null}}
-const LK_SKIP=/^(BUTTON|A|SELECT|INPUT|TEXTAREA|LABEL|SVG|CANVAS|SCRIPT|STYLE|TITLE|OPTION|TEXT|TSPAN)$/i;
-function lkClickable(x,stop){for(;x&&x!==stop;x=x.parentElement){if(x.onclick||LK_SKIP.test(x.tagName)||(x.dataset&&(x.dataset.pl||x.dataset.lk||x.dataset.yo||x.dataset.co||x.dataset.nolk!==undefined))||(x.getAttribute&&/^(tab|button|link)$/.test(x.getAttribute('role')||'')))return true}return false}
+const LK_SKIP=/^(H1|H2|BUTTON|A|SELECT|INPUT|TEXTAREA|LABEL|SVG|CANVAS|SCRIPT|STYLE|TITLE|OPTION|TEXT|TSPAN)$/i;
+function lkClickable(x,stop){for(;x&&x!==stop;x=x.parentElement){if(x.onclick||LK_SKIP.test(x.tagName)||(x.classList&&x.classList.contains('eyebrow'))||(x.dataset&&(x.dataset.pl||x.dataset.lk||x.dataset.yo||x.dataset.co||x.dataset.nolk!==undefined))||(x.getAttribute&&/^(tab|button|link)$/.test(x.getAttribute('role')||'')))return true}return false}
 function linkify(root){if(!root||!G)return;let X;try{X=linkIndex()}catch(e){return}if(!X.re)return;
   const here=VIEW==='comp'?'go:'+(VIEWARG||''):'';
   const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),nodes=[];let n;while(n=w.nextNode())if(n.nodeValue.length>=4)nodes.push(n);
@@ -4354,6 +4355,45 @@ function nouLive(ev){const N=G.S.nou,f=nouStage(ev.k)[ev.j],ko=ev.k[0]!=='g',pla
   liveTactical({...M.spec,M,bench,block:{simple:'equi',talents:'press',bloc:'bloc'}[plan]||'equi'},M2=>{const sc=scoreAt(M2,90),pp=ko&&sc[0]===sc[1]?pens():null,goals=[];
     for(const e of M2.ev)if(e.k==='goal'){const mine=e.s===M2.userSide,p=e.p&&G.players[e.p.id];goals.push({m:e.m,mine:mine?1:0,id:mine&&p?(p.tmp?p.src:'p'+p.id):undefined,n:e.p?e.p.n:'?'})}
     nouTmpClear(1);nouPlay(ev,plan,{hg:sc[0],ag:sc[1],p:pp,goals});save()})}
+
+/* ---------- Équipe › Analyse ---------- */
+function sqKey(){return inPrologue()&&G.start==='district'?'u18':'first'}
+function sqTabs(on){return `<div class="tabs" id="sqtabs" role="tablist">${[['','Effectif'],['ana','Analyse']].map(([k,l])=>`<button role="tab" data-sq="${k}" aria-selected="${on===k}" class="${on===k?'on':''}">${l}</button>`).join('')}</div>`}
+function bindSqTabs(el){el.querySelectorAll('[data-sq]').forEach(b=>b.onclick=()=>go('squad',b.dataset.sq||undefined));el.querySelectorAll('[data-sqa]').forEach(b=>b.onclick=()=>go('squad','ana'))}
+function anaTeaser(key){const A=teamAudit(key);return `<div class="lbl">Analyse de l'équipe</div><h3 style="margin:4px 0 6px">${A.imp.length?`${A.imp.length} point${A.imp.length>1?'s':''} à améliorer`:'Pas de point faible évident'}</h3><p class="muted" style="margin:0 0 10px">${esc(A.imp[0]||A.good[0]||'')}</p><button class="btn sec sm" data-sqa="1">Voir l'analyse complète ›</button>`}
+function vAnalyse(el){const key=sqKey(),u18=key==='u18',ps=u18?(G.u18||[]):squad(G.club),nm=p=>u18?esc(p.n):pl(p);
+  const ch={};ps.forEach(p=>{const c=matchChar(p);(ch[c]=ch[c]||[]).push(p)});
+  const CH_D={pro:'Répond bien quand tu le recadres.',normal:'Réagit en général bien.',sens:'Un recadrage peut le faire douter. Encourage-le.',fier:'Peut bouder si tu le recadres devant tout le monde.',tete:'Risque de carton, peut arrêter de défendre.'};
+  const watch=ps.filter(p=>['tete','fier','sens'].includes(matchChar(p))).slice(0,6);
+  const cond=ps.length?Math.round(ps.reduce((s,p)=>s+(p.cond??100),0)/ps.length):0,endu=ps.length?Math.round(ps.reduce((s,p)=>s+enduOf(p),0)/ps.length):0,inj=ps.filter(p=>(p.inj||0)>0),low=ps.filter(p=>(p.cond??100)<60);
+  const bar=(v,c)=>`<div class="meter"><i style="width:${clamp(v,0,100)}%;background:${c}"></i></div>`;
+  let res='';
+  if(u18){const N=G.S&&G.S.nou,st=N?Object.entries(N.st||{}):[];const top=st.map(([id,s])=>({y:ps.find(p=>p.id===id),s})).filter(x=>x.y&&x.s.apps).sort((a,b)=>b.s.rs.reduce((x,y)=>x+y,0)/b.s.rs.length-a.s.rs.reduce((x,y)=>x+y,0)/a.s.rs.length);
+    res=top.length?`<div class="list">${top.slice(0,5).map(x=>`<div class="item"><span style="flex:1;min-width:0">${nm(x.y)}</span><span class="muted">${x.s.apps} m · ${x.s.g} but${x.s.g>1?'s':''}</span><b class="num">${(x.s.rs.reduce((a,b)=>a+b,0)/x.s.rs.length).toFixed(1)}</b></div>`).join('')}</div>`:`<p class="muted" style="margin:0">Pas encore de match officiel. ${G.regQ?'Lors de la qualification régionale : '+esc(G.regQ.path):''}</p>`}
+  else{const r=G.S&&G.S.league?leagueTable().find(x=>x.id===G.club):null,rated=ps.filter(p=>p.rat.length>=3).map(p=>({p,v:p.rat.reduce((a,b)=>a+b,0)/p.rat.length})).sort((a,b)=>b.v-a.v);
+    res=r&&r.J?`<div class="cgrid">${[['Matchs',r.J],['Bilan',`${r.G} V · ${r.N} N · ${r.P} D`],['Buts marqués',`${r.bp} (${(r.bp/r.J).toFixed(1)} / match)`],['Buts encaissés',`${r.bc} (${(r.bc/r.J).toFixed(1)} / match)`]].map(([l,v])=>`<div class="item"><span class="muted">${l}</span><b>${v}</b></div>`).join('')}</div>
+      <div class="row" style="margin-top:10px;gap:4px"><span class="muted" style="margin-right:6px">Forme</span>${r.form.slice(-5).map(f=>`<span class="frm frm-${f}">${f}</span>`).join('')}</div>
+      ${rated.length?`<div class="lbl" style="margin:12px 0 6px">En forme</div><div class="list">${rated.slice(0,3).map(x=>`<div class="item"><span style="flex:1;min-width:0">${nm(x.p)}</span><b class="num good">${x.v.toFixed(1)}</b></div>`).join('')}</div>
+      <div class="lbl" style="margin:12px 0 6px">En difficulté</div><div class="list">${rated.slice(-3).reverse().map(x=>`<div class="item"><span style="flex:1;min-width:0">${nm(x.p)}</span><b class="num ${x.v<6.3?'bad':''}">${x.v.toFixed(1)}</b></div>`).join('')}</div>`:''}`
+      :'<p class="muted" style="margin:0">Le championnat n\'a pas encore commencé.</p>'}
+  const ages=u18?'':(()=>{const b=[['21 ans et moins',ps.filter(p=>p.age<=21).length],['22 à 28 ans',ps.filter(p=>p.age>=22&&p.age<=28).length],['29 ans et plus',ps.filter(p=>p.age>=29).length]],end=ps.filter(p=>p.ctr<=1),wage=proWage(),cap=wageCap();
+    return `<div class="panel"><h3>Âges et contrats</h3><div class="cgrid">${b.map(([l,v])=>`<div class="item"><span class="muted">${l}</span><b>${v}</b></div>`).join('')}<div class="item"><span class="muted">Âge moyen</span><b>${(ps.reduce((s,p)=>s+p.age,0)/Math.max(1,ps.length)).toFixed(1)} ans</b></div></div>
+      <div class="lbl" style="margin:12px 0 6px">Contrats qui se terminent cette saison · ${end.length}</div>${end.length?`<div class="list">${end.slice(0,6).map(p=>`<div class="item">${posTag(p.pos)}<span style="flex:1;min-width:0">${nm(p)}</span><span class="muted">${p.age} ans</span>${ovrTag(p)}</div>`).join('')}</div>`:'<p class="muted" style="margin:0">Aucun.</p>'}
+      <div class="lbl" style="margin:12px 0 6px">Masse salariale</div><div class="row" style="margin-bottom:6px"><b class="num">${money(wage)}</b><span class="muted">/ ${money(cap)} par mois</span></div>${bar(wage/cap*100,wage>cap?'var(--bad)':wage/cap>.85?'var(--warn)':'var(--good)')}</div>`})();
+  el.innerHTML=`<div class="vhead"><div><div class="eyebrow">${esc(me().name)}${u18?' · groupe Noushi League':''}</div><h2>Analyse</h2></div></div>${sqTabs('ana')}
+   <div class="grid g2">
+    <div class="panel">${auditPanel(key)}</div>
+    <div class="panel"><h3>${u18?'Noushi League':'Résultats'}</h3>${res}</div>
+    <div class="panel"><h3>Caractères du vestiaire</h3><p class="muted" style="margin:0 0 10px">Ils décident comment chacun réagit quand tu le recadres ou l'encourages en match.</p>
+     <div class="list">${['pro','normal','sens','fier','tete'].filter(k=>ch[k]).map(k=>`<div class="item"><b style="flex:1">${CHAR_L[k]}</b><span class="num">${ch[k].length}</span><span class="muted" style="flex:2;font-size:calc(12.5px*var(--tz))">${CH_D[k]}</span></div>`).join('')}</div>
+     ${watch.length?`<div class="lbl" style="margin:12px 0 6px">À gérer avec attention</div><div class="list">${watch.map(p=>`<div class="item">${posTag(p.pos)}<span style="flex:1;min-width:0">${nm(p)}</span><span class="chip">${CHAR_L[matchChar(p)]}</span></div>`).join('')}</div>`:''}</div>
+    <div class="panel"><h3>Physique</h3><div class="lbl" style="margin-bottom:6px">Condition moyenne · ${cond} %</div>${bar(cond,cond>75?'var(--good)':cond>60?'var(--warn)':'var(--bad)')}
+     <div class="lbl" style="margin:12px 0 6px">Endurance moyenne · ${endu} / 100</div>${bar(endu,endu>=60?'var(--good)':endu>=50?'var(--warn)':'var(--bad)')}<p class="muted" style="font-size:calc(12.5px*var(--tz));margin:6px 0 0">Sous 58, ton équipe fatigue vite et paie en fin de match.</p>
+     ${inj.length?`<div class="lbl" style="margin:12px 0 6px">Blessés · ${inj.length}</div><div class="list">${inj.map(p=>`<div class="item">${posTag(p.pos)}<span style="flex:1">${nm(p)}</span><span class="chip bad">${p.inj} sem.</span></div>`).join('')}</div>`:''}
+     ${low.length?`<div class="lbl" style="margin:12px 0 6px">Fatigués</div><div class="list">${low.slice(0,5).map(p=>`<div class="item">${posTag(p.pos)}<span style="flex:1">${nm(p)}</span><span class="num bad">${Math.round(p.cond)} %</span></div>`).join('')}</div>`:''}</div>
+    ${ages}
+   </div>`;
+  bindSqTabs(el);bindAudit(el);bindPl(el)}
 
 try{window.claude?.hot?.snapshot?.(()=>({save:G?JSON.stringify(G):null,view:VIEW}))}catch(e){}
 (window.claude?.hot?.ready?window.claude.hot.ready(start):start(window.claude?.hot?.data??{}));
