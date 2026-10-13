@@ -1679,7 +1679,7 @@ function dscProspect(d,z,l,sc,f){const L=LIEUX[l],age=pick([15,16,16,17,17,18,18
   const pers=pick(Object.keys(DSC_PERS)),aca=l==='aca';
   const fam={who:aca?'Le directeur de l\'académie':pick(['Son père','Sa mère','Son oncle','Son grand frère','Sa tante','Son éducateur de quartier']),want:aca?pick(['argent','pct']):pick(['argent','argent','ecole','jeu','quartier']),greed:aca?1.3+R()*.25:.8+R()*.6,pat:mgrT('nego')?4:3,met:0,known:0,closed:0};
   const lieu=l==='aca'?z.aca:z[l];
-  return{id:'r'+(G.uid++),n:genUniq(pick(z.z),d.P.concat(G.u18||[])),pos,age,ovr,pot,at,c:z.k,l,from:`${lieu} · ${z.n}`,b:gauss()*5,k:clamp(12+sc.eye*7+(sc.net===z.k?10:0)+(mgrT('vieux')?10:0),10,70),pers,fam,riv:null,st:'rep',wk:d.wk,by:sc.n,obs:1,trial:0}}
+  return{id:'r'+(G.uid++),n:genUniq(pick(z.z),d.P.concat(G.u18||[])),pos,age,ovr,pot,at,c:z.k,l,from:`${lieu} · ${z.n}`,b:gauss()*5,k:clamp(12+sc.eye*7+(sc.net===z.k?10:0)+(mgrT('vieux')?10:0),10,70),pers,fam,riv:null,st:'rep',wk:d.wk,by:sc.n,obs:1,trial:0,jok:(l==='mar'||l==='com')&&age<=17&&R()<.55?(at.endu=ri(28,42),1):0}}
 function dscEst(x){const w=Math.max(1,Math.round((100-x.k)/10)),c=Math.round(x.ovr+x.b*(100-x.k)/100);return{c,lo:c-w,hi:c+w,w}}
 function dscAttr(x,k){const e=dscEst(x),h=(hashN(x.id+k)%9-4)*(100-x.k)/100;const c=clamp(Math.round(x.at[k]+x.b*(100-x.k)/100+h),20,99);return{c,lo:clamp(c-e.w-1,20,99),hi:clamp(c+e.w+1,20,99)}}
 function dscPotTxt(x){if(x.k<35)return 'inconnu';const w=Math.round((100-x.k)/6)+3,c=Math.round(x.pot+x.b*(100-x.k)/120);return `${c-w}–${c+w}`}
@@ -1703,7 +1703,7 @@ function dscWeek(ev){const d=ev.d,rep=[];addMoney(-dscWeekCost(d),'rec');
     else if(R()<.32-prot){x.st='gone';rep.push({sc:null,t:`<b>${esc(x.n)}</b> a signé chez ${esc(x.riv)}. Trop tard.`,ids:[]})}}
   for(const sc of d.sc){const a=d.asg[sc.id];if(a&&a.follow){const x=d.P.find(y=>y.id===a.follow);if(!x||x.st!=='rep'||x.k>=95)d.asg[sc.id]={c:sc.net,l:'mar',f:'ALL'}}}
   d.log.push({wk:d.wk,rep});d.tri=[];d.wk++;if(G.calV)G.today=isoD(addDays(mdate(0,1),Math.min(60,(d.wk-1)*7+(d.wk>d.W?60:0))));save();return rep}
-function dscSign(ev,x,cost,ex){addMoney(-cost,'rec');x.st='signed';x.cost=cost;const y={ost:x.l==='aca'?'semipro':'amateur',ostr:x.from,id:'u'+(G.uid++),n:x.n,pos:x.pos,age:x.age,ovr:x.ovr,ovr0:x.ovr,cost,sgSn:G.sn,pot:x.pot+(mgrT('form')?1:0),at:x.at,endu:x.at.endu,from:x.from,pers:x.pers};archInit(y);
+function dscSign(ev,x,cost,ex){addMoney(-cost,'rec');x.st='signed';x.cost=cost;const y={ost:x.l==='aca'?'semipro':'amateur',ostr:x.from,id:'u'+(G.uid++),n:x.n,pos:x.pos,age:x.age,ovr:x.ovr,ovr0:x.ovr,cost,sgSn:G.sn,jok:x.jok||0,pot:x.pot+(mgrT('form')?1:0),at:x.at,endu:x.at.endu,from:x.from,pers:x.pers};archInit(y);
   if(ex&&ex.jeu)y.promise=1;if(ex&&ex.pct)y.pct=10;G.u18.push(y);txPlayer(y,{n:x.from,s:x.l==='aca'?'ACA':x.l==='com'?'COM':'MAR'},G.club,cost);x.uid=y.id;newsAdd(`${me().name} signe ${x.n} (${x.pos}, ${x.age} ans), repéré au ${x.from}.`,'scout');save()}
 function dscNeed(){const n={GB:0,DEF:0,MIL:0,ATT:0};G.u18.forEach(y=>n[y.pos]++);return n}
 function dscStatus(x,d){if(x.st==='signed')return '<span class="chip good">Signé</span>';if(x.st==='gone')return '<span class="chip bad">Parti</span>';if(x.fam.closed)return '<span class="chip bad">Porte fermée</span>';
@@ -1970,7 +1970,7 @@ function u18Panel(){u18Init();const ys=G.u18.slice().sort((a,b)=>b.pot-a.pot);
 function nouPool(){u18Init();const pro=squad(G.club).filter(p=>p.age<=20&&p.inj<=0).sort((a,b)=>b.ovr-a.ovr).slice(0,3).map(p=>({id:'p'+p.id,ref:p.id,n:p.n,pos:p.pos,age:p.age,ovr:p.ovr,pot:p.pot,pro:1}));return G.u18.concat(pro)}
 function nouXI(){const st=tbState('u18');const xi=st.arr.filter(Boolean).map(st.getP).filter(Boolean);return xi.length?xi:nouAutoXI()}
 function nouEntBonus(){try{const st=tbState('u18');return clamp((tbEntente(st.arr,st.form,st.getP,st.same).score-50)/25,-2,2)}catch(e){return 0}}
-function nouMyStr(){const xi=nouXI(),N=G.S&&G.S.nou,dist=N&&N.me>=0&&N.teams[N.me].isD;return xi.reduce((s,p)=>s+p.ovr,0)/Math.max(1,xi.length)+.3*G.fac.train-1.5-(11-xi.length)*3+(dist?3.5:0)+nouEntBonus()+nouMor()*.6+(N&&N.sharp?.5:0)+(mgrT('tact')?.8:0)+sysBonus('u18')+(sysKey()==='u18'?nouMatchupVal():0)+enduPen(xi)+(G.prepTac===G.sn?.4:0)}
+function nouMyStr(){const xi=nouXI(),N=G.S&&G.S.nou,dist=N&&N.me>=0&&N.teams[N.me].isD;return xi.reduce((s,p)=>s+p.ovr,0)/Math.max(1,xi.length)+.3*G.fac.train-1.5-(11-xi.length)*3+(dist?3.5:0)+nouEntBonus()+nouMor()*.6+(N&&N.sharp?.5:0)+(mgrT('tact')?.8:0)+sysBonus('u18')+(sysKey()==='u18'?nouMatchupVal():0)+enduPen(xi)+(G.prepTac===G.sn?.4:0)+nouSessB()}
 
 /* --- tournoi --- */
 function nouInit(){const S=G.S;u18Init();G.dStr=G.dStr||{};G.yStr=G.yStr||{};const st=cur(),pro=!!(st&&st.pro),dm=pro&&G.start==='district',hasMe=dm||G.l1.includes(G.club);
@@ -2066,11 +2066,12 @@ function evNou(el,ev){if(ev.k==='bilan')return evNouBilan(el,ev);
     el.innerHTML=`<div class="event"><div class="hero"><div class="kita"></div><div class="in"><div class="eyebrow">${esc(lbl)} · ${esc(dateLabel())}</div><h2>${esc(nouTName(N.me))} contre ${esc(nouTName(opp))}</h2><p class="pitchline" style="font-size:calc(16px*var(--tz))">${esc(nouOppLine(opp))}</p></div></div>
      ${nouOppPanel(opp)}
      <div class="panel"><div class="row"><h3 style="margin:0">Consigne</h3><span class="sp"></span><span class="muted" style="font-size:calc(13px*var(--tz))">Moral ${morHTML()}</span></div><div style="height:10px"></div><div class="list nplan">${Object.entries(NOU_PLAN).map(([k,p])=>`<button class="item achoice ${ev.plan===k?'on':''}" data-np="${k}" aria-pressed="${ev.plan===k}"><span style="flex:1;min-width:0;text-align:left"><b>${esc(p.l)}</b><span class="muted" style="display:block;font-size:calc(13.5px*var(--tz))">${esc(p.d)}</span></span></button>`).join('')}</div></div>
+     ${sessHTML(ev)}
      <div class="panel"><h3>Ton onze <span class="muted" style="font-weight:400;font-size:.8em">· niveau moyen ${Math.round(xi.reduce((s,p)=>s+p.ovr,0)/Math.max(1,xi.length))}</span></h3>${tbPanel('u18')}</div>
      ${N.teams[N.me]&&N.teams[N.me].isD?`<div class="panel" style="border-color:var(--accent)"><div class="lbl">Ton objectif</div><p style="margin:6px 0 0">Finir parmi les <b>2 meilleures équipes de district</b>. ${ev.k==='g0'?'Le tournoi commence.':`Aujourd'hui : <b>${nouDistRank()}e district sur 16</b>${nouDistRank()<=2?' · qualifié si ça s\'arrêtait maintenant':''}.`} Gagner la Noushi te vaudrait en plus l'appel d'un club de Ligue des Pros.</p></div>`:''}
      ${ev.k[0]==='g'?`<div class="panel">${nouGroupHTML(N.gfx[ev.k][ev.j].gi)}</div>`:''}
      <div class="row" style="gap:8px;flex-wrap:wrap"><button class="btn" data-primary id="nlive">Jouer en direct ›</button><button class="btn ghost" id="nplay">Résultat immédiat</button></div></div>`;
-    el.querySelectorAll('[data-np]').forEach(b=>b.onclick=()=>{ev.plan=b.dataset.np;save();refresh()});
+    el.querySelectorAll('[data-np]').forEach(b=>b.onclick=()=>{ev.plan=b.dataset.np;save();refresh()});el.querySelectorAll('[data-ss]').forEach(b=>b.onclick=()=>{ev.sess=b.dataset.ss;save();refresh()});
     el.querySelector('#nplay').onclick=()=>{nouPlay(ev,ev.plan||'simple');refresh()};{const nl=el.querySelector('#nlive');if(nl)nl.onclick=()=>nouLive(ev)}el.querySelectorAll('[data-gosq]').forEach(b=>b.onclick=()=>go('squad'));bindTB(el);return}
   const r=ev.res,won=nouMyWon(f),draw=r.my===r.op&&!r.p;
   const verdict=won?(r.p?'Qualifié aux tirs au but':'Victoire'):draw?'Match nul':r.p?'Éliminé aux tirs au but':'Défaite';
@@ -2667,7 +2668,7 @@ function sixVars(){const v=[
 function repTxt(v,w){if(w)return v<5?'Nulle':v<20?'Discrète':v<45?'Remarquée':v<70?'Établie':'Mondiale';return v<10?'Inconnue':v<30?'Émergente':v<55?'Respectée':v<80?'Redoutée':'Légendaire'}
 
 /* ---------------- Effectif ---------------- */
-function vSquad(el){if(VIEWARG==='ana')return vAnalyse(el);vSquadMain(el);const vh=el.querySelector('.vhead');if(vh)vh.insertAdjacentHTML('afterend',sqTabs(''));else el.insertAdjacentHTML('afterbegin',sqTabs(''));bindSqTabs(el)}
+function vSquad(el){if(VIEWARG==='ana')return vAnalyse(el);if(isDist()&&(VIEWARG==='tri'||VIEWARG==='ami')){el.innerHTML=`<div class="vhead"><div><div class="eyebrow">Équipe</div><h2>${VIEWARG==='tri'?'Tri du groupe':'Matchs amicaux'}</h2></div></div>${sqTabs(VIEWARG)}<div id="sqsub"></div>`;bindSqTabs(el);(VIEWARG==='tri'?vTri:vAmi)(el.querySelector('#sqsub'));return}vSquadMain(el);const vh=el.querySelector('.vhead');if(vh)vh.insertAdjacentHTML('afterend',sqTabs(''));else el.insertAdjacentHTML('afterbegin',sqTabs(''));bindSqTabs(el)}
 function vSquadMain(el){if(inPrologue()&&G.start==='district'){el.innerHTML=`<div class="vhead"><div><div class="eyebrow">Noushi League</div><h2>Ton groupe</h2></div></div><div class="panel" style="margin-bottom:14px"><h3>Ton onze pour la Noushi League</h3>${tbPanel('u18')}</div><div class="panel" style="margin-bottom:14px">${anaTeaser('u18')}</div><div class="panel" style="margin-bottom:14px"><h3>Plan de jeu</h3>${sysPanel('u18')}</div>${u18Panel()}`;el.querySelectorAll('[data-gonou]').forEach(b=>b.onclick=()=>go('comp','nou'));bindTB(el);bindSys(el,'u18');return}
   const c=me(),xi=userXI(),sq=squad(G.club).sort((a,b)=>LINES.indexOf(a.pos)-LINES.indexOf(b.pos)||b.ovr-a.ovr);
   const n=lineCounts(xi),f=FORMS[c.form];const ok=LINES.every((l,i)=>n[l]===f[i])&&xi.length===11;
@@ -3012,7 +3013,7 @@ function dscCompare(x){const e=dscEst(x),same=G.u18.filter(y=>y.pos===x.pos).sor
   if(e.hi>=last.ovr)return{t:`À la lutte pour une place : ${esc(last.n)} (${last.ovr}) tient le poste.`,c:'warn'};
   return{t:`Il serait remplaçant : tes titulaires ${x.pos} sont à ${last.ovr} ou plus.`,c:'muted'}}
 function dscCard(x,d){const e=dscEst(x),isNew=x.wk===d.wk-1&&x.st==='rep';
-  return `<button class="srcard ${x.st!=='rep'?'off':''}" data-pr="${x.id}"><span class="srface">${faceSVG(x,{c1:'#3a4a44',c2:'#9fb3a8'})}</span><span class="srtxt"><b>${esc(x.n.split(' ')[0])}<br>${esc(x.n.split(' ').slice(1).join(' '))}</b><span>Âge ${x.age} · ${posTag(x.pos)}</span><span class="srnote num">${x.st==='signed'?x.ovr:e.lo+'–'+e.hi}</span></span>${isNew?'<i class="srnew">NOUVEAU</i>':''}${(()=>{const t=dscStatus(x,d);return t&&!t.includes('>Nouveau<')?`<span class="srst">${t}</span>`:''})()}</button>`}
+  return `<button class="srcard ${x.st!=='rep'?'off':''}" data-pr="${x.id}"><span class="srface">${faceSVG(x,{c1:'#3a4a44',c2:'#9fb3a8'})}</span><span class="srtxt"><b>${esc(x.n.split(' ')[0])}<br>${esc(x.n.split(' ').slice(1).join(' '))}</b><span>Âge ${x.age} · ${posTag(x.pos)}</span>${x.jok?'<span class="chip gold" style="align-self:flex-start">Joker</span>':''}<span class="srnote num">${x.st==='signed'?x.ovr:e.lo+'–'+e.hi}</span></span>${isNew?'<i class="srnew">NOUVEAU</i>':''}${(()=>{const t=dscStatus(x,d);return t&&!t.includes('>Nouveau<')?`<span class="srst">${t}</span>`:''})()}</button>`}
 
 /* --- recruteurs à embaucher --- */
 const SC_NAT=[['ci','🇨🇮',6],['ml','🇲🇱',1],['bf','🇧🇫',1],['gh','🇬🇭',1],['gn','🇬🇳',1],['fr','🇫🇷',1]];
@@ -3551,7 +3552,7 @@ function eSub(E,out,inId){const p=P(inId),s=out.s,m=clamp(Math.ceil(E.t/60),1,90
   E.condOf[out.id]=out.cond;E.subs.push({out:out.id,in:inId,m});E.subsLeft[s]--;E.bench=E.bench.filter(x=>x!==inId);
   eLog(E,'sub',s,null,`Changement : ${p.n} remplace ${out.n}.`);out.pl=p;out.id=p.id;out.n=p.n;out.cond=p.cond;out.inj=false;out.yc=0;out.lazy=false;out.focus=0;out.hot=0;return true}
 function eAutoSubs(E,s,n){const tired=eAct(E,s).filter(t=>t.id&&t.line>0).sort((a,b)=>(a.inj?-1:0)-(b.inj?-1:0)||a.cond-b.cond);
-  for(const t of tired){if(n<=0||E.subsLeft[s]<=0)break;if(!t.inj&&t.cond>72)continue;const b=E.bench.map(P).filter(p=>p&&p.pos===t.pos).sort((a,c)=>c.ovr-a.ovr)[0]||E.bench.map(P).filter(p=>p&&p.pos!=='GB').sort((a,c)=>c.ovr-a.ovr)[0];if(!b)break;if(eSub(E,t,b.id))n--}}
+  for(const t of tired){if(n<=0||E.subsLeft[s]<=0)break;if(!t.inj&&t.cond>72&&!t.pl.jok)continue;const b=E.bench.map(P).filter(p=>p&&p.pos===t.pos).sort((a,c)=>c.ovr-a.ovr)[0]||E.bench.map(P).filter(p=>p&&p.pos!=='GB').sort((a,c)=>c.ovr-a.ovr)[0];if(!b)break;if(eSub(E,t,b.id))n--}}
 function eLocked(E){return E.mgr.red||E.mgr.susp}
 function eComplain(E){const m=E.mgr;if(eLocked(E)||E.done)return;m.complaints++;const just=E.window&&E.t<=E.window.until;
   if(just){m.agg+=16;eLog(E,'mgr',E.uside,null,E.window.kind==='offside'?'Tu protestes contre le hors-jeu. L\'arbitre maintient sa décision.':'Tu protestes contre le tacle non sifflé. L\'arbitre maintient sa décision.');E.window=null}
@@ -3579,7 +3580,7 @@ function newEngine(M,o){o=o||{};const uid=G.club;if(G.diff==null)G.diff=DIFF_PRE
   if(E.mgr.susp)eLog(E,'mgr',E.uside,null,'Suspendu, tu suis le match depuis la tribune. Ton adjoint applique les consignes d\'avant-match.');
   return E}
 function eFatigue(E,d){for(const s of [0,1]){const ins=E.ins[s],f=d/60*.2*FATIGUE_F[ins.block]*((ins.block==='press'||ins.block==='tout')&&capPress(E,s)<.9?1.15:1)*(s===E.uside?(1-.05*inf('muscu'))*(s===1&&inf('bus')?.93:1):1)*(ins.calm?.9:1);
-  for(const t of eAct(E,s)){t.cond=Math.max(20,t.cond-f*(t.pl.id?clamp(1+(60-enduOf(t.pl))/120,.8,1.3):1)*(t.pl.at.phy<50?1.3:1)*(t.pl.plan==='endurance'?.85:1)*(t.line===0?.3:1))}}}
+  for(const t of eAct(E,s)){t.cond=Math.max(20,t.cond-f*(t.pl.id?clamp(1+(60-enduOf(t.pl))/120,.8,1.3):1)*(t.pl.at.phy<50?1.3:1)*(t.pl.plan==='endurance'?.85:1)*(t.line===0?.3:1)*(t.pl.jok&&E.t/60>52?5:1))}}}
 function eHooks(E){const m=Math.ceil(E.t/60);
   for(const s of [0,1])if(s!==E.uside&&!E.aiSubs[s]&&m>=64){E.aiSubs[s]=true;eAct(E,s).filter(t=>t.line>0).sort((a,b)=>a.cond-b.cond).slice(0,3).forEach(t=>t.cond=100);eLog(E,'sub',s,null,`Triple changement pour ${T(eSide(E,s)).short}.`)}
   if((E.auto||eLocked(E))&&!E.autoDone&&m>=65){E.autoDone=true;eAutoSubs(E,E.uside,3)}
@@ -4130,7 +4131,7 @@ function renderTitle(saved){
    <div id="m-dis" hidden><button class="btn ghost sm" data-back style="margin-bottom:12px">‹ Changer de carrière</button><h3 class="mtitle">Carrière District · choisis ta région</h3><p class="muted" style="margin:0 0 14px">Les opérateurs économiques et les supporters financent l'équipe du district. Détecte tes U20 dans les communes du Grand Abidjan, puis joue la Noushi League : les 2 meilleures équipes de district montent en Ligue 2. Sinon, un club de Ligue des Pros te proposera son équipe B.</p>
    <div class="clubpick">${DISTRICTS.map(d=>`<button data-d="${d.id}">${kit({c1:d.c[0],c2:d.c[1],pat:d.c[2]},52)}<span style="min-width:0"><b>${esc(d.name)}</b><small>${esc(d.dist)}</small><small>${esc(d.city)} · profil ${PROF_L[d.prof]||'équilibre'}</small></span></button>`).join('')}</div></div></div>
    <div class="row" style="gap:8px"><label class="btn ghost sm" style="cursor:pointer">Importer une partie<input type="file" id="impsave" accept=".json,application/json" hidden></label></div>
-   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 59${cloudDb?' · sauvegarde en ligne active':''}</p>
+   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 60${cloudDb?' · sauvegarde en ligne active':''}</p>
    <p class="muted" style="font-size:calc(13.5px*var(--tz));margin:0">Projet original. Clubs, joueurs, compétitions et montants de jeu sont fictifs, à l'échelle du football ivoirien réel. Aucune affiliation avec une fédération, une confédération ou un éditeur de jeux.</p>
   </div></div>`;
   $('#app').style.display='block';
@@ -4370,7 +4371,7 @@ function nouTmpClear(keepFx){if(!G)return;for(const id in G.players)if(G.players
 function nouLive(ev){const N=G.S.nou,f=nouStage(ev.k)[ev.j],ko=ev.k[0]!=='g',plan=ev.plan||'simple',home=f.h===N.me,oi=home?f.a:f.h,ot=N.teams[oi];
   nouTmpClear();const xi=nouXI(),avg=xi.reduce((s,p)=>s+p.ovr,0)/Math.max(1,xi.length),bonus=clamp(nouMyStr()-avg,-6,8);
   const tmp=y=>{if(y.ref)return y.ref;const id='n_'+y.id,at=y.at||(y.at=genAttrs(y.pos,y.ovr));
-    G.players[id]={id,n:y.n,pos:y.pos,age:y.age,ovr:y.ovr,pot:y.pot,at:Object.fromEntries(Object.entries(at).map(([k,v])=>[k,clamp(Math.round(v+bonus),20,99)])),cond:100,disc:y.disc??(y.pers==='tete'?32:y.pers==='trav'||y.pers==='lead'?78:y.pers==='frag'?55:62),pers:y.pers,known:true,rat:[],tmp:1,src:y.id};return id};
+    G.players[id]={id,n:y.n,pos:y.pos,age:y.age,ovr:y.ovr,pot:y.pot,at:Object.fromEntries(Object.entries(at).map(([k,v])=>[k,clamp(Math.round(v+bonus),20,99)])),cond:100,disc:y.disc??(y.pers==='tete'?32:y.pers==='trav'||y.pers==='lead'?78:y.pers==='frag'?55:62),pers:y.pers,endu:y.endu,jok:y.jok,known:true,rat:[],tmp:1,src:y.id};return id};
   const ids=xi.map(tmp),bench=nouPool().filter(y=>!xi.includes(y)).sort((a,b)=>b.ovr-a.ovr).slice(0,9).map(tmp);
   const b=ot.kind==='dist'?distBase(ot.k):null,oc=ot.kind==='dist'?{c1:(b&&b.c[0])||'#444',c2:(b&&b.c[1])||'#ddd',pat:(b&&b.c[2])||'plain'}:T(ot.club)||{c1:'#444',c2:'#ddd',pat:'plain'},city=ot.kind==='dist'?(b||{}).city:(T(ot.club)||{}).city;
   FX.NOUOPP={id:'NOUOPP',name:ot.name,short:ot.name.split(/\s+/).filter(w=>/^[A-ZÉ]/.test(w)).map(w=>w[0]).join('').slice(0,3)||'ADV',country:'Côte d\'Ivoire',league:'autres',base:nouStr(oi),c1:oc.c1,c2:oc.c2,pat:oc.pat,ivo:1,z:zoneOf(city)};
@@ -4382,7 +4383,7 @@ function nouLive(ev){const N=G.S.nou,f=nouStage(ev.k)[ev.j],ko=ev.k[0]!=='g',pla
 
 /* ---------- Équipe › Analyse ---------- */
 function sqKey(){return inPrologue()&&G.start==='district'?'u18':'first'}
-function sqTabs(on){return `<div class="tabs" id="sqtabs" role="tablist">${[['','Effectif'],['ana','Analyse']].map(([k,l])=>`<button role="tab" data-sq="${k}" aria-selected="${on===k}" class="${on===k?'on':''}">${l}</button>`).join('')}</div>`}
+function sqTabs(on){return `<div class="tabs" id="sqtabs" role="tablist">${(isDist()?[['','Effectif'],['tri','Tri du groupe'],['ami','Amicaux'],['ana','Analyse']]:[['','Effectif'],['ana','Analyse']]).map(([k,l])=>`<button role="tab" data-sq="${k}" aria-selected="${on===k}" class="${on===k?'on':''}">${l}</button>`).join('')}</div>`}
 function bindSqTabs(el){el.querySelectorAll('[data-sq]').forEach(b=>b.onclick=()=>go('squad',b.dataset.sq||undefined));el.querySelectorAll('[data-sqa]').forEach(b=>b.onclick=()=>go('squad','ana'))}
 function anaTeaser(key){const A=teamAudit(key);return `<div class="lbl">Analyse de l'équipe</div><h3 style="margin:4px 0 6px">${A.imp.length?`${A.imp.length} point${A.imp.length>1?'s':''} à améliorer`:'Pas de point faible évident'}</h3><p class="muted" style="margin:0 0 10px">${esc(A.imp[0]||A.good[0]||'')}</p><button class="btn sec sm" data-sqa="1">Voir l'analyse complète ›</button>`}
 function vAnalyse(el){const key=sqKey(),u18=key==='u18',ps=u18?(G.u18||[]):squad(G.club),nm=p=>u18?esc(p.n):pl(p);
@@ -4903,6 +4904,8 @@ function bureauTasks(){if(!isDist())return [];const out=[],ev=G.ev,ys=G.u18||[],
     const nw=ys.filter(y=>y.sgSn===G.sn&&!ids.has(y.id)&&xi.some(p=>p.pos===y.pos&&p.ovr<y.ovr));
     if(nw.length)out.push({k:'xi',t:`${nw.length===1?esc(nw[0].n)+' peut':nw.length+' recrues peuvent'} entrer dans ton onze`,s:'Place-les sur le terrain ou garde-les sur le banc.',go:['squad']})}catch(e){}
   if(N&&N.me>=0&&!(N.done&&Object.keys(N.done).length)){const g=N.groups.findIndex(x=>x.includes(N.me));if(g>=0)out.push({k:'nou',t:`Noushi League : poule ${'ABCDEFGH'[g]}`,s:'Adversaires : '+N.groups[g].filter(i=>i!==N.me).map(i=>N.teams[i].name).join(', ')+'.',go:['comp','nou']})}
+  if(amiOpen()&&ev&&ev.t==='drec'&&amiState().list.length===0)out.push({k:'ami',t:'Programme un match amical',s:'Teste tes anciens et tes recrues avant la Noushi League.',go:['squad','ami']});
+  if(ev&&ev.t==='nou'&&ev.phase==='pre'&&!ev.sess)out.push({k:'sess',t:'Séance tactique avant le match',s:'Choisis le thème de la veille du match.',go:['event']});
   return out}
 function bTile(k,lbl,big,small,act){return `<button class="btile" data-bt="${k}" ${k==='rdv'?'id="hgo" data-primary':''}><span class="lbl">${lbl}</span><b>${big}</b><span class="muted">${small}</span></button>`}
 function vBureauD(el){const ev=G.ev,st=cur(),ys=G.u18||[],n=ys.length,gb=ys.filter(y=>y.pos==='GB').length,N=G.S.nou,d=ev&&ev.t==='drec'?(ev.d||dscInit(ev)):null,T=bureauTasks();
@@ -4941,6 +4944,61 @@ function distFicheHTML(b,k){const kv=(l,v)=>`<div class="item"><span class="mute
   const N=G.S&&G.S.nou,ni=N?N.teams.findIndex(t=>t.name===b.name):-1,mg=N&&N.me>=0?N.groups.findIndex(x=>x.includes(N.me)):-1,same=ni>=0&&mg>=0&&N.groups[mg].includes(ni);
   return `<div class="cgrid">${kv('Région',esc(b.dist))}${kv('Niveau estimé',lv)}${kv('Tournoi régional',reg)}${same?kv('Noushi League','Dans ta poule'):''}</div>
    <div class="list" style="margin-top:10px"><div class="item" style="flex-direction:column;align-items:flex-start;gap:2px"><b>Style : ${P[0]}</b><span class="muted">${P[1]}</span></div><div class="item" style="flex-direction:column;align-items:flex-start;gap:2px"><b>Ce qui est dangereux</b><span class="muted">${P[2]}</span></div><div class="item" style="flex-direction:column;align-items:flex-start;gap:2px"><b>Comment les jouer</b><span class="muted">${P[3]}</span></div><div class="item" style="flex-direction:column;align-items:flex-start;gap:2px"><b>Noushi League, dernières éditions</b><span class="muted">${H}</span></div></div>`}
+
+/* ---------- Lot B2 : préparer la Noushi League (séance tactique, jokers, amicaux, tri du groupe) ---------- */
+// séance tactique de la veille : un thème, un petit avantage pour ce match seulement
+const SESS={def:{l:'Travail défensif',d:'Lignes serrées et couverture. Plus utile si tu joues « Bloc et contre ».',b:e=>e.plan==='bloc'?.7:.3},
+  att:{l:'Automatismes offensifs',d:'Combinaisons et appels. Plus utile si tu laisses jouer les talents.',b:e=>e.plan==='talents'?.7:.3},
+  cpa:{l:'Coups de pied arrêtés',d:'Corners et coups francs travaillés : un petit gain dans tous les cas.',b:()=>.4},
+  opp:{l:'Étude de l\'adversaire',d:'Causerie sur leur style. Plus utile si ton plan de jeu contre leur style.',b:()=>{try{return nouMatchupVal()>0?.7:.2}catch(x){return .3}}}};
+function nouSessB(){const e=G&&G.ev;return e&&e.t==='nou'&&e.phase==='pre'&&e.sess&&SESS[e.sess]?SESS[e.sess].b(e):(e&&e.t==='nou'&&e.sessDone&&SESS[e.sessDone]?SESS[e.sessDone].b(e):0)}
+function sessHTML(ev){return `<div class="panel"><h3>Séance tactique de la veille</h3><p class="muted" style="margin-top:0">Choisis un seul thème. Il donne un petit avantage pour ce match uniquement.</p><div class="list nplan">${Object.entries(SESS).map(([k,s])=>`<button class="item achoice ${ev.sess===k?'on':''}" data-ss="${k}" aria-pressed="${ev.sess===k}"><span style="flex:1;min-width:0;text-align:left"><b>${s.l}</b><span class="muted" style="display:block;font-size:calc(13.5px*var(--tz))">${s.d}</span></span>${ev.sess===k?`<b class="num good">+${s.b(ev).toFixed(1).replace('.',',')}</b>`:''}</button>`).join('')}</div></div>`}
+// matchs amicaux avant la Noushi League : on teste les joueurs, le résultat ne compte pas
+function amiState(){let A=G.ami;if(!A||A.sn!==G.sn){A=G.ami={sn:G.sn,list:[],opp:null}}
+  if(!A.opp){const pool=shuffle(REG_OTHERS.map(o=>({n:o[0],city:o[1]})).concat(ACADEMIES.map(a=>({n:a.name,city:a.city,c:a.c}))));A.opp=pool.slice(0,3).map((o,i)=>({...o,str:[47,51,55][i]}))}return A}
+function amiOpen(){const e=G.ev;return isDist()&&!!e&&['intro','drec','prep'].includes(e.t)}
+function amiMatch(o){nouTmpClear();const xi=nouXI(),avg=xi.reduce((s,p)=>s+p.ovr,0)/Math.max(1,xi.length),bonus=clamp(nouMyStr()-avg,-6,8);
+  const tmp=y=>{const id='n_'+y.id,at=y.at||(y.at=genAttrs(y.pos,y.ovr));G.players[id]={id,n:y.n,pos:y.pos,age:y.age,ovr:y.ovr,pot:y.pot,at:Object.fromEntries(Object.entries(at).map(([k,v])=>[k,clamp(Math.round(v+bonus),20,99)])),cond:100,disc:y.disc??62,pers:y.pers,endu:y.endu,jok:y.jok,known:true,rat:[],tmp:1,src:y.id};return id};
+  const ids=xi.map(tmp),bench=nouPool().filter(y=>!xi.includes(y)).sort((a,b)=>b.ovr-a.ovr).slice(0,9).map(tmp);
+  FX.NOUOPP={id:'NOUOPP',name:o.n,short:o.n.split(/\s+/).filter(w=>/^[A-ZÉ]/.test(w)).map(w=>w[0]).join('').slice(0,3)||'ADV',country:'Côte d\'Ivoire',league:'autres',base:o.str,c1:o.c?o.c[0]:'#4a5a54',c2:o.c?o.c[1]:'#e8e2d0',pat:o.c?o.c[2]:'plain',ivo:1,z:zoneOf(o.city)};
+  const M={spec:{comp:'ami',h:G.club,a:'NOUOPP',label:'Match amical · '+o.n,ko:false,neutral:true},h:G.club,a:'NOUOPP',userSide:0,xi:{[G.club]:ids,NOUOPP:null},hg:0,ag:0,ev:[],stats:{sh:[0,0],ot:[0,0],pos:50},tac:'equi',min:0,half:1,done:false,venue:'Terrain du quartier'};
+  return{M,ids,bench}}
+function amiReport(M,ids,i,o){const E=M.E,[hg,ag]=scoreAt(M,90),res=[],slot={};for(const t of (E?E.pl[0]:[]))if(t.id)slot[t.id]=t;
+  const all=ids.concat((E?E.subs:[]).map(s=>s.in).filter(id=>!ids.includes(id)));
+  for(const id of all){const p=G.players[id];if(!p||!p.tmp)continue;const so=E.subs.find(s=>s.out===id),si=E.subs.find(s=>s.in===id);
+    const mins=si?(so?so.m-si.m:90-si.m):so?so.m:90,goals=M.ev.filter(e=>e.k==='goal'&&e.p&&e.p.id===id).length,ast=M.ev.filter(e=>e.k==='goal'&&e.as&&e.as.id===id).length;
+    const r=Math.round(clamp((si?6.3:6.4)+rf(-.3,.3)+clamp(E.perf[id]||0,-1,1.3)+goals*.9+ast*.5+(hg>ag?.3:hg<ag?-.3:0),4.5,10)*10)/10,cond=Math.round(E.condOf[id]??(slot[id]?slot[id].cond:100));
+    res.push({id:p.src,n:p.n,pos:p.pos,mins,r,cond,goals,jok:!!p.jok,out:!!so,sub:!!si})}
+  nouTmpClear(1);const A=amiState();A.list.push({i,opp:o.n,sc:[hg,ag],rat:res});
+  for(const x of res){const y=(G.u18||[]).find(q=>q.id===x.id);if(y)(y.ami=y.ami||[]).push(x.r)}
+  newsAdd(`Match amical : ${me().name} ${hg}-${ag} ${o.n}.`,'club');save()}
+function amiPlay(i,live){const A=amiState(),o=A.opp[i];if(!o||A.list.some(m=>m.i===i)||A.list.length>=3)return;const {M,ids,bench}=amiMatch(o);
+  if(live){liveTactical({...M.spec,M,bench,block:'equi'},M2=>{amiReport(M2,ids,i,o);refresh()});return}
+  const E=newEngine(M,{auto:true});E.bench=bench.slice();eSimAll(E);amiReport(M,ids,i,o);refresh()}
+function amiTable(m){return `<div class="panel"><div class="row"><h3 style="margin:0">${esc(me().name)} ${m.sc[0]} - ${m.sc[1]} ${esc(m.opp)}</h3></div><div class="tw" style="margin-top:8px"><table><thead><tr><th>Joueur</th><th class="r">Min</th><th class="r">Note</th><th>Physique</th></tr></thead><tbody>${m.rat.sort((a,b)=>b.r-a.r).map(x=>`<tr><td style="white-space:normal">${posTag(x.pos)} ${esc(x.n)}${x.goals?' ⚽'.repeat(x.goals):''}${x.sub?' <span class="muted">(entré)</span>':x.out?' <span class="muted">(remplacé)</span>':''}</td><td class="r num">${x.mins}</td><td class="r num"><b class="${x.r>=7?'good':x.r<6?'bad':''}">${String(x.r).replace('.',',')}</b></td><td>${x.cond<60?`<span class="bad">épuisé${x.jok?' · joker':''}</span>`:x.cond<72?'fatigué':'frais'}</td></tr>`).join('')}</tbody></table></div></div>`}
+function vAmi(el){const A=amiState(),can=amiOpen(),left=3-A.list.length;
+  el.innerHTML=`<div class="panel"><h3>Matchs amicaux · ${A.list.length} / 3</h3><p class="muted" style="margin-top:0">Avant la Noushi League. Teste tes anciens et tes recrues : chaque joueur reçoit une note et tu vois qui tient physiquement. Le résultat ne compte pas. Ton onze et ton plan de jeu sont ceux de l'onglet Effectif.</p>
+   ${can&&left>0?`<div class="list">${A.opp.map((o,i)=>A.list.some(m=>m.i===i)?'':`<div class="item" style="flex-wrap:wrap;gap:8px"><span style="flex:1 1 100%;min-width:0"><b>${esc(o.n)}</b><span class="muted" style="display:block;font-size:calc(13px*var(--tz))">${['Adversaire modeste','Adversaire de ton niveau','Adversaire costaud'][i]}</span></span><span class="row" style="gap:8px;flex-basis:100%"><button class="btn sm" data-ami="${i}:1">Jouer en direct</button><button class="btn ghost sm" data-ami="${i}:0">Résultat immédiat</button></span></div>`).join('')}</div>`:`<p class="muted" style="margin:0">${can?'Les trois matchs amicaux sont joués.':'La période des matchs amicaux est passée : ils se jouent avant la Noushi League.'}</p>`}</div>
+   ${A.list.slice().reverse().map(amiTable).join('')}`;
+  el.querySelectorAll('[data-ami]').forEach(b=>b.onclick=()=>{const [i,l]=b.dataset.ami.split(':');amiPlay(+i,l==='1')})}
+// tri du groupe : garder, proposer à un club de district ou à une académie, rendre au quartier
+function triOpen(){return isDist()&&G.ev&&(G.ev.t==='intro'||G.ev.t==='drec')}
+function triBuyers(y){const ds=DISTRICTS.filter(d=>d.name!==me().name).map(d=>d.name),as=y.age<=18?ACADEMIES.map(a=>a.name):[];return ds.concat(as)}
+function triSell(y){const wk=G.ev&&G.ev.d?G.ev.d.wk:0;if(y.saleWk===wk)return{ok:false,why:'Déjà proposé cette semaine. Réessaie la semaine prochaine.'};y.saleWk=wk;
+  const ch=clamp((y.pot-58)/22+(y.ovr-50)/30,.08,.85);if(R()>ch)return{ok:false,why:`Aucun club ne s'est manifesté pour ${y.n} cette semaine.`};
+  const club=pick(triBuyers(y)),fee=Math.max(1e5,Math.round((.6e5+(y.ovr-48)*.6e5+Math.max(0,y.pot-65)*.4e5)*rf(.8,1.15)/5e4)*5e4);return{ok:true,club,fee}}
+function triLeave(y,why,fee,club){G.u18=G.u18.filter(q=>q!==y);try{if(G.u18xs)G.u18xs=G.u18xs.map(id=>id===y.id?null:id)}catch(e){}try{txPlayer(y,G.club,{n:club||'Quartier',s:club?'DIS':'QRT'},fee||0)}catch(e){}if(fee)addMoney(fee,'tra');try{archivePlayer({...y,club:G.club,apps:0,wm:1},why)}catch(e){}save()}
+function vTri(el){const ord={GB:0,DEF:1,MIL:2,ATT:3},ys=(G.u18||[]).slice().sort((a,b)=>ord[a.pos]-ord[b.pos]||b.ovr-a.ovr),can=triOpen(),n=ys.length;
+  const am=y=>y.ami&&y.ami.length?(y.ami.reduce((a,b)=>a+b,0)/y.ami.length).toFixed(1).replace('.',','):null;
+  el.innerHTML=`<div class="panel"><h3>Tri du groupe · ${n} / 23</h3><p class="muted" style="margin-top:0">Garde ceux qui entrent dans tes plans. Propose les autres à un club de district ou à une académie, ou rends-les au quartier. ${can?'Possible jusqu\'au dépôt de la liste (30 juin).':'La liste est déposée : plus de départ avant la fin de la Noushi League.'}${n<18?' <b class="bad">Attention : il faut au moins 18 joueurs.</b>':''}</p>
+   <div class="list">${ys.map(y=>`<div class="item" style="flex-wrap:wrap;gap:6px">${posTag(y.pos)}<span style="flex:1;min-width:0"><span class="lk" data-yo="${y.id}" tabindex="0">${esc(y.n)}</span> <span class="muted">· ${y.age} ans${am(y)?' · amicaux '+am(y):''}</span>${y.jok?' <span class="chip gold">Joker</span>':''}${y.sgSn===G.sn?' <span class="chip">Recrue</span>':''}</span><b class="num">${y.ovr}</b>${can?`<span class="row" style="gap:6px;flex-basis:100%;justify-content:flex-end"><button class="btn ghost sm" data-sell="${y.id}">Proposer à un club</button><button class="btn ghost sm" data-rel="${y.id}">Rendre au quartier</button></span>`:''}</div>`).join('')}</div></div>
+   <p class="muted" style="font-size:calc(13px*var(--tz))"><span class="chip gold">Joker</span> peu d'expérience : il s'essouffle vers la 55e minute. Idéal pour finir un match.</p>`;
+  el.querySelectorAll('[data-yo]').forEach(b=>b.onclick=()=>openYouth(b.dataset.yo));
+  el.querySelectorAll('[data-sell]').forEach(b=>b.onclick=()=>{const y=G.u18.find(q=>q.id===b.dataset.sell);if(!y)return;const r=triSell(y);save();
+    if(!r.ok){toast(esc(r.why));refresh();return}
+    modal(`<div class="csheet"><div class="lbl">Offre reçue</div><h2>${esc(y.n)}</h2><p><b>${esc(r.club)}</b> propose <b>${money(r.fee)}</b> pour ${esc(y.n)} (${y.pos}, ${y.age} ans, note ${y.ovr}).</p>${y.pos==='GB'&&G.u18.filter(q=>q.pos==='GB').length<=1?'<p class="bad"><b>C\'est ton dernier gardien.</b> Il t\'en faut au moins un pour déposer ta liste.</p>':''}${n-1<18?'<p class="bad">Ton groupe passerait sous 18 joueurs.</p>':''}<div class="row" style="gap:8px"><button class="btn" id="tacc">Accepter</button><button class="btn ghost" id="mclose">Refuser</button></div></div>`);
+    const o=document.querySelector('#ov');o.querySelector('#mclose').onclick=closeModal;o.querySelector('#tacc').onclick=()=>{triLeave(y,`Vendu à ${r.club}`,r.fee,r.club);newsAdd(`${y.n} quitte ${me().name} pour ${r.club} (${money(r.fee)}).`,'scout');closeModal();toast(`<b>${esc(y.n)}</b> part à ${esc(r.club)}.`);refresh()}});
+  el.querySelectorAll('[data-rel]').forEach(b=>b.onclick=()=>{if(!b.dataset.sure){b.dataset.sure=1;b.textContent='Confirmer';return}const y=G.u18.find(q=>q.id===b.dataset.rel);if(!y)return;triLeave(y,'Rendu au quartier');newsAdd(`${y.n} quitte le groupe et retourne jouer au quartier.`,'scout');refresh()})}
 
 try{window.claude?.hot?.snapshot?.(()=>({save:G?JSON.stringify(G):null,view:VIEW}))}catch(e){}
 (window.claude?.hot?.ready?window.claude.hot.ready(start):start(window.claude?.hot?.data??{}));
