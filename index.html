@@ -785,7 +785,8 @@ const PROF={GB:{vit:-6,tec:-5,fin:-18,pas:-2,def:7,phy:4,men:6},DEF:{vit:-1,tec:
 const PRI={argent:{l:'Argent',m:1.4,t:.8,v:.8},temps:{l:'Temps de jeu',m:.8,t:1.4,v:.8},vitrine:{l:'Visibilité',m:.8,t:.8,v:1.4},equilibre:{l:'Équilibré',m:1,t:1,v:1}};
 const FORMS={'4-3-3':[1,4,3,3],'4-4-2':[1,4,4,2],'3-5-2':[1,3,5,2],'5-3-2':[1,5,3,2]};
 const LINES=['GB','DEF','MIL','ATT'];
-const TAC_COST={bloc:['buts marqués −30 %','buts encaissés −35 %','fatigue −10 %'],equi:['référence','',''],press:['buts marqués +25 %','buts encaissés +25 %','fatigue +25 %'],tout:['buts marqués +40 %','buts encaissés +40 %','fatigue +15 %']};
+// mesuré sur le moteur de match (700 matchs par mentalité, deux clubs différents), comparé à l'équilibré
+const TAC_COST={bloc:['buts marqués ≈ −35 %','buts encaissés ≈ −40 %','fatigue −10 %'],equi:['référence','',''],press:['buts marqués +15 à +40 %','buts encaissés +5 à +15 %','fatigue +25 %'],tout:['buts marqués +30 à +55 %','buts encaissés +25 à +35 %','fatigue +15 %']};
 function nextOpp(){const S=G.S;for(const st of S.steps.slice(S.si))if(st.t==='md'){const f=S.league.fx[st.i].find(x=>x.h===G.club||x.a===G.club);if(f&&!f.r)return{id:f.h===G.club?f.a:f.h,home:f.h===G.club,i:st.i}}return null}
 function tacAdvice(){const o=nextOpp();if(!o)return'';const me_=teamStr(G.club),op=teamStr(o.id),d=isDerby(G.club,o.id),diff=op-me_;
   const k=d||diff>2.5?'bloc':diff<-2.5?'press':'equi';
@@ -1010,10 +1011,10 @@ const kitId=(id,s)=>kit(T(id),s);
 
 /* ---------------- nouvelle partie ---------------- */
 function mkClub(a){return{id:a[0],name:a[1],short:a[2],city:a[3],tier:a[4],c1:a[5],c2:a[6],pat:a[7],stadium:a[8],cap:a[9],pl:[],form:'4-3-3',tactic:'equi',kind:'pro',budget:'saison',contract:'annuel'}}
-function newGame(cid,mode){const dm=mode==='district';
+function newGame(cid,mode){const dm=mode==='district';const DF=DIFF_PREF;
   G={v:1,uid:1,sn:1,club:dm?null:cid,clubs:{},players:{},l1:[],l2:[],fstr:{},cash:0,
      fac:{train:2,acad:1,proj:0},rep:{caf:5,world:0},coef:24,coefHist:[],scouts:2,
-     news:[],ach:{},hist:[],cashHist:[],trophies:[],sold:[],retained:[],qual:null,S:null,ev:null,pending:false,over:null,pref:{live:true,speed:1}};
+     news:[],diff:DF,ach:{},hist:[],cashHist:[],trophies:[],sold:[],retained:[],qual:null,S:null,ev:null,pending:false,over:null,pref:{live:true,speed:1}};
   for(const a of CI_CLUBS){const c=mkClub(a);G.clubs[c.id]=c;G.l1.push(c.id)}
   for(const a of L2_CLUBS){const c=mkClub(a);c.origin='club';G.clubs[c.id]=c;G.l2.push(c.id)}
   // 2 académies déjà en Ligue 2 ; les 2 places de district se jouent à la Noushi League d'ouverture
@@ -1088,7 +1089,8 @@ function onMonth(m){const S=G.S;if(S.lastM===m)return;{const st=cur();if(st&&st.
 }
 
 /* ---------------- résultats & simulation ---------------- */
-function xg(rh,ra,home){const d=rh-ra+(home?2:0);return[1.35*Math.exp(d/16),1.12*Math.exp(-d/16)]}
+// calibré sur le moteur de match (1 600 matchs simulés) : même écart de niveau, mêmes chances qu'un match joué
+function xg(rh,ra,home){const d=rh-ra+(home?1:0);return[1.39*Math.exp(d/26),1.39*Math.exp(-d/26)]}
 function scorerFrom(cid,ids){const ps=(ids||autoXI(cid,false)).map(P);return wpick(ps,ps.map(p=>({GB:.02,DEF:.6,MIL:2.2,ATT:5}[p.pos])*Math.pow(p.ovr/70,2)))}
 function quickMatch(h,a,neutral){
   const [xh,xa]=xg(teamStr(h),teamStr(a),!neutral);const r={hg:poisson(xh),ag:poisson(xa)};
@@ -1321,29 +1323,15 @@ function prepMatch(spec){
   const h=spec.h,a=spec.a,userHome=h===G.club;
   const M={spec,h,a,userSide:userHome?0:1,xi:{},hg:0,ag:0,ev:[],stats:{sh:[0,0],ot:[0,0],pos:50},tac:me().tactic||'equi',min:0,half:1,done:false};
   for(const id of [h,a])M.xi[id]=isCI(id)?(id===G.club?userXI():autoXI(id,false)):null;
+  if(isCI(G.club)&&(h===G.club||a===G.club)){const c=me();M.form=c.form||'4-3-3';M.arr=Array.isArray(c.xs)?c.xs.slice():null}
   M.rh=isCI(h)?xiRating(M.xi[h],h):teamStr(h);M.ra=isCI(a)?xiRating(M.xi[a],a):teamStr(a);
   M.stats.pos=Math.round(clamp(50+(M.rh-M.ra)*1.6+(spec.neutral?0:3),28,72));
   M.venue=spec.neutral?(spec.comp==='mon'?'Mondial des clubs, terrain neutre':'Terrain neutre'):(isCI(h)?T(h).stadium:`${T(h).country}`);
   return M}
 function pname(M,side){const id=side===0?M.h:M.a;if(isCI(id)){const p=scorerFrom(id,M.xi[id]);return{n:p.n,id:p.id}}return{n:fname(id),id:null}}
-function genHalf(M,half){
-  const [bx,by]=xg(M.rh,M.ra,!M.spec.neutral);const t=TACTICS[M.tac],u=M.userSide;
-  let x=[bx,by];x[u]*=t.f;x[1-u]*=t.a;
-  const lo=half===1?1:46,hi=half===1?45:90,evs=[];
-  for(const s of [0,1]){
-    const g=poisson(x[s]/2),c=poisson(x[s]/2*1.3)+(R()<.4?1:0);
-    for(let i=0;i<g;i++){const p=pname(M,s);let as=null;if(isCI(s?M.a:M.h)&&R()<.7){const q=pname(M,s);if(q.id!==p.id)as=q}evs.push({m:ri(lo,hi),k:'goal',s,p,as})}
-    for(let i=0;i<c;i++)evs.push({m:ri(lo,hi),k:'chance',s,p:pname(M,s)});
-    M.stats.sh[s]+=g+c+poisson(x[s]*1.4);M.stats.ot[s]+=g+Math.ceil(c/2)+poisson(x[s]*.4);
-  }
-  if(R()<.55){const s=R()<.5?0:1;evs.push({m:ri(lo,hi),k:'card',s,p:pname(M,s)})}
-  if(R()<.07){const s=M.userSide;evs.push({m:ri(lo+5,hi),k:'inj',s,p:pname(M,s)})}
-  while(evs.length<3)evs.push({m:ri(lo,hi),k:'amb',s:-1});
-  evs.sort((a,b)=>a.m-b.m);
-  for(const e of evs){const pool=LINES_TXT[e.k];e.txt=pick(pool).replace('{p}',e.p?e.p.n:'').replace('{s}',M.venue)}
-  M.ev.push(...evs);return evs}
 function scoreAt(M,min){let h=0,a=0;for(const e of M.ev)if(e.k==='goal'&&e.m<=min){if(e.s===0)h++;else a++}return[h,a]}
 function finalizeMatch(M){
+  try{if(M.form)famAdd(me(),M.form)}catch(e){}
   const [hg,ag]=scoreAt(M,90);M.hg=hg;M.ag=ag;let p=null;
   if(M.spec.ko&&hg===ag){p=pens();M.pens=p}
   writeResult(M.spec.ref,hg,ag,p);
@@ -2675,7 +2663,7 @@ function vSquadMain(el){if(inPrologue()&&G.start==='district'){el.innerHTML=`<di
     <div class="panel">${anaTeaser('first')}</div>
     <div class="panel"><h3>Plan de jeu</h3>${sysPanel('first')}</div>
     <div class="panel"><h3>Tactique par défaut</h3><div class="sel" id="tacs">${Object.entries(TACTICS).map(([k,t])=>`<button data-t="${k}" class="${c.tactic===k?'on':''}">${t.l}</button>`).join('')}</div>${tacCost(c.tactic)}
-      ${tacAdvice()}<p class="muted" style="font-size:calc(13.5px*var(--tz));margin:8px 0 0">Chiffres comparés à l'équilibré, pour une saison moyenne. Tu peux changer à la mi-temps des matchs en direct.</p>
+      ${tacAdvice()}<p class="muted" style="font-size:calc(13.5px*var(--tz));margin:8px 0 0">Mesuré sur le moteur de match, comparé à l'équilibré. L'effet réel dépend de tes joueurs : un pressing sans vitesse ni physique coûte plus qu'il ne rapporte, et chaque changement de système coûte des repères.</p>
       <div class="lbl" style="margin-top:14px">Masse salariale hors aspirants</div><div class="row" style="margin:6px 0"><b class="num">${money(wage)}</b><span class="muted">/ mois sur un plafond de</span><b class="num">${money(cap)}</b></div>
       <div class="meter" role="img" aria-label="Masse salariale ${Math.round(wage/cap*100)} % du plafond"><i style="width:${clamp(wage/cap*100,0,100)}%;background:${wage>cap?'var(--bad)':wage/cap>.85?'var(--warn)':'var(--good)'}"></i></div>
       <p class="muted" style="font-size:calc(14.5px*var(--tz))">Le plafond dépend de la subvention, des sponsors, de la billetterie, des primes récentes et, un peu, des réserves du club. Il limite les prolongations et les signatures.</p></div>
@@ -3167,6 +3155,7 @@ const TRAIN_COST=[0,0,40e6,120e6,300e6,650e6];
 function vClubHub(el){const tab=VIEWARG||'club';
   el.innerHTML=`<div class="row" style="margin-bottom:10px"><span class="muted" style="font-size:calc(14px*var(--tz))">Affichage</span>${themeButton()}${tzButton()}<span class="sp"></span><button class="btn ghost sm" id="expsave">Exporter ma partie</button><button class="btn ghost sm" id="newcar">Nouvelle carrière</button></div>${cloudDb?`<p class="muted" style="margin:-4px 0 10px;font-size:calc(12.5px*var(--tz))">Sauvegarde en ligne : ${cloudSt==='ok'?'à jour':cloudSt?'échec ('+esc(cloudSt)+')':'en cours'}</p>`:''}<div class="tabs" role="tablist">${[['club','Installations'],['fin','Finances'],['coach','Entraîneurs'],['shop','Maillots'],['tx','Transferts'],['pal','Palmarès'],['news','Actualités']].map(([k,l])=>`<button role="tab" aria-selected="${k===tab}" data-tb="${k}" class="${k===tab?'on':''}">${l}</button>`).join('')}</div><div id="sub"></div>`;
   el.querySelectorAll('[data-tb]').forEach(b=>b.onclick=()=>go('club',b.dataset.tb));bindTZ(el,refresh);
+  if(tab==='club'){const box=document.createElement('div');box.className='panel';box.style.cssText='padding:12px 14px;margin-bottom:14px';box.innerHTML=`<div class="lbl" style="margin-bottom:8px">Niveau de difficulté</div><div id="cdiffw">${diffSel(diffK(),'cdiff')}</div>`;const tb=el.querySelector('.tabs');if(tb)tb.after(box)}
   {const xb=el.querySelector('#expsave');xb.onclick=async()=>{save();const fn=`goudron-${(me().short||'partie').toLowerCase()}-saison${G.sn}.json`,data=JSON.stringify(G);
     const dl=window.claude&&window.claude.use?await window.claude.use('downloads').catch(()=>null):null;
     if(dl){try{await dl.save({filename:fn,data});toast('<b>Partie exportée</b><br>« Importer une partie » sur l\'écran titre la restaure.')}catch(e){if(e&&e.code!=='declined')toast('<b>Export impossible ici</b>')}return}
@@ -3451,12 +3440,12 @@ function colDist(a,b){const x=hexRGB(a),y=hexRGB(b);return Math.hypot(x[0]-y[0],
 const tdist=(a,b)=>Math.hypot(a.x-b.x,(a.y-b.y)*.65);
 function teamStyle(id){if(isCI(id)){const t=T(id).tier;return t>=4?{block:'press',calm:true}:t===3?{block:'equi'}:{block:'bloc',direct:true}}
   return({nord:{block:'equi',calm:true},sud:{block:'press'},ouest:{block:'equi',direct:true},autres:{block:'equi'},out:{block:'bloc',direct:true},monde:{block:'press',calm:true}})[FX[id].league]||{block:'equi'}}
-function tAttr(t,k){return (t.pl.at[k]||60)*(1+(t.focus||0)/200)*(.86+.14*t.cond/100)*(t.home?1.015:t.bus?1.008:1)*(t.pl.rat?formMult(t.pl):1)}
-function tPlayers(s,id,xi){const out=[];let ps;
-  if(xi)ps=xi.map(P).filter(Boolean);
+function tAttr(t,k){return ((t.pl.at[k]||60)+(t.tm||0))*(t.oop?.93:1)*(1+(t.focus||0)/200)*(.86+.14*t.cond/100)*(t.home?1.015:t.bus?1.008:1)*(t.pl.rat?formMult(t.pl):1)}
+function tPlayers(s,id,xi,M){const out=[];let ps,lineOf=null;
+  if(xi){ps=xi.map(P).filter(Boolean);if(M&&M.form&&id===G.club){const sl=tbSlots(M.form),arr=M.arr&&M.arr.length===sl.length&&M.arr.every(x=>x==null||xi.includes(x))?M.arr:tbNormalize(xi,M.form,P);lineOf=new Map();arr.forEach((pid,i)=>{const p=pid!=null&&P(pid);if(p&&!lineOf.has(p))lineOf.set(p,LINES.indexOf(sl[i]))});ps.forEach(p=>{if(!lineOf.has(p))lineOf.set(p,LINES.indexOf(p.pos))})}}
   else{const base=teamStr(id),f=FORMS['4-3-3'];ps=[];LINES.forEach((pos,li)=>{for(let i=0;i<f[li];i++){const o=Math.round(base+gauss()*2);ps.push({id:null,n:fname(id),pos,ovr:o,at:genAttrs(pos,o),cond:100})}})}
   const U=[.05,.24,.47,.7];let num=2;
-  LINES.forEach((l,li)=>{const arr=ps.filter(p=>p.pos===l);arr.forEach((p,i)=>out.push({s,key:s+'-'+out.length,pl:p,id:p.id,n:p.n,pos:p.pos,line:li,au:U[li],ay:(i+1)/(arr.length+1),num:li===0?1:num++,cond:p.id?p.cond:100,yc:0,off:false,x:.5,y:.5,tx:.5,ty:.5}))});
+  LINES.forEach((l,li)=>{const arr=ps.filter(p=>lineOf?lineOf.get(p)===li:p.pos===l);arr.forEach((p,i)=>out.push({s,key:s+'-'+out.length,pl:p,id:p.id,n:p.n,pos:p.pos,line:li,oop:p.pos!==l,au:U[li],ay:(i+1)/(arr.length+1),num:li===0?1:num++,cond:p.id?p.cond:100,yc:0,off:false,x:.5,y:.5,tx:.5,ty:.5}))});
   return out}
 function eAct(E,s){return E.pl[s].filter(t=>!t.off)}
 function eNear(E,pt,s){let best=null,bd=9;for(const t of eAct(E,s)){const d=tdist(pt,{x:t.tx,y:t.ty});if(d<bd){bd=d;best=t}}return{t:best,d:bd}}
@@ -3466,7 +3455,7 @@ function eTargets(E){const b=E.hpos;
     for(const t of eAct(E,s)){if(t===E.holder){t.tx=b.x;t.ty=b.y;continue}
       let sh=(bu-.5)*.38+(poss?.07:-.06)+BLOCK_SHIFT[ins.block];if(t.line===0)sh=clamp((bu-.5)*.06,-.02,.04);
       const off=ins.off[t.key]||{du:0,dy:0};let u=clamp(t.au+sh+off.du+(IND_SHIFT[ins.ind[t.key]]||0)+(t.lazy&&!poss&&t.line>=2?.1:0),.02,.95),y=clamp(t.ay+off.dy+(b.y-.5)*(t.line===0?.15:.3),.04,.96);
-      if(ins.lanes&&!poss&&t.line>=1&&t.line<=2)y=.5+(y-.5)*.82;
+      if(ins.lanes&&!poss&&t.line>=1&&t.line<=2)y=.5+(y-.5)*(1-.18*clamp(capLanes(E,s),.5,1.3));
       t.tx=uN(s,u);t.ty=y}
     if(!poss){const ch=eAct(E,s).filter(t=>t.line>0).sort((a,c)=>tdist(a,b)-tdist(c,b)).slice(0,ins.block==='press'||ins.block==='tout'?2:1);
       ch.forEach((t,i)=>{const k=i===0?.85:.5;t.tx=t.tx+(b.x-t.tx)*k;t.ty=t.ty+(b.y-t.ty)*k})}}}
@@ -3482,7 +3471,7 @@ function eStep(E){
   if(E.kick!=null){eKick(E,E.kick);return 6}
   eTargets(E);
   const s=E.poss,h=E.holder,o=1-s,ins=E.ins[s],oi=E.ins[o],hp=E.hpos,u=uN(s,hp.x),wide=Math.abs(hp.y-.5);
-  const nr=eNear(E,hp,o),press=clamp((.13-nr.d)/.13,0,1)*PRESS_F[oi.block],ind=ins.ind[h.key]||'';
+  const nr=eNear(E,hp,o),press=clamp((.13-nr.d)/.13,0,1)*PRESS_F[oi.block]*(oi.block==='press'||oi.block==='tout'?capPress(E,o):1),ind=ins.ind[h.key]||'';
   if(h.line===0)return ePass(E,h,ind==='long'?'long':ind==='short'?(press>.7&&R()<.4?'long':'short'):ins.direct||R()<.35?'long':'short',press);
   let pSh=0;if(u>.72)pSh=clamp((u-.7)*1.15*(1-wide*1.4),0,.55);else if(u>.62)pSh=.02*tAttr(h,'fin')/70;
   if(ins.block==='tout')pSh*=1.12;
@@ -3495,20 +3484,22 @@ function eStep(E){
 function ePass(E,h,kind,press){const s=h.s,o=1-s,ins=E.ins[s],oi=E.ins[o],hp=E.hpos,hu=uN(s,hp.x);
   const mates=eAct(E,s).filter(t=>t!==h&&t.line>0);let best=null,bs=-9;
   for(const t of mates){const tp={x:t.tx,y:t.ty},tu=uN(s,t.tx),dist=tdist(hp,tp),open=eNear(E,tp,o).d;
-    let sc=kind==='long'?tu*2+open*3-(dist<.25?1:0):(tu-hu)*2.2+open*4-Math.abs(dist-.15)*1.6;if(oi.lanes&&Math.abs(t.ty-.5)>.28)sc-=.35;sc+=R()*.35;if(sc>bs){bs=sc;best=t}}
+    let sc=kind==='long'?tu*2+open*3-(dist<.25?1:0):(tu-hu)*2.2+open*4-Math.abs(dist-.15)*1.6;if(oi.lanes&&Math.abs(t.ty-.5)>.28)sc-=.35*capLanes(E,o);if(E.live&&s!==E.uside&&E.weak!=null&&DIFF[diffK()].flank&&!oi.lanes&&Math.abs(t.ty-E.weak)<.22)sc+=.3;sc+=R()*(E.live&&s!==E.uside?DIFF[diffK()].noise:.35);if(sc>bs){bs=sc;best=t}}
   if(!best)return 8;
   const tp={x:best.tx,y:best.ty},dist=tdist(hp,tp),open=eNear(E,tp,o).d,wide=Math.abs(tp.y-.5)>.28;if(E.live&&wide)E.ana.wide.push([s,E.t]);
   const dur=kind==='long'?ri(10,15):ri(8,13)+(ins.calm?3:0);let ok;
-  if(kind==='long'){ok=.5+(tAttr(h,'pas')-65)/240-(avgAttr(E,o,'def')-65)/300-(open<.05?.1:0)+(E.ins[o].block==='tout'?.08:0)+(oi.block==='press'?.05:0)+(ins.direct?.05:0)+(ins.block==='bloc'&&hu<.5?.07:0);
-    if(uN(s,tp.x)>.66&&R()<clamp(.15-E.bias[s]*.4+E.bias[o]*.4,.05,.25)){const dub=R()<.4;eBall(E,tp,dur);const d=eNear(E,tp,o).t;eHold(E,d,{x:d.tx,y:d.ty});
+  if(kind==='long'){ok=.5+(tAttr(h,'pas')-65)/170-(avgAttr(E,o,'def')-65)/200-(open<.05?.1:0)+(E.ins[o].block==='tout'?.08:0)+(oi.block==='press'?.05:0)+(ins.direct?.05*capDirect(E,s):0)+(ins.block==='bloc'&&hu<.5?.07:0);
+    if(uN(s,tp.x)>.66&&R()<clamp(.15*(1+(avgAttr(E,o,'men')-60)/80)*(oi.block==='press'||oi.block==='tout'?1.2:oi.block==='bloc'?.7:1)*(2-capDirect(E,s))*.9,.04,.3)){const dub=R()<.4;eBall(E,tp,dur);const d=eNear(E,tp,o).t;eHold(E,d,{x:d.tx,y:d.ty});
       eLog(E,'offside',s,best,pick(OFFS_T).replace('{p}',best.n)+(dub?' La décision est très discutable.':''));if(dub&&s===E.uside)eWindow(E,'offside');E.lastPass=null;return 14}}
-  else ok=.8+(tAttr(h,'pas')-65)/260-press*.15-Math.max(0,dist-.18)*.6-(open<.045?.14:0)+(ins.calm?.02:0)-(oi.lanes&&wide?.1:0)-(uN(s,tp.x)>.64?(DENS[oi.block]-1)*.35:0);
+  else ok=.8+(tAttr(h,'pas')-65)/180-press*.15-Math.max(0,dist-.18)*.6-(open<.045?.14:0)+(ins.calm?.02:0)-(oi.lanes&&wide?.1:0)-(uN(s,tp.x)>.64?(DENS[oi.block]-1)*.35:0);
+  if(kind!=='long'){const dfn=eNear(E,tp,o).t;if(dfn)ok-=((tAttr(dfn,'def')+tAttr(dfn,'men'))/2-62)/400}
+  ok-= (1-E.coord[s])*.12;
   ok=clamp(ok-(E.live&&s===E.uside&&eIssue(E,'press')?.07:0)-(E.live?.015*eIndN(E,o,'step'):0),.3,.96);
   if(R()<ok){E.lastPass={t:best,from:h,time:E.t};ePerf(E,h,.02);eHold(E,best,tp);eBall(E,tp,dur)}
   else{ePerf(E,h,-.04);if(E.live)E.ana.lost.push([s,E.t]);const it=eNear(E,tp,o).t;ePerf(E,it,.03);const ip={x:hp.x+(tp.x-hp.x)*.6,y:hp.y+(tp.y-hp.y)*.6};eHold(E,it,ip);eBall(E,ip,dur);E.lastPass=null}
   return dur}
 function eDribble(E,h,o){const s=h.s,os=1-s,ins=E.ins[s],dur=ri(7,11);
-  const duel=((tAttr(h,'tec')+tAttr(h,'vit'))/2-(tAttr(o,'def')+tAttr(o,'phy'))/2)/20-(DENS[E.ins[os].block]-1)*.6+(ins.ind[h.key]==='take'?.15:0);
+  const duel=((tAttr(h,'tec')+tAttr(h,'vit'))/2-(tAttr(o,'def')+tAttr(o,'phy'))/2)/14-(DENS[E.ins[os].block]-1)*.6+(ins.ind[h.key]==='take'?.15:0);
   if(R()<clamp(.92/(1+Math.exp(-duel)),.12,.9)){const g=rf(.07,.14);ePerf(E,h,.06);
     if(R()<.22)eLog(E,'drib',s,h,pick(DRIB_T).replace('{p}',h.n).replace('{o}',o.n));
     E.hpos={x:clamp(E.hpos.x+(s===0?g:-g),.02,.98),y:clamp(E.hpos.y+rf(-.08,.08),.05,.95)};eBall(E,E.hpos,dur);E.lastPass=null;return dur}
@@ -3530,7 +3521,7 @@ function eFoul(E,f,v){const vs=v.s,fs=f.s;E.stats.fouls[fs]++;
 function eShot(E,h,press,pen){const s=h.s,o=1-s,hp=E.hpos;E.stats.sh[s]++;
   const gx=s===0?1:0,d=Math.hypot(hp.x-gx,(hp.y-.5)*.65),gk=eAct(E,o).find(t=>t.line===0)||eAct(E,o)[0];
   let xg=pen?.76:.29*Math.exp(-5*d)/(pen?1:DENS[E.ins[o].block]);
-  xg*=(1+(tAttr(h,'fin')-62)/200)*(1-((tAttr(gk,'def')+tAttr(gk,'men'))/2-65)/260)*(1-.3*press);xg=clamp(xg,.01,pen?.85:.7);if(!pen&&E.live)xg=clamp(xg*xgMod(E,s),.01,.75);
+  xg*=(1+(tAttr(h,'fin')-62)/120)*(1-((tAttr(gk,'def')+tAttr(gk,'men'))/2-65)/170)*(1-.3*press);xg=clamp(xg,.01,pen?.85:.7);if(!pen&&E.live)xg=clamp(xg*xgMod(E,s),.01,.75);
   if(R()<xg){E.stats.ot[s]++;const lp=E.lastPass,as=lp&&lp.t===h&&E.t-lp.time<40?lp.from:null;
     eLog(E,'goal',s,h,(pen?`${h.n} transforme le penalty.`:pick(GOAL_T).replace('{p}',h.n))+(as?` Passe de ${as.n}.`:''),{as:as?{n:as.n,id:as.id}:null});
     ePerf(E,h,.5);if(as)ePerf(E,as,.25);eBall(E,{x:gx,y:.5+rf(-.03,.03)},4);E.flash={txt:'BUT !',until:E.t+45};E.kick=o;return 50}
@@ -3556,18 +3547,22 @@ function eComplain(E){const m=E.mgr;if(eLocked(E)||E.done)return;m.complaints++;
 function eCalm(E){const m=E.mgr;if(eLocked(E)||E.done)return;const just=E.window&&E.t<=E.window.until;
   if(just){m.calm=(m.calm||0)+1;E.window=null;eLog(E,'mgr',E.uside,null,'Tu restes calme et tu rassures tes joueurs. Ils se remettent au travail.');E.pl[E.uside].forEach(t=>t.cond=Math.min(100,t.cond+1))}
   m.agg=Math.max(0,m.agg-20)}
-function newEngine(M,o){o=o||{};const uid=G.club;
-  const E={M,t:0,next:0,ev:M.ev,pl:[],ins:[],stats:{sh:[0,0],ot:[0,0],fouls:[0,0],corn:[0,0]},ptime:[0,0],bias:[0,0],perf:{},subs:[],subsLeft:[5,5],conc:[72,72],alerts:[],ana:{wide:[],lost:[]},lmin:0,score:[0,0],talkAt:{},teamTalkAt:-99,live:false,offAt:{},condOf:{},
+function newEngine(M,o){o=o||{};const uid=G.club;if(G.diff==null)G.diff=DIFF_PREF;
+  const E={M,t:0,next:0,ev:M.ev,pl:[],ins:[],stats:{sh:[0,0],ot:[0,0],fouls:[0,0],corn:[0,0]},ptime:[0,0],bias:[0,0],perf:{},subs:[],subsLeft:[5,5],conc:[72,72],coord:[1,1],form:['4-3-3','4-3-3'],aiMat:[0,0],alerts:[],ana:{wide:[],lost:[]},lmin:0,score:[0,0],talkAt:{},teamTalkAt:-99,live:false,offAt:{},condOf:{},
     mgr:{agg:0,y:0,red:false,complaints:0,susp:!!(G.mgr&&G.mgr.susp)},window:null,half:1,done:false,uside:M.userSide,auto:!!o.auto,kick:null,flash:null,aiSubs:[false,false],autoDone:false,amb:0};
-  for(const s of [0,1]){const id=eSide(E,s);E.pl[s]=tPlayers(s,id,isCI(id)?M.xi[id]:null);if(s===0&&!M.spec.neutral)E.pl[0].forEach(t=>t.home=true);if(s===M.userSide&&s===1&&inf('bus'))E.pl[1].forEach(t=>t.bus=true);
+  for(const s of [0,1]){const id=eSide(E,s);E.pl[s]=tPlayers(s,id,isCI(id)?M.xi[id]:null,M);if(s===0&&!M.spec.neutral)E.pl[0].forEach(t=>t.home=true);if(s===M.userSide&&s===1&&inf('bus'))E.pl[1].forEach(t=>t.bus=true);
     E.ins[s]=s===M.userSide?{block:me().tactic||'equi',lanes:false,direct:false,calm:false,ind:{},off:{}}:{block:'equi',lanes:false,direct:false,calm:false,...teamStyle(id),ind:{},off:{}}}
   E.bias[M.userSide]=0;
+  for(const s of [0,1]){const id=eSide(E,s),tm=teamMod(id,isCI(id)?M.xi[id]:null);E.pl[s].forEach(t=>t.tm=tm);E.form[s]=id===G.club?(M.form||(G.clubs[id]&&G.clubs[id].form)||'4-3-3'):isCI(id)?(G.clubs[id].form||'4-3-3'):'4-3-3';E.aiMat[s]=isCI(id)&&id!==G.club?(T(id).tier||2)*2:id===G.club?0:6}
+  {const c=G.clubs[G.club],us=M.userSide;if(c&&!M.spec.M){const fam=famOf(c,E.form[us]),tm=teamMind(E,us);E.coord[us]=clamp(.82+fam*.022+(tm.adp-50)/600,.75,1)}}
+  if(G.diff==null)G.diff=DIFF_PREF;
   E.bench=squad(uid).filter(p=>!M.xi[uid].includes(p.id)&&p.inj<=0).map(p=>p.id);
+  E.live=true;{const us=M.userSide,d=E.pl[us].filter(t=>t.line===1);if(d.length>=2){const L=d.filter(t=>t.ay<.5),Rr=d.filter(t=>t.ay>=.5),av=a=>a.length?a.reduce((x,t)=>x+tAttr(t,'def'),0)/a.length:99;E.weak=av(L)<av(Rr)?.2:.8}}
   E.start=R()<.5?0:1;eKick(E,E.start);E.bDisp={x:.5,y:.5};
   if(E.mgr.susp)eLog(E,'mgr',E.uside,null,'Suspendu, tu suis le match depuis la tribune. Ton adjoint applique les consignes d\'avant-match.');
   return E}
-function eFatigue(E,d){for(const s of [0,1]){const ins=E.ins[s],f=d/60*.2*FATIGUE_F[ins.block]*(s===E.uside?(1-.05*inf('muscu'))*(s===1&&inf('bus')?.93:1):1)*(ins.calm?.9:1);
-  for(const t of eAct(E,s)){t.cond=Math.max(20,t.cond-f*(t.pl.at.phy<50?1.3:1)*(t.pl.plan==='endurance'?.85:1)*(t.line===0?.3:1))}}}
+function eFatigue(E,d){for(const s of [0,1]){const ins=E.ins[s],f=d/60*.2*FATIGUE_F[ins.block]*((ins.block==='press'||ins.block==='tout')&&capPress(E,s)<.9?1.15:1)*(s===E.uside?(1-.05*inf('muscu'))*(s===1&&inf('bus')?.93:1):1)*(ins.calm?.9:1);
+  for(const t of eAct(E,s)){t.cond=Math.max(20,t.cond-f*(t.pl.id?clamp(1+(60-enduOf(t.pl))/120,.8,1.3):1)*(t.pl.at.phy<50?1.3:1)*(t.pl.plan==='endurance'?.85:1)*(t.line===0?.3:1))}}}
 function eHooks(E){const m=Math.ceil(E.t/60);
   for(const s of [0,1])if(s!==E.uside&&!E.aiSubs[s]&&m>=64){E.aiSubs[s]=true;eAct(E,s).filter(t=>t.line>0).sort((a,b)=>a.cond-b.cond).slice(0,3).forEach(t=>t.cond=100);eLog(E,'sub',s,null,`Triple changement pour ${T(eSide(E,s)).short}.`)}
   if((E.auto||eLocked(E))&&!E.autoDone&&m>=65){E.autoDone=true;eAutoSubs(E,E.uside,3)}
@@ -3583,7 +3578,8 @@ function eRun(E,tEnd){
     for(const s of [0,1])E.bias[s]*=.998;
     const s0=E.poss,d=eStep(E);E.ptime[s0]+=d;eFatigue(E,d);E.next=E.t+d;eHooks(E)}
   E.t=Math.max(E.t,Math.min(tEnd,5400));return null}
-function eResume(E){if(E.half===1.5){E.half=2;E.t=2700;E.next=2700;eKick(E,1-E.start);eLog(E,'amb',-1,null,'Reprise de la seconde période.')}}
+function eResume(E){if(E.half===1.5&&(E.auto||eLocked(E))&&!E.htDone){E.htDone=1;const sc=scoreAt(E.M,45),us=E.uside,d=us===0?sc[0]-sc[1]:sc[1]-sc[0];if(E.conc[us]<58||d<0)eHalfTalk(E,d<0?'motiv':'calme')}
+  if(E.half===1.5){E.half=2;E.t=2700;E.next=2700;eKick(E,1-E.start);eLog(E,'amb',-1,null,'Reprise de la seconde période.')}}
 function eFinish(E){const M=E.M;M.E=E;for(const t of E.pl[E.uside])if(t.id&&E.condOf[t.id]==null||t.id&&!t.off)E.condOf[t.id]=t.cond;M.stats={sh:E.stats.sh,ot:E.stats.ot,pos:Math.round(E.ptime[0]/Math.max(1,E.ptime[0]+E.ptime[1])*100)}}
 function eSimAll(E){let r;while(!E.done){r=eRun(E,5400);if(r==='ht')eResume(E)}eFinish(E)}
 
@@ -3623,14 +3619,16 @@ function liveTactical(spec,done){
   const locked=()=>eLocked(E)||ended;
   let ctab=null,subOut=null,hlKey=null;
   function panels(){const ins=E.ins[us],L=locked();
-    const act=E.alerts.filter(a=>!a.fix),A=act.slice(-2),tabOf=a=>({flancs:'col',press:'col',subit:'col',conc:'col',lazy:'talk',doubt:'talk',tired:'sub'})[a.k];
+    const act=E.alerts.filter(a=>!a.fix),A=act.slice(-2),tabOf=a=>({flancs:'col',press:'col',subit:'col',conc:'col',coord:'col',contre:'col',assaut:'col',lazy:'talk',doubt:'talk',tired:'sub'})[a.k];
     ov.querySelector('#alerts').innerHTML=A.map(a=>`<div class="calert"><span class="cal-ic">!</span><span class="cal-t"><b>Ton adjoint · ${a.m}'</b>${esc(a.txt)}</span>${L?'':`<button class="btn sm" data-afix="${E.alerts.indexOf(a)}">${ALERT_T[a.k][1]}</button>`}</div>`).join('');
     const dot=k=>act.some(a=>tabOf(a)===k)?'<i class="cdot"></i>':'';
     ov.querySelector('#cbar').innerHTML=[['col','Collectif'],['ind','Individuel'],['talk','Recadrer / encourager'],['sub',`Changer · ${E.subsLeft[us]}`]].map(([k,l])=>`<button data-ct="${k}" class="${ctab===k?'on':''}" ${L?'disabled':''}>${l}${dot(k)}</button>`).join('');
     const dr=ov.querySelector('#cdr'),mine=eAct(E,us).slice().sort((a,b)=>a.line-b.line||a.ay-b.ay),st=t=>`${t.pos} · ${CHAR_L[matchChar(t.pl)]} · forme ${Math.round(t.cond)} %${t.lazy?' · <span class="bad">ne défend plus</span>':''}${(t.focus||0)<=-6?' · <span class="goldt">doute</span>':(t.focus||0)>=8?' · <span class="good">concentré</span>':''}`;
     const row=(t,btns)=>`<div class="crow${hlKey===t.key?' hl':''}" data-ck="${t.key}"><span class="cnum">${t.num}</span><span class="cnm"><b>${esc(t.n)}</b><small>${st(t)}</small></span><span class="cbtns2">${btns}</span></div>`;
     if(L||!ctab){dr.innerHTML=L?'<p class="bad" style="margin:8px 0 0">En tribune : ton adjoint applique les consignes d\'avant-match.</p>':'';}
-    else if(ctab==='col'){const c=Math.round(E.conc[us]);dr.innerHTML=`<div class="clbl">Mentalité</div><div class="sel cwrap">${Object.entries(TACTICS).map(([k,t])=>`<button data-blk="${k}" class="${ins.block===k?'on':''}">${t.l}</button>`).join('')}</div>
+    else if(ctab==='col'){const c=Math.round(E.conc[us]),co=Math.round(E.coord[us]*100);dr.innerHTML=`<div class="clbl">Formation</div><div class="sel cwrap">${Object.keys(FORMS).map(k=>`<button data-frm="${k}" class="${E.form[us]===k?'on':''}">${k}</button>`).join('')}</div>
+      <div class="clbl">Coordination <b class="num" style="color:${co>=86?'var(--good)':co>=74?'var(--warn)':'var(--bad)'}">${co}</b></div><div class="meter"><i style="width:${co}%;background:${co>=86?'var(--good)':co>=74?'var(--warn)':'var(--bad)'}"></i></div><p class="muted chelp">Chaque changement de système coûte des repères. Un groupe mature et adaptable les retrouve vite ; un groupe jeune ou brut peut se perdre.</p>
+      <div class="clbl">Mentalité</div><div class="sel cwrap">${Object.entries(TACTICS).map(([k,t])=>`<button data-blk="${k}" class="${ins.block===k?'on':''}">${t.l}</button>`).join('')}</div>
       <div class="clbl">Consignes</div><div class="sel cwrap">${[['lanes','Fermer les couloirs'],['direct','Sauter les lignes'],['calm','Poser le ballon']].map(([k,l])=>`<button data-tg="${k}" class="${ins[k]?'on':''}" aria-pressed="${!!ins[k]}">${l}</button>`).join('')}</div>
       <div class="clbl">Concentration du groupe <b class="num" style="color:${c>=62?'var(--good)':c>=50?'var(--warn)':'var(--bad)'}">${c}</b></div><div class="meter"><i style="width:${c}%;background:${c>=62?'var(--good)':c>=50?'var(--warn)':'var(--bad)'}"></i></div>
       <div class="row" style="margin-top:8px;gap:8px;flex-wrap:nowrap"><button class="btn sec sm" data-tt="crit" style="flex:1">Hausser le ton</button><button class="btn sec sm" data-tt="enc" style="flex:1">Encourager le groupe</button></div>
@@ -3651,8 +3649,9 @@ function liveTactical(spec,done){
   function openTab(k,key){ctab=ctab===k&&!key?null:k;hlKey=key||null;if(k!=='sub')subOut=null;panels();if(key){const r=ov.querySelector(`#cdr [data-ck="${key}"]`);if(r)r.scrollIntoView({behavior:'smooth',block:'nearest'})}}
   function bind(){const ins=E.ins[us];
     ov.querySelectorAll('[data-ct]').forEach(b=>b.onclick=()=>openTab(b.dataset.ct));
-    ov.querySelectorAll('[data-afix]').forEach(b=>b.onclick=()=>{const a=E.alerts[+b.dataset.afix];if(!a)return;const k={flancs:'col',press:'col',subit:'col',conc:'col',lazy:'talk',doubt:'talk',tired:'sub'}[a.k];if(k==='sub'&&a.pid)subOut=a.pid;ctab=null;openTab(k,a.pid)});
-    ov.querySelectorAll('[data-blk]').forEach(b=>b.onclick=()=>{ins.block=b.dataset.blk;panels()});
+    ov.querySelectorAll('[data-afix]').forEach(b=>b.onclick=()=>{const a=E.alerts[+b.dataset.afix];if(!a)return;const k={flancs:'col',press:'col',subit:'col',conc:'col',coord:'col',contre:'col',assaut:'col',lazy:'talk',doubt:'talk',tired:'sub'}[a.k];if(k==='sub'&&a.pid)subOut=a.pid;ctab=null;openTab(k,a.pid)});
+    ov.querySelectorAll('[data-blk]').forEach(b=>b.onclick=()=>{if(ins.block!==b.dataset.blk){ins.block=b.dataset.blk;eChange(E,us,'block')}panels()});
+    ov.querySelectorAll('[data-frm]').forEach(b=>b.onclick=()=>{if(E.form[us]!==b.dataset.frm)eReform(E,us,b.dataset.frm);panels()});
     ov.querySelectorAll('[data-tg]').forEach(b=>b.onclick=()=>toggle(b.dataset.tg));
     ov.querySelectorAll('[data-tt]').forEach(b=>b.onclick=()=>{eTeamTalk(E,b.dataset.tt);panels()});
     ov.querySelectorAll('[data-ind]').forEach(b=>b.onclick=()=>{const k=b.dataset.k,v=b.dataset.ind;if(ins.ind[k]===v)delete ins.ind[k];else ins.ind[k]=v;sel=k;hlKey=k;panels()});
@@ -3664,8 +3663,9 @@ function liveTactical(spec,done){
   function stats(){const st=E.stats,pos=Math.round(E.ptime[0]/Math.max(1,E.ptime[0]+E.ptime[1])*100);
     ov.querySelector('#pStats').innerHTML=`<h3 style="margin-bottom:6px">Statistiques</h3><div class="cmp" style="grid-template-columns:1fr auto auto"><span></span><span class="h">${esc(th.short)}</span><span class="h">${esc(ta.short)}</span>
       <span class="muted">Possession</span><b class="num">${pos} %</b><b class="num">${100-pos} %</b><span class="muted">Tirs</span><b class="num">${st.sh[0]}</b><b class="num">${st.sh[1]}</b>
-      <span class="muted">Cadrés</span><b class="num">${st.ot[0]}</b><b class="num">${st.ot[1]}</b><span class="muted">Fautes</span><b class="num">${st.fouls[0]}</b><b class="num">${st.fouls[1]}</b></div>`}
-  function toggle(k){if(locked())return;const ins=E.ins[us];ins[k]=!ins[k];if(k==='direct'&&ins.direct)ins.calm=false;if(k==='calm'&&ins.calm)ins.direct=false;panels()}
+      <span class="muted">Cadrés</span><b class="num">${st.ot[0]}</b><b class="num">${st.ot[1]}</b><span class="muted">Fautes</span><b class="num">${st.fouls[0]}</b><b class="num">${st.fouls[1]}</b>
+      <span class="muted">Concentration</span><b class="num">${Math.round(E.conc[0])}</b><b class="num">${Math.round(E.conc[1])}</b><span class="muted">Coordination</span><b class="num">${Math.round(E.coord[0]*100)}</b><b class="num">${Math.round(E.coord[1]*100)}</b></div><p class="muted" style="font-size:calc(12px*var(--tz));margin:6px 0 0">Niveau ${DIFF[diffK()].l} : ${esc(DIFF[diffK()].d)}</p>`}
+  function toggle(k){if(locked())return;const ins=E.ins[us];ins[k]=!ins[k];eChange(E,us,'toggle');if(k==='direct'&&ins.direct)ins.calm=false;if(k==='calm'&&ins.calm)ins.direct=false;panels()}
   // terrain
   const toPitch=ev=>{const r=cv.getBoundingClientRect();return{x:((ev.clientX-r.left)*W/r.width-mg)/(W-2*mg),y:((ev.clientY-r.top)*H/r.height-mg)/(H-2*mg)}};
   cv.onpointerdown=ev=>{const p=toPitch(ev);let best=null,bd=Math.max(.06,.03*W/Math.max(200,cv.clientWidth));for(const t of eAct(E,us)){const d=Math.hypot(t.x-p.x,(t.y-p.y)*.65);if(d<bd){bd=d;best=t}}
@@ -3709,7 +3709,7 @@ function liveTactical(spec,done){
     const b=ov.querySelector('#lskip');b.textContent='Voir le rapport ›';b.className='btn';b.onclick=()=>{closeModal();go('event')};b.focus()}
   function keys(e){if(e.target.closest&&e.target.closest('select,input'))return;const k=e.key.toLowerCase();
     if(k===' '){paused=!paused;ov.querySelector('#lpause').textContent=paused?'Reprendre':'Pause';e.preventDefault();return}
-    if(locked())return;if('1234'.includes(k)&&k){E.ins[us].block=Object.keys(TACTICS)[+k-1];panels()}else if(k==='c')toggle('lanes');else if(k==='s')toggle('direct');else if(k==='p')toggle('calm');else if(k==='r'){eComplain(E);panels()}else if(k==='k'){eCalm(E);panels()}}
+    if(locked())return;if('1234'.includes(k)&&k){const nb=Object.keys(TACTICS)[+k-1];if(E.ins[us].block!==nb){E.ins[us].block=nb;eChange(E,us,'block')}panels()}else if(k==='c')toggle('lanes');else if(k==='s')toggle('direct');else if(k==='p')toggle('calm');else if(k==='r'){eComplain(E);panels()}else if(k==='k'){eCalm(E);panels()}}
   addEventListener('keydown',keys);
   ov.querySelectorAll('#spd button').forEach(b=>b.onclick=()=>{G.pref.speed=+b.dataset.sp;ov.querySelectorAll('#spd button').forEach(x=>x.classList.toggle('on',x===b))});
   ov.querySelector('#lpause').onclick=()=>{paused=!paused;ov.querySelector('#lpause').textContent=paused?'Reprendre':'Pause'};
@@ -4106,14 +4106,14 @@ function renderTitle(saved){
    <p class="pitchline">Jeu de gestion de football ivoirien. 12 saisons, du 1er mai 2026 au 1er juin 2038.</p></div>
    ${has?`<div class="nextcard" style="max-width:640px"><div class="ico" style="background:none">${kit(saved.clubs[saved.club],52)}</div><div style="min-width:0"><div class="lbl">Partie en cours</div><h2 style="margin:4px 0;font-size:calc(21px*var(--tz))">${esc(saved.clubs[saved.club].name)}</h2><div class="muted">Saison ${saved.sn} · trésorerie ${money(saved.cash)}</div></div><button class="btn lg go2" id="cont">Reprendre ${icon('next',18)}</button><button class="btn ghost sm" id="wipe" style="margin-top:8px">Effacer cette partie</button></div>`:''}
    <div><h2 style="font-size:calc(22px*var(--tz));margin-bottom:12px">${has?'Ou commence une nouvelle carrière':'Nouvelle carrière'}</h2>
-   <div id="m-choose">${careerCards()}</div>
+   <div id="m-choose"><div class="panel" style="padding:12px 14px;margin-bottom:14px"><div class="lbl" style="margin-bottom:8px">Niveau de difficulté</div><div id="tdiffw">${diffSel(DIFF_PREF,'tdiff')}</div></div>${careerCards()}</div>
    <div id="m-pro" hidden><button class="btn ghost sm" data-back style="margin-bottom:12px">‹ Changer de carrière</button><h3 class="mtitle">Carrière Ligue des Pros · choisis ton club</h3><p class="muted" style="margin:0 0 14px">Prends un club de Ligue des Pros. Ta carrière commence en juin par la Noushi League avec son équipe U20. Ces quatre clubs viennent de monter : petit budget, beaucoup à construire.</p>
    <div class="clubpick big">${CI_CLUBS.filter(a=>rec.includes(a[0])).map(card).join('')}</div>
    <details style="margin-top:14px"><summary class="btn ghost sm" style="list-style:none;display:inline-flex">Mode libre : les 12 autres clubs</summary><div class="clubpick" style="margin-top:12px">${CI_CLUBS.filter(a=>!rec.includes(a[0])).sort((a,b)=>a[4]-b[4]).map(card).join('')}</div></details></div>
    <div id="m-dis" hidden><button class="btn ghost sm" data-back style="margin-bottom:12px">‹ Changer de carrière</button><h3 class="mtitle">Carrière District · choisis ta région</h3><p class="muted" style="margin:0 0 14px">Les opérateurs économiques et les supporters financent l'équipe du district. Détecte tes U20 dans les communes du Grand Abidjan, puis joue la Noushi League : les 2 meilleures équipes de district montent en Ligue 2. Sinon, un club de Ligue des Pros te proposera son équipe B.</p>
    <div class="clubpick">${DISTRICTS.map(d=>`<button data-d="${d.id}">${kit({c1:d.c[0],c2:d.c[1],pat:d.c[2]},52)}<span style="min-width:0"><b>${esc(d.name)}</b><small>${esc(d.dist)}</small><small>${esc(d.city)} · profil ${PROF_L[d.prof]||'équilibre'}</small></span></button>`).join('')}</div></div></div>
    <div class="row" style="gap:8px"><label class="btn ghost sm" style="cursor:pointer">Importer une partie<input type="file" id="impsave" accept=".json,application/json" hidden></label></div>
-   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 48${cloudDb?' · sauvegarde en ligne active':''}</p>
+   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 49${cloudDb?' · sauvegarde en ligne active':''}</p>
    <p class="muted" style="font-size:calc(13.5px*var(--tz));margin:0">Projet original. Clubs, joueurs, compétitions et montants de jeu sont fictifs, à l'échelle du football ivoirien réel. Aucune affiliation avec une fédération, une confédération ou un éditeur de jeux.</p>
   </div></div>`;
   $('#app').style.display='block';
@@ -4278,10 +4278,11 @@ function xgMod(E,s){const o=1-s;let m=1;
   if(o===E.uside){if(eIssue(E,'flancs'))m*=1.22;if(eIssue(E,'subit'))m*=1.12;if(eIssue(E,'press'))m*=1.08;if(eIssue(E,'contre'))m*=1.18}
   m*=(1-.04*eIndN(E,o,'cover'))*(1+.045*eIndN(E,o,'step'))*(1+.03*eIndN(E,o,'push'))*(1-.03*eIndN(E,o,'hold'));
   m*=(1+.045*eIndN(E,s,'push'))*(1-.02*eIndN(E,s,'cover'));
+  m*=1+(1-E.coord[o])*.6;if(E.ins[o].block==='press')m*=1.1+(capPress(E,o)<.95?.1:0);if((E.ins[s].block==='press'||E.ins[s].block==='tout')&&E.coord[s]>.86&&capPress(E,s)>1)m*=1.05;
   if(E.boost&&E.boost.s===s&&E.t<E.boost.until)m*=1.22;
   return m}
 const ALERT_T={flancs:['Ils passent tous par les côtés. Il faut fermer les couloirs.','Fermer les couloirs'],press:['Ils pressent haut, on perd le ballon dans notre camp. Joue plus direct ou recule le bloc.','Changer le plan'],
-  subit:['On subit trop, on ne garde jamais le ballon. Pose le ballon ou remonte le bloc.','Garder le ballon'],contre:['Ils se découvrent pour revenir au score. Joue en contre : saute les lignes.','Jouer en contre'],assaut:['Ils reculent pour garder le score. Il faut monter et presser.','Monter le pressing'],conc:['Le groupe se déconcentre. Un message est nécessaire.','Parler au groupe'],
+  subit:['On subit trop, on ne garde jamais le ballon. Pose le ballon ou remonte le bloc.','Garder le ballon'],contre:['Ils se découvrent pour revenir au score. Joue en contre : saute les lignes.','Jouer en contre'],coord:['Le groupe a perdu ses repères depuis le changement. Simplifie ou laisse-leur du temps.','Voir le collectif'],assaut:['Ils reculent pour garder le score. Il faut monter et presser.','Monter le pressing'],conc:['Le groupe se déconcentre. Un message est nécessaire.','Parler au groupe'],
   lazy:['{p} ne défend plus. Il laisse son couloir ouvert.','Le recadrer'],tired:['{p} est cuit. Il va finir par craquer.','Le remplacer'],doubt:['{p} doute depuis son occasion manquée.','L\'encourager']};
 function eAlert(E,k,t){if(!E.live||E.done||eIssue(E,k)&&!t)return;if(t&&E.alerts.some(a=>a.k===k&&a.pid===t.key&&!a.fix))return;
   const m=clamp(Math.ceil(E.t/60),1,90),a={k,m,pid:t?t.key:null,txt:ALERT_T[k][0].replace('{p}',t?t.n:''),fix:0};E.alerts.push(a);eLog(E,'adj',E.uside,t||null,'Ton adjoint : '+a.txt);return a}
@@ -4300,11 +4301,11 @@ function eTalk(E,t,kind){if(!t||!t.id||t.off||eLocked(E)||E.done)return'';const 
   else{f={sens:12,normal:7,pro:3,fier:8,tete:5}[c];ok=true;txt={sens:`${t.n} relève la tête. Ton message lui fait du bien.`,normal:`${t.n} applaudit le banc.`,pro:`${t.n} fait signe que tout va bien.`,fier:`${t.n} apprécie. Il en redemande.`,tete:`${t.n} tape dans ses mains, survolté.`}[c];
     if(t.lazy&&R()<.25){t.lazy=false;txt+=' Il se remet même à défendre.'}
     const a=E.alerts.find(x=>x.k==='doubt'&&x.pid===t.key&&!x.fix);if(a){t.focus=Math.max(t.focus||0,0);eFix(E,a,`${t.n} retrouve confiance`)}}
-  t.focus=clamp((t.focus||0)+f,-20,20);return eLog(E,'mgr',E.uside,t,(kind==='crit'?'Tu recadres '+t.n+'. ':'Tu encourages '+t.n+'. ')+txt).txt}
+  t.focus=clamp((t.focus||0)+f,-20,20);return eLog(E,'mgr',E.uside,t,(E.auto?(kind==='crit'?'Ton adjoint recadre '+t.n+'. ':'Ton adjoint encourage '+t.n+'. '):(kind==='crit'?'Tu recadres '+t.n+'. ':'Tu encourages '+t.n+'. '))+txt).txt}
 function eTeamTalk(E,kind){if(eLocked(E)||E.done)return;const s=E.uside,m=clamp(Math.ceil(E.t/60),1,90),[my,op]=(()=>{const sc=scoreAt(E.M,90);return s===0?sc:[sc[1],sc[0]]})();
   if(m-E.teamTalkAt<10){E.conc[s]-=3;eLog(E,'mgr',s,null,'Encore un discours ? Les joueurs ne t\'écoutent plus vraiment.');return}E.teamTalkAt=m;
-  if(kind==='crit'){const g=E.conc[s]<60?13:5;E.conc[s]+=g;for(const t of eAct(E,s))if(matchChar(t.pl)==='sens')t.focus=(t.focus||0)-3;eLog(E,'mgr',s,null,`Tu hausses le ton depuis la ligne de touche. ${g>8?'Le groupe se réveille.':'Le message passe, sans plus.'}`)}
-  else{const g=(my<=op&&m>=65?9:6);E.conc[s]+=g;for(const t of eAct(E,s))if(matchChar(t.pl)==='sens')t.focus=(t.focus||0)+3;eLog(E,'mgr',s,null,my<op?'Tu pousses ton équipe : on y croit encore !':'Tu encourages ton équipe. Les joueurs se parlent davantage.')}
+  if(kind==='crit'){const g=E.conc[s]<60?13:5;E.conc[s]+=g;for(const t of eAct(E,s))if(matchChar(t.pl)==='sens')t.focus=(t.focus||0)-3;eLog(E,'mgr',s,null,`${E.auto?'Ton adjoint hausse le ton':'Tu hausses le ton'} depuis la ligne de touche. ${g>8?'Le groupe se réveille.':'Le message passe, sans plus.'}`)}
+  else{const g=(my<=op&&m>=65?9:6);E.conc[s]+=g;for(const t of eAct(E,s))if(matchChar(t.pl)==='sens')t.focus=(t.focus||0)+3;eLog(E,'mgr',s,null,(E.auto?'Ton adjoint : ':'')+(my<op?'on y croit encore, il pousse l\'équipe !':'encouragements depuis le banc. Les joueurs se parlent davantage.'))}
   E.conc[s]=clamp(E.conc[s],25,95);const a=eIssue(E,'conc');if(a&&E.conc[s]>=62)eFix(E,a,'le groupe est de nouveau concentré')}
 const HT_TALK={calme:['Calme et précis','Tu corriges deux détails, sans crier.'],ton:['Hausser le ton','Tu exiges plus. Efficace si on joue mal, risqué avec les joueurs sensibles.'],motiv:['Les motiver','Tu parles de fierté, du quartier, des recruteurs en tribune.']};
 function eHalfTalk(E,k){const s=E.uside,sc=scoreAt(E.M,45),[my,op]=s===0?sc:[sc[1],sc[0]],d=my-op,act=eAct(E,s);let txt='';
@@ -4314,7 +4315,7 @@ function eHalfTalk(E,k){const s=E.uside,sc=scoreAt(E.M,45),[my,op]=s===0?sc:[sc[
   else if(k==='motiv'){E.conc[s]+=d<=0?12:6;act.forEach(t=>t.focus=(t.focus||0)+(matchChar(t.pl)==='sens'?5:2));txt=d<=0?'Ils sortent du vestiaire en courant.':'Bonne ambiance, attention à ne pas se relâcher.'}
   E.conc[s]=clamp(E.conc[s],25,95);act.forEach(t=>t.focus=clamp(t.focus||0,-20,20));if(k!=='none')eLog(E,'mgr',s,null,`Causerie (${HT_TALK[k][0].toLowerCase()}) : ${txt}`)}
 function eLive(E,m){if(m<=E.lmin)return;const s=E.uside,o=1-s,ins=E.ins[s],oi=E.ins[o],sc=scoreAt(E.M,90),my=s===0?sc[0]:sc[1],op=s===0?sc[1]:sc[0];
-  for(let k=E.lmin+1;k<=m;k++)for(const x of [0,1])E.conc[x]=clamp(E.conc[x]-.12-(k>75?.15:0)-(x===E.uside?0:-.12),25,95);
+  const D=DIFF[diffK()];for(let k=E.lmin+1;k<=m;k++)for(const x of [0,1])E.conc[x]=clamp(E.conc[x]-(x===E.uside?.12+(k>75?.15:0):D.drift+(k>75?D.late:0)),25,95);eCoordTick(E,m-E.lmin);eAI(E,m);
   if(my+op!==E.score[0]+E.score[1]){if(my>E.score[0]){E.conc[s]-=6}if(op>E.score[1]){E.conc[o]-=5}E.score=[my,op]}
   E.lmin=m;if(eLocked(E)&&!E.auto){}
   // lectures du match
@@ -4326,11 +4327,13 @@ function eLive(E,m){if(m<=E.lmin)return;const s=E.uside,o=1-s,ins=E.ins[s],oi=E.
     else if(a.k==='contre'&&ins.direct)eFix(E,a,'on les prend en contre');
     else if(a.k==='assaut'&&(ins.block==='press'||ins.block==='tout'))eFix(E,a,'on les étouffe');
     else if((a.k==='contre'||a.k==='assaut')&&m-a.m>12)eFix(E,a,'gone');
+    else if(a.k==='coord'&&E.coord[s]>=.85)eFix(E,a,'gone');
     else if(a.k==='conc'&&E.conc[s]>=62)eFix(E,a,'le groupe est de nouveau concentré');
     else if(a.k==='tired'){const t=E.pl[s].find(x=>x.key===a.pid);if(!t||t.off||t.cond>=60||t.subIn)eFix(E,a,'le joueur fatigué est sorti')}
     else if((a.k==='flancs'&&wide<2)||(a.k==='press'&&lost<1&&m-a.m>12))eFix(E,a,'gone');
     if(!a.fix&&!a.warn&&m-a.m>=10){a.warn=1;eLog(E,'adj',s,null,'Ton adjoint : on n\'a toujours pas réagi. On le paie.')}}
-  if(!E.aiAdapt&&m>=58&&m<=72&&R()<.25){const d=op-my;if(d<0){E.aiAdapt=1;oi.block='tout';eAlert(E,'contre');return}if(d>0){E.aiAdapt=1;oi.block='bloc';eAlert(E,'assaut');return}}
+  if(!E.aiAdapt&&m>=D.adapt[0]&&m<=D.adapt[1]&&R()<D.adapt[2]){const d=op-my;if(d<0){E.aiAdapt=1;oi.block='tout';eChange(E,o,'block');eAlert(E,'contre');return}if(d>0){E.aiAdapt=1;oi.block='bloc';eChange(E,o,'block');eAlert(E,'assaut');return}}
+  if(E.auto||eLocked(E))eAutoCoach(E,m);
   if(m<8||m%4)return;const act=E.alerts.filter(a=>!a.fix).length;if(act>=2)return;
   const mine=eAct(E,s);
   if(m>=25&&m%9===0)for(const t of mine){if(t.lazy||!t.id||t.line<2)continue;const d=t.pl.disc??60;if(d<48&&R()<(48-d)/70+(t.cond<60?.08:0)){t.lazy=true;eAlert(E,'lazy',t);return}}
@@ -4340,7 +4343,8 @@ function eLive(E,m){if(m<=E.lmin)return;const s=E.uside,o=1-s,ins=E.ins[s],oi=E.
   if((oi.block==='press'||oi.block==='tout')&&lost>=3&&!ins.direct&&ins.block!=='bloc'&&!eIssue(E,'press')){eAlert(E,'press');return}
   const pt=E.ptime,share=E.pshare?(pt[s]-E.pshare[s])/Math.max(1,pt[0]+pt[1]-E.pshare[0]-E.pshare[1]):.5;if(m%10===0)E.pshare=[...pt];
   if(ins.block==='bloc'&&share<.38&&my<=op&&!eIssue(E,'subit')){eAlert(E,'subit');return}
-  if(E.conc[s]<56&&!eIssue(E,'conc')){eAlert(E,'conc');return}}
+  if(E.conc[s]<56&&!eIssue(E,'conc')){eAlert(E,'conc');return}
+  if(E.coord[s]<.74&&!eIssue(E,'coord')){eAlert(E,'coord');return}}
 
 /* ---------- Noushi League en direct : le moteur de match avec les U20 ---------- */
 function nouTmpClear(keepFx){if(!G)return;for(const id in G.players)if(G.players[id]&&G.players[id].tmp)delete G.players[id];if(!keepFx)delete FX.NOUOPP}
@@ -4426,6 +4430,55 @@ function promoteGroup(c){const ys=(G.u18||[]).slice(),N=G.S&&G.S.nou,out=[];c.pl
     c.pl.push(p.id);out.push(p);if(p.pot>=66)trackStart(p,`Sélection régionale de ${c.name}, Noushi League ${N&&N.yr||G.sn+2025}. Monte en Ligue 2 avec le club.`)}
   G.u18=null;G.u18xs=null;return out}
 
+/* ---------- Lot 2 : moteur honnête ---------- */
+// difficulté : jamais sur les attributs ; seulement la qualité de décision et la concentration de l'IA
+const DIFF={facile:{l:'Facile',d:'L\'adversaire se déconcentre, réagit tard et garde parfois un plan devenu mauvais.',drift:.12,late:.15,adapt:[66,82,.14],counter:0,noise:.7,flank:0},
+  difficile:{l:'Difficile',d:'L\'adversaire tient son plan de jeu et finit par réagir quand il est mené.',drift:.05,late:.07,adapt:[58,74,.28],counter:.5,noise:.35,flank:0},
+  expert:{l:'Expert',d:'L\'adversaire reste concentré, vise ton côté faible et répond vite à tes changements.',drift:.015,late:.03,adapt:[50,76,.42],counter:1,noise:.2,flank:1}};
+let DIFF_PREF='difficile';try{DIFF_PREF=localStorage.getItem('mdc-diff')||'difficile'}catch(e){}
+function diffK(){return (G&&G.diff&&DIFF[G.diff])?G.diff:'difficile'}
+function diffSel(cur,id){return `<div class="sel diffsel" id="${id}">${Object.entries(DIFF).map(([k,v])=>`<button data-diff="${k}" class="${cur===k?'on':''}">${v.l}</button>`).join('')}</div><p class="muted diffd" style="margin:6px 0 0;font-size:calc(13px*var(--tz))">${esc(DIFF[cur].d)}</p>`}
+// bonus d'équipe affichés avant le match, en points de note : ils entrent maintenant dans le moteur
+function teamMod(id,ids){try{if(id===G.club&&ids&&ids.length){const ps=ids.map(P).filter(Boolean);return clamp((ids.every(x=>P(x)&&P(x).tmp)?0:tbBonusFirst(ids)+sysFirstBonus(ids))+(mgrT('tact')?.6:0)+enduPen(ps)*.4+adjBonus(),-6,6)}if(isCI(id))return coachBonus(id);return 0}catch(e){return 0}}
+// familiarité avec le système : chaque match joué avec une formation la rend plus naturelle
+function famOf(c,form){return c&&c.fam&&c.fam[form]!=null?c.fam[form]:6}
+function famAdd(c,form){if(!c)return;c.fam=c.fam||{};for(const k in FORMS)c.fam[k]=Math.max(0,(c.fam[k]??6)-(k===form?0:.15));c.fam[form]=Math.min(8,(c.fam[form]??6)+1)}
+function teamMind(E,s){const a=eAct(E,s).filter(t=>t.line>0);let m=0,ad=0,n=0;for(const t of a){const p=t.pl;m+=p.mat??(52+(E.aiMat?.[s]||0));ad+=p.adp??(52+(E.aiMat?.[s]||0));n++}return{mat:n?m/n:52,adp:n?ad/n:52}}
+const CHG_COST={block:.11,form:.2,toggle:.04};
+function eChange(E,s,kind){const tm=teamMind(E,s),hit=CHG_COST[kind]*(1.45-tm.adp/100*.95);E.coord[s]=clamp(E.coord[s]-hit,.5,1);
+  if(s===E.uside&&!E.auto&&kind!=='toggle'){const txt=E.coord[s]>=.9?'Le groupe suit le changement sans perdre ses repères.':E.coord[s]>=.78?'Quelques minutes de flottement le temps que chacun trouve sa place.':'Le groupe est perdu : alignements cassés, il faudra du temps.';eLog(E,'adj',s,null,`Ton adjoint : ${txt}`)}}
+function eCoordTick(E,dm){for(const s of [0,1]){const tm=teamMind(E,s);E.coord[s]=Math.min(1,E.coord[s]+dm*(.004+tm.mat/100*.013))}}
+// capacités réelles derrière une tactique
+function capPress(E,s){const a=eAct(E,s).filter(t=>t.line>0);if(!a.length)return 1;const v=a.reduce((x,t)=>x+(tAttr(t,'vit')+tAttr(t,'phy'))/2,0)/a.length;return clamp(1+(v-60)/40,.65,1.3)*E.coord[s]}
+function capLanes(E,s){const a=eAct(E,s).filter(t=>t.line===1||t.line===2);if(!a.length)return 1;const v=a.reduce((x,t)=>x+(tAttr(t,'def')+tAttr(t,'men'))/2,0)/a.length;return clamp(1+(v-58)/40,.6,1.3)*E.coord[s]}
+function capDirect(E,s){const a=eAct(E,s).filter(t=>t.line===3);if(!a.length)return 1;const v=a.reduce((x,t)=>x+tAttr(t,'vit'),0)/a.length;return clamp(1+(v-60)/35,.6,1.4)}
+// changer de formation pendant le match : on replace des joueurs dans d'autres lignes
+function eReform(E,s,form){const f=FORMS[form];if(!f)return false;const act=eAct(E,s),U=[.05,.24,.47,.7],fit={1:t=>tAttr(t,'def')+tAttr(t,'men')*.5,2:t=>tAttr(t,'pas')+tAttr(t,'tec')*.6,3:t=>tAttr(t,'fin')+tAttr(t,'vit')*.6};
+  const cnt=li=>act.filter(t=>t.line===li).length;let guard=0;
+  while(guard++<12){const over=[1,2,3].filter(li=>cnt(li)>f[li]),under=[1,2,3].filter(li=>cnt(li)<f[li]);if(!over.length||!under.length)break;
+    const to=under[0],from=over.slice().sort((a,b)=>Math.abs(a-to)-Math.abs(b-to))[0];const c=act.filter(t=>t.line===from).sort((a,b)=>fit[to](b)-fit[to](a))[0];if(!c)break;c.line=to;c.au=U[to]}
+  for(const li of [1,2,3]){const L=act.filter(t=>t.line===li).sort((a,b)=>a.ay-b.ay);L.forEach((t,i)=>{t.ay=(i+1)/(L.length+1);t.oop=t.pos!==LINES[li];delete E.ins[s].off[t.key]})}
+  E.form[s]=form;eChange(E,s,'form');return true}
+// l'IA lit le match selon la difficulté
+function eAI(E,m){const D=DIFF[diffK()],s=E.uside,o=1-s,ins=E.ins[s],oi=E.ins[o];
+  const sig=[ins.block,ins.lanes,ins.direct,ins.calm,E.form[s]].join('|');if(E.uSig==null)E.uSig=sig;
+  if(sig!==E.uSig){E.uSig=sig;E.uChg=m;E.aiDone=0}
+  if(E.uChg!=null&&!E.aiDone&&D.counter&&m-E.uChg>=(D.counter>=1?3:8)){E.aiDone=1;if(R()<D.counter){let did='';
+      if((ins.block==='press'||ins.block==='tout')&&!oi.direct){oi.direct=true;oi.calm=false;did='jouer long dans ton dos'}
+      else if(ins.block==='bloc'&&!oi.calm){oi.calm=true;oi.direct=false;did='faire tourner le ballon'}
+      else if(ins.lanes&&!oi.calm){oi.calm=true;did='passer par l\'axe'}
+      if(did){eChange(E,o,'toggle');eLog(E,'amb',o,null,`${T(eSide(E,o)).short} s'adapte : l'adversaire décide de ${did}.`)}}}}
+
+// en résultat immédiat (ou coach en tribune), l'adjoint applique les corrections avec un temps de retard
+function eAutoCoach(E,m){const s=E.uside,ins=E.ins[s],dl=G.staff&&G.staff.adj&&G.staff.adj.sk?clamp(Math.round(9-adjSk('tac')/3),3,8):7;
+  for(const a of E.alerts){if(a.fix||m-a.m<dl)continue;const t=a.pid&&E.pl[s].find(x=>x.key===a.pid);
+    if(a.k==='flancs')ins.lanes=true;else if(a.k==='press'){ins.direct=true;ins.calm=false}else if(a.k==='subit'){ins.calm=true;ins.direct=false}
+    else if(a.k==='contre'){ins.direct=true;ins.calm=false}else if(a.k==='assaut'){if(ins.block!=='press'){ins.block='press';eChange(E,s,'block')}}
+    else if(a.k==='conc')eTeamTalk(E,'crit');else if(a.k==='lazy'&&t)eTalk(E,t,'crit');else if(a.k==='doubt'&&t)eTalk(E,t,'enc');
+    else if(a.k==='tired'&&t&&E.subsLeft[s]>0){const b=E.bench.map(P).filter(q=>q&&q.pos===t.pos)[0]||E.bench.map(P).filter(q=>q&&q.pos!=='GB')[0];if(b&&eSub(E,t,b.id))eFix(E,a,'le joueur fatigué est sorti')}}}
+
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-diff]');if(!b)return;const k=b.dataset.diff,w=b.closest('#tdiffw,#cdiffw');if(!w)return;
+  if(w.id==='tdiffw'){DIFF_PREF=k;try{localStorage.setItem('mdc-diff',k)}catch(e){}w.innerHTML=diffSel(k,'tdiff')}else if(G){G.diff=k;save();w.innerHTML=diffSel(k,'cdiff');toast(`Difficulté : <b>${DIFF[k].l}</b>`)}});
 try{window.claude?.hot?.snapshot?.(()=>({save:G?JSON.stringify(G):null,view:VIEW}))}catch(e){}
 (window.claude?.hot?.ready?window.claude.hot.ready(start):start(window.claude?.hot?.data??{}));
 </script>
