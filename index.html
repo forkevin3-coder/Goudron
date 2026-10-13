@@ -1416,7 +1416,7 @@ function sellPlayer(p,fee,to,pct,o){txPlayer(p,G.club,txAbroad(to,o&&o.country),
   removeFromClub(p,`Vendu à ${to}${o&&o.country?' ('+o.country+')':''}`);if(fee>=1e6)unlock('sale1m');G.rep.world=clamp(G.rep.world+(fee>=5e5?4:1),0,100);
   newsAdd(`${p.n} rejoint ${to} pour ${eur(fee)} (${money(v)}).`,'transfer',true)}
 function removeFromClub(p,why){try{archivePlayer(p,why||'Fin de contrat')}catch(e){}if(p.club===G.club&&G&&G.track&&G.track[p.id])trackLeave(p,why||'fin de contrat');const c=G.clubs[p.club];if(c){c.pl=c.pl.filter(x=>x!==p.id);if(c.xi)c.xi=c.xi.filter(x=>x!==p.id)}p.club=null;delete G.players[p.id]}
-function signPlayer(p,sal,dur){delete p.num;p.club=G.club;p.sal=sal;p.ctr=dur;p.cond=100;p.share=.5;me().pl.push(p.id)}
+function signPlayer(p,sal,dur){delete p.num;p.club=G.club;p.sal=sal;p.ctr=dur;p.cond=100;p.share=.5;me().pl.push(p.id);try{stTrack(p)}catch(e){}}
 function capRoom(extra){return wageCap()-(proWage()+(extra||0))}
 
 /* ======================= FIN DE SAISON ======================= */
@@ -2302,7 +2302,7 @@ const proWage=()=>squad(G.club).filter(p=>!p.asp).reduce((s,p)=>s+p.sal,0);
 const aspCount=()=>squad(G.club).filter(p=>p.asp).length;
 const homegrown=p=>['maracana','academie','centre'].includes(p.origin);
 const pepite=p=>(p.origin==='maracana'||p.origin==='academie')&&p.age<=21;
-function migrate(){try{if(G){for(const id in G.players){archInit(G.players[id]);ostInit(G.players[id])}(G.u18||[]).forEach(y=>{archInit(y);ostInit(y)})}}catch(e){}if(G&&!G.calV){if(G.S&&G.S.steps)G.S.steps.forEach(x=>{if(x.m!=null)x.m=(x.m+3)%12});G.calV=1}if(!G)return;
+function migrate(){try{if(G){for(const id in G.players){archInit(G.players[id]);ostInit(G.players[id]);try{stTrack(G.players[id])}catch(e){}}(G.u18||[]).forEach(y=>{archInit(y);ostInit(y)})}}catch(e){}if(G&&!G.calV){if(G.S&&G.S.steps)G.S.steps.forEach(x=>{if(x.m!=null)x.m=(x.m+3)%12});G.calV=1}if(!G)return;
   if(!G.staff)G.staff={scouts:[{id:'s'+(G.uid++),n:'Vieux Père Bamba',lvl:1,sal:SCOUT_SAL[1]}]};
   if(G.ferveur==null)G.ferveur=30;if(G.rep.form==null)G.rep.form=10;if(!G.board)G.board={conf:65,dlost:0};if(!G.sellOn)G.sellOn=[];if(G.lastBigSale==null)G.lastBigSale=0;
   if(!G.rival){G.rival={};for(const [a,b] of RIVALS){G.rival[a]=b;G.rival[b]=a}}
@@ -4098,7 +4098,7 @@ function renderTitle(saved){
    <div id="m-dis" hidden><button class="btn ghost sm" data-back style="margin-bottom:12px">‹ Changer de carrière</button><h3 class="mtitle">Carrière District · choisis ta région</h3><p class="muted" style="margin:0 0 14px">Les opérateurs économiques et les supporters financent l'équipe du district. Détecte tes U20 dans les communes du Grand Abidjan, puis joue la Noushi League : les 2 meilleures équipes de district montent en Ligue 2. Sinon, un club de Ligue des Pros te proposera son équipe B.</p>
    <div class="clubpick">${DISTRICTS.map(d=>`<button data-d="${d.id}">${kit({c1:d.c[0],c2:d.c[1],pat:d.c[2]},52)}<span style="min-width:0"><b>${esc(d.name)}</b><small>${esc(d.dist)}</small><small>${esc(d.city)} · profil ${PROF_L[d.prof]||'équilibre'}</small></span></button>`).join('')}</div></div></div>
    <div class="row" style="gap:8px"><label class="btn ghost sm" style="cursor:pointer">Importer une partie<input type="file" id="impsave" accept=".json,application/json" hidden></label></div>
-   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 50${cloudDb?' · sauvegarde en ligne active':''}</p>
+   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 51${cloudDb?' · sauvegarde en ligne active':''}</p>
    <p class="muted" style="font-size:calc(13.5px*var(--tz));margin:0">Projet original. Clubs, joueurs, compétitions et montants de jeu sont fictifs, à l'échelle du football ivoirien réel. Aucune affiliation avec une fédération, une confédération ou un éditeur de jeux.</p>
   </div></div>`;
   $('#app').style.display='block';
@@ -4408,11 +4408,12 @@ function youthToPlayer(y,cid,o){o=o||{};archInit(y);ostInit(y);
   const p=newPlayer({n:y.n,pos:y.pos,age:y.age,ovr:y.ovr,pot:y.pot,club:cid,ctr:o.ctr||3,sal:o.sal||marketSal(y.ovr),origin:o.origin||'academie',known:true,disc:y.disc,from:y.from||''});
   Object.assign(p,{at:{...y.at},mat:y.mat,cnc:y.cnc,adp:y.adp,yid:y.id,ost:y.ost,ostr:y.ostr,nat:y.nat||'ci'});if(y.trf)p.trf=y.trf.slice();if(y.pers)p.pers=y.pers;if(y.endu!=null)p.endu=y.endu;if(y.num)p.num=y.num;if(y.promise)p.promise=true;
   const N=G.S&&(G.S.nou||G.S.nouPro);p.nou=(N&&N.st&&N.st[y.id])||null;if(N&&N.yr)p.nouYr=N.yr;p.reg=(G.regQ&&G.regQ.st[y.id])||null;
-  (G.idMap=G.idMap||{})[y.id]=p.id;return p}
+  (G.idMap=G.idMap||{})[y.id]=p.id;p.stH=(y.stH||[{y:yearNow()-(y.age>17?1:0),s:y.ost,w:y.ostr||''}]).slice();stTrack(p,T(cid)?T(cid).name:'');return p}
 function regWho(id){const y=(G.u18||[]).find(x=>x.id===id);if(y)return y;const p=G.idMap&&G.idMap[id]!=null?P(G.idMap[id]):null;if(p)return p;const s=G.regQ&&G.regQ.st[id];return s&&s.n?{n:s.n}:null}
 // montée : le groupe devient l'effectif professionnel, avec des contrats
 function promoteGroup(c){const ys=(G.u18||[]).slice(),N=G.S&&G.S.nou,out=[];c.pl=[];
   for(const y of ys){const sal=Math.round(Math.max(1.2e5,marketSal(y.ovr)*.5)/5e3)*5e3,p=youthToPlayer(y,c.id,{ctr:y.age<=18?3:2,sal,origin:/Maracana|marché|plage|gare|Terrain/i.test(y.from||'')?'maracana':'academie'});
+    if(p.stH&&p.stH[p.stH.length-1].s!=='pro')p.stH.push({y:yearNow(),s:'pro',w:c.name+' · Ligue 2'});
     c.pl.push(p.id);out.push(p);if(p.pot>=66)trackStart(p,`Sélection régionale de ${c.name}, Noushi League ${N&&N.yr||G.sn+2025}. Monte en Ligue 2 avec le club.`)}
   G.u18=null;G.u18xs=null;return out}
 
@@ -4469,6 +4470,8 @@ document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest
 const OST_L={amateur:'Amateur',semipro:'Semi-pro',pro:'Professionnel'};
 // statut et structure d'origine, fixés une fois pour toutes
 function ostInit(p){if(!p||p.ost)return p;const f=String(p.from||''),o=p.origin||'';
+  if(!f&&!o&&p.id!=null&&String(p.id).startsWith('u')){p.ost='semipro';p.ostr=G&&G.club&&me()?'Centre de formation · '+me().name:'Centre de formation';if(!p.nat)p.nat='ci';return p}
+  if(/Sans club|Jeune du quartier/.test(f)){p.ost='amateur';p.ostr=/quartier/.test(f)?f:'Joueur libre, sans club';if(!p.nat)p.nat='ci';return p}
   if(/Acad|Centre de formation|Elite|Foot Academy/i.test(f)||o==='academie'||o==='centre'){p.ost='semipro';p.ostr=f&&!/^Formé|Sans club/.test(f)?f:o==='centre'&&p.club&&T(p.club)?'Centre de formation · '+T(p.club).name:(f||'Académie')}
   else if(o==='maracana'||o==='district'||/Maracana|Comité|quartier|Tournoi|Terrain|marché|plage|gare|Sélection régionale/i.test(f)){p.ost='amateur';p.ostr=f||'Football de quartier'}
   else if(o==='expat'){p.ost='pro';p.ostr=f||'Club étranger'}
@@ -4479,13 +4482,13 @@ function natName(k){const a=(typeof MGR_NAT!=='undefined'&&MGR_NAT.find(x=>x[0]=
 // noms uniques dans tout le monde du jeu
 function nameTaken(){const s=new Set();if(!G)return s;for(const id in G.players)s.add(G.players[id].n);(G.u18||[]).forEach(y=>s.add(y.n));if(G.gone)for(const id in G.gone)s.add(G.gone[id].n);return s}
 // archive de la saison écoulée, avant la remise des compteurs de la nouvelle saison
-function seasonArchive(p){if(!p||p.tmp)return;if(p.hsLast===G.sn)return;p.hsLast=G.sn;if(!(p.apps>0))return;
+function seasonArchive(p){if(!p||p.tmp)return;try{stTrack(p)}catch(e){}if(p.hsLast===G.sn)return;p.hsLast=G.sn;if(!(p.apps>0))return;
   const c=p.club&&T(p.club),d=G.l1.includes(p.club)?'Ligue des Pros':G.l2.includes(p.club)?'Ligue 2':'';
   (p.hs=p.hs||[]).push({y:`${2024+G.sn}-${2025+G.sn}`,c:c?c.name:'',cid:p.club,d,j:p.apps,mn:p.mins,b:p.sg,pd:p.sa,n:p.rat&&p.rat.length?Math.round(p.rat.reduce((a,b)=>a+b,0)/p.rat.length*10)/10:null});if(p.hs.length>25)p.hs.shift()}
 function careerTot(p){const t={j:0,b:0,pd:0};for(const h of p.hs||[]){t.j+=h.j;t.b+=h.b;t.pd+=h.pd}t.j+=p.apps||0;t.b+=p.sg||0;t.pd+=p.sa||0;return t}
 // registre des joueurs sortis du jeu : on garde leur fiche et leurs liens
-function archivePlayer(p,why){if(!p||p.tmp)return;ostInit(p);G.gone=G.gone||{};const c=p.club&&T(p.club),hs=(p.hs||[]).slice();if(p.apps>0)hs.push({y:seasonLabel(),c:c?c.name:'',cid:p.club,d:'',j:p.apps,mn:p.mins,b:p.sg,pd:p.sa,n:p.rat&&p.rat.length?Math.round(p.rat.reduce((a,b)=>a+b,0)/p.rat.length*10)/10:null});
-  G.gone[p.id]={id:p.id,n:p.n,pos:p.pos,age:p.age,nat:p.nat,ost:p.ost,ostr:p.ostr,ovr:p.ovr,peak:Math.max(p.peak||0,p.ovr),last:c?c.name:'',mine:p.club===G.club,why:why||'',y:yearNow(),hs,trf:p.trf||[],nou:p.nou||null,reg:p.reg||null};
+function archivePlayer(p,why){if(!p||p.tmp)return;ostInit(p);try{if(/étranger|Vendu/.test(why||'')){p.stH=p.stH||[{y:yearNow(),s:p.ost,w:p.ostr||''}];if(p.stH[p.stH.length-1].s!=='pro')p.stH.push({y:yearNow(),s:'pro',w:String(why).replace(/^.*?(à|·) /,'')})}else stTrack(p)}catch(e){}G.gone=G.gone||{};const c=p.club&&T(p.club),hs=(p.hs||[]).slice();if(p.apps>0)hs.push({y:seasonLabel(),c:c?c.name:'',cid:p.club,d:'',j:p.apps,mn:p.mins,b:p.sg,pd:p.sa,n:p.rat&&p.rat.length?Math.round(p.rat.reduce((a,b)=>a+b,0)/p.rat.length*10)/10:null});
+  G.gone[p.id]={id:p.id,n:p.n,pos:p.pos,age:p.age,nat:p.nat,ost:p.ost,ostr:p.ostr,ovr:p.ovr,peak:Math.max(p.peak||0,p.ovr),last:c?c.name:'',mine:p.club===G.club,why:why||'',y:yearNow(),hs,stH:p.stH||null,trf:p.trf||[],nou:p.nou||null,reg:p.reg||null};
   const ks=Object.keys(G.gone);if(ks.length>600){let drop=ks.filter(k=>!G.gone[k].mine&&G.gone[k].peak<68);if(ks.length-drop.length>700)drop=drop.concat(ks.filter(k=>!G.gone[k].mine&&!drop.includes(k)));drop.slice(0,ks.length-600).forEach(k=>delete G.gone[k])}}
 function provHTML(p){ostInit(p);const t=careerTot(p),hs=p.hs||[];
   const rows=hs.map(h=>`<tr><td>${h.y}</td><td style="white-space:normal">${h.cid&&T(h.cid)?`<span class="lk" data-lk="c:${h.cid}" tabindex="0">${esc(h.c)}</span>`:esc(h.c)}</td><td class="r num">${h.j}</td><td class="r num">${h.b}</td><td class="r num">${h.pd}</td><td class="r num">${h.n??'–'}</td></tr>`).join('');
@@ -4493,14 +4496,18 @@ function provHTML(p){ostInit(p);const t=careerTot(p),hs=p.hs||[];
   const trf=(p.trf||[]).slice().reverse();
   return `<div class="lbl" style="margin:12px 0 6px">Provenance</div><div class="list">
     <div class="item"><span class="muted" style="flex:1">Statut d'origine</span><b>${OST_L[p.ost]||'—'}</b></div>
+    ${(()=>{const h=p.stH&&p.stH.length?p.stH:[{s:p.ost}],cur=p.club!==undefined&&!p.why?stNow(p):h[h.length-1].s,last=h[h.length-1];return `<div class="item"><span class="muted" style="flex:1">Statut actuel</span><b>${OST_L[cur]||'—'}${last&&last.s===cur&&last.y&&h.length>1?` <span class="muted" style="font-weight:500">depuis ${last.y}</span>`:''}</b></div>${h.length>1?`<div class="item" style="font-size:calc(13px*var(--tz))"><span class="muted" style="flex:1">Évolution</span><span style="text-align:right">${h.map(x=>`${OST_L[x.s]}${x.y?' ('+x.y+(x.w?', '+esc(x.w):'')+')':''}`).join(' → ')}</span></div>`:''}`})()}
     <div class="item"><span class="muted" style="flex:1">Structure d'origine</span><b style="text-align:right">${esc(p.ostr||'—')}</b></div>
     <div class="item"><span class="muted" style="flex:1">Nationalité</span><b>${natName(p.nat||'ci')}</b></div></div>
    ${rows||cur?`<div class="lbl" style="margin:12px 0 6px">Historique · ${t.j} match${t.j>1?'s':''}, ${t.b} but${t.b>1?'s':''}, ${t.pd} passe${t.pd>1?'s':''} décisive${t.pd>1?'s':''}</div><div class="tw"><table><thead><tr><th>Saison</th><th>Club</th><th class="r">J</th><th class="r">B</th><th class="r">PD</th><th class="r">Note</th></tr></thead><tbody>${rows}${cur}</tbody></table></div>`:''}
    ${trf.length?`<div class="lbl" style="margin:12px 0 6px">Transferts</div><div class="list">${trf.slice(0,8).map(x=>`<div class="item" style="font-size:calc(13.5px*var(--tz))"><span class="muted" style="min-width:42px">${x.y}</span><span style="flex:1;min-width:0">${esc(x.f)} → ${esc(x.t)}</span><b class="num">${x.fee?money(x.fee):'libre'}</b></div>`).join('')}</div>`:''}`}
-function goneSheet(id){const g=G.gone&&G.gone[id];if(!g)return false;const p={...g,hs:g.hs,trf:g.trf,apps:0,club:null};
+function goneSheet(id){const g=G.gone&&G.gone[id];if(!g)return false;const p={...g,hs:g.hs,trf:g.trf,apps:0,club:null,stH:g.stH};
   modal(`<div class="csheet"><div class="chead"><div style="min-width:0;flex:1"><div class="lbl">${esc(g.why||'A quitté le football ivoirien')} · ${g.y}</div><h2>${esc(g.n)}</h2><div class="cmeta">${g.pos} · ${g.age} ans · meilleure note ${g.peak}${g.last?' · dernier club : '+esc(g.last):''}</div></div></div>
    ${youthHist(p)}${provHTML(p)}<div class="row" style="margin-top:14px"><button class="btn ghost" id="mclose">Fermer</button></div></div>`);$('#ov').querySelector('#mclose').onclick=closeModal;return true}
 
+// statut actuel : il évolue avec la carrière (l'origine, elle, ne change jamais)
+function stNow(p){if(!p)return 'amateur';if(p.club&&(G.l1.includes(p.club)||G.l2.includes(p.club)))return p.asp?'semipro':'pro';if(p.yid==null&&p.id&&String(p.id).startsWith('u'))return p.ost==='semipro'||!(G.start==='district'&&inPrologue())?'semipro':'amateur';return (p.stH&&p.stH.length?p.stH[p.stH.length-1].s:null)||p.ost||'amateur'}
+function stTrack(p,where){if(!p)return;ostInit(p);const now=stNow(p),h=p.stH=p.stH||[{y:p.stY0||yearNow(),s:p.ost,w:p.ostr||''}];if(h[h.length-1].s!==now){h.push({y:yearNow(),s:now,w:where||(p.club&&T(p.club)?T(p.club).name:'')});if(h.length>8)h.splice(1,1)}}
 try{window.claude?.hot?.snapshot?.(()=>({save:G?JSON.stringify(G):null,view:VIEW}))}catch(e){}
 (window.claude?.hot?.ready?window.claude.hot.ready(start):start(window.claude?.hot?.data??{}));
 </script>
