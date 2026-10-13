@@ -4117,7 +4117,7 @@ function renderTitle(saved){
    <div id="m-dis" hidden><button class="btn ghost sm" data-back style="margin-bottom:12px">‹ Changer de carrière</button><h3 class="mtitle">Carrière District · choisis ta région</h3><p class="muted" style="margin:0 0 14px">Les opérateurs économiques et les supporters financent l'équipe du district. Détecte tes U20 dans les communes du Grand Abidjan, puis joue la Noushi League : les 2 meilleures équipes de district montent en Ligue 2. Sinon, un club de Ligue des Pros te proposera son équipe B.</p>
    <div class="clubpick">${DISTRICTS.map(d=>`<button data-d="${d.id}">${kit({c1:d.c[0],c2:d.c[1],pat:d.c[2]},52)}<span style="min-width:0"><b>${esc(d.name)}</b><small>${esc(d.dist)}</small><small>${esc(d.city)} · profil ${PROF_L[d.prof]||'équilibre'}</small></span></button>`).join('')}</div></div></div>
    <div class="row" style="gap:8px"><label class="btn ghost sm" style="cursor:pointer">Importer une partie<input type="file" id="impsave" accept=".json,application/json" hidden></label></div>
-   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 54${cloudDb?' · sauvegarde en ligne active':''}</p>
+   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 55${cloudDb?' · sauvegarde en ligne active':''}</p>
    <p class="muted" style="font-size:calc(13.5px*var(--tz));margin:0">Projet original. Clubs, joueurs, compétitions et montants de jeu sont fictifs, à l'échelle du football ivoirien réel. Aucune affiliation avec une fédération, une confédération ou un éditeur de jeux.</p>
   </div></div>`;
   $('#app').style.display='block';
@@ -4542,35 +4542,49 @@ function coachEval(){const N=G.S.nou,me_=N&&N.me,r=N&&me_>=0?(N.out[me_]??0):0,s
   let gf=0,mj=0;if(N)for(const k of NOU_ORDER){const L=nouStage(k)||[];for(const f of L)if(f.r&&(f.h===me_||f.a===me_)){mj++;gf+=f.h===me_?f.r.hg:f.r.ag}}
   const style=clamp(Math.round(30+(mj?gf/mj:0)*28+(sysAct&&sysAct().def==='press'?6:0)),5,100);
   const gestion=G.cash>=0?clamp(Math.round(62+Math.min(30,G.cash/2e6)),0,100):25;
-  const rep=clamp(Math.round(30+r*9+(G.regQ&&G.regQ.best==='win'?10:0)+(G.ferveur||30)/5),5,100);
-  const v={res:clamp(Math.round(res),5,100),youth,style,gestion,rep},score=Math.round(v.res*.4+v.youth*.25+v.style*.15+v.gestion*.1+v.rep*.1);
-  const txt={res:N?`${NOU_REACH[r]} en Noushi League${G.regQ?', '+(G.regQ.best==='win'?'champion régional':'qualifié au régional'):''}`:'',youth:`${stars} joueur${stars>1?'s':''} à 7 de moyenne ou plus`,style:`${mj?(gf/mj).toFixed(1):'0'} but${gf/mj>=2?'s':''} par match`,gestion:G.cash>=0?`Caisse positive (${money(G.cash)})`:'Caisse dans le rouge',rep:`Ferveur ${G.ferveur||30}`};
+  const v={res:clamp(Math.round(res),5,100),youth,style,gestion};
+  // réputation de coach : elle te suit d'une saison à l'autre ; une saison ne l'efface pas
+  const base=(v.res*.4+v.youth*.25+v.style*.15+v.gestion*.1)/.9,now=clamp(Math.round(12+base*.6+(G.regQ&&G.regQ.best==='win'?6:0)+((G.ferveur||30)-30)/10),5,95);
+  if(N&&N.repY!==N.yr){N.repY=N.yr;const prev=G.cRep;G.cRepH=G.cRepH||[];G.cRep=prev==null?now:Math.round(prev*.5+now*.5);G.cRepH.push({y:N.yr||yearNow(),v:G.cRep})}
+  v.rep=G.cRep??now;const H=G.cRepH||[],tr=H.length>1?H[H.length-1].v-H[H.length-2].v:0;
+  const score=Math.round(v.res*.4+v.youth*.25+v.style*.15+v.gestion*.1+v.rep*.1);
+  const txt={res:N?`${NOU_REACH[r]} en Noushi League${G.regQ?', '+(G.regQ.best==='win'?'champion régional':'qualifié au régional'):''}`:'',youth:`${stars} joueur${stars>1?'s':''} à 7 de moyenne ou plus`,style:`${mj?(gf/mj).toFixed(1):'0'} but${gf/mj>=2?'s':''} par match`,gestion:G.cash>=0?`Caisse positive (${money(G.cash)})`:'Caisse dans le rouge',rep:`Réputation de coach ${v.rep}/100${H.length>1?` (${tr>=0?'+':''}${tr} depuis l'an dernier)`:', construite sur cette saison'}`};
   return{v,score,txt}}
-// postes à pourvoir : chaque club a ses priorités
-function openPosts(score){const out=[],pr=()=>{const k=Object.keys(ARG_L),w={};k.forEach(x=>w[x]=.2+R());const s=Object.values(w).reduce((a,b)=>a+b,0);k.forEach(x=>w[x]=+(w[x]/s).toFixed(2));return w};
-  const l2=shuffle(G.l2.filter(id=>id!==G.club&&T(id).origin!=='academie')).slice(0,2),l1=shuffle(G.l1.filter(id=>id!==G.club)).slice(0,2);
-  for(const id of l2){const w=pr();w.res+=.2;out.push({club:id,role:'head',div:'Ligue 2',need:60,prio:w})}
-  for(const id of l1){const w=pr();w.youth+=.25;out.push({club:id,role:'B',div:'Équipe B · Ligue des Espoirs',need:46,prio:w})}
+// ce que le club cherche vraiment : calculé à partir de son effectif, de son budget, de son niveau et de son entraîneur actuel
+function clubNeeds(id,role){const c=G.clubs[id],sq=squad(id),yg=sq.filter(p=>p.age<=21).length,purse=clubPurse(id),co=G.coaches&&G.coaches[id],tier=c.tier||1;
+  const allP=G.l1.concat(G.l2).map(clubPurse).sort((a,b)=>a-b),med=allP[Math.floor(allP.length/2)]||1;
+  const w={res:.15+tier*.05+(co&&co.rep<35+tier*6?.15:0),youth:.1+yg/Math.max(1,sq.length)*(role==='B'?1.4:.9)+(c.origin==='academie'?.3:0),style:.12+(tier>=4?.15:0),gestion:.08+(purse<med?.3:0)+(G.l2.includes(id)?.1:0),rep:.05+tier*.05};
+  const s=Object.values(w).reduce((a,b)=>a+b,0);for(const k in w)w[k]=+(w[k]/s).toFixed(2);
+  const why={res:co&&co.rep<35+tier*6?`l'entraîneur en place (${co.n}) n'a pas convaincu`:tier>=3?`club ambitieux (niveau ${tier}/5)`:'le président veut des résultats tout de suite',youth:`${yg} joueur${yg>1?'s':''} de 21 ans ou moins dans l'effectif${c.origin==='academie'?', club formateur':''}`,style:tier>=4?'un public exigeant qui veut du spectacle':'une équipe à qui donner une identité',gestion:purse<med?`budget de recrutement serré (${money(purse)})`:'tenir le budget',rep:tier>=4?'un club exposé qui veut un nom':'un coach dont on parle'};
+  return{w,why,yg,purse}}
+// postes réellement ouverts : entraîneur en fin de contrat ou trop faible pour le niveau du club ; équipes B des clubs qui ont des jeunes à faire grandir
+function openPosts(){coachesInit();const out=[];
+  const heads=G.l2.filter(id=>id!==G.club&&G.clubs[id]&&T(id).origin!=='academie').map(id=>{const co=G.coaches[id],tier=G.clubs[id].tier||1,weak=co?(35+tier*6)-co.rep:10,end=co&&(co.ctr||1)<=1;return{id,co,tier,sc:(end?12:0)+weak+R()*6,end,weak}}).filter(x=>x.end||x.weak>0).sort((a,b)=>b.sc-a.sc).slice(0,2);
+  for(const h of heads){const n=clubNeeds(h.id,'head');out.push({club:h.id,role:'head',div:'Ligue 2 · entraîneur principal',need:Math.round(44+h.tier*4),prio:n.w,whyN:n.why,open:h.co?(h.end?`${h.co.n} arrive en fin de contrat.`:`${h.co.n} (réputation ${h.co.rep}) n'a pas le niveau attendu.`):'Le banc est vide.'})}
+  const bs=G.l1.filter(id=>id!==G.club&&G.clubs[id]).map(id=>({id,n:clubNeeds(id,'B')})).sort((a,b)=>b.n.yg-a.n.yg).slice(0,3);
+  for(const b of shuffle(bs).slice(0,2)){const tier=G.clubs[b.id].tier||1;out.push({club:b.id,role:'B',div:'Équipe B · Ligue des Espoirs',need:Math.round(34+tier*3),prio:b.n.w,whyN:b.n.why,open:`${b.n.yg} jeunes de 21 ans ou moins à faire progresser.`})}
   return out}
 function prioTop(w){return Object.entries(w).sort((a,b)=>b[1]-a[1]).slice(0,2).map(x=>x[0])}
-function applyPost(post,args,E){const w=post.prio,tot=prioTop(w).concat(Object.keys(w).sort((a,b)=>w[b]-w[a])[2]).reduce((s,k)=>s+w[k],0);
-  const fit=args.reduce((s,k)=>s+w[k]*E.v[k],0)/Math.max(.01,tot);const val=fit*.75+E.score*.25+rf(-6,6);const ok=val>=post.need;
-  const top=prioTop(w),miss=top.filter(k=>!args.includes(k)),weak=args.filter(k=>E.v[k]<45);
+function postVal(post,args,E,noise){const w=post.prio,tot=Object.keys(w).sort((a,b)=>w[b]-w[a]).slice(0,3).reduce((s,k)=>s+w[k],0);
+  const fit=args.reduce((s,k)=>s+w[k]*E.v[k],0)/Math.max(.01,tot);return fit*.55+E.v.rep*.3+E.score*.15+(noise?rf(-5,5):0)}
+function applyPost(post,args,E){const val=postVal(post,args,E,true),ok=val>=post.need;
+  const top=prioTop(post.prio),miss=top.filter(k=>!args.includes(k)),weak=args.filter(k=>E.v[k]<45);
   const why=ok?`Le président a retenu ${args.filter(k=>top.includes(k)).map(k=>ARG_L[k][0].toLowerCase()).join(' et ')||'ton projet'}. Le poste est à toi s'il te convient.`
-    :`Refus. ${miss.length?`Ce club cherchait surtout : ${miss.map(k=>ARG_L[k][0].toLowerCase()).join(' et ')}. `:''}${weak.length?`Ton argument « ${ARG_L[weak[0]][0].toLowerCase()} » n'a pas convaincu.`:'D\'autres candidats avaient un meilleur dossier.'}`;
+    :`Refus. ${miss.length?`Ce club cherchait surtout : ${miss.map(k=>ARG_L[k][0].toLowerCase()).join(' et ')}. `:''}${weak.length?`Ton argument « ${ARG_L[weak[0]][0].toLowerCase()} » n'a pas convaincu.`:E.v.rep<post.need-10?'Ta réputation de coach est encore trop faible pour ce poste.':'D\'autres candidats avaient un meilleur dossier.'}`;
   return{ok,why,val:Math.round(val)}}
-function fut4HTML(N){const E=N.eval||(N.eval=coachEval()),O=N.opps||(N.opps=(()=>{const o=[],sc=E.score;
+function fut4HTML(N){const E=N.eval||(N.eval=coachEval()),P=N.posts||(N.posts=openPosts()),apps=N.apps||(N.apps={}),O=N.opps||(N.opps=(()=>{const o=[],sc=E.score;
     if(sc>=30)o.push({k:'stay',l:`Rester à ${me().name} et rejouer le district`,d:'Le comité te garde. Tu gardes ton groupe (jusqu\'à 20 ans), tu recrutes à nouveau en mai et tu retentes la Noushi League.'});
-    if(sc>=45&&R()<(sc>=55?.95:.55)){const b=N.offerB||bOffer();o.push({k:'job',club:b,role:'B',l:`${T(b).name} t'offre son équipe B`,d:'Ligue des Espoirs. L\'équipe première peut te revenir si tu brilles.'})}
-    if(sc>=62&&R()<(sc>=72?.85:.35)){const c=l2Offer();o.push({k:'job',club:c,role:'head',l:`${T(c).name} t'offre son banc en Ligue 2`,d:'Entraîneur principal d\'un club professionnel.'})}
-    return o})()),P=N.posts||(N.posts=openPosts(E.score)),apps=N.apps||(N.apps={});
+    // un club vient te chercher s'il a un poste ouvert et que ton profil correspond nettement à ce qu'il cherche
+    P.map((p,i)=>({p,i,v:postVal(p,Object.keys(p.prio).sort((a,b)=>p.prio[b]-p.prio[a]).slice(0,3),E,true)})).filter(x=>x.v>=x.p.need+8).sort((a,b)=>(b.v-b.p.need)-(a.v-a.p.need)).slice(0,2)
+      .forEach(x=>{apps[x.i]={ok:true,why:'Le club t\'a contacté directement.',direct:1}});
+    return o})());
   const bars=Object.keys(ARG_L).map(k=>`<div class="row" style="flex-wrap:nowrap;font-size:calc(13.5px*var(--tz))"><span style="width:150px;flex:none" class="muted">${ARG_L[k][0]}</span><div class="bar" style="flex:1"><i style="width:${E.v[k]}%;background:${E.v[k]>=65?'var(--good)':E.v[k]>=45?'var(--warn)':'var(--bad)'}"></i></div><span class="num" style="width:28px;text-align:right">${E.v[k]}</span></div><div class="muted" style="font-size:calc(12px*var(--tz));margin:-2px 0 6px 150px">${esc(E.txt[k])}</div>`).join('');
-  const offers=O.concat(Object.entries(apps).filter(([,a])=>a.ok).map(([i,a])=>({k:'job',club:P[i].club,role:P[i].role,l:`${T(P[i].club).name} accepte ta candidature`,d:P[i].div})));
-  const left=2-Object.keys(apps).length;
+  const offers=O.concat(Object.entries(apps).filter(([,a])=>a.ok).map(([i,a])=>({k:'job',club:P[i].club,role:P[i].role,l:a.direct?`${T(P[i].club).name} te propose ${P[i].role==='B'?'son équipe B':'son banc'}`:`${T(P[i].club).name} accepte ta candidature`,d:P[i].div})));
+  const left=2-Object.values(apps).filter(a=>!a.direct).length;
   return `<div class="panel"><h3>Ton bilan de coach · ${E.score} / 100</h3><p class="muted" style="margin-top:0">${esc(me().name)} ne monte pas. La suite dépend de ce que tu as montré : c'est ce que les clubs regardent.</p>${bars}</div>
    <div class="panel"><h3>Propositions</h3>${offers.length?`<div class="list">${offers.map((o,i)=>`<div class="item" style="flex-wrap:wrap"><span style="flex:1;min-width:0"><b>${esc(o.l)}</b><span class="muted" style="display:block;font-size:calc(13px*var(--tz))">${esc(o.d)}</span></span><button class="btn sm" data-take="${i}" ${i===0?'data-primary':''}>Accepter</button></div>`).join('')}</div>`:'<p class="muted" style="margin:0">Aucune proposition pour l\'instant. Tu peux candidater ci-dessous.</p>'}</div>
-   <div class="panel"><h3>Postes ouverts</h3><p class="muted" style="margin-top:0">Défends ta candidature avec tes meilleurs arguments. ${left>0?`Encore ${left} candidature${left>1?'s':''} possible${left>1?'s':''}.`:'Plus de candidature possible cette année.'}</p>
-    <div class="list">${P.map((p,i)=>{const a=apps[i];return `<div class="item" style="flex-wrap:wrap"><span style="flex:1;min-width:0"><b>${esc(T(p.club).name)}</b><span class="muted" style="display:block;font-size:calc(13px*var(--tz))">${esc(p.div)}</span>${a?`<span class="${a.ok?'good':'bad'}" style="display:block;font-size:calc(13px*var(--tz));margin-top:4px">${esc(a.why)}</span>`:''}</span>${a?'':`<button class="btn sec sm" data-app="${i}" ${left<=0?'disabled':''}>Candidater</button>`}</div>`}).join('')}</div></div>`}
+   <div class="panel"><h3>Postes ouverts</h3><p class="muted" style="margin-top:0">Chaque club dit pourquoi il cherche et ce qu'il attend. Défends ta candidature avec les bons arguments. ${left>0?`Encore ${left} candidature${left>1?'s':''} possible${left>1?'s':''}.`:'Plus de candidature possible cette année.'}</p>
+    <div class="list">${P.map((p,i)=>{const a=apps[i],top=prioTop(p.prio);return `<div class="item" style="flex-wrap:wrap"><span style="flex:1;min-width:0"><b>${esc(T(p.club).name)}</b><span class="muted" style="display:block;font-size:calc(13px*var(--tz))">${esc(p.div)} · niveau exigé ${p.need}</span><span style="display:block;font-size:calc(13px*var(--tz));margin-top:4px">${esc(p.open||'')}</span><span class="muted" style="display:block;font-size:calc(13px*var(--tz))">Cherche : ${top.map(k=>`<b>${ARG_L[k][0].toLowerCase()}</b> (${esc(p.whyN?p.whyN[k]:'')})`).join(' · ')}</span>${a?`<span class="${a.ok?'good':'bad'}" style="display:block;font-size:calc(13px*var(--tz));margin-top:4px">${esc(a.why)}</span>`:''}</span>${a?'':`<button class="btn sec sm" data-app="${i}" ${left<=0?'disabled':''}>Candidater</button>`}</div>`}).join('')}</div></div>`}
 function fut4Bind(el,ev){const N=G.S.nou,E=N.eval,P=N.posts;
   el.querySelectorAll('[data-app]').forEach(b=>b.onclick=()=>{const i=+b.dataset.app,p=P[i],sel=new Set();
     const draw=()=>{modal(`<div class="csheet"><div class="lbl">Candidature · ${esc(p.div)}</div><h2>${esc(T(p.club).name)}</h2><p class="muted">Choisis jusqu'à 3 arguments. Le président les compare à ce que son club recherche.</p>
