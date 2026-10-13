@@ -495,7 +495,7 @@ html[data-theme="jour"] .ovr.t1{color:#5f6a73}html[data-theme="jour"] .ovr.t2{co
 .celeb{position:fixed;inset:0;z-index:1000;background:radial-gradient(circle at 50% 40%,rgba(30,40,30,.92),rgba(0,0,0,.95));display:grid;place-items:center;padding:20px;animation:cfade .4s ease}
 .celeb-in{position:relative;max-width:420px;width:100%;text-align:center;color:#fff;display:flex;flex-direction:column;align-items:center;gap:8px;animation:pop .6s cubic-bezier(.2,1.5,.4,1)}.celeb-in h2{margin:4px 0;color:#fff}.celeb-in p{color:#d8d2c4;margin:0}.celeb-in .btn{margin-top:14px}
 .celeb-face.big{font-size:64px;line-height:1}.bigcount{display:flex;flex-direction:column;align-items:center;margin-top:8px}.bigcount b{font-size:calc(40px*var(--tz));font-weight:800;color:#f2b33d}.bigcount small{color:#d8d2c4}
-.conf{position:absolute;inset:-40px 0 auto 0;height:0;pointer-events:none}.conf i{position:absolute;top:0;width:8px;height:14px;border-radius:2px;animation:confall 2.2s ease-in forwards;opacity:0}
+.confx{position:absolute;inset:-40px 0 auto 0;height:0;pointer-events:none}.confx i{position:absolute;top:0;width:8px;height:14px;border-radius:2px;animation:confall 2.2s ease-in forwards;opacity:0}
 @keyframes confall{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:0;transform:translateY(520px) rotate(540deg)}}
 .kitspin{animation:kspin 1.4s cubic-bezier(.2,1,.3,1)}.kitspin svg{filter:drop-shadow(0 16px 30px rgba(0,0,0,.6))}@keyframes kspin{from{transform:rotateY(180deg) scale(.4);opacity:0}to{transform:none;opacity:1}}
 .reveal .rvgrp{margin-bottom:14px}.rvwho{display:flex;gap:10px;align-items:center;font-size:calc(13.5px*var(--tz));margin-bottom:8px}.rvwho .ini{width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:800;flex:none}
@@ -544,7 +544,7 @@ h1,h2{font-family:var(--f-disp);font-weight:800;text-transform:uppercase;letter-
 .ilist{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px}.iobj{border-left:4px solid var(--accent)}.iobj p{margin:6px 0 0;font-weight:650}
 .itl{display:flex;flex-direction:column;gap:10px}.itr{display:grid;grid-template-columns:minmax(0,130px) minmax(0,1fr);gap:2px 12px;padding:8px 0;border-top:1px solid var(--line)}.itr:first-child{border-top:0}.itr .num{grid-row:span 2;font-weight:800;font-size:calc(13px*var(--tz));color:var(--accent)}.itr b{text-transform:uppercase;font-family:var(--f-disp);font-size:calc(17px*var(--tz))}.itr .muted{font-size:calc(13px*var(--tz))}
 .famk.off{opacity:.55}.dfoot{gap:10px;flex-wrap:wrap}.dfoot .btn{flex:1;justify-content:center;min-width:200px}
-@media (max-width:900px){#view{padding-bottom:calc(196px + env(safe-area-inset-bottom,0px))!important}}
+@media (max-width:900px){#view{padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))!important}}
 .face.shirt{filter:drop-shadow(0 3px 5px rgba(0,0,0,.35))}
 .pcard .pc-face{place-items:center!important;padding:1px 0}.pcard .pc-face svg{max-height:50px!important}
 .pface{background:transparent!important;border-radius:0!important;overflow:visible!important;place-items:center!important}
@@ -581,6 +581,12 @@ h1,h2{font-family:var(--f-disp);font-weight:800;text-transform:uppercase;letter-
 .radar .rp{fill:rgba(241,90,26,.35);stroke:var(--accent);stroke-width:2}.radar .rp.est{fill:rgba(160,160,160,.15);stroke:var(--muted);stroke-dasharray:4 3}
 .radar .rl{fill:var(--muted);font-size:10px;font-family:var(--f-body)}.radar .rv{fill:var(--text);font-size:11px;font-weight:700;font-family:var(--f-num)}
 .fbars{display:flex;flex-direction:column;gap:6px}.fbar{display:grid;grid-template-columns:78px 1fr 28px;align-items:center;gap:8px;font-size:calc(13px*var(--tz))}.fbar b{text-align:right}
+.lk{cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent)}
+.lk:hover,.lk:focus-visible{color:var(--accent);text-decoration-color:var(--accent);outline:none}
+.tap{cursor:pointer;transition:border-color .15s ease,transform .15s ease}.tap:hover{border-color:var(--accent)!important}.tap:active{transform:scale(.99)}
+.tinfo-c>*{margin:0 0 6px}.tinfo p{margin:10px 0 0;color:var(--muted);line-height:1.45}
+.frm{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:6px;font-weight:800;font-size:calc(11.5px*var(--tz))}.frm-V{background:var(--good);color:#06150d}.frm-N{background:var(--line2)}.frm-D{background:var(--bad);color:#fff}
+.top button.next{background:none;border:0;padding:0;font:inherit;text-align:left;cursor:pointer}.top button.next:hover{color:var(--text)}
 </style>
 
 <div id="app"></div>
@@ -817,11 +823,21 @@ const NAME_ZONES={
  mande_n:{l:['Koné','Traoré','Diabaté','Cissé','Bamba','Touré','Diomandé','Fofana','Doumbia','Kamagaté','Sylla','Keïta','Kanté','Camara','Dosso','Bakayoko','Konaté','Diakité','Sangaré','Méité'],f:['Mamadou','Abdoulaye','Moussa','Brahima','Daouda','Karim','Ibrahim','Yacouba','Lassina','Dramane','Seydou','Aboubacar','Vassiriki']},
  mande_s:{l:['Gueu','Guéi','Tia','Bah','Zoh','Dion','Goh','Sahi','Gonkanou','Zoro Bi','Irié Bi','Tra Bi','Boli Bi','Sehi','Djé Bi','Gouli'],f:['Serge','Didier','Gervais','Firmin','Rodrigue','Hervé','Bertin','Germain','Ulrich']},
  krou:{l:['Gnahoré','Zadi','Digbeu','Lago','Gbadjé','Kipré','Djédjé','Gogoua','Bléhoué','Dago','Séri','Tapé','Kragbé','Gnaoré','Zokou','Dakoury','Guédé','Lida','Toualy','Zahui','Okou','Gnépo'],f:['Serge','Didier','Hervé','Christian','Romaric','Gervais','Landry','Brice','Arsène']}};
-const CITY_ZONE={Korhogo:'gur',Ferkessédougou:'gur',Boundiali:'gur',Katiola:'gur',Bondoukou:['akan','gur'],Odienné:'mande_n',Séguéla:'mande_n',Man:'mande_s',Sinfra:'mande_s',Daloa:'krou',Gagnoa:'krou',Soubré:'krou',Sassandra:'krou','San-Pédro':'krou',Divo:'krou',Bouaké:'akan',Yamoussoukro:'akan',Kossou:'akan',Dimbokro:'akan',Abengourou:'akan',Aboisso:'akan',Agboville:'akan',Dabou:'akan','Grand-Bassam':'akan',Bingerville:'akan',Tiassalé:'akan'};
-// Abidjan et ses communes : brassage de tout le pays (pas de zone)
+const CITY_ZONE={Korhogo:'N',Ferkessédougou:'N',Boundiali:'N',Katiola:'N',Odienné:'N',Séguéla:'N',Bondoukou:'E',Abengourou:'E',Aboisso:'E',Agnibilékrou:'E',Man:'O',Sinfra:'O',Daloa:'O',Gagnoa:'O',Soubré:'O',Sassandra:'O','San-Pédro':'O',Divo:'O',Bouaké:'C',Yamoussoukro:'C',Kossou:'C',Dimbokro:'C',Tiassalé:'C',Agboville:'S',Dabou:'S','Grand-Bassam':'S',Bingerville:'S'};
+// Abidjan et ses communes : brassage de tout le pays (pas de région)
 function zoneOf(city){if(!city)return null;const z=CITY_ZONE[String(city).split(' · ')[0]];return Array.isArray(z)?pick(z):z||null}
+// Patronymes : 261 noms (globalsurnames.com + classement par région). Poids = fréquence nationale atténuée ; puis % de provenance Nord, Centre, Ouest, Est, Sud.
+// Un nom n'appartient pas à une seule région : sa chance de sortir dépend de la région du club.
+const SURN='Koné:3618:43,14,15,12,16|Ouattara:3414:65,8,10,5,12|Kouassi:3313:10,45,12,15,17|Koffi:3240:10,45,12,15,17|Kouadio:3084:0,70,5,10,15|Kouamé:3052:0,70,5,10,15|Yao:3014:10,45,12,15,17|Coulibaly:2982:80,5,0,5,10|Kouakou:2892:0,70,5,10,15|Konan:2680:0,70,5,10,15|N’Guessan:2325:0,70,5,10,15|Traoré:2202:65,8,10,5,12|Soro:2025:80,5,0,5,10|Bamba:1911:43,14,15,12,16|Touré:1727:65,8,10,5,12|Fofana:1663:65,8,10,5,12|Yéo:1547:80,5,0,5,10|Diomandé:1497:65,8,10,5,12|Konaté:1436:65,8,10,5,12|Silué:1292:59,10,7,10,14|Doumbia:1286:65,8,10,5,12|Brou:1204:0,70,5,10,15|N’Dri:1191:0,70,5,10,15|Diarrassouba:1145:49,12,14,10,15|Sanogo:1141:65,8,10,5,12|Cissé:1074:65,8,10,5,12|Hien:1042:70,5,0,15,10|Dosso:1008:49,12,14,10,15|N’Goran:995:0,70,5,10,15|Sangaré:976:65,8,10,5,12|Soumahoro:975:65,8,10,5,12|Bakayoko:970:65,8,10,5,12|Aka:947:7,53,10,14,17|Amani:878:0,70,5,10,15|Sylla:878:65,8,10,5,12|Kra:867:7,53,10,14,17|Kambou:855:70,5,0,15,10|Diabaté:847:65,8,10,5,12|Dah:827:53,10,7,17,14|Tuo:817:59,10,7,10,14|Kamagaté:810:65,8,10,5,12|Camara:810:65,8,10,5,12|Oulaï:780:7,10,56,7,20|Djè:760:7,14,56,7,17|Sidibé:752:65,8,10,5,12|Adou:711:0,70,5,10,15|Sékongo:709:80,5,0,5,10|Irié:691:7,14,56,7,17|Yapo:691:0,10,0,10,80|Palé:688:53,10,7,17,14|Kanga:683:7,53,10,14,17|Yapi:680:7,14,7,14,59|Kambiré:679:53,10,7,17,14|Guéï:676:0,10,75,0,15|N’Da:669:7,53,10,14,17|Keïta:661:65,8,10,5,12|Diarra:642:65,8,10,5,12|Diakité:640:49,12,14,10,15|Gueu:621:0,10,75,0,15|Tra:620:7,14,56,7,17|Tanoh:599:0,15,0,70,15|Diallo:598:65,8,10,5,12|Tano:587:0,15,0,70,15|Assi:569:0,70,5,10,15|Karamoko:555:65,8,10,5,12|Bah:546:7,14,56,7,17|Yoboué:546:0,35,0,55,10|Diaby:545:49,12,14,10,15|Mamadou:163:43,14,14,10,20|N’Zi:538:7,53,10,14,17|Séri:531:7,10,56,7,20|Blé:529:7,10,56,7,20|Kacou:529:0,70,5,10,15|Dembélé:521:65,8,10,5,12|Tapé:514:7,10,56,7,20|Dagnogo:513:80,5,0,5,10|Koua:505:7,53,10,14,17|Tia:500:0,10,75,0,15|Komenan:497:7,53,10,14,17|Méité:497:49,12,14,10,15|Kassi:493:0,70,5,10,15|Loukou:490:0,70,5,10,15|Diby:488:7,53,10,14,17|N’Cho:487:0,10,0,10,80|Fanny:485:49,12,14,10,15|Zamblé:478:0,10,75,0,15|Ballo:474:49,12,14,10,15|Kobenan:471:7,53,10,14,17|Dao:232:59,10,7,10,14|Séka:461:7,14,7,14,59|Kakou:449:0,70,5,10,15|Séry:436:7,10,56,7,20|Dago:436:7,10,56,7,20|Beugré:430:7,10,56,7,20|Kouman:427:7,53,10,14,17|Diabagaté:426:49,12,14,10,15|Djaha:212:7,53,10,14,17|Alla:420:7,53,10,14,17|Adama:126:43,14,14,10,20|Kpan:406:0,10,75,0,15|Guéhi:404:0,5,75,0,20|Atsé:403:0,10,0,10,80|Noufé:400:0,5,75,0,20|Amon:399:0,70,5,10,15|Kouao:398:0,70,5,10,15|Boni:396:0,70,5,10,15|Zadi:393:0,5,75,0,20|Doh:391:0,10,75,0,15|Dion:391:0,10,75,0,15|Moussa:117:55,10,10,5,20|Aké:387:0,70,5,10,15|Allou:377:0,70,5,10,15|Som:374:70,5,0,15,10|N’Guetta:374:0,15,0,70,15|Bohoussou:369:0,70,5,10,15|Séa:185:20,20,20,20,20|Berté:368:65,8,10,5,12|Youan:366:0,10,75,0,15|Kadjo:365:0,70,5,10,15|Dié:182:20,20,20,20,20|Tiéné:365:80,5,0,5,10|Ya:182:0,70,5,10,15|Lago:362:0,5,75,0,20|Kanaté:360:65,8,10,5,12|N’Zué:360:0,70,5,10,15|Tiémoko:107:55,10,10,5,20|Kané:357:65,8,10,5,12|Niamien:356:0,70,5,10,15|Koko:178:0,70,5,10,15|Chérif:354:65,8,10,5,12|Djédjé:354:0,5,75,0,20|M’Bra:353:0,70,5,10,15|Ettien:350:0,70,5,10,15|Digbeu:345:0,5,75,0,20|Doua:172:0,10,75,0,15|Atta:344:0,10,0,10,80|Gnamien:341:0,70,5,10,15|Yoro:170:20,20,20,20,20|Achi:340:0,10,0,10,80|Dibi:169:0,5,75,0,20|Boua:169:0,70,5,10,15|Gondo:338:0,10,75,0,15|Aman:337:0,70,5,10,15|Goli:335:0,10,75,0,15|Koré:168:0,70,5,10,15|Karidioula:335:65,8,10,5,12|Kouyaté:335:65,8,10,5,12|Ekra:334:0,10,0,10,80|Guédé:334:0,5,75,0,20|Mahan:334:0,10,75,0,15|Oka:334:0,70,5,10,15|Kangah:333:0,70,5,10,15|Ehouman:333:0,70,5,10,15|Dongo:166:20,20,20,20,20|Yobouët:330:0,35,0,55,10|Séhi:330:0,10,75,0,15|Adja:322:0,70,5,10,15|Gue:314:0,10,75,0,15|Kramo:309:0,70,5,10,15|Koudou:309:0,5,75,0,20|Abou:93:55,10,10,5,20|Bleu:306:0,5,75,0,20|Tokpa:305:0,10,75,0,15|Samaké:304:65,8,10,5,12|Amadou:91:55,10,10,5,20|Kossonou:302:0,70,5,10,15|Tah:302:0,10,75,0,15|Kanté:298:65,8,10,5,12|Kouacou:298:0,70,5,10,15|Adjé:295:0,70,5,10,15|Anoh:294:0,70,5,10,15|Toh:293:0,10,75,0,15|Sako:292:65,8,10,5,12|Gohi:291:0,10,75,0,15|Oussou:291:0,70,5,10,15|Goué:291:0,10,75,0,15|Gnahoré:289:0,5,75,0,20|Kablan:288:0,70,5,10,15|Maniga:143:65,8,10,5,12|Yéboué:286:0,35,0,55,10|Dan:143:0,10,75,0,15|Téhé:143:0,5,75,0,20|Siaka:86:55,10,10,5,20|Oula:142:0,5,75,0,20|Boti:284:0,10,75,0,15|Adjoumani:283:0,70,5,10,15|Gboko:141:0,10,75,0,15|Assié:281:0,70,5,10,15|Boli:280:0,10,75,0,15|Bakary:84:55,10,10,5,20|Assamoi:279:0,10,0,10,80|Sib:278:70,5,0,15,10|Gogbé:139:0,5,75,0,20|Koué:275:0,10,75,0,15|Tié:274:0,10,75,0,15|Bolou:273:0,10,75,0,15|Loua:271:0,10,75,0,15|Bahi:271:0,10,75,0,15|Bini:269:0,10,75,0,15|Souleymane:79:55,10,10,5,20|Boka:259:0,10,75,0,15|Zouzou:259:0,10,75,0,15|Ahoua:258:0,15,0,70,15|Tanou:257:0,15,0,70,15|Abdoulaye:77:55,10,10,5,20|Bilé:249:0,10,75,0,15|Ouédraogo:72:40,20,15,0,25|Yacouba:71:55,10,10,5,20|Seydou:69:55,10,10,5,20|Comoé:223:0,15,0,70,15|Haïdara:218:65,8,10,5,12|Lassina:62:55,10,10,5,20|Ahoutou:195:0,15,0,70,15|N’Doua:195:0,15,0,70,15|Ibrahima:52:55,10,10,5,20|Zouzoua:174:0,10,75,0,15|N’Gbesso:173:0,15,0,70,15|Gbe:169:0,10,75,0,15|Kouya:168:0,70,5,10,15|Kouaho:168:0,70,5,10,15|Ahoussi:167:0,70,5,10,15|Zogbé:164:0,10,75,0,15|Angaman:164:0,70,5,10,15|Gbalé:162:0,10,75,0,15|Gbah:161:0,10,75,0,15|Agnéro:160:0,70,5,10,15|Doffou:158:0,10,75,0,15|Gbéhé:158:0,10,75,0,15|Gogbeu:157:0,10,75,0,15|Bora:157:0,10,75,0,15|Dogo:157:0,10,75,0,15|Zon:153:0,10,75,0,15|Gbogou:151:0,10,75,0,15|Edoukou:151:0,70,5,10,15|Doudou:151:0,10,75,0,15|Kaboré:45:40,20,15,0,25|Bony:148:0,10,75,0,15|Djézou:147:0,10,75,0,15|Sawadogo:44:40,20,15,0,25|N’Doli:145:0,15,0,70,15|Youssouf:42:55,10,10,5,20|Zran:141:0,10,75,0,15|Gbato:138:0,10,75,0,15|Djah:137:0,10,75,0,15|Gbohou:136:0,10,75,0,15|Gbocho:135:0,10,75,0,15|Ziao:135:0,10,75,0,15|Gbangbo:134:0,10,75,0,15|Daho:134:0,10,75,0,15|Gbaka:134:0,10,75,0,15|Zingbé:133:0,10,75,0,15|Kouablan:132:0,70,5,10,15|N’Dja:131:0,15,0,70,15|Amalaman:131:0,15,0,70,15|Bakari:39:55,10,10,5,20|Koumoin:130:0,70,5,10,15|Tanon:129:0,15,0,70,15|Issouf:39:55,10,10,5,20|Tan:127:0,15,0,70,15|Maïga:37:65,8,10,5,12|Amoikon:124:0,70,5,10,15'.split('|').map(x=>{const[n,w,p]=x.split(':');return{n:n.replace(/’/g,"'"),w:+w,p:p.split(',').map(Number)}});
+const REG_IX={N:0,C:1,O:2,E:3,S:4},OLDZ={akan:'C',gur:'N',mande_n:'N',mande_s:'O',krou:'O'},REG_FN={N:['gur','mande_n'],C:['akan'],O:['mande_s','krou'],E:['akan'],S:['akan','krou']};
+const BI=new Set(['Irié','Tra','Zamblé','Goli','Boli','Djè','Bolou']);// noms gouro : souvent suivis de « Bi »
+const regOf=z=>z?(REG_IX[z]!==undefined?z:OLDZ[z]||null):null;
+const SURN_CUM={};function surnCum(r){if(SURN_CUM[r||'_'])return SURN_CUM[r||'_'];let t=0;const a=SURN.map(o=>t+=o.w*(r?o.p[REG_IX[r]]:100));return SURN_CUM[r||'_']={a,t}}
+function pickSurn(r){const{a,t}=surnCum(r),x=R()*t;let lo=0,hi=a.length-1;while(lo<hi){const m=lo+hi>>1;if(a[m]<x)lo=m+1;else hi=m}const n=SURN[lo].n;return BI.has(n)&&R()<.5?n+' Bi':n}
+function surnRegion(ln){const o=SURN.find(x=>x.n===String(ln).replace(/ Bi$/,''));if(!o)return null;let b=0;o.p.forEach((v,i)=>{if(v>o.p[b])b=i});return 'NCOES'[b]}
 function genUniq(zone,list){const ls=new Set(list.map(x=>x.n.split(' ').slice(1).join(' '))),fs=new Set(list.map(x=>x.n.split(' ')[0]));let n;for(let k=0;k<30;k++){n=genName(zone);if(!ls.has(n.split(' ').slice(1).join(' '))&&!fs.has(n.split(' ')[0]))return n}return n}
-function genName(zone){const Z=zone&&NAME_ZONES[zone];let n;do{n=(Z&&R()<.55?pick(Z.f):pick(FIRST))+' '+(Z&&R()<.8?pick(Z.l):pick(LAST))}while(BLOCK.has(n));return n}
+function genName(zone){const r=regOf(zone),fz=r?REG_FN[r]:null,Z=fz?NAME_ZONES[pick(fz)]:null;let n;do{n=(Z&&R()<.55?pick(Z.f):pick(FIRST))+' '+pickSurn(r)}while(BLOCK.has(n));return n}
+const lastN=n=>String(n||'').split(' ').slice(1).join(' ')
 function altPos(p){const a=p.at,o=[];if(p.pos==='DEF'&&a.pas>=62&&a.tec>=60)o.push('MIL');if(p.pos==='MIL'&&a.fin>=62)o.push('ATT');if(p.pos==='MIL'&&a.def>=62)o.push('DEF');if(p.pos==='ATT'&&a.pas>=63)o.push('MIL');return o}
 function profileOf(p){const a=p.at,sk=(a.tec+a.vit)/2;if(p.pos==='GB')return{k:'gb',l:'Gardien',d:'Spécialiste du poste.'};
   if(sk-a.phy>=18)return{k:'rue',l:'Technicien de rue',d:`Brille au Maracana. À 11, il s'essouffle vite (physique ${a.phy}).`};
@@ -832,7 +848,7 @@ function shortN(p){const w=p.n.split(' ');return w.length>1?w[0][0]+'. '+w.slice
 function genAttrs(pos,ovr){const o={},pf=PROF[pos];for(const k in ATTR)o[k]=clamp(Math.round(ovr+pf[k]+gauss()*3),25,99);return o}
 function marketSal(ovr){return Math.round(150000*Math.pow(1.12,ovr-58)/5000)*5000}
 function newPlayer(o){
-  let nm=o.n;if(!nm){const used=new Set();if(o.club)for(const id in G.players){const q=G.players[id];if(q.club===o.club)used.add(q.n.split(' ').slice(-1)[0])}for(let k=0;k<25;k++){nm=genName(o.zone);if(!used.has(nm.split(' ').slice(-1)[0]))break}}
+  let nm=o.n;if(!nm){const used=new Set();if(o.club)for(const id in G.players){const q=G.players[id];if(q.club===o.club)used.add(lastN(q.n))}for(let k=0;k<25;k++){nm=genName(o.zone);if(!used.has(lastN(nm)))break}}
   const p={id:G.uid++,n:nm,nick:o.nick||'',pos:o.pos,age:o.age,ovr:o.ovr,pot:Math.max(o.ovr,o.pot),club:o.club||null,origin:o.origin||'base',
     sal:o.sal||marketSal(o.ovr),ctr:o.ctr||ri(1,3),clause:o.clause||0,mins:0,apps:0,sg:0,sa:0,cond:100,inj:o.inj||0,pri:o.pri||pick(Object.keys(PRI)),
     known:o.known!==false,rev:o.rev||[],promise:false,share:o.share??.6,from:o.from||'',joined:G.sn||1,peak:o.ovr,rat:[],
@@ -1630,7 +1646,7 @@ function distBaseSquad(c){const city=c.city.split(' · ')[0],pf=(distBase(c.id)|
     const tw={physique:{phy:3},technique:{tec:3},vitesse:{vit:4}}[pf]||{};for(const k in tw)at[k]=clamp(at[k]+tw[k],25,99);
     L.push({id:'u'+(G.uid++),n:genUniq(R()<.85?zoneOf(c.city):null,L),pos,age,ovr,pot:clamp(ovr+ri(4,17)+(18-age),ovr+2,82),at,from:`Équipe du quartier · ${city}`,pers:pick(Object.keys(DSC_PERS))})}
   return L}
-function dscHome(){const c=me(),city=c.city.split(' · ')[0];return city==='Abidjan'?null:{k:'home',n:city,pool:4,z:[zoneOf(city)||'akan'],prof:(distBase(G.club)||{}).prof||'equilibre',mar:'Maracana du quartier',com:'Comité de vacances de '+city,d:'Chez toi : tu connais tout le monde, pas de frais de transport.'}}
+function dscHome(){const c=me(),city=c.city.split(' · ')[0];return city==='Abidjan'?null:{k:'home',n:city,pool:4,z:[zoneOf(city)||'C'],prof:(distBase(G.club)||{}).prof||'equilibre',mar:'Maracana du quartier',com:'Comité de vacances de '+city,d:'Chez toi : tu connais tout le monde, pas de frais de transport.'}}
 function dscZones(){const h=dscHome();return h?[h,...COMMUNES]:COMMUNES}
 function dscZ(k){return dscZones().find(z=>z.k===k)}
 function dscTravel(k){return dscHome()&&k!=='home'?1.5e5:0}
@@ -2420,7 +2436,7 @@ function shell(){
     <div class="main"><header class="top" id="top"></header><section id="view"></section></div><nav class="tabbar" id="tabbar" aria-label="Navigation"></nav>`;}
 const TABS=[['home','Accueil'],['squad','Équipe'],['scout','Jeunes'],['comp','Saison'],['club','Club']];
 function seasonProg(){const m=G.S&&cur()?cur().m:11;return `<div class="mprog" role="img" aria-label="Mois ${m+1} sur 12">${MONTHS.map((x,i)=>`<i class="${i<m?'on':i===m?'now':''}"></i>`).join('')}</div>`}
-function renderTabbar(cur){const tb=$('#tabbar');if(!tb)return;const showNext=VIEW!=='home'&&VIEW!=='event'&&!G.over;const nx=showNext?nextInfo():null;
+function renderTabbar(cur){const tb=$('#tabbar');if(!tb)return;const showNext=false;const nx=showNext?nextInfo():null;
   tb.innerHTML=`${showNext?`<button class="nextstrip" id="nstrip"><span class="lbl">Prochaine étape</span><b>${esc(nx.t)}</b>${icon('next',18)}</button>`:''}<div class="t5">${TABS.map(([k,l])=>`<button data-v="${k}" class="${cur===k?'on':''}" ${cur===k?'aria-current="page"':''}>${icon(k,22)}<span>${l}</span>${k==='home'&&G.pending&&VIEW!=='event'&&VIEW!=='home'?'<i class="dot"></i>':''}</button>`).join('')}</div>`;
   tb.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>go(b.dataset.v));
   const n=$('#nstrip');if(n)n.onclick=()=>{if(G.pending)go('event');else advance()}}
@@ -2444,13 +2460,13 @@ function tzButton(){const cur=TZ_STEPS.find(x=>x[0]===TZ)||TZ_STEPS[0];return `<
 function bindTZ(root,after){root.querySelectorAll('.thb').forEach(b=>b.onclick=()=>{const i=THEMES.findIndex(x=>x[0]===THEME);THEME=THEMES[(i+1)%THEMES.length][0];try{localStorage.setItem('mdc-theme',THEME)}catch(e){}applyTheme();after()});root.querySelectorAll('.tzb').forEach(b=>b.onclick=()=>{const i=TZ_STEPS.findIndex(x=>x[0]===TZ);TZ=TZ_STEPS[(i+1)%TZ_STEPS.length][0];try{localStorage.setItem('mdc-tz',TZ)}catch(e){}applyTZ();after()})}
 function renderTop(){
   $('#top').innerHTML=`<div class="date"><span class="lbl">Saison ${G.sn} sur ${MAX_SEASONS}</span><b>${dateLabel()}</b></div>
-   <div class="next ${VIEW==='event'?'evt':''}">${esc(nextLabel())}</div>
+   <button class="next ${VIEW==='event'?'evt':''}" id="topnext" title="Voir l'agenda">${esc(nextLabel())}</button>
    <div class="cash"><span class="lbl">Trésorerie</span><br><b class="${G.cash<0?'bad':''}">${money(G.cash)}</b></div>
-   ${VIEW!=='event'&&VIEW!=='home'?`<button class="btn go" id="goBtn">Prochaine étape ${icon('next',18)}</button>`:''}`;
-  const b=$('#goBtn');if(b)b.onclick=()=>{if(G.pending)go('event');else advance()}}
+   `;
+  const b=$('#topnext');if(b)b.onclick=()=>go(G.pending?'event':'home')}
 function go(v,arg){if(SUBVIEW[v]){arg=SUBVIEW[v][1];v=SUBVIEW[v][0]}VIEW=v;VIEWARG=arg??null;if(!G)return;renderSide();renderTop();
   const f={home:vHome,event:vEvent,squad:vSquad,comp:vComp,scout:vScout,club:vClubHub}[v]||vHome;
-  const V=$('#view');V.innerHTML='';try{f(V)}catch(e){console.error(e);V.innerHTML=`<div class="card"><h3>Cet écran n'a pas pu s'afficher</h3><p class="muted">Ta partie est sauvegardée. Touche « Accueil » ou recharge la page.</p><p class="muted" style="font-size:calc(12px*var(--tz))">${esc(String(e&&e.message||e))}</p></div>`}if(v==='home')try{officeHome(V)}catch(e){}window.scrollTo(0,0)}
+  const V=$('#view');V.innerHTML='';try{f(V);try{linkify(V)}catch(e){console.error(e)}}catch(e){console.error(e);V.innerHTML=`<div class="card"><h3>Cet écran n'a pas pu s'afficher</h3><p class="muted">Ta partie est sauvegardée. Touche « Accueil » ou recharge la page.</p><p class="muted" style="font-size:calc(12px*var(--tz))">${esc(String(e&&e.message||e))}</p></div>`}if(v==='home')try{officeHome(V)}catch(e){}window.scrollTo(0,0)}
 function viewKey(){return VIEW+'|'+(VIEWARG||'')+'|'+(G&&G.ev?G.ev.t+(G.ev.k||'')+(G.ev.j??'')+(G.ev.phase||'')+(G.ev.d?G.ev.d.wk+G.ev.d.tab:''):'')+'|'+(G&&G.S?G.S.si:'')}
 function refresh(){const y=window.scrollY,k=viewKey();go(VIEW,VIEWARG);if(viewKey()===k)window.scrollTo(0,y)}
 function bindPl(root){root.querySelectorAll('[data-pl]').forEach(e=>e.onclick=ev=>{ev.stopPropagation();openPlayer(+e.dataset.pl)})}
@@ -2477,7 +2493,7 @@ function sellModal(o){const p=P(o.pid);const m=modal(`<div class="lbl">${esc(o.c
 function formTag(arr){return `<span class="form">${arr.slice(-5).map(f=>`<i class="${f}">${f}</i>`).join('')}</span>`}
 
 /* ---------------- modal ---------------- */
-function modal(html,wide){const o=$('#ov');o.innerHTML=`<div class="modal${wide?' wide':''}" role="dialog" aria-modal="true">${html}</div>`;o.hidden=false;
+function modal(html,wide){const o=$('#ov');o.innerHTML=`<div class="modal${wide?' wide':''}" role="dialog" aria-modal="true">${html}</div>`;o.hidden=false;{const m=o.firstChild;Promise.resolve().then(()=>{try{if(m.isConnected)linkify(m)}catch(e){}})}
   o.onclick=e=>{if(e.target===o&&!o.dataset.lock)closeModal()};return o.firstChild}
 function closeModal(){const o=$('#ov');o.hidden=true;o.innerHTML='';delete o.dataset.lock;o.style.background='';o.style.alignItems=''}
 addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#ov').hidden&&!$('#ov').dataset.lock)closeModal()});
@@ -2673,7 +2689,7 @@ function tbCoords(form){const f=FORMS[form]||FORMS['4-3-3'],ys=[85,64,42,18],out
 function tbNormalize(ids,form,getP){const slots=tbSlots(form),arr=Array(slots.length).fill(null),left=ids.filter(id=>id!=null&&getP(id));
   slots.forEach((pos,i)=>{const j=left.findIndex(id=>getP(id).pos===pos);if(j>=0)arr[i]=left.splice(j,1)[0]});
   slots.forEach((pos,i)=>{if(arr[i]==null&&left.length)arr[i]=left.shift()});return arr}
-function pZone(p){if(!p)return null;if(p.z!==undefined)return p.z;const ln=p.n.split(' ').slice(1).join(' ');let z=null;for(const k in NAME_ZONES)if(NAME_ZONES[k].l.includes(ln)){z=k;break}p.z=z;return z}
+function pZone(p){if(!p)return null;if(p.zr!==undefined)return p.zr;const ln=lastN(p.n);let z=surnRegion(ln);if(!z)for(const k in NAME_ZONES)if(NAME_ZONES[k].l.includes(ln)){z=OLDZ[k];break}p.zr=z;return z}
 function pTier(o){return o>=80?'el':o>=70?'or':o>=60?'ag':'br'}
 // liens d'entente : même région ou même formation = vert, à son poste = orange, hors poste = rouge
 function tbEntente(arr,form,getP,same){const slots=tbSlots(form),co=tbCoords(form),f=FORMS[form]||FORMS['4-3-3'],rows=[];let k=0;
@@ -2777,7 +2793,7 @@ function shirtNum(p){if(p.num)return p.num;const L={GB:[1,16,30],DEF:[2,3,4,5,12
   let grp=null;try{if(p.club&&G.clubs[p.club]&&P(p.id)===p)grp=squad(p.club);else if(G.u18&&G.u18.includes(p))grp=G.u18}catch(e){}
   if(!grp)return L[hashN(String(p.id)+p.n)%L.length];const used=new Set(grp.map(q=>q.num).filter(Boolean));const n=L.find(x=>!used.has(x))||[...Array(60)].map((_,i)=>i+1).find(x=>!used.has(x))||99;p.num=n;return n}
 function lumi(h){const m=/^#?([0-9a-f]{6})$/i.exec(h||'');if(!m)return .2;const n=parseInt(m[1],16),r=(n>>16)/255,g=(n>>8&255)/255,b=(n&255)/255;return .2126*r+.7152*g+.0722*b}
-function faceSVG(p,kc){const c=kc||(G&&G.club?me():null)||{},c1=c.c1||'#3a4a44',c2=c.c2||'#9fb3a8',pat=c.pat||'plain',id='sh'+(KID++),num=shirtNum(p),ln=String(p.n||'').split(' ').slice(-1)[0].toUpperCase().slice(0,10);
+function faceSVG(p,kc){const c=kc||(G&&G.club?me():null)||{},c1=c.c1||'#3a4a44',c2=c.c2||'#9fb3a8',pat=c.pat||'plain',id='sh'+(KID++),num=shirtNum(p),ln=(lastN(p.n)||String(p.n||'')).toUpperCase().slice(0,10);
   const body='M24 13 Q50 21 76 13 L95 28 L86 45 L77 39 L77 95 Q50 100 23 95 L23 39 L14 45 L5 28 Z';let pt='';
   if(pat==='stripes')for(let x=28;x<76;x+=11)pt+=`<rect x="${x}" y="0" width="5.5" height="100" fill="${c2}"/>`;else if(pat==='hoops')for(let y=26;y<98;y+=13)pt+=`<rect x="0" y="${y}" width="100" height="6.5" fill="${c2}"/>`;
   else if(pat==='halves')pt=`<rect x="50" y="0" width="50" height="100" fill="${c2}"/>`;else if(pat==='sash')pt=`<polygon points="26,14 38,14 78,94 66,94" fill="${c2}"/>`;
@@ -2986,7 +3002,7 @@ function scHireModal(ev){const d=ev.d;if(!d.cand||!d.cand.length)d.cand=[...Arra
     fete(`<div class="celeb-face big">${natFlag(s.nat)}</div><h2>${esc(s.n)} rejoint ton réseau</h2><p>« Donne-moi une semaine, je te ramène des noms. »</p>`)})}
 function scFire(ev,id){const d=ev.d;if(d.sc.length<=1)return;d.sc=d.sc.filter(s=>s.id!==id);delete d.asg[id];d.act=d.sc[0].id;save();refresh()}
 /* --- moment fort générique --- */
-function fete(html,cb){const o=document.createElement('div');o.className='celeb';o.innerHTML=`<div class="celeb-in">${html}<div class="conf">${[...Array(18)].map((_,i)=>`<i style="left:${(i*37)%100}%;animation-delay:${(i%6)*.12}s;background:${['#f77f00','#ffffff','#009e60','#f2b33d'][i%4]}"></i>`).join('')}</div><button class="btn" id="celok">Continuer</button></div>`;
+function fete(html,cb){const o=document.createElement('div');o.className='celeb';o.innerHTML=`<div class="celeb-in">${html}<div class="confx">${[...Array(18)].map((_,i)=>`<i style="left:${(i*37)%100}%;animation-delay:${(i%6)*.12}s;background:${['#f77f00','#ffffff','#009e60','#f2b33d'][i%4]}"></i>`).join('')}</div><button class="btn" id="celok">Continuer</button></div>`;
   document.body.appendChild(o);const end=()=>{o.remove();cb&&cb()};o.querySelector('#celok').onclick=end;o.onclick=e=>{if(e.target===o)end()}}
 /* --- retour des recruteurs : révélation des cartes --- */
 function dscReveal(ev,rep,w){const d=ev.d,groups=rep.filter(r=>r.sc&&r.ids.length&&!/a suivi/.test(r.t)),other=rep.filter(r=>!groups.includes(r));let k=0;
@@ -3627,7 +3643,7 @@ function liveTactical(spec,done){
       g.fillStyle=t.line===0?c.c2:c.c1;g.beginPath();g.arc(x,y,RD,0,7);g.fill();g.lineWidth=Math.max(4,RD*.18);g.strokeStyle=t.line===0?c.c1:c.c2;g.stroke();
       g.fillStyle=t.line===0?c.c1:c.c2;g.font=`600 ${NF}px Outfit,sans-serif`;g.textAlign='center';g.textBaseline='middle';g.fillText(t.num,x,y+1);
       if(s===us&&(E.ins[us].ind[t.key]||pepite(t.pl))){g.fillStyle=E.ins[us].ind[t.key]==='take'?'#e2702f':E.ins[us].ind[t.key]==='simple'?'#57a6c9':'#d8a83c';g.beginPath();g.arc(x+RD*.78,y-RD*.78,RD*.34,0,7);g.fill()}
-      if(t.key===sel||t===E.holder){g.font=`700 ${LF}px Outfit,sans-serif`;g.fillStyle='#fff';g.strokeStyle='rgba(0,0,0,.75)';g.lineWidth=Math.max(4,LF*.22);const nm=t.n.split(' ').slice(-1)[0];g.strokeText(nm,x,y-RD-LF*.6);g.fillText(nm,x,y-RD-LF*.6)}
+      if(t.key===sel||t===E.holder){g.font=`700 ${LF}px Outfit,sans-serif`;g.fillStyle='#fff';g.strokeStyle='rgba(0,0,0,.75)';g.lineWidth=Math.max(4,LF*.22);const nm=lastN(t.n)||t.n;g.strokeText(nm,x,y-RD-LF*.6);g.fillText(nm,x,y-RD-LF*.6)}
       if(t.key===sel){g.strokeStyle='#e2702f';g.lineWidth=Math.max(4,RD*.18);g.beginPath();g.arc(x,y,RD*1.33,0,7);g.stroke()}}
     const b=E.bDisp;g.fillStyle='rgba(0,0,0,.35)';g.beginPath();g.ellipse(px(b.x)+3,py(b.y)+4,RD*.4,RD*.25,0,0,7);g.fill();g.fillStyle='#fff';g.beginPath();g.arc(px(b.x),py(b.y),Math.max(10,RD*.45),0,7);g.fill();g.strokeStyle='#111';g.lineWidth=1.5;g.stroke();
     if(E.flash&&E.t<E.flash.until){g.fillStyle='rgba(216,168,60,.18)';g.fillRect(0,0,W,H)}
@@ -4057,7 +4073,7 @@ function renderTitle(saved){
    <div id="m-dis" hidden><button class="btn ghost sm" data-back style="margin-bottom:12px">‹ Changer de carrière</button><h3 class="mtitle">Carrière District · choisis ta région</h3><p class="muted" style="margin:0 0 14px">Les opérateurs économiques et les supporters financent l'équipe du district. Détecte tes U18 dans les communes du Grand Abidjan, puis joue la Noushi League : les 2 meilleures équipes de district montent en Ligue 2. Sinon, un club de Ligue des Pros te proposera son équipe B.</p>
    <div class="clubpick">${DISTRICTS.map(d=>`<button data-d="${d.id}">${kit({c1:d.c[0],c2:d.c[1],pat:d.c[2]},52)}<span style="min-width:0"><b>${esc(d.name)}</b><small>${esc(d.dist)}</small><small>${esc(d.city)} · profil ${PROF_L[d.prof]||'équilibre'}</small></span></button>`).join('')}</div></div></div>
    <div class="row" style="gap:8px"><label class="btn ghost sm" style="cursor:pointer">Importer une partie<input type="file" id="impsave" accept=".json,application/json" hidden></label></div>
-   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 43${cloudDb?' · sauvegarde en ligne active':''}</p>
+   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 44${cloudDb?' · sauvegarde en ligne active':''}</p>
    <p class="muted" style="font-size:calc(13.5px*var(--tz));margin:0">Projet original. Clubs, joueurs, compétitions et montants de jeu sont fictifs, à l'échelle du football ivoirien réel. Aucune affiliation avec une fédération, une confédération ou un éditeur de jeux.</p>
   </div></div>`;
   $('#app').style.display='block';
@@ -4081,6 +4097,78 @@ function start(data){
   if(!saved)saved=loadLocal();
   if(data&&data.save&&saved){G=saved;startUI();VIEW=data.view||VIEW;go(VIEW)}else renderTitle(saved);
   initCloud()}
+/* ---------- tout est cliquable : clubs, joueurs, entraîneurs, compétitions, tuiles ---------- */
+const COMP_LINKS=[['Ligue des Pros','l1'],['Ligue 2','l2'],['Noushi League','nou'],['Ligue des Espoirs','nl'],['Coupe du Père Fondateur','cup'],['C1 Afrique','c1'],['Coupe des Confédérations','c2']];
+function linkIndex(){const m=new Map(),add=(n,v)=>{if(n&&n.length>=4&&!m.has(n))m.set(n,v)};
+  if(G.S&&G.S.nou&&G.S.nou.teams)G.S.nou.teams.forEach((t,i)=>add(t.name,t.kind==='dist'?'c:nou/'+i:'c:'+(t.club||G.club)));
+  for(const id in G.clubs)add(G.clubs[id].name,'c:'+id);
+  for(const id in FX)add(FX[id].name,'c:'+id);
+  DISTRICTS.forEach(d=>add(d.name,'c:dist/'+d.id));
+  try{if(G.coaches)allCoaches().forEach(c=>add(c.n,'co:'+c.id))}catch(e){}
+  (G.u18||[]).forEach(y=>add(y.n,'yo:'+y.id));
+  for(const id in G.players)add(G.players[id].n,'pl:'+id);
+  COMP_LINKS.forEach(([n,a])=>add(n,'go:'+a));
+  const keys=[...m.keys()].sort((a,b)=>b.length-a.length).map(s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));
+  return{m,re:keys.length?new RegExp('(?<![\\p{L}\\p{N}])('+keys.join('|')+')(?![\\p{L}\\p{N}])','gu'):null}}
+const LK_SKIP=/^(BUTTON|A|SELECT|INPUT|TEXTAREA|LABEL|SVG|CANVAS|SCRIPT|STYLE|TITLE|OPTION|TEXT|TSPAN)$/i;
+function lkClickable(x,stop){for(;x&&x!==stop;x=x.parentElement){if(x.onclick||LK_SKIP.test(x.tagName)||(x.dataset&&(x.dataset.pl||x.dataset.lk||x.dataset.yo||x.dataset.co||x.dataset.nolk!==undefined))||(x.getAttribute&&/^(tab|button|link)$/.test(x.getAttribute('role')||'')))return true}return false}
+function linkify(root){if(!root||!G)return;let X;try{X=linkIndex()}catch(e){return}if(!X.re)return;
+  const here=VIEW==='comp'?'go:'+(VIEWARG||''):'';
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),nodes=[];let n;while(n=w.nextNode())if(n.nodeValue.length>=4)nodes.push(n);
+  for(const t of nodes){const s=t.nodeValue;X.re.lastIndex=0;if(!X.re.test(s))continue;if(lkClickable(t.parentElement,root.parentElement))continue;
+    const fr=document.createDocumentFragment();let last=0;X.re.lastIndex=0;let mt;
+    while(mt=X.re.exec(s)){const v=X.m.get(mt[1]);if(!v||v===here)continue;if(mt.index>last)fr.appendChild(document.createTextNode(s.slice(last,mt.index)));
+      const sp=document.createElement('span');sp.className='lk';sp.dataset.lk=v;sp.tabIndex=0;sp.textContent=mt[1];fr.appendChild(sp);last=mt.index+mt[1].length}
+    if(!last)continue;if(last<s.length)fr.appendChild(document.createTextNode(s.slice(last)));t.parentNode.replaceChild(fr,t)}
+  // une ligne ou une tuile qui ne mène qu'à une seule fiche devient cliquable en entier
+  root.querySelectorAll('.item,.stat,.aurec,.ynext,.tadv,.ach,.ihero,.kitstage,.nlrules,tr,li').forEach(el=>{if(lkClickable(el,root.parentElement)||el.querySelector('button,a,input,select,[data-pl],[data-yo],[data-co]'))return;
+    const ts=[...new Set([...el.querySelectorAll('[data-lk]')].map(x=>x.dataset.lk))];
+    if(ts.length===1){el.classList.add('tap');el.onclick=ev=>{ev.stopPropagation();lkOpen(ts[0])};return}
+    if(ts.length)return;const g=tileGo(el);if(g){el.classList.add('tap');el.onclick=ev=>{ev.stopPropagation();g()}}})}
+const TILE_GO=[[/^(trésorerie|masse|primes|bénéfices)/i,'club','fin'],[/^classement/i,'comp',null],[/^(ferveur|affluence|stade|valeur d.un contrat)/i,'club','club'],[/^(modernisation|installations|académie)/i,'club','club'],
+  [/^(jeunes devenus pros|internationaux formés)/i,'scout',null],[/^(réputation|coefficient)/i,'club','club'],[/^(titres|stabilité)/i,'club','pal'],[/^prochain rendez-vous/i,'comp','cal'],[/^(en stock|vendus|demande estimée)/i,'club','shop'],[/^composition/i,'squad',null],[/^prochain match/i,'comp','cal']];
+const TILE_HELP={'trésorerie':'L\'argent disponible. Sous zéro, le président s\'inquiète et le mercato se ferme.','masse':'Total des salaires mensuels comparé au plafond que tes revenus permettent. Au-dessus, tu creuses la caisse chaque mois.','primes':'Ce que les compétitions t\'ont rapporté cette saison.','classement':'Ta place dans ton championnat.',
+  'ferveur':'L\'envie des supporters. Elle remplit le stade et fait vendre des maillots. Elle monte avec les victoires et les jeunes du coin.','modernisation':'Le niveau général de tes installations, de 1 à 5.','jeunes devenus pros':'Joueurs formés ou détectés par le club qui jouent en équipe première.',
+  'académie':'Le niveau de ton centre de formation : il décide de la qualité des jeunes qui arrivent chaque saison.','réputation africaine':'Ton poids sur le continent : il attire de meilleurs joueurs et augmente les primes.','réputation mondiale':'Ta visibilité hors d\'Afrique : elle fait venir les recruteurs étrangers et les grosses offres.',
+  'coefficient':'Le niveau moyen de la Ligue des Pros. Il fixe la valeur des contrats sponsors.','titres':'Trophées gagnés pendant ta carrière.','stabilité':'Nombre de saisons passées dans ce club.','bénéfices':'Ce que tu as gagné pour les investisseurs.','internationaux formés':'Joueurs formés chez toi et appelés en sélection.',
+  'en stock':'Maillots prêts à vendre.','vendus en tout':'Maillots vendus depuis l\'ouverture de la boutique.','demande estimée':'Combien de maillots tu peux vendre par mois avec ta ferveur actuelle.','prochain rendez-vous':'Le prochain événement des jeunes.'};
+function tileLabel(el){const l=el.querySelector('.lbl,.muted,b,h3');return ((l?l.textContent:el.innerText.split('\n')[0])||'').trim()}
+function tileGo(el){const lb=tileLabel(el);if(!lb)return null;const r=TILE_GO.find(x=>x[0].test(lb));
+  if(r&&!(VIEW===r[1]&&(r[2]==null||VIEWARG===r[2]||(!VIEWARG&&r[2]==='club'))))return()=>{closeModal();go(r[1],r[2]===null?undefined:r[2])};
+  return()=>tileInfo(el,lb)}
+function tileInfo(el,lb){const k=Object.keys(TILE_HELP).find(x=>lb.toLowerCase().startsWith(x));const c=el.cloneNode(true);c.classList.remove('tap');c.onclick=null;
+  modal(`<div class="tinfo"><div class="tinfo-c"></div>${k?`<p>${esc(TILE_HELP[k])}</p>`:''}<div class="row" style="margin-top:12px"><button class="btn ghost" id="mclose">Fermer</button></div></div>`);
+  const o=$('#ov');o.querySelector('.tinfo-c').appendChild(c);o.querySelector('#mclose').onclick=closeModal}
+function lkOpen(v){const i=v.indexOf(':'),k=v.slice(0,i),x=v.slice(i+1);
+  if(k==='c')openClub(x);else if(k==='pl')openPlayer(+x);else if(k==='yo')openYouth(x);
+  else if(k==='co'){const c=allCoaches().find(y=>y.id===x);if(c)coachSheet(c)}else if(k==='go'){closeModal();go('comp',x)}}
+document.addEventListener('click',e=>{const l=e.target.closest&&e.target.closest('[data-lk]');if(!l)return;e.stopPropagation();lkOpen(l.dataset.lk)});
+document.addEventListener('keydown',e=>{if(e.key!=='Enter')return;const l=e.target.closest&&e.target.closest('[data-lk],.tap');if(l)l.click()});
+function clubRank(id){const d=G.l1.includes(id)?1:G.l2.includes(id)?2:0;if(!d||!G.S||!G.S.league||G.S.div!==d)return null;const t=leagueTable(),i=t.findIndex(r=>r.id===id);return i<0?null:{d,pos:i+1,n:t.length,r:t[i]}}
+function openClub(ref){ref=String(ref);const S=G.S;let h='';try{coachesInit()}catch(e){}
+  const kv=(l,v)=>`<div class="item"><span class="muted">${l}</span><b>${v}</b></div>`;
+  if(ref.startsWith('nou/')){const i=+ref.slice(4),t=S.nou.teams[i];if(t.kind!=='dist'){openClub(t.club||G.club);return}const b=distBase(t.k)||{},inf=nouOppInfo(i),st=nouStr(i),stars=clamp(Math.round((st-44)/4),1,5);
+    h=`<div class="chead">${kit({c1:(b.c||[])[0]||'#444',c2:(b.c||[])[1]||'#ccc',pat:(b.c||[])[2]||'plain',id:t.k},64)}<div style="min-width:0;flex:1"><div class="lbl">Club de district · ${esc(t.dist||b.dist||'')}</div><h2>${esc(t.name)}</h2><div class="cmeta">${esc(b.city||'')} · ${starsHTML(stars)}</div></div></div>
+     <div class="cgrid">${kv('Style',esc(inf.style))}${kv('Niveau estimé',st)}</div><h3 style="margin:14px 0 6px">Joueurs à surveiller</h3><div class="list">${inf.keys.map(k=>`<div class="item">${posTag(k.pos)}<span style="flex:1">${esc(k.n)}</span><span class="ovr ${ovrClass(k.ovr)}">${k.ovr}</span></div>`).join('')}</div>
+     <div class="row" style="margin-top:14px;gap:8px"><button class="btn" data-cgo="nou">Voir la Noushi League</button><button class="btn ghost" id="mclose">Fermer</button></div>`}
+  else if(ref.startsWith('dist/')){const b=distBase(ref.slice(5));if(!b)return;
+    h=`<div class="chead">${kit({c1:b.c[0],c2:b.c[1],pat:b.c[2],id:b.id},64)}<div style="min-width:0;flex:1"><div class="lbl">Club de district · ${esc(b.dist)}</div><h2>${esc(b.name)}</h2><div class="cmeta">${esc(b.city)}</div></div></div>
+     <div class="cgrid">${kv('Région',esc(b.dist))}${kv('Profil de jeu',esc({vitesse:'Vitesse',physique:'Physique',technique:'Technique',equilibre:'Équilibré'}[b.prof]||b.prof))}</div>
+     <div class="row" style="margin-top:14px;gap:8px"><button class="btn" data-cgo="nou">Voir la Noushi League</button><button class="btn ghost" id="mclose">Fermer</button></div>`}
+  else if(FX[ref]&&!G.clubs[ref]){const f=FX[ref],st=G.fstr[ref]??f.base;
+    h=`<div class="chead">${kit(f,64)}<div style="min-width:0;flex:1"><div class="lbl">Club étranger · ${esc(f.country||'')}</div><h2>${esc(f.name)}</h2><div class="cmeta">${starsHTML(clamp(Math.round((st-56)/6),1,5))}</div></div></div>
+     <div class="cgrid">${kv('Pays',esc(f.country||'—'))}${kv('Force',st)}</div><div class="row" style="margin-top:14px"><button class="btn ghost" id="mclose">Fermer</button></div>`}
+  else{const c=G.clubs[ref];if(!c)return;const mine=ref===G.club,rk=clubRank(ref),co=G.coaches&&G.coaches[ref],sq=c.pl.map(P).filter(Boolean).sort((a,b)=>b.ovr-a.ovr);
+    const div=G.l1.includes(ref)?'Ligue des Pros':G.l2.includes(ref)?'Ligue 2':c.kind==='aca'||String(ref).startsWith('a_')?'Académie':'District';
+    const coach=mine?`<b>${esc(G.mgr&&G.mgr.fn?mgrName():'Toi')}</b> (toi)`:co?`<span class="lk" data-lk="co:${co.id}" tabindex="0">${esc(co.n)}</span>`:'—';
+    h=`<div class="chead">${crest(c,72)}<div style="min-width:0;flex:1"><div class="lbl">${div}${mine?' · ton club':''}</div><h2>${esc(c.name)}</h2><div class="cmeta">${esc(c.city)}${c.stadium?` · ${esc(c.stadium)}`:''}</div></div></div>
+     <div class="cgrid">${kv('Classement',rk&&rk.r.J?`${rk.pos}<small>e / ${rk.n}</small>`:'—')}${kv('Bilan',rk&&rk.r.J?`${rk.r.G} V · ${rk.r.N} N · ${rk.r.P} D`:'Pas encore joué')}${kv('Entraîneur',coach)}${kv('Capacité',c.cap?c.cap.toLocaleString('fr-FR')+' places':'—')}${kv('Système',`${esc(c.form||'4-3-3')}`)}${kv('Force',sq.length?Math.round(teamStr(ref)):'—')}</div>
+     ${rk&&rk.r.form.length?`<div class="row" style="margin-top:10px;gap:4px"><span class="muted" style="margin-right:6px">Forme</span>${rk.r.form.slice(-5).map(f=>`<span class="frm frm-${f}">${f}</span>`).join('')}</div>`:''}
+     ${sq.length?`<h3 style="margin:14px 0 6px">Meilleurs joueurs</h3><div class="list">${sq.slice(0,5).map(p=>`<div class="item tap" data-pl="${p.id}">${posTag(p.pos)}<span style="flex:1">${esc(p.n)} <span class="muted">· ${p.age} ans</span></span>${ovrTag(p)}</div>`).join('')}</div>`:''}
+     <div class="row" style="margin-top:14px;gap:8px;flex-wrap:wrap">${mine?'<button class="btn" data-cgo="squad">Mon effectif</button>':''}${rk?`<button class="btn ${mine?'ghost':''}" data-cgo="${rk.d===2?'l2':'l1'}">Voir le classement</button>`:''}<button class="btn ghost" id="mclose">Fermer</button></div>`}
+  modal(`<div class="csheet">${h}</div>`);const o=$('#ov');o.querySelectorAll('.chead').forEach(x=>x.dataset.nolk='');o.querySelector('#mclose').onclick=closeModal;
+  o.querySelectorAll('[data-cgo]').forEach(b=>b.onclick=()=>{closeModal();const g=b.dataset.cgo;if(g==='squad')go('squad');else go('comp',g)});bindPl(o)}
+
 try{window.claude?.hot?.snapshot?.(()=>({save:G?JSON.stringify(G):null,view:VIEW}))}catch(e){}
 (window.claude?.hot?.ready?window.claude.hot.ready(start):start(window.claude?.hot?.data??{}));
 </script>
