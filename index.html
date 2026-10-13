@@ -1421,7 +1421,7 @@ function capRoom(extra){return wageCap()-(proWage()+(extra||0))}
 
 /* ======================= FIN DE SAISON ======================= */
 function seasonEnd(){
-  worldClose();const S=G.S,dv=S.div||1,tb=leagueTable(),pos=tb.findIndex(r=>r.id===G.club)+1,t1=l1Table(),champ=t1[0].id,champMine=tb[0].id;
+  try{mkLoanReturn()}catch(e){console.error(e)}worldClose();const S=G.S,dv=S.div||1,tb=leagueTable(),pos=tb.findIndex(r=>r.id===G.club)+1,t1=l1Table(),champ=t1[0].id,champMine=tb[0].id;
   S.final=t1.map(r=>r.id);S.endPos=pos;nlEnd();
   const lp=(dv===2?{1:15e6,2:10e6,3:6e6}:{1:60e6,2:30e6,3:15e6})[pos]||0;if(lp){addMoney(lp,'pri');S.prize=(S.prize||0)+lp}
   if(pos===1&&dv===1)unlock('champion');
@@ -1733,20 +1733,23 @@ function dscNego(ev,id,st){const d=ev.d,x=d.P.find(y=>y.id===id);if(!x||d.wk>d.W
    <div class="sel wrap">${lv.map((v,i)=>`<button data-pl="${i}" class="${i===st.p?'on':''}">${money(v).replace(' FCFA','')}</button>`).join('')}</div>
    <div class="lbl" style="margin:14px 0 6px">Ce que tu ajoutes</div>
    <div class="list">${opts.map(k=>`<label class="item"><input type="checkbox" data-ex="${k}" ${st.ex[k]?'checked':''}><span style="flex:1">${DSC_X[k].n}</span><span class="muted">${DSC_X[k].c?money(DSC_X[k].c):'gratuit'}</span></label>`).join('')}</div>
+   ${aca?`<div class="lbl" style="margin:14px 0 6px">Un de tes jeunes en échange (facultatif)</div><p class="muted" style="margin:0 0 6px;font-size:calc(13px*var(--tz))">L'académie forme des jeunes pour les revendre : elle n'accepte que des joueurs de 18 ans au plus, et juge leur valeur.</p><div class="list" style="max-height:200px;overflow:auto"><label class="item"><input type="radio" name="dgv" data-dgv="" ${!st.give?'checked':''}><span style="flex:1">Aucun échange</span></label>${(G.u18||[]).slice().sort((a,b)=>a.age-b.age||b.ovr-a.ovr).map(y=>`<label class="item"><input type="radio" name="dgv" data-dgv="${y.id}" ${st.give===y.id?'checked':''}><span style="flex:1">${esc(y.n)} · ${y.pos}</span><span class="muted">${y.age} ans · ${y.ovr}</span></label>`).join('')}</div>`:''}
    <div class="row" style="margin-top:12px"><span class="muted">Total</span><span class="sp"></span><b class="num">${money(tot)}</b></div>
    <div class="row"><span class="muted">Caisse</span><span class="sp"></span><span class="num">${money(G.cash)}</span></div>
-   <div class="row" style="margin-top:12px;gap:8px"><button class="btn" id="offer" ${tot>G.cash||n>=23?'disabled':''}>Faire l'offre</button><button class="btn ghost" id="back">Retour à la fiche</button></div>
+   <div class="row" style="margin-top:12px;gap:8px"><button class="btn" id="offer" ${tot>G.cash||n-(aca&&st.give?1:0)>=23?'disabled':''}>Faire l'offre</button><button class="btn ghost" id="back">Retour à la fiche</button></div>
    ${n>=23?'<p class="muted">Ton groupe est complet (23).</p>':tot>G.cash?'<p class="muted">Pas assez d\'argent en caisse.</p>':''}`}
    ${x.fam.closed||x.st!=='rep'?`<div class="row" style="margin-top:12px"><button class="btn" id="back">Retour à la fiche</button></div>`:''}</div>`);
   const o=document.querySelector('#ov');
   o.querySelectorAll('[data-pl]').forEach(b=>b.onclick=()=>{st.p=+b.dataset.pl;st.msg='';dscNego(ev,id,st)});
   o.querySelectorAll('[data-ex]').forEach(b=>b.onchange=()=>{st.ex[b.dataset.ex]=b.checked;st.msg='';dscNego(ev,id,st)});
+  o.querySelectorAll('[data-dgv]').forEach(b=>b.onchange=()=>{st.give=b.dataset.dgv||null;st.msg='';dscNego(ev,id,st)});
   o.querySelector('#back').onclick=()=>dscOpen(ev,id);
   const of=o.querySelector('#offer');if(of)of.onclick=()=>{
     let s=prime/dem;for(const k of opts)if(st.ex[k])s+=(k===x.fam.want||(k==='quartier'&&x.fam.want==='quartier'))?.32:k==='loge'?.08:.05;
     if(st.ex.jeu&&(x.pers==='gagn'||x.pers==='lead'))s+=.06;
-    if(s>=1){dscSign(ev,x,tot,st.ex);closeModal();refresh();
-      modal(`<div class="dsc"><div class="lbl">C'est signé</div><h2 style="margin:4px 0 8px">${esc(x.n)} rejoint ${esc(me().name)}</h2><p>${esc(x.fam.who)} serre la main du président. ${st.ex.jeu?'Tu as promis du temps de jeu : il faudra le faire jouer.':''}</p><p class="muted">Coût total : ${money(tot)}.</p><div class="row"><button class="btn" id="mclose">Continuer</button></div></div>`);
+    const gy=aca&&st.give?(G.u18||[]).find(y=>y.id===st.give):null;if(gy){if(gy.age>18){x.fam.pat--;st.msg=`« ${esc(gy.n)} a déjà ${gy.age} ans. Nous formons des jeunes pour les revendre : on ne le prend pas. »`;if(x.fam.pat<=0){x.fam.closed=1;st.msg+=' « Et pour le reste, c\'est fini. »'}save();dscNego(ev,id,st);return}s+=dscYV(gy)/dem}
+    if(s>=1){if(gy)dscGive(gy,x);dscSign(ev,x,tot,st.ex);closeModal();refresh();
+      modal(`<div class="dsc"><div class="lbl">C'est signé</div><h2 style="margin:4px 0 8px">${esc(x.n)} rejoint ${esc(me().name)}</h2><p>${esc(x.fam.who)} serre la main du président.${gy?` ${esc(gy.n)} part à l'académie dans l'échange.`:''} ${st.ex.jeu?'Tu as promis du temps de jeu : il faudra le faire jouer.':''}</p><p class="muted">Coût total : ${money(tot)}.</p><div class="row"><button class="btn" id="mclose">Continuer</button></div></div>`);
       document.querySelector('#mclose').onclick=closeModal;return}
     if(s>=.82){x.fam.pat--;x.fam.known=1;st.msg=`« On n'est pas loin. Mais ce qui compte vraiment pour nous, c'est ${DSC_WANT[x.fam.want]}. »`}
     else{x.fam.pat-=2;st.msg=`« Ce n'est pas sérieux. ${x.riv?esc(x.riv)+' propose bien plus.':'On vaut mieux que ça.'} »`}
@@ -3747,6 +3750,12 @@ function evOver(el){const o=G.over;
      <div class="score goldt">${H.tot} / 100</div></div></div>${heritageHTML(true)}
      <div class="row"><button class="btn" id="nw">Nouvelle carrière</button><button class="btn sec" id="pal">Voir le palmarès</button></div></div>`;
     el.querySelector('#nw').onclick=()=>{try{localStorage.removeItem(LS)}catch(e){}G=null;renderTitle(null)};el.querySelector('#pal').onclick=()=>{const ov=G.over;G.over=null;go('pal');G.over=ov};return}
+  if(o.kind==='regfail'){const Q=G.regQ,sn=G.sn-1;
+    el.innerHTML=`<div class="event"><div class="hero"><div class="kita"></div><div class="in"><div class="eyebrow">Tournoi régional · mars-avril ${o.yr||''}</div><h2>Le comité te limoge</h2>
+     <p class="pitchline">${esc(Q?Q.path:'Éliminé du tournoi régional.')} Sans Noushi League, ${esc(me().name)} perd sa saison. Le comité met fin à ton contrat : aucun club ne te fait d'offre.</p></div></div>
+     <div class="panel"><h3>Ton passage au club</h3><p style="margin:0">${sn} saison${sn>1?'s':''} sur le banc de ${esc(me().name)}.${(G.regH||[]).length?` Tournois régionaux précédents : ${G.regH.map(h=>`${h.yr} (${h.best==='win'?'champion':h.best==='out'?'éliminé en poule':'qualifié'})`).join(', ')}.`:''}</p></div>
+     <div class="row"><button class="btn" data-primary id="nw">Nouvelle carrière</button><button class="btn ghost" id="reg">Voir le tournoi</button></div></div>`;
+    el.querySelector('#nw').onclick=()=>{try{localStorage.removeItem(LS)}catch(e){}G=null;renderTitle(null)};el.querySelector('#reg').onclick=()=>{const ov=G.over;G.over=null;go('comp','reg');G.over=ov};return}
   o.offer=o.offer||bOffer(G.club);
   el.innerHTML=`<div class="event"><div class="hero"><div class="kita"></div><div class="in"><div class="eyebrow">Fin de l'aventure</div><h2>${o.kind==='rel'?'Le club descend en Ligue 2':o.kind==='rel2'?'Le club quitte la Ligue 2':'Le président te remercie'}</h2>
    <p class="pitchline">${o.kind==='rel2'?`${esc(me().name)} termine ${o.pos}e de Ligue 2 et retourne au football de district. Le projet s'arrête là.`:o.kind==='rel'?`${esc(me().name)} termine ${o.pos}e. La subvention tombe à 70 M FCFA, les meilleurs joueurs partiront. Le conseil d'administration met fin à ton contrat.`:(o.why==='derby'?'Deux saisons de suite à perdre tous tes derbies. Les supporters ont eu ta tête.':`La confiance du président est tombée à ${G.board.conf} / 100. ${o.pos}e pour un objectif de ${objTxt(o.obj).toLowerCase()}.`)}</p></div></div>
@@ -3985,11 +3994,11 @@ function aiMercato(win){const ids=G.l1.concat(G.l2).filter(id=>id!==G.club&&G.cl
   const tierOf=id=>(G.clubs[id].tier||1)+(G.l1.includes(id)?2:0),nDom=win==='hiver'?ri(2,4):ri(5,9),nAbr=win==='hiver'?ri(0,2):ri(2,4);
   const replace=(cid,p)=>{const np=newPlayer({pos:p.pos,age:ri(18,22),ovr:clamp(p.ovr-ri(2,5),48,72),pot:clamp(p.ovr+ri(0,6),50,80),club:cid,zone:zoneOf(G.clubs[cid].city)});G.clubs[cid].pl.push(np.id);txPlayer(np,{n:'Centre de formation',s:'FOR'},cid,0,{yth:1})};
   for(let i=0;i<nDom;i++){const sel=pick(ids),buyers=ids.filter(b=>b!==sel&&tierOf(b)>=tierOf(sel));if(!buyers.length)continue;const buy=pick(buyers);
-    const cand=squad(sel).filter(p=>p.age<=29&&!(G.track&&G.track[p.id])).sort((a,b)=>b.ovr-a.ovr).slice(0,4);if(!cand.length)continue;const p=pick(cand);
+    const cand=squad(sel).filter(p=>p.age<=29&&!p.loan&&!(G.track&&G.track[p.id])).sort((a,b)=>b.ovr-a.ovr).slice(0,4);if(!cand.length)continue;const p=pick(cand);
     const fee=Math.max(2e6,Math.round(l1Fee(p)*rf(.12,.3)/5e5)*5e5);G.clubs[sel].pl=G.clubs[sel].pl.filter(x=>x!==p.id);if(G.clubs[sel].xi)G.clubs[sel].xi=G.clubs[sel].xi.filter(x=>x!==p.id);
     G.clubs[buy].pl.push(p.id);p.club=buy;p.joined=G.sn;txPlayer(p,sel,buy,fee);if(i<2)newsAdd(`Officiel : ${p.n} quitte ${G.clubs[sel].name} pour ${G.clubs[buy].name} (${money(fee)}).`,'transfer');
-    replace(sel,p);const bs=squad(buy).filter(q=>q.pos===p.pos&&q.id!==p.id).sort((a,b)=>a.ovr-b.ovr);if(G.clubs[buy].pl.length>24&&bs[0]){const w=bs[0];G.clubs[buy].pl=G.clubs[buy].pl.filter(x=>x!==w.id);if(G.clubs[buy].xi)G.clubs[buy].xi=G.clubs[buy].xi.filter(x=>x!==w.id);txPlayer(w,buy,TX_FREE,0);archivePlayer(w,'Libéré');delete G.players[w.id]}}
-  for(let i=0;i<nAbr;i++){const sel=pick(ids.filter(id=>G.l1.includes(id))||ids);if(!sel)continue;const p=squad(sel).filter(q=>q.age<=24&&!(G.track&&G.track[q.id])).sort((a,b)=>b.ovr-a.ovr)[0];if(!p)continue;
+    replace(sel,p);const bs=squad(buy).filter(q=>q.pos===p.pos&&q.id!==p.id&&!q.loan).sort((a,b)=>a.ovr-b.ovr);if(G.clubs[buy].pl.length>24&&bs[0]){const w=bs[0];G.clubs[buy].pl=G.clubs[buy].pl.filter(x=>x!==w.id);if(G.clubs[buy].xi)G.clubs[buy].xi=G.clubs[buy].xi.filter(x=>x!==w.id);txPlayer(w,buy,TX_FREE,0);archivePlayer(w,'Libéré');delete G.players[w.id]}}
+  for(let i=0;i<nAbr;i++){const sel=pick(ids.filter(id=>G.l1.includes(id))||ids);if(!sel)continue;const p=squad(sel).filter(q=>q.age<=24&&!q.loan&&!(G.track&&G.track[q.id])).sort((a,b)=>b.ovr-a.ovr)[0];if(!p)continue;
     const dest=R()<.6?pick(EURO):(()=>{const f=pick(FOREIGN);return{n:f[1],c:f[3]}})(),fee=Math.round(valueEUR(p)*EUR*rf(.8,1.4)/5e5)*5e5;
     G.clubs[sel].pl=G.clubs[sel].pl.filter(x=>x!==p.id);if(G.clubs[sel].xi)G.clubs[sel].xi=G.clubs[sel].xi.filter(x=>x!==p.id);txPlayer(p,sel,txAbroad(dest.n,dest.c),fee);
     newsAdd(`Officiel : ${p.n} (${G.clubs[sel].name}) part à l'étranger, à ${dest.n} (${money(fee)}).`,'transfer');archivePlayer(p,'Parti à l\'étranger · '+dest.n);delete G.players[p.id];replace(sel,{pos:p.pos,ovr:p.ovr})}}
@@ -4108,7 +4117,7 @@ function renderTitle(saved){
    <div id="m-dis" hidden><button class="btn ghost sm" data-back style="margin-bottom:12px">‹ Changer de carrière</button><h3 class="mtitle">Carrière District · choisis ta région</h3><p class="muted" style="margin:0 0 14px">Les opérateurs économiques et les supporters financent l'équipe du district. Détecte tes U20 dans les communes du Grand Abidjan, puis joue la Noushi League : les 2 meilleures équipes de district montent en Ligue 2. Sinon, un club de Ligue des Pros te proposera son équipe B.</p>
    <div class="clubpick">${DISTRICTS.map(d=>`<button data-d="${d.id}">${kit({c1:d.c[0],c2:d.c[1],pat:d.c[2]},52)}<span style="min-width:0"><b>${esc(d.name)}</b><small>${esc(d.dist)}</small><small>${esc(d.city)} · profil ${PROF_L[d.prof]||'équilibre'}</small></span></button>`).join('')}</div></div></div>
    <div class="row" style="gap:8px"><label class="btn ghost sm" style="cursor:pointer">Importer une partie<input type="file" id="impsave" accept=".json,application/json" hidden></label></div>
-   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 53${cloudDb?' · sauvegarde en ligne active':''}</p>
+   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 54${cloudDb?' · sauvegarde en ligne active':''}</p>
    <p class="muted" style="font-size:calc(13.5px*var(--tz));margin:0">Projet original. Clubs, joueurs, compétitions et montants de jeu sont fictifs, à l'échelle du football ivoirien réel. Aucune affiliation avec une fédération, une confédération ou un éditeur de jeux.</p>
   </div></div>`;
   $('#app').style.display='block';
@@ -4225,9 +4234,9 @@ function regBuild(){const c=me(),mb=distBase(G.club),T0=[];
   pots.forEach(p=>shuffle([...p]).forEach((t,g)=>groups[g].push(t)));
   const play=(h,a,ko)=>{const d=(T0[h].str-T0[a].str)/12;let hg=poisson(1.25*Math.exp(d)),ag=poisson(1.25*Math.exp(-d));let p=null;if(ko&&hg===ag){let x=0,y=0;while(x===y){x=ri(2,5);y=ri(2,5)}p=[x,y]}return{h,a,hg,ag,p}};
   const gm=[],tab=[];
-  groups.forEach((g,gi)=>{let fx,tb;for(let k=0;k<300;k++){fx=[[0,1],[2,3],[0,2],[1,3],[0,3],[1,2]].map(([x,y],j)=>({...play(g[x],g[y]),g:gi,day:j>>1}));
+  groups.forEach((g,gi)=>{let fx,tb,meQ=null;const mine=g.includes(0)&&G.sn>1;for(let k=0;k<300;k++){fx=[[0,1],[2,3],[0,2],[1,3],[0,3],[1,2]].map(([x,y],j)=>({...play(g[x],g[y]),g:gi,day:j>>1}));
       const t={};g.forEach(i=>t[i]={i,J:0,pts:0,bp:0,bc:0});fx.forEach(f=>{const h=t[f.h],a=t[f.a];h.J++;a.J++;h.bp+=f.hg;h.bc+=f.ag;a.bp+=f.ag;a.bc+=f.hg;if(f.hg>f.ag)h.pts+=3;else if(f.hg<f.ag)a.pts+=3;else{h.pts++;a.pts++}});
-      tb=Object.values(t).sort((p,q)=>q.pts-p.pts||(q.bp-q.bc)-(p.bp-p.bc)||q.bp-p.bp||T0[q.i].str-T0[p.i].str);if(T0[tb[0].i].d&&T0[tb[1].i].d)break}
+      tb=Object.values(t).sort((p,q)=>q.pts-p.pts||(q.bp-q.bc)-(p.bp-p.bc)||q.bp-p.bp||T0[q.i].str-T0[p.i].str);const top2=T0[tb[0].i].d&&T0[tb[1].i].d;if(mine){const q=tb[0].i===0||tb[1].i===0;if(meQ===null)meQ=q;if(meQ?top2:!q)break}else if(top2)break}
     gm.push(...fx);tab.push(tb)});
   const W=f=>f.hg>f.ag||(f.p&&f.p[0]>f.p[1])?f.h:f.a,ko={};
   const q=tab.map(t=>[t[0].i,t[1].i]),pairs=[[0,1],[2,3],[4,5],[6,7],[1,0],[3,2],[5,4],[7,6]];
@@ -4242,6 +4251,7 @@ function regBuild(){const c=me(),mb=distBase(G.club),T0=[];
 function regPath(){const Q=G.regQ,g=Q.groups.findIndex(x=>x.includes(0)),pos=Q.tab[g].findIndex(r=>r.i===0)+1,pts=Q.tab[g][pos-1].pts,W=f=>f.hg>f.ag||(f.p&&f.p[0]>f.p[1])?f.h:f.a;
   let out='',lost=null;for(const k of ['r16','qf','sf','f']){const f=Q.ko[k].find(x=>x.h===0||x.a===0);if(!f)break;if(W(f)!==0){lost={k,f};break}}
   const L='ABCDEFGH'[g],P1=pos===1?'1er':pos+'e';Q.gl=L;
+  if(pos>2){Q.failed=true;Q.best='out';Q.path=`${P1} du groupe ${L} (${pts} pts) : éliminé dès la phase de groupes. Pas de Noushi League cette saison.`;return Q.path}
   if(!lost)out=`Champion régional. ${P1} du groupe ${L} (${pts} pts), puis quatre victoires jusqu'au titre.`;
   else{const o=Q.T[lost.f.h===0?lost.f.a:lost.f.h].name,s=lost.f.h===0?`${lost.f.hg}-${lost.f.ag}`:`${lost.f.ag}-${lost.f.hg}`;out=`${P1} du groupe ${L} (${pts} pts), qualifié pour la Noushi League. Éliminé en ${REG_ST[lost.k].toLowerCase()} par ${o} (${s}${lost.f.p?', aux tirs au but':''}).`}
   Q.path=out;Q.best=lost?lost.k:'win';return out}
@@ -4590,12 +4600,12 @@ function evDSeason(el,ev){const c=me(),ys=G.u18||[];if(!ev.d){for(const y of ys)
    <div class="row"><button class="btn" data-primary id="ok">Continuer ›</button></div></div>`;el.querySelector('#ok').onclick=complete}
 function evDYear(el,ev){const c=me(),ys=G.u18||[],leave=ys.filter(y=>y.age>=20);if(ev.inv==null){ev.inv=Math.round(ri(6,14)*1e6);addMoney(ev.inv,'inv');save()}
   el.innerHTML=`<div class="event"><div class="hero"><div class="kita"></div><div class="in"><div class="eyebrow">Fin de saison · ${seasonLabel()}</div><h2>Nouvelle chance</h2>
-   <p class="pitchline" style="font-size:calc(16px*var(--tz))">Le comité de ${esc(c.name)} renouvelle sa confiance et apporte ${money(ev.inv)} pour la nouvelle saison. En mai : tournoi régional, recrutement jusqu'au 30 juin, puis la Noushi League.</p></div></div>
+   <p class="pitchline" style="font-size:calc(16px*var(--tz))">Le comité de ${esc(c.name)} renouvelle sa confiance et apporte ${money(ev.inv)} pour la nouvelle saison. En mai : tournoi régional, recrutement jusqu'au 30 juin, puis la Noushi League.</p><p class="pitchline" style="font-size:calc(15px*var(--tz))"><b>Attention :</b> si ton équipe ne sort pas de sa poule au tournoi régional, le comité te limoge et la partie s'arrête.</p></div></div>
    ${leave.length?`<div class="panel"><h3>Ils atteignent la limite d'âge</h3><p class="muted" style="margin-top:0">À 21 ans, ils ne peuvent plus jouer la Noushi League et quittent le groupe.</p><div class="list">${leave.map(y=>`<div class="item">${posTag(y.pos)}<span style="flex:1">${esc(y.n)}</span><span class="muted">${y.age} ans</span></div>`).join('')}</div></div>`:''}
    <div class="row"><button class="btn" data-primary id="ok">Commencer la nouvelle saison ›</button></div></div>`;
   el.querySelector('#ok').onclick=()=>{for(const y of leave){try{archivePlayer({...y,club:G.club,apps:0},'Limite d\'âge de la Noushi League')}catch(e){}}distSeasonClose();try{reviewPrep()}catch(e){console.error(e)}G.lastLedger={...G.S.ledger};G.pending=false;G.ev=null;startNextSeason()}}
 function distSeasonClose(){const role=G.role,nh=G.hist.length;G.role='B';try{seasonEnd()}catch(e){console.error(e)}G.role=role;G.hist.length=nh;G.over=null;G.news=(G.news||[]).filter(n=>!/termine 0e/.test(n.t||n.txt||''))}
-function evRegQ(el,ev){const Q=regQ();el.innerHTML=`<div class="event"><div class="hero"><div class="kita"></div><div class="in"><div class="eyebrow">Mars-avril ${Q.yr||2026} · tournoi régional</div><h2>Qualification pour la Noushi League</h2>
+function evRegQ(el,ev){const Q=regQ();if(Q&&Q.failed){if(!G.over){G.over={kind:'regfail',yr:Q.yr};newsAdd(`${me().name} éliminé du tournoi régional. Le comité limoge son entraîneur.`,'club',true);save()}return evOver(el)}el.innerHTML=`<div class="event"><div class="hero"><div class="kita"></div><div class="in"><div class="eyebrow">Mars-avril ${Q.yr||2026} · tournoi régional</div><h2>Qualification pour la Noushi League</h2>
    <p class="pitchline" style="font-size:calc(16px*var(--tz))">${esc(Q.path)}</p></div></div><div class="row" style="gap:8px"><button class="btn ghost" id="see">Voir le tournoi</button><button class="btn" data-primary id="ok">Continuer ›</button></div></div>`;
   el.querySelector('#see').onclick=()=>go('comp','reg');el.querySelector('#ok').onclick=complete}
 
@@ -4630,13 +4640,13 @@ function domMove(p,toCid,fee,sal){const fromCid=p.club,from=G.clubs[fromCid],to=
 function mkTick(){if(!mkActive())return;const M=mkInit(),w=mkWin(),si=G.S.si;
   for(const o of M.offers)if(o.status==='open'&&(o.exp<si&&o.sn===G.sn||o.sn!==G.sn||!w)){o.status='expired'}
   if(!w)return;mkAcaGen();if(M.offers.filter(o=>o.status==='open').length>=4)return;
-  const sq=shuffle(squad(G.club).filter(p=>p.age>=17));
+  const sq=shuffle(squad(G.club).filter(p=>p.age>=17&&!p.loan));
   for(const p of sq){if(M.offers.some(o=>o.pid===p.id&&o.status==='open'))continue;const L=M.listed[p.id],e=effOvr(p);
     if(R()>(L?.32:.025)+clamp((e-62)/70,0,.12))continue;
     if(e>=66&&R()<(L?.3:.45)){const o=makeOffer(p);Object.assign(o,{id:M.nid++,kind:'abroad',sn:G.sn,exp:si+6,round:0,max:Math.round(o.fee*rf(1.08,1.3)/5e3)*5e3,give:[]});M.offers.push(o);newsAdd(`${o.club} (${o.country}) fait une offre pour ${p.n} : ${eur(o.fee)}.`,'transfer',true);return}
     const buyers=G.l1.concat(G.l2).filter(id=>id!==G.club&&G.clubs[id]&&needFor(id,p)>=1.05);if(!buyers.length)continue;const b=pick(buyers);
     let fee=Math.round(aiValIn(b,p)*rf(.72,.92)/1e5)*1e5;if(L)fee=Math.round(Math.max(fee,L.price*rf(.78,.98))/1e5)*1e5;const purse=clubPurse(b)-(M.spent[b]||0),give=[];
-    if(fee>purse||R()<.25){const q=squad(b).filter(q=>importance(b,q)<1.2&&q.age<=30&&q.id!==p.id).sort((a,c)=>mkVal(c)-mkVal(a)).find(q=>mkVal(q)<fee*.8);if(q){give.push(q.id);fee=Math.max(0,Math.round((fee-mkVal(q))/1e5)*1e5)}}
+    if(fee>purse||R()<.25){const q=squad(b).filter(q=>importance(b,q)<1.2&&q.age<=30&&q.id!==p.id&&!q.loan).sort((a,c)=>mkVal(c)-mkVal(a)).find(q=>mkVal(q)<fee*.8);if(q){give.push(q.id);fee=Math.max(0,Math.round((fee-mkVal(q))/1e5)*1e5)}}
     if(fee>purse&&!give.length)continue;
     M.offers.push({id:M.nid++,pid:p.id,kind:'dom',club:b,fee,give,sn:G.sn,status:'open',round:0,exp:si+6,max:Math.round(fee*rf(1.08,1.3)/1e5)*1e5});
     newsAdd(`${T(b).name} fait une offre pour ${p.n}${give.length?` : ${P(give[0]).n} + ${money(fee)}`:` : ${money(fee)}`}.`,'transfer',true);return}}
@@ -4650,7 +4660,7 @@ function mkCounter(o,ask){if(o.status!=='open')return'';const fmt=o.kind==='abro
   if(o.round>=1){o.status='refused';return `${o.kind==='abroad'?o.club:T(o.club).name} se retire.`}
   o.round++;o.fee=Math.round((o.fee+o.max)/2/(o.kind==='abroad'?5e3:1e5))*(o.kind==='abroad'?5e3:1e5);return `Contre-proposition : ${fmt(o.fee)}. C'est leur dernier mot.`}
 // tes offres pour un joueur d'un autre club (argent, joueurs en échange, ou les deux)
-function mkBid(p,fee,giveIds,salM){const cid=p.club,M=mkInit();if(!mkWin())return{ok:false,why:'Le marché est fermé. Prochaine fenêtre : juin ou janvier.'};if(!cid||cid===G.club||!G.clubs[cid])return{ok:false,why:'Ce joueur n\'est plus disponible.'};
+function mkBid(p,fee,giveIds,salM){const cid=p.club,M=mkInit();if(!mkWin())return{ok:false,why:'Le marché est fermé. Prochaine fenêtre : juin ou janvier.'};if(!cid||cid===G.club||!G.clubs[cid])return{ok:false,why:'Ce joueur n\'est plus disponible.'};if(p.loan)return{ok:false,why:'Ce joueur est en prêt : pas de transfert avant la fin de la saison.'};
   const gv=giveIds.map(P).filter(Boolean),giveV=gv.reduce((s,q)=>s+aiValIn(cid,q),0),inc=fee+giveV,out=aiValOut(cid,p)*rf(.93,1.07),sal=Math.round(l1Ask(p)*(salM||1)/5e3)*5e3,dSal=sal-gv.reduce((s,q)=>s+q.sal,0);
   if(G.cash<fee)return{ok:false,why:'Ta caisse ne couvre pas cette indemnité.'};if(capRoom(dSal)<0)return{ok:false,why:'Ta masse salariale ne permet pas son salaire.'};
   if(inc>=out){if(!willJoin(p,G.club,sal))return{ok:false,club:true,why:`${T(cid).name} accepte, mais ${p.n} refuse de venir : ${(salM||1)<1.5?'propose-lui un meilleur salaire, ou ':''}ton projet ne le convainc pas.`};
@@ -4688,7 +4698,7 @@ function vMarket(el){const M=mkInit(),w=mkWin();
   if(w)mkAcaGen();
   const open=M.offers.filter(o=>o.status==='open'&&P(o.pid)&&P(o.pid).club===G.club),past=M.offers.filter(o=>o.status!=='open'&&o.sn===G.sn).slice(-6).reverse();
   const listed=Object.entries(M.listed).map(([id,l])=>({p:P(+id),l})).filter(x=>x.p&&x.p.club===G.club);
-  const pos=G.mkPos||'ALL',dv=G.mkDiv||(G.l2.includes(G.club)?'l2':'l1'),pool=(dv==='l2'?G.l2:G.l1).filter(id=>id!==G.club).flatMap(id=>squad(id)).filter(p=>pos==='ALL'||p.pos===pos).sort((a,b)=>b.ovr-a.ovr).slice(0,14);
+  const pos=G.mkPos||'ALL',dv=G.mkDiv||(G.l2.includes(G.club)?'l2':'l1'),pool=(dv==='l2'?G.l2:G.l1).filter(id=>id!==G.club).flatMap(id=>squad(id)).filter(p=>!p.loan&&(pos==='ALL'||p.pos===pos)).sort((a,b)=>b.ovr-a.ovr).slice(0,14);
   const ST={done:['Conclu','good'],refused:['Ils se retirent','bad'],expired:['Expirée','']};
   el.innerHTML=`<div class="panel" style="margin-bottom:14px;border-left:4px solid ${w?'var(--good)':'var(--line2)'}"><b>${esc(mkWinTxt())}</b><div class="muted" style="margin-top:4px;font-size:calc(13.5px*var(--tz))">Caisse ${money(G.cash)} · marge salariale ${money(capRoom())}/mois · effectif ${me().pl.length}/25</div></div>
    <div class="grid g2">
@@ -4698,13 +4708,14 @@ function vMarket(el){const M=mkInit(),w=mkWin();
      ${past.length?`<div class="lbl" style="margin:12px 0 6px">Réponses récentes</div><div class="list">${past.map(o=>`<div class="item" style="font-size:calc(13px*var(--tz))"><span style="flex:1;min-width:0">${esc((P(o.pid)||(G.gone&&G.gone[o.pid])||{n:'?'}).n)} · ${esc(mkWho(o))}</span><span class="chip ${(ST[o.status]||['',''])[1]}">${(ST[o.status]||[o.status])[0]}</span></div>`).join('')}</div>`:''}</div>
    <div class="panel"><h3>Tes joueurs en vente</h3>${listed.length?`<div class="list">${listed.map(x=>`<div class="item">${posTag(x.p.pos)}<span style="flex:1;min-width:0">${pl(x.p)}<span class="muted" style="display:block;font-size:calc(12.5px*var(--tz))">prix demandé ${money(x.l.price)} · valeur ${money(mkVal(x.p))}</span></span><button class="btn ghost sm" data-mk="unl:${x.p.id}">Retirer</button></div>`).join('')}</div>`:'<p class="muted" style="margin:0">Aucun. Ouvre la fiche d\'un de tes joueurs pour le mettre en vente.</p>'}</div>
    </div>
+   ${(()=>{const Ls=mkLoans();return `<div class="panel" style="margin-top:14px"><h3>Prêts</h3>${Ls.length?`<div class="list">${Ls.map(q=>`<div class="item">${posTag(q.pos)}<span style="flex:1;min-width:0">${pl(q)}<span class="muted" style="display:block;font-size:calc(12.5px*var(--tz))">${q.loan.to===G.club?'arrivé de '+esc(T(q.loan.from).name):'prêté à '+esc(T(q.loan.to).name)} · retour en fin de saison</span></span>${ovrTag(q)}</div>`).join('')}</div>`:`<p class="muted" style="margin:0">Aucun prêt. ${w?'Depuis la fiche d\'un joueur : « Prêter » un de tes jeunes pour qu\'il joue ailleurs, ou « Demander un prêt » à un autre club.':'Les prêts se font pendant les fenêtres de transfert.'}</p>`}</div>`})()}
    <div class="panel" style="margin-top:14px"><div class="row" style="margin-bottom:8px"><h3 style="margin:0">Recruter en Côte d'Ivoire</h3><span class="sp"></span><div class="sel">${[['l1','Ligue des Pros'],['l2','Ligue 2']].map(([k,l])=>`<button data-mkdv="${k}" class="${dv===k?'on':''}">${l}</button>`).join('')}</div></div>
     <div class="sel" style="margin-bottom:8px">${['ALL','GB','DEF','MIL','ATT'].map(k=>`<button data-mkpos="${k}" class="${pos===k?'on':''}">${k==='ALL'?'Tous':k}</button>`).join('')}</div>
     <div class="list">${pool.map(p=>`<div class="item">${posTag(p.pos)}<span style="flex:1;min-width:0">${pl(p)}<span class="muted" style="display:block;font-size:calc(12.5px*var(--tz))">${p.age} ans · ${esc(T(p.club).name)} · ${OST_L[stNow(p)]||''} · valeur ${money(mkVal(p))}</span></span>${ovrTag(p)}<button class="btn sec sm" data-mk="bid:${p.id}" ${w?'':'disabled'}>Offre</button></div>`).join('')}</div></div>
    ${w&&M.aca.length?`<div class="panel" style="margin-top:14px"><h3>Académies et centres de formation</h3><p class="muted" style="margin-top:0">Joueurs semi-pro, déjà encadrés. L'académie demande une indemnité de formation ; elle peut accepter un échange si tu proposes des jeunes à fort potentiel.</p><div class="list">${M.aca.map(P).filter(p=>p&&!p.club).map(p=>`<div class="item">${posTag(p.pos)}<span style="flex:1;min-width:0">${pl(p)}<span class="muted" style="display:block;font-size:calc(12.5px*var(--tz))">${p.age} ans · ${esc(mkAcaName(p))} · indemnité ${money(p.ind)}</span></span>${ovrTag(p)}<button class="btn sec sm" data-mk="aca:${p.id}">Négocier</button></div>`).join('')}</div></div>`:''}`;
   el.querySelectorAll('[data-mkpos]').forEach(b=>b.onclick=()=>{G.mkPos=b.dataset.mkpos;refresh()});el.querySelectorAll('[data-mkdv]').forEach(b=>b.onclick=()=>{G.mkDiv=b.dataset.mkdv;refresh()});bindPl(el)}
 // fenêtre de négociation : argent et/ou joueurs en échange
-function mkDealModal(p,kind){const base=kind==='aca'?p.ind:mkVal(p),mine=squad(G.club).filter(q=>q.id!==p.id).sort((a,b)=>mkVal(b)-mkVal(a)).slice(0,16),give=new Set();let mult=1,salM=1,res=null,fee=base;
+function mkDealModal(p,kind){const base=kind==='aca'?p.ind:mkVal(p),mine=squad(G.club).filter(q=>q.id!==p.id&&!q.loan).sort((a,b)=>mkVal(b)-mkVal(a)).slice(0,16),give=new Set();let mult=1,salM=1,res=null,fee=base;
   const draw=()=>{fee=res&&res.counter?res.counter:Math.round(base*mult/1e5)*1e5;const sal=kind==='aca'?p.sal:Math.round(l1Ask(p)*salM/5e3)*5e3;
     modal(`<div class="csheet"><div class="lbl">${kind==='aca'?'Académie · '+esc(mkAcaName(p)):esc(T(p.club).name)}</div><h2>${esc(p.n)}</h2><div class="cmeta">${p.pos} · ${p.age} ans · note ${p.ovr} · ${kind==='aca'?'indemnité demandée '+money(p.ind):'valeur '+money(mkVal(p))} · salaire demandé ${money(sal)}/mois</div>
      <div class="clbl" style="margin-top:12px">Indemnité proposée</div><div class="sel">${[.6,.8,1,1.2,1.5].map(m=>`<button data-mul="${m}" class="${!res?.counter&&mult===m?'on':''}">${money(Math.round(base*m/1e5)*1e5)}</button>`).join('')}${res&&res.counter?`<button class="on">${money(res.counter)}</button>`:''}</div>
@@ -4722,17 +4733,50 @@ function mkListModal(p){modal(`<div class="csheet"><div class="lbl">Liste des tr
 function mkCounterModal(o){const p=P(o.pid),u=o.kind==='abroad'?5e3:1e5;modal(`<div class="csheet"><div class="lbl">Contre-offre · ${esc(mkWho(o))}</div><h2>${esc(p.n)}</h2><p class="muted">Ils proposent ${mkFmt(o,o.fee)}. Demande plus : ils peuvent accepter, faire un dernier pas, ou se retirer.</p>
    <div class="sel">${[1.15,1.3,1.5].map(m=>`<button data-cm="${m}">${mkFmt(o,Math.round(o.fee*m/u)*u)}</button>`).join('')}</div><div class="row" style="margin-top:12px"><button class="btn ghost" id="mclose">Annuler</button></div></div>`);
   const m=$('#ov');m.querySelector('#mclose').onclick=closeModal;m.querySelectorAll('[data-cm]').forEach(b=>b.onclick=()=>{const r=mkCounter(o,Math.round(o.fee*+b.dataset.cm/u)*u);save();closeModal();toast(esc(r));refresh()})}
-function mkFicheHTML(p){if(!mkActive()||!p)return'';const M=mkInit(),L=M.listed[p.id];
-  if(p.club===G.club)return `<div class="row" style="margin-top:10px;gap:8px">${L?`<span class="chip gold">En vente · ${money(L.price)}</span><button class="btn ghost sm" data-mk="unl:${p.id}">Retirer de la liste</button>`:`<button class="btn sec sm" data-mk="lst:${p.id}">Mettre sur la liste des transferts</button>`}</div>`;
-  if(p.club&&G.clubs[p.club])return `<div class="row" style="margin-top:10px;gap:8px">${mkWin()?`<button class="btn sm" data-mk="bid:${p.id}">Faire une offre à ${esc(T(p.club).name)}</button>`:'<span class="muted" style="font-size:calc(13px*var(--tz))">Marché fermé : offre possible en juin-août ou en janvier.</span>'}</div>`;
+function mkFicheHTML(p){if(!mkActive()||!p)return'';const M=mkInit(),L=M.listed[p.id],w=mkWin();
+  if(p.loan)return `<div class="row" style="margin-top:10px"><span class="chip gold">${p.loan.to===G.club?`Prêté par ${esc(T(p.loan.from).name)}`:p.loan.from===G.club?`Prêté par ton club à ${esc(T(p.loan.to).name)}`:`En prêt (${esc(T(p.loan.from).name)})`} · retour en fin de saison</span></div>`;
+  if(p.club===G.club)return `<div class="row" style="margin-top:10px;gap:8px">${L?`<span class="chip gold">En vente · ${money(L.price)}</span><button class="btn ghost sm" data-mk="unl:${p.id}">Retirer de la liste</button>`:`<button class="btn sec sm" data-mk="lst:${p.id}">Mettre sur la liste des transferts</button>`}${w?`<button class="btn ghost sm" data-mk="lo:${p.id}">Prêter</button>`:''}</div>`;
+  if(p.club&&G.clubs[p.club])return `<div class="row" style="margin-top:10px;gap:8px">${mkWin()?`<button class="btn sm" data-mk="bid:${p.id}">Faire une offre à ${esc(T(p.club).name)}</button><button class="btn ghost sm" data-mk="li:${p.id}">Demander un prêt</button>`:'<span class="muted" style="font-size:calc(13px*var(--tz))">Marché fermé : offre possible en juin-août ou en janvier.</span>'}</div>`;
   if(p.aca&&!p.club)return `<div class="row" style="margin-top:10px"><button class="btn sm" data-mk="aca:${p.id}">Négocier avec ${esc(mkAcaName(p))}</button></div>`;return ''}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-mk]');if(!b||!G)return;e.stopPropagation();const [k,v]=b.dataset.mk.split(':'),M=mkInit(),o=M.offers.find(x=>x.id===+v),p=P(+v);
   if(k==='acc'&&o){const r=mkAccept(o);save();toast(esc(r));refresh()}else if(k==='ref'&&o){o.status='refused';const pp=P(o.pid);if(o.kind==='abroad'&&pp){const r=resolveOffer(o,'refuse');}save();refresh()}
   else if(k==='ctr'&&o)mkCounterModal(o);else if(k==='bid'&&p)mkDealModal(p,'club');else if(k==='aca'&&p)mkDealModal(p,'aca');
-  else if(k==='lst'&&p)mkListModal(p);else if(k==='unl'&&p){mkList(p,0);save();closeModal();refresh()}});
+  else if(k==='lst'&&p)mkListModal(p);else if(k==='lo'&&p)mkLoanModal(p);else if(k==='li'&&p){const r=mkLoanIn(p);save();closeModal();toast(esc(r.why));refresh()}else if(k==='unl'&&p){mkList(p,0);save();closeModal();refresh()}});
 function mkHomeCard(V){if(!mkActive())return;const n=mkInit().offers.filter(o=>o.status==='open'&&P(o.pid)&&P(o.pid).club===G.club).length;if(!n)return;
   const d=document.createElement('button');d.className='decision mkcard';d.style.cssText='all:unset;box-sizing:border-box;display:block;width:100%;cursor:pointer;margin:0 0 12px;padding:14px 16px;border-radius:14px;background:var(--panel);border:1px solid var(--accent)';
   d.innerHTML=`<div class="lbl">Marché des transferts</div><b style="font-size:calc(17px*var(--tz))">${n} offre${n>1?'s':''} pour tes joueurs</b><div class="muted" style="font-size:calc(13.5px*var(--tz))">Accepter, négocier ou refuser ›</div>`;d.onclick=()=>{G.txTop='mk';go('club','tx')};V.prepend(d)}
+
+/* ---------- Lot 5 (suite) : prêts. Le joueur prêté reste le même et revient en fin de saison ---------- */
+function loanMove(p,toCid,ret){const fromCid=p.club,from=G.clubs[fromCid],to=G.clubs[toCid];if(!to)return;
+  if(from){from.pl=from.pl.filter(x=>x!==p.id);if(from.xi)from.xi=from.xi.filter(x=>x!==p.id);if(Array.isArray(from.xs))from.xs=from.xs.map(x=>x===p.id?null:x)}
+  mkSplit(p,fromCid);txPlayer(p,fromCid,toCid,0,{loan:1});const t=p.trf&&p.trf[p.trf.length-1];if(t)t.t+=ret?' (retour de prêt)':' (prêt)';
+  if(toCid===G.club)delete p.num;p.club=toCid;to.pl.push(p.id);p.share=.5;p.cond=Math.max(p.cond,80);delete mkInit().listed[p.id];
+  if(G.track&&G.track[p.id]&&G.track[p.id].status==='club')G.track[p.id].ev.push({y:yearNow(),t:ret?`Revient de prêt (${from?from.name:''}).`:`Prêté à ${to.name} jusqu'à la fin de saison.`});try{stTrack(p,to.name)}catch(e){}}
+// un jeune prêté gratuitement intéresse plus qu'un achat : les clubs le jugent avec un peu d'indulgence
+function loanNeed(cid,p){return needFor(cid,p.age<=21?{...p,ovr:p.ovr+5}:p)}
+function mkLoanFit(p,cid){const n=loanNeed(cid,p);return n>=1.05?'titulaire probable':n>=.85?'temps de jeu partiel':null}
+function mkLoanOut(p,cid){if(!mkWin())return{ok:false,why:'Le marché est fermé.'};if(!p||p.club!==G.club||p.loan)return{ok:false,why:'Ce joueur ne peut pas être prêté.'};
+  if(me().pl.length<=16)return{ok:false,why:'Ton effectif est trop court pour prêter un joueur.'};const n=loanNeed(cid,p);
+  if(posDepth(G.club,p.pos).length<=MK_K[p.pos]+1)return{ok:false,why:`Tu n'as pas assez de joueurs au poste ${p.pos} pour en prêter un.`};
+  if(n<.85||R()>.55+(n-.85)*1.2){const st=posDepth(cid,p.pos).slice(0,MK_K[p.pos]);return{ok:false,why:`${T(cid).name} décline : ${st.length&&p.ovr<st[st.length-1].ovr-4?`${p.n} n'a pas encore le niveau de leurs titulaires.`:`ils ont assez de joueurs au poste ${p.pos}.`}`}}
+  if(p.age>=27&&n<1.05)return{ok:false,why:`${p.n} refuse : à ${p.age} ans, il ne part pas en prêt pour rester sur le banc.`};
+  loanMove(p,cid);p.loan={from:G.club,to:cid,sn:G.sn};newsAdd(`${p.n} est prêté à ${T(cid).name} jusqu'à la fin de la saison.`,'transfer',true);return{ok:true,why:`${p.n} part en prêt à ${T(cid).name}. Il revient à la fin de la saison.`}}
+function mkLoanIn(p){const cid=p&&p.club;if(!mkWin())return{ok:false,why:'Le marché est fermé.'};if(!cid||cid===G.club||!G.clubs[cid]||p.loan)return{ok:false,why:'Ce joueur ne peut pas être prêté.'};
+  if(me().pl.length>=25)return{ok:false,why:'Ton effectif est complet (25).'};const fee=Math.round(mkVal(p)*.1/1e5)*1e5;if(G.cash<fee)return{ok:false,why:'Ta caisse ne couvre pas les frais de prêt.'};if(capRoom(p.sal)<0)return{ok:false,why:'Ta masse salariale ne permet pas son salaire.'};
+  if(importance(cid,p)>=1.25)return{ok:false,why:`${T(cid).name} refuse : ${p.n} est titulaire chez eux.`};
+  if(needFor(G.club,p)<.85&&R()<.7)return{ok:false,why:`${p.n} refuse : chez toi, il serait remplaçant. Il veut jouer.`};
+  addMoney(-fee,'rec');loanMove(p,G.club);p.loan={from:cid,to:G.club,sn:G.sn};newsAdd(`${me().name} obtient le prêt de ${p.n} (${T(cid).name}) jusqu'à la fin de la saison${fee?` : ${money(fee)}`:''}.`,'transfer',true);return{ok:true,why:`${p.n} arrive en prêt jusqu'à la fin de la saison${fee?` (frais ${money(fee)})`:''}.`}}
+function mkLoanReturn(){for(const id in G.players){const p=G.players[id];if(!p||!p.loan)continue;const L=p.loan;delete p.loan;
+  if(p.club!==L.to||!G.clubs[L.from])continue;loanMove(p,L.from,true);if(L.from===G.club||L.to===G.club)newsAdd(`Fin de prêt : ${p.n} retourne à ${T(L.from).name}.`,'transfer')}}
+function mkLoans(){const out=[];for(const id in G.players){const p=G.players[id];if(p&&p.loan&&(p.loan.from===G.club||p.loan.to===G.club))out.push(p)}return out}
+function mkLoanModal(p){const ids=G.l1.concat(G.l2).filter(id=>id!==G.club&&G.clubs[id]).map(id=>({id,f:mkLoanFit(p,id),n:loanNeed(id,p)})).filter(x=>x.f).sort((a,b)=>b.n-a.n).slice(0,8);
+  modal(`<div class="csheet"><div class="lbl">Prêt jusqu'à la fin de la saison</div><h2>${esc(p.n)}</h2><p class="muted">Il garde son contrat chez toi. Le club qui l'accueille paie son salaire. Il revient à la fin de la saison avec ses matchs et sa progression.</p>
+   ${ids.length?`<div class="list">${ids.map(x=>`<button class="item" data-mklo="${x.id}" style="all:unset;box-sizing:border-box;display:flex;gap:8px;align-items:center;padding:10px;border-radius:10px;border:1px solid var(--line);cursor:pointer;width:100%">${crest(G.clubs[x.id],24)}<span style="flex:1;min-width:0">${esc(G.clubs[x.id].name)}<span class="muted" style="display:block;font-size:calc(12.5px*var(--tz))">${G.l1.includes(x.id)?'Ligue des Pros':'Ligue 2'} · ${x.f}</span></span><span class="muted">›</span></button>`).join('')}</div>`:'<p>Aucun club n\'a besoin d\'un joueur à ce poste en ce moment.</p>'}
+   <div class="row" style="margin-top:12px"><button class="btn ghost" id="mclose">Annuler</button></div></div>`);
+  const o=$('#ov');o.querySelector('#mclose').onclick=closeModal;o.querySelectorAll('[data-mklo]').forEach(b=>b.onclick=()=>{const r=mkLoanOut(p,b.dataset.mklo);save();closeModal();toast(esc(r.why));refresh()})}
+// district : l'académie juge le jeune proposé en échange
+function dscYV(y){return (.8e5+(y.ovr-48)*.8e5+Math.max(0,y.pot-65)*.5e5)*(y.age<=17?1.1:1)}
+function dscGive(y,x){const an=String(x.from||'').split(' · ')[0]||'l\'académie';G.u18=G.u18.filter(q=>q!==y);try{txPlayer(y,G.club,{n:an,s:'ACA'},0)}catch(e){}try{archivePlayer({...y,club:G.club,apps:0},`Échangé à ${an}`)}catch(e){}newsAdd(`${y.n} rejoint ${an} dans l'échange avec ${x.n}.`,'scout')}
 
 try{window.claude?.hot?.snapshot?.(()=>({save:G?JSON.stringify(G):null,view:VIEW}))}catch(e){}
 (window.claude?.hot?.ready?window.claude.hot.ready(start):start(window.claude?.hot?.data??{}));
