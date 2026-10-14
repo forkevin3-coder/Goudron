@@ -1679,7 +1679,7 @@ function dscProspect(d,z,l,sc,f){const L=LIEUX[l],age=pick([15,16,16,17,17,18,18
   const pers=pick(Object.keys(DSC_PERS)),aca=l==='aca';
   const fam={who:aca?'Le directeur de l\'académie':pick(['Son père','Sa mère','Son oncle','Son grand frère','Sa tante','Son éducateur de quartier']),want:aca?pick(['argent','pct']):pick(['argent','argent','ecole','jeu','quartier']),greed:aca?1.3+R()*.25:.8+R()*.6,pat:mgrT('nego')?4:3,met:0,known:0,closed:0};
   const lieu=l==='aca'?z.aca:z[l];
-  return{id:'r'+(G.uid++),n:genUniq(pick(z.z),d.P.concat(G.u18||[])),pos,age,ovr,pot,at,c:z.k,l,from:`${lieu} · ${z.n}`,b:gauss()*5,k:clamp(12+sc.eye*7+(sc.net===z.k?10:0)+(mgrT('vieux')?10:0),10,70),pers,fam,riv:null,st:'rep',wk:d.wk,by:sc.n,obs:1,trial:0,jok:(l==='mar'||l==='com')&&age<=17&&R()<.55?(at.endu=ri(28,42),1):0}}
+  return{id:'r'+(G.uid++),n:genUniq(pick(z.z),d.P.concat(G.u18||[])),pos,age,ovr,pot,at,c:z.k,l,from:`${lieu} · ${z.n}`,b:gauss()*5,k:clamp(12+sc.eye*7+(sc.net===z.k?10:0)+(mgrT('vieux')?10:0),10,70),pers,fam,riv:null,st:'rep',wk:d.wk,by:sc.n,obs:1,trial:0,jok:(l==='mar'||l==='com')&&pos!=='GB'&&age<=17&&R()<.55?(at.endu=ri(28,42),1):0}}
 function dscEst(x){const w=Math.max(1,Math.round((100-x.k)/10)),c=Math.round(x.ovr+x.b*(100-x.k)/100);return{c,lo:c-w,hi:c+w,w}}
 function dscAttr(x,k){const e=dscEst(x),h=(hashN(x.id+k)%9-4)*(100-x.k)/100;const c=clamp(Math.round(x.at[k]+x.b*(100-x.k)/100+h),20,99);return{c,lo:clamp(c-e.w-1,20,99),hi:clamp(c+e.w+1,20,99)}}
 function dscPotTxt(x){if(x.k<35)return 'inconnu';const w=Math.round((100-x.k)/6)+3,c=Math.round(x.pot+x.b*(100-x.k)/120);return `${c-w}–${c+w}`}
@@ -1865,7 +1865,7 @@ function finishPrologue(choice){const S=G.S;if(G.prologue!=='pending')return fal
     G.prologue='pending';save();advance();if(!G.pending)go('home');return true}
   if(choice&&typeof choice==='object'){const grp=(G.u18||[]).slice(),fol=grp.filter(y=>(choice.follow||[]).includes(y.id)),dn=c.name;G.u18=null;takeClub(choice.club,choice.role);const nc=me();
     for(const y of fol){const p=youthToPlayer(y,nc.id,{ctr:3,sal:Math.round(Math.max(1.2e5,marketSal(y.ovr)*.6)/5e3)*5e3,origin:'academie'});nc.pl.push(p.id);if(p.stH&&p.stH[p.stH.length-1].s!=='pro')p.stH.push({y:yearNow(),s:'pro',w:nc.name});try{txPlayer(p,{n:dn,s:'DIS'},nc.id,0)}catch(e){}trackStart(p,`Suit son entraîneur de ${dn} à ${nc.name}.`)}
-    for(const y of grp)if(!fol.includes(y)){try{archivePlayer({...y,club:null,apps:0,last:dn},'Reste au district · '+dn)}catch(e){}}
+    for(const y of grp)if(!fol.includes(y)){try{archivePlayer({...y,club:null,apps:0,last:dn,wm:1},'Reste au district · '+dn)}catch(e){}}
     newsAdd(choice.role==='B'?`Tu prends l'équipe B de ${nc.name}${fol.length?` avec ${fol.length} joueur${fol.length>1?'s':''} de ton groupe`:''}.`:`Tu deviens entraîneur principal de ${nc.name} (${G.l2.includes(nc.id)?'Ligue 2':'Ligue des Pros'})${fol.length?`. ${fol.length} joueur${fol.length>1?'s':''} de ton groupe te sui${fol.length>1?'vent':'t'}`:''}.`,'club',true)}
   else{  const qual=!!(N&&N.qual&&N.qual.includes(dc));if(choice==='l2'&&!qual)choice='B';if(choice==='l1'&&!(N&&N.offerL1))choice=qual?'l2':'B';
   if(choice==='l2'){G.role='head';const grp=promoteGroup(c);if(!G.l2.includes(dc))G.l2.push(dc);
@@ -1961,7 +1961,7 @@ function u18Fill(young){while(G.u18.length<18){let best='MIL',gap=-99;for(const 
 function u18Init(){if(G.u18)return;G.u18=[];u18Fill(false)}
 function u18Season(){if(!G.u18)return;const gone=[];
   for(const y of G.u18){y.age++;archInit(y);archGrow(y,0);y.ovr=Math.min(y.pot,y.ovr+ri(0,3)+(G.fac.train>=3?1:0)+(mgrT('form')&&R()<.5?1:0))}
-  G.u18=G.u18.filter(y=>{if(y.age>20){gone.push(y);return false}return true});if(!(G.start==='district'&&G.prologue==='pending'))u18Fill(true);
+  G.u18=G.u18.filter(y=>{if(y.age>20){gone.push(y);return false}return true});for(const y of gone){if(!(G.gone&&G.gone[y.id]))try{archivePlayer({...y,club:G.club,apps:0,wm:1},'Limite d\'âge des U20')}catch(e){}}if(!(G.start==='district'&&G.prologue==='pending'))u18Fill(true);
   if(gone.length)newsAdd(`${gone.length} joueur${gone.length>1?'s':''} des U20 atteigne${gone.length>1?'nt':''} la limite d'âge sans contrat pro et quitte${gone.length>1?'nt':''} le club. Le groupe U20 est complété par des 15-16 ans.`,'scout')}
 function u18Panel(){u18Init();const ys=G.u18.slice().sort((a,b)=>b.pot-a.pot);
   return `<div class="panel" style="margin-top:16px"><div class="row" style="margin-bottom:8px"><h3 style="margin:0">Tes U20 · Noushi League</h3><span class="sp"></span><button class="btn ghost sm" data-gonou>Voir la compétition</button></div>
@@ -4001,7 +4001,7 @@ const TX_FREE={n:'Libre',s:'LIB',free:1};
 function txAbroad(name,country){const e=EURO.find(x=>x.n===name),f=FOREIGN.find(x=>x[1]===name);const fl={'Suède':'🇸🇪','Serbie':'🇷🇸','Suisse':'🇨🇭','Belgique':'🇧🇪','Portugal':'🇵🇹','France':'🇫🇷','Espagne':'🇪🇸','États-Unis':'🇺🇸','Golfe':'🇶🇦','Allemagne':'🇩🇪','Maroc':'🇲🇦','Afrique du Sud':'🇿🇦','Kenya':'🇰🇪','Égypte':'🇪🇬','Tunisie':'🇹🇳','Algérie':'🇩🇿','Nigeria':'🇳🇬','Ghana':'🇬🇭','Sénégal':'🇸🇳','RD Congo':'🇨🇩','Tanzanie':'🇹🇿','Cameroun':'🇨🇲','Mali':'🇲🇱','Angola':'🇦🇴','Zambie':'🇿🇲','Guinée':'🇬🇳'},flagOf=c=>{const k=Object.keys(fl).find(k=>String(c||'').startsWith(k));return k?fl[k]:'🌍'};if(f)return{n:f[1],s:f[2],c1:f[6],c2:f[7],pat:f[8],flag:flagOf(f[3]),abroad:1};
   const c=(e&&e.c)||country||'';const k=Object.keys(fl).find(k=>c.startsWith(k));const h=hashN(name);return{n:name,s:name.replace(/^(FC|SV|AC|IF|FK|SC|Al-)\s*/,'').slice(0,3).toUpperCase(),c1:['#14365c','#7a1020','#0e5a3a','#222','#5a2a7a'][h%5],c2:'#f4f1e8',pat:['plain','stripes','hoops','sash'][h%4],flag:k?fl[k]:'🌍',abroad:1}}
 function txAdd(e){if(!G.tx)G.tx=[];e.sn=G.sn;e.m=cur()?cur().m:0;e.dl=dateLabel();G.tx.unshift(e);if(G.tx.length>300)G.tx.length=300}
-function txPlayer(p,from,to,fee,extra){try{const fp=txParty(from),tp=txParty(to);(p.trf=p.trf||[]).push({y:yearNow(),f:fp.n,t:tp.n,fee:fee||0});if(p.trf.length>20)p.trf.shift();if(p.num&&to!==G.club)delete p.num}catch(e){}try{txAdd({k:'j',n:p.n,pos:p.pos,age:p.age,ovr:p.ovr,fid:String(p.id),nat:p.nat||'ci',from:txParty(from),to:txParty(to),fee:fee||0,...(extra||{})})}catch(e){}}
+function txPlayer(p,from,to,fee,extra){if(p&&(to===G.club||from===G.club))p.wm=1;try{const fp=txParty(from),tp=txParty(to);(p.trf=p.trf||[]).push({y:yearNow(),f:fp.n,t:tp.n,fee:fee||0});if(p.trf.length>20)p.trf.shift();if(p.num&&to!==G.club)delete p.num}catch(e){}try{txAdd({k:'j',n:p.n,pos:p.pos,age:p.age,ovr:p.ovr,fid:String(p.id),nat:p.nat||'ci',from:txParty(from),to:txParty(to),fee:fee||0,...(extra||{})})}catch(e){}}
 function txCoach(c,from,to,why){try{txAdd({k:'c',n:c.n,nat:c.nat,cfg:c.cfg,age:c.cfg&&c.cfg.age,from:txParty(from),to:txParty(to),why:why||''})}catch(e){}}
 /* mercato des clubs de l'ordinateur */
 function aiMercato(win){const ids=G.l1.concat(G.l2).filter(id=>id!==G.club&&G.clubs[id]&&G.clubs[id].pl&&G.clubs[id].pl.length>=16);if(ids.length<4)return;
@@ -4131,7 +4131,7 @@ function renderTitle(saved){
    <div id="m-dis" hidden><button class="btn ghost sm" data-back style="margin-bottom:12px">‹ Changer de carrière</button><h3 class="mtitle">Carrière District · choisis ta région</h3><p class="muted" style="margin:0 0 14px">Les opérateurs économiques et les supporters financent l'équipe du district. Détecte tes U20 dans les communes du Grand Abidjan, puis joue la Noushi League : les 2 meilleures équipes de district montent en Ligue 2. Sinon, un club de Ligue des Pros te proposera son équipe B.</p>
    <div class="clubpick">${DISTRICTS.map(d=>`<button data-d="${d.id}">${kit({c1:d.c[0],c2:d.c[1],pat:d.c[2]},52)}<span style="min-width:0"><b>${esc(d.name)}</b><small>${esc(d.dist)}</small><small>${esc(d.city)} · profil ${PROF_L[d.prof]||'équilibre'}</small></span></button>`).join('')}</div></div></div>
    <div class="row" style="gap:8px"><label class="btn ghost sm" style="cursor:pointer">Importer une partie<input type="file" id="impsave" accept=".json,application/json" hidden></label></div>
-   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 60${cloudDb?' · sauvegarde en ligne active':''}</p>
+   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 61${cloudDb?' · sauvegarde en ligne active':''}</p>
    <p class="muted" style="font-size:calc(13.5px*var(--tz));margin:0">Projet original. Clubs, joueurs, compétitions et montants de jeu sont fictifs, à l'échelle du football ivoirien réel. Aucune affiliation avec une fédération, une confédération ou un éditeur de jeux.</p>
   </div></div>`;
   $('#app').style.display='block';
