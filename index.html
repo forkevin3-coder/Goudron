@@ -2408,22 +2408,64 @@ function boardEval(pos){const S=G.S,b=G.board,items=[];let d=0;
 
 /* ======================= SAUVEGARDE ======================= */
 const LS='mdc-save-v1';let cloud=null,cloudT=null;
-function save(){if(!G)return;G.t=Date.now();let s;try{s=JSON.stringify(G)}catch(e){return}
-  try{localStorage.setItem(LS,s)}catch(e){}
-  if(cloud){cloudNext={s,t:G.t};clearTimeout(cloudT);cloudT=setTimeout(cloudPush,2500)}}
-function loadLocal(){try{const s=localStorage.getItem(LS);return s?JSON.parse(s):null}catch(e){return null}}
+/* --- sauvegarde sûre (v62) ---
+   · une seule écriture par action : save() note la demande, l'écriture a lieu juste après l'action ;
+   · format numéroté (G.schema) et mises à jour numérotées, faites une seule fois, dans l'ordre ;
+   · copie de secours avant toute mise à jour ; un échec est affiché et n'écrase jamais la partie ;
+   · une sauvegarde illisible est mise de côté au lieu d'être perdue. */
+const SAVE_SCHEMA=62,LS_BAK='mdc-save-v1-avant-v',LS_BAD='mdc-save-v1-illisible';
+// SAVE_MIGRATIONS[n] fait passer une partie du format n au format suivant
+const SAVE_MIGRATIONS={61:g=>{/* v61 → v62 : aucune donnée de jeu ne change */}};
+let saveBlocked=null,saveIssue=null,saveTarget=null,saveQueued=false,saveWarned=false;
+function save(){if(!G||saveBlocked)return;saveTarget=G;if(saveQueued)return;saveQueued=true;queueMicrotask(flushSave)}
+function flushSave(){saveQueued=false;const g=saveTarget;saveTarget=null;if(!g||saveBlocked)return;
+  // la partie a été effacée volontairement pendant l'action (nouvelle carrière) : on n'écrit rien
+  if(!G){let had=null;try{had=localStorage.getItem(LS)}catch(e){}if(had==null)return}
+  g.t=Date.now();g.schema=SAVE_SCHEMA;let s;try{s=JSON.stringify(g)}catch(e){return}
+  try{localStorage.setItem(LS,s);if(saveIssue==='plein'){saveIssue=null;saveWarned=false}}
+  catch(e){saveIssue='plein';if(!saveWarned){saveWarned=true;saveBanner('<b>Partie non enregistrée</b><br>Le téléphone n\'a plus de place pour la sauvegarde. Libère de l\'espace ; le jeu réessaiera à ta prochaine action.')}}
+  if(cloud){cloudNext={s,t:g.t};clearTimeout(cloudT);cloudT=setTimeout(cloudPush,2500)}}
+function loadLocal(){let s=null;try{s=localStorage.getItem(LS)}catch(e){return null}if(!s)return null;
+  try{return JSON.parse(s)}catch(e){try{if(!localStorage.getItem(LS_BAD))localStorage.setItem(LS_BAD,s)}catch(e2){}
+    saveIssue='illisible';return null}}
+function schemaOf(g){return g&&typeof g.schema==='number'?g.schema:61}
+// met une partie au format actuel ; ne touche à rien si ce n'est pas possible
+function upgradeSave(g,noBackup){const from=schemaOf(g);
+  if(from>SAVE_SCHEMA)return{ok:false,why:`Cette partie a été enregistrée par une version plus récente du jeu (format ${from}). Recharge la page pour obtenir la dernière version : ta partie n'a pas été touchée.`};
+  if(from===SAVE_SCHEMA)return{ok:true};
+  if(!noBackup)try{const raw=JSON.stringify(g);localStorage.setItem(LS_BAK+SAVE_SCHEMA,raw);
+    for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith(LS_BAK)&&k!==LS_BAK+SAVE_SCHEMA){localStorage.removeItem(k);i--}}}catch(e){}
+  let v=from;try{while(v<SAVE_SCHEMA){const step=SAVE_MIGRATIONS[v];if(!step)throw new Error(`étape ${v} absente`);step(g);v++}}
+  catch(e){return{ok:false,why:`La mise à jour de ta sauvegarde a échoué (${esc(String(e&&e.message||e))}). Ta partie n'a pas été modifiée ; une copie de secours est gardée.`}}
+  g.schema=SAVE_SCHEMA;return{ok:true,from}}
+function saveBanner(html){let b=document.getElementById('savebn');if(!b){b=document.createElement('div');b.id='savebn';b.setAttribute('role','alert');
+    b.style.cssText='position:fixed;left:12px;right:12px;top:calc(12px + env(safe-area-inset-top,0px));z-index:9999;background:var(--panel,#0A2418);color:var(--text,#F8F1E1);border:2px solid var(--accent,#F15A1A);border-radius:14px;padding:12px 14px;font-size:14px;box-shadow:0 6px 24px rgba(0,0,0,.35)';
+    document.body.appendChild(b)}
+  b.innerHTML=html+'<div style="text-align:right;margin-top:8px"><button class="btn ghost sm" id="savebnx">Compris</button></div>';b.querySelector('#savebnx').onclick=()=>b.remove()}
+// sur l'écran titre : explique un problème de sauvegarde et empêche de reprendre une partie abîmée
+function saveNotice(saved){
+  if(saved&&schemaOf(saved)>SAVE_SCHEMA&&!saveBlocked)saveBlocked=`Cette partie a été enregistrée par une version plus récente du jeu (format ${schemaOf(saved)}). Recharge la page pour obtenir la dernière version : ta partie n'a pas été touchée.`;
+  if(saveBlocked){const c=document.getElementById('cont');if(c){c.hidden=true;c.disabled=true}saveBanner('<b>Sauvegarde protégée</b><br>'+saveBlocked)}
+  else if(saveIssue==='illisible')saveBanner('<b>Sauvegarde illisible</b><br>Le fichier de ta partie est abîmé. Une copie a été mise de côté sur ce téléphone ; tu peux commencer une nouvelle carrière sans la perdre.')}
 // sauvegarde en ligne : un document est limité à 256 Ko, donc la partie est compressée (si le navigateur sait le faire) puis découpée en morceaux
 const CLOUD_CH=180000;let cloudDb=null,cloudUid=null,cloudNext=null,cloudBusy=false,cloudSt='';
 async function gz(str){if(typeof CompressionStream==='undefined')return null;try{const cs=new Blob([str]).stream().pipeThrough(new CompressionStream('gzip'));const buf=new Uint8Array(await new Response(cs).arrayBuffer());let bin='';for(let i=0;i<buf.length;i+=32768)bin+=String.fromCharCode.apply(null,buf.subarray(i,i+32768));return btoa(bin)}catch(e){return null}}
 async function gunz(b64){const bin=atob(b64),u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);const ds=new Blob([u]).stream().pipeThrough(new DecompressionStream('gzip'));return await new Response(ds).text()}
+// empreinte d'un texte (FNV-1a) : vérifie qu'une sauvegarde en ligne est complète
+function hashStr(t){let h=0x811c9dc5;for(let i=0;i<t.length;i++){h^=t.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+// sauvegarde en ligne par génération : les morceaux sont écrits dans l'emplacement libre (a ou b),
+// l'en-tête bascule seulement à la fin ; une coupure laisse toujours la version précédente intacte
 async function cloudPush(){if(cloudBusy||!cloudNext||!cloudDb)return;cloudBusy=true;const {s,t}=cloudNext;cloudNext=null;
   try{const z=await gz(s),body=z||s,n=Math.max(1,Math.ceil(body.length/CLOUD_CH)),base='data/users/'+cloudUid+'/';
-    for(let i=0;i<n;i++)await cloudDb.doc(base+'save_'+i).set({s:body.slice(i*CLOUD_CH,(i+1)*CLOUD_CH)});
-    await cloudDb.doc(base+'save').set({t,n,z:!!z,v:2});cloudSt='ok'}
+    let curSlot=null;try{const h=await cloudDb.doc(base+'save').get();if(h.exists)curSlot=h.data().slot||null}catch(e){}
+    const slot=curSlot==='a'?'b':'a';
+    for(let i=0;i<n;i++)await cloudDb.doc(base+'save_'+slot+'_'+i).set({s:body.slice(i*CLOUD_CH,(i+1)*CLOUD_CH)});
+    await cloudDb.doc(base+'save').set({t,n,z:!!z,v:3,slot,len:body.length,h:hashStr(body)});cloudSt='ok'}
   catch(e){cloudSt=(e&&e.code)||'erreur'}
   cloudBusy=false;if(cloudNext)setTimeout(cloudPush,1500)}
-async function cloudLoad(d){if(!d)return null;if(d.json)return d.json;if(!d.n)return null;const base='data/users/'+cloudUid+'/';let body='';
-  for(let i=0;i<d.n;i++){const sn=await cloudDb.doc(base+'save_'+i).get();if(!sn.exists)return null;body+=sn.data().s||''}
+async function cloudLoad(d){if(!d)return null;if(d.json)return d.json;if(!d.n)return null;const base='data/users/'+cloudUid+'/',pre=d.slot?'save_'+d.slot+'_':'save_';let body='';
+  for(let i=0;i<d.n;i++){const sn=await cloudDb.doc(base+pre+i).get();if(!sn.exists)return null;body+=sn.data().s||''}
+  if(d.len!=null&&(body.length!==d.len||hashStr(body)!==d.h))return null; // morceaux incomplets ou mélangés : on ne charge pas
   return d.z?await gunz(body):body}
 async function initCloud(){try{if(!window.claude||!window.claude.use)return;const db=await window.claude.use('db');const user=await window.claude.use('user');if(!db||!user)return;
   const id=await user.id();if(!id)return;cloudDb=db;cloudUid=id;cloud=db.doc('data/users/'+id+'/save');const snap=await cloud.get();
@@ -3776,7 +3818,7 @@ function evOver(el){const o=G.over;
    <div class="panel"><h3>Un nouveau départ</h3><p style="margin:0">${esc(T(o.offer).name)} te propose son équipe B en Ligue des Espoirs. Tu formes les jeunes, et si l'équipe première va mal, le président pourrait te confier l'intérim.</p></div>
    <div class="row"><button class="btn" data-primary id="ob">Prendre l'équipe B de ${esc(T(o.offer).name)} ›</button><button class="btn sec" id="re">Rejouer cette saison</button><button class="btn ghost" id="nw">Nouvelle carrière</button></div></div>`;
   el.querySelector('#ob').onclick=overTakeB;
-  el.querySelector('#re').onclick=()=>{try{const s=localStorage.getItem('mdc-season-start');if(s){G=JSON.parse(s);G.over=null;save();advance();return}}catch(e){}toast('Sauvegarde de début de saison introuvable.')};
+  el.querySelector('#re').onclick=()=>{try{const s=localStorage.getItem('mdc-season-start');if(s){const g=JSON.parse(s),r=upgradeSave(g,true);if(!r.ok){toast(r.why);return}G=g;G.over=null;save();advance();return}}catch(e){}toast('Sauvegarde de début de saison introuvable.')};
   el.querySelector('#nw').onclick=()=>{try{localStorage.removeItem(LS)}catch(e){}G=null;renderTitle(null)}}
 
 /* ---------- Maracana ---------- */
@@ -4131,20 +4173,25 @@ function renderTitle(saved){
    <div id="m-dis" hidden><button class="btn ghost sm" data-back style="margin-bottom:12px">‹ Changer de carrière</button><h3 class="mtitle">Carrière District · choisis ta région</h3><p class="muted" style="margin:0 0 14px">Les opérateurs économiques et les supporters financent l'équipe du district. Détecte tes U20 dans les communes du Grand Abidjan, puis joue la Noushi League : les 2 meilleures équipes de district montent en Ligue 2. Sinon, un club de Ligue des Pros te proposera son équipe B.</p>
    <div class="clubpick">${DISTRICTS.map(d=>`<button data-d="${d.id}">${kit({c1:d.c[0],c2:d.c[1],pat:d.c[2]},52)}<span style="min-width:0"><b>${esc(d.name)}</b><small>${esc(d.dist)}</small><small>${esc(d.city)} · profil ${PROF_L[d.prof]||'équilibre'}</small></span></button>`).join('')}</div></div></div>
    <div class="row" style="gap:8px"><label class="btn ghost sm" style="cursor:pointer">Importer une partie<input type="file" id="impsave" accept=".json,application/json" hidden></label></div>
-   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 61${cloudDb?' · sauvegarde en ligne active':''}</p>
+   <p class="muted" style="font-size:calc(12.5px*var(--tz));margin:0">Version 62${cloudDb?' · sauvegarde en ligne active':''}</p>
    <p class="muted" style="font-size:calc(13.5px*var(--tz));margin:0">Projet original. Clubs, joueurs, compétitions et montants de jeu sont fictifs, à l'échelle du football ivoirien réel. Aucune affiliation avec une fédération, une confédération ou un éditeur de jeux.</p>
   </div></div>`;
   $('#app').style.display='block';
-  bindTZ($('#app'),()=>renderTitle(saved));
+  bindTZ($('#app'),()=>renderTitle(saved));saveNotice(saved);
   if(has)$('#cont').onclick=()=>{G=saved;startUI()};
   document.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{if(has&&!b.dataset.sure){b.dataset.sure=1;b.querySelector('b').textContent='Confirmer : écraser la partie en cours ?';return}mgrStart(b.dataset.c)});
-  {const f=$('#impsave');if(f)f.onchange=async()=>{const file=f.files&&f.files[0];if(!file)return;try{const g=JSON.parse(await file.text());if(!g||!g.club||!g.clubs)throw 0;G=g;save();startUI();toast('<b>Partie importée</b>')}catch(e){toast('<b>Fichier illisible</b><br>Choisis un fichier exporté depuis GOUDRON.')}}}
+  {const f=$('#impsave');if(f)f.onchange=async()=>{const file=f.files&&f.files[0];if(!file)return;try{const g=JSON.parse(await file.text());if(!g||!g.club||!g.clubs)throw 0;G=g;save();startUI();if(G)toast('<b>Partie importée</b>')}catch(e){toast('<b>Fichier illisible</b><br>Choisis un fichier exporté depuis GOUDRON.')}}}
   {const w=$('#wipe');if(w)w.onclick=()=>{if(!w.dataset.sure){w.dataset.sure=1;w.textContent='Confirmer : effacer définitivement ?';return}try{localStorage.removeItem(LS);localStorage.removeItem('mdc-season-start')}catch(e){}if(cloudDb&&cloudUid)cloudDb.doc('data/users/'+cloudUid+'/save').delete().catch(()=>{});G=null;renderTitle(null)}}
   document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{$('#m-choose').hidden=true;$('#m-pro').hidden=b.dataset.mode!=='pro';$('#m-dis').hidden=b.dataset.mode==='pro';($('#m-pro').hidden?$('#m-dis'):$('#m-pro')).scrollIntoView({behavior:'smooth',block:'start'})});
   document.querySelectorAll('[data-back]').forEach(b=>b.onclick=()=>{$('#m-choose').hidden=false;$('#m-pro').hidden=true;$('#m-dis').hidden=true});
   document.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{if(has&&!b.dataset.sure){b.dataset.sure=1;b.querySelector('b').textContent='Confirmer : écraser la partie en cours ?';return}mgrStart(b.dataset.d,'district')})}
 if(window.claude||window.self!==window.top)document.documentElement.classList.add('inclaude');
-function startUI(fresh){migrate();try{nouTmpClear()}catch(e){}$('#app').style.display='';shell();if(fresh){save();advance();go('home');clearTimeout(cloudT);if(cloudDb)cloudPush()}else go('home')}
+function startUI(fresh){
+  if(fresh){saveBlocked=null;G.schema=SAVE_SCHEMA}
+  else{const sv=G,r=upgradeSave(G);let why=r.ok?null:r.why;
+    if(!why){try{migrate()}catch(e){why=`La mise à jour de ta sauvegarde a échoué (${esc(String(e&&e.message||e))}). Ta partie n'a pas été modifiée.`}}
+    if(why){saveBlocked=why;G=null;renderTitle(sv);return}}
+  if(fresh)migrate();try{nouTmpClear()}catch(e){}$('#app').style.display='';shell();if(fresh){save();advance();go('home');clearTimeout(cloudT);if(cloudDb)cloudPush()}else go('home')}
 
 addEventListener('keydown',e=>{if(!G||!$('#ov').hidden)return;if(e.target.closest&&e.target.closest('input,select,textarea'))return;
   if(e.key==='Enter'&&VIEW==='event'){const b=document.querySelector('[data-primary]');if(b&&!b.disabled&&document.activeElement===document.body){b.click();e.preventDefault()}}});
