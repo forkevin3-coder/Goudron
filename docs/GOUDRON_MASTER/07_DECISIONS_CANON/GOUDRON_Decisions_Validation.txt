@@ -344,3 +344,8 @@ Points nouveaux par rapport aux entrées précédentes :
 - Vérifié : club du joueur dans les 4 derniers de Ligue 2 (écran « Le club quitte la Ligue 2 » ; choix équipe B : ancien club conservé ; choix rejouer : club intact ; Ligue 2 à 16 clubs).
 - Limites acceptées provisoirement : clubs hors division sans matchs ; un seul club par district en Noushi League. À résoudre lors de la refonte des championnats territoriaux.
 - Non testé : club de District monté avec le joueur puis fini dans les 4 derniers (même code que l'académie testée).
+[DÉCIDÉ 13/11] Option 1 retenue.
+- v63 = correctif technique « identité permanente des clubs » uniquement (branche fix/identite-clubs, dernier commit 1f6e04e). Périmètre accepté ; testé sur les trois parcours : club pro, académie, club de District. Aucune nouvelle fonctionnalité de carrière.
+- v64 = carrière et relégation : la direction décide du maintien ou du licenciement ; démission et recherche d'un nouveau poste possibles sans fin de carrière.
+- Avant publication de la v63 : dernière vérification de la compatibilité des sauvegardes, de la version du cache hors ligne et de l'absence de régression.
+- En attendant : branche candidate conservée, pas de fusion dans main, pas de publication. L'autorisation de mise en ligne sera donnée séparément.
