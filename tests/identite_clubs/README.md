@@ -65,7 +65,14 @@ Le club du joueur a été volontairement affaibli pour finir 16e de Ligue 2 (scr
 
 **Ce que fait vraiment la « protection »** : le club du joueur n'est jamais retiré de la Ligue 2 **tant que le joueur en est l'entraîneur**. Mais un club du joueur fini dans les 4 derniers déclenche déjà l'écran « Le club quitte la Ligue 2 ». Le joueur ne peut pas rester : il prend une équipe B, rejoue la saison ou recommence. Dès qu'il part, son ancien club sort normalement de la division, et avec le correctif il garde son identité. La protection ne joue donc que si le joueur rejoue la saison. Elle n'a pas été modifiée.
 
-Non testé : un club de District monté en Ligue 2 avec le joueur (carrière District), puis fini dans les 4 derniers. Le code suivi est le même que pour l'académie (même branche `district`/`academie`), mais ce parcours complet n'a pas été joué.
+**Carrière District : club monté avec le joueur, puis relégué** (script `rel2d.js`, ajouté le 13/11). La montée a été forcée à la Noushi League d'ouverture, puis l'équipe a été affaiblie en Ligue 2.
+
+| Cas | v62 | Correctif |
+|---|---|---|
+| Comoé Indénié FC monte en Ligue 2 avec le joueur, finit 16e, le joueur prend une équipe B | club **supprimé** ; actualité « Quittent la division : …, d_com » | ✅ conservé : même nom, même stade, 18 joueurs sur 18 ; redevient l'équipe du district Comoé ; actualité avec le nom |
+| Même scénario avec Bas-Sassandra FC | — | ✅ même résultat (18/18, équipe du district) |
+| Ligue 2 et Ligue des Pros | 16 et 16 | ✅ 16 et 16, aucun doublon |
+| Devenir de l'entraîneur | écran « Le club quitte la Ligue 2 » : équipe B, rejouer ou nouvelle carrière | identique (non modifié) |
 
 ## 5. Limites et régressions possibles
 
@@ -88,5 +95,6 @@ Dans `tests/identite_clubs/`, copier la version à tester sous le nom `page.html
 - `node ident2.js` : deux clubs d'un même district, Ligue 2 à 16 clubs, joueurs hors division, affichage.
 - `node mig63.js` : ancienne sauvegarde v62 (copier la v62 sous `page62.html`).
 - `CID=a_hor node rel2.js` (et `CHOIX=rejouer`) : club du joueur dans les 4 derniers de Ligue 2.
+- `CID=d_com node rel2d.js` : carrière District, montée avec le joueur puis relégation.
 
 `auto4g.js` est le script de pilotage déjà existant (tests v46 à v50) ; les autres s'appuient sur lui. Les matchs sont aléatoires : les chiffres varient d'une exécution à l'autre, mais les contrôles d'identité doivent toujours donner 0.
