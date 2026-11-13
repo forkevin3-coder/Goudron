@@ -1042,7 +1042,7 @@ function newGame(cid,mode){const dm=mode==='district';const DF=DIFF_PREF;
 /* ---------------- saison ---------------- */
 // la Ligue 2 compte toujours 16 clubs : on retire d'abord le dernier club entrant (jamais le tien)
 function l2Norm(){let n=0;while(G.l2.length>16&&n++<4){const ent=G.l2.filter(id=>id!==G.club&&G.clubs[id]&&['district','academie'].includes(G.clubs[id].origin)),id=ent[ent.length-1]||G.l2.filter(x=>x!==G.club).slice(-1)[0];if(!id)break;
-  G.l2=G.l2.filter(x=>x!==id);const c=G.clubs[id];for(const p of squad(id)){archivePlayer(p,'Club non retenu en Ligue 2');delete G.players[p.id]}if(c&&['district','academie'].includes(c.origin))delete G.clubs[id];else if(c){c.pl=[];c.out=G.sn}}}
+  G.l2=G.l2.filter(x=>x!==id);const c=G.clubs[id];if(c&&!['district','academie'].includes(c.origin))c.out=G.sn}}
 // joueurs passés par ton club : marqués pour le registre (et rattrapage des anciennes sauvegardes)
 function goneMark(){if(G.club&&G.clubs[G.club])for(const p of squad(G.club))p.wm=1;if(G.goneMig)return;G.goneMig=1;const mn=new Set((G.hist||[]).map(h=>T(h.club)&&T(h.club).name).concat(me()?[me().name]:[]).filter(Boolean));
   for(const k in G.gone||{}){const g=G.gone[k];if(!g.mine&&((g.trf||[]).some(t=>mn.has(t.f)||mn.has(t.t))||(g.hs||[]).some(h=>mn.has(h.c))))g.mine=true}}
@@ -1076,7 +1076,7 @@ function newSeason(){
   [...S.c1.prelim,...S.c2.prelim].forEach((f,i)=>f.a=outs[i%outs.length]);
   G.S=S;G.ev=null;G.pending=false;
   S.promoted=md>0&&S.prevDiv!=null&&(S.prevDiv===0||S.prevDiv>md);if(md){G.lastDiv=md;ensureRival()}
-  for(const id of G.l1.concat(G.l2))for(const p of squad(id)){seasonArchive(p);p.mins=0;p.apps=0;p.sg=0;p.sa=0;p.rat=[];p.cond=100}
+  for(const id of G.l1.concat(G.l2,horsDiv()))for(const p of squad(id)){seasonArchive(p);p.mins=0;p.apps=0;p.sg=0;p.sa=0;p.rat=[];p.cond=100}
   for(const id in G.players){const p=G.players[id];if(!p.club&&!p.tmp&&p.orph&&p.orph<G.sn){archivePlayer(p,'Sans club');delete G.players[id]}}
   nlInit(S);if(G.l2.length>=16)worldInit(S);
   if(G.calV){if(!G.today)G.today=isoD(stepDate(S.steps[0]));else if(G.today<isoD(mdate(0,1)))G.today=isoD(mdate(0,1))}
@@ -1161,7 +1161,7 @@ function closeStage(C,k){if(k==='f'&&C.f&&C.f[0].r){const w=winnerOf(C.f[0]),l=w
   if(w===G.club&&C.kind==='c1'){unlock('africa');G.S.mondial={fx:MONDIAL_OPP.map(o=>({h:G.club,a:o[0],r:null})),j:0}}}}
 
 /* ---------------- nouvelles & succès ---------------- */
-function newsAdd(t,k,hot){G.news.unshift({d:G.S&&cur()?newsDate():'1er mai '+(2025+G.sn),t,k,hot:!!hot});if(G.news.length>80)G.news.pop()}
+function newsAdd(t,k,hot){G.news.unshift({d:G.S&&cur()?newsDate():'1er mai '+(2025+G.sn),t:fixIds(t),k,hot:!!hot});if(G.news.length>80)G.news.pop()}
 function unlock(id){if(G.ach[id])return;G.ach[id]=G.sn;const a=ACH.find(x=>x[0]===id);if(a)toast(`<b>Succès débloqué</b><br>${esc(a[1])}`)}
 function toast(html){const T0=$('#toasts');if(!T0)return;const d=document.createElement('div');d.className='toast';d.innerHTML=html;T0.appendChild(d);while(T0.children.length>2)T0.firstChild.remove();setTimeout(()=>d.remove(),3800)}
 
@@ -1474,7 +1474,7 @@ function reviewPrep(){const __pre=new Map((G.club&&G.clubs[G.club]?squad(G.club)
   if(G.S.goal==='star'){const Gl=GOALS.star,ok=!!G.S.starSigned;G.board.conf=clamp(G.board.conf+(ok?Gl.win:Gl.lose),0,100);if(ok)addMoney(Gl.prime,'pri');newsAdd(ok?`Objectif phare atteint : ${G.S.starSigned} est le jeune superstar du club. Le président verse une prime de ${money(Gl.prime)}.`:'Objectif phare manqué : aucun jeune superstar recruté cette saison.','club',ok)}
   const train=[0,.7,.85,1,1.2,1.4][G.fac.train];
   const mentors={};for(const p of squad(G.club))if(p.mentor&&p.age>=30)mentors[p.pos]=1;
-  for(const id of G.l1.concat(G.l2))for(const p of squad(id)){
+  for(const id of G.l1.concat(G.l2,horsDiv()))for(const p of squad(id)){
     const before=p.ovr;p.age++;archGrow(p,p.apps);if(p.endu!=null){const fe=a=>(28-Math.abs(a-24))*.7-(a>=33?16:0);p.endu=clamp(Math.round(p.endu+fe(p.age)-fe(p.age-1)),18,95)}
     const rate=p.age<=21?.35:p.age<=24?.25:p.age<=28?.1:0;
     const mf=id===G.club?clamp(.6+.6*Math.min(1,p.share+.45*Math.min(1,(p.nlj||0)/14)),.6,1.2):.9;const tm=id===G.club?train:1;
@@ -1513,9 +1513,11 @@ const ACAD=['','Locale','Régionale','Nationale','Élite'];
 function aiRefresh(){
   for(const id of G.l1.concat(G.l2)){if(id===G.club)continue;const c=G.clubs[id];
     for(const p of squad(id))if(p.ovr>=72&&R()<.35){removeFromClub(p)}
-    const comp={GB:2,DEF:6,MIL:6,ATT:4};const have=lineCounts(c.pl);
-    for(const pos in comp)while(have[pos]<comp[pos]){const age=ri(18,28),ovr=clamp(Math.round(60+c.tier*2+gauss()*3),52,76);c.pl.push(newPlayer({pos,age,ovr,pot:ovr+(age<23?ri(2,9):0),club:id,zone:R()<.6?zoneOf(c.city):null}).id);have[pos]++}}}
-function entrantClub(k){const D=distSpec(k),A=ACADEMIES.find(x=>x.id===k),X=D||A;
+    topUp(c)}}
+function topUp(c){const id=c.id,comp={GB:2,DEF:6,MIL:6,ATT:4};const have=lineCounts(c.pl);
+    for(const pos in comp)while(have[pos]<comp[pos]){const age=ri(18,28),ovr=clamp(Math.round(60+c.tier*2+gauss()*3),52,76);c.pl.push(newPlayer({pos,age,ovr,pot:ovr+(age<23?ri(2,9):0),club:id,zone:R()<.6?zoneOf(c.city):null}).id);have[pos]++}}
+function entrantClub(k){if(G.clubs[k]){const c=G.clubs[k];delete c.out;if(!c.pl.length)c.pl=genSquad(c.id,c.tier||1);else topUp(c);return c}
+  const D=distSpec(k),A=ACADEMIES.find(x=>x.id===k),X=D||A;
   const c=mkClub([X.id,X.name,X.short,X.city,1,X.c[0],X.c[1],X.c[2],D?`Stade de ${X.city.split(' · ')[0]}`:`Terrain de l'${X.name.replace(/^Académie (de |du |des )?/,'académie ')}`,D?4000:1500]);
   c.origin=D?'district':'academie';c.dist=D?D.dist:null;c.prof=D?D.prof:'technique';c.since=G.sn||1;
   c.pl=[];G.clubs[c.id]=c;const ids=genSquad(c.id,1);if(A)for(const id of ids){const p=P(id);p.age=ri(17,22);p.pot=Math.max(p.pot,p.ovr+ri(4,11))}c.pl=ids;return c}
@@ -1536,17 +1538,18 @@ function worldRound(i){const S=G.S;if(!S.l2)worldInit(S);
 function l2Table(){const S=G.S;if(S.div===2)return leagueTable();if(!S.l2)return[];return leagueMini(G.l2,S.l2.fx,S.l2.r)}
 function acTable(){const S=G.S;if(!S.ac)return[];return leagueMini(S.ac.ids,S.ac.fx,S.ac.r)}
 function worldClose(){const S=G.S;if(!S.l2)worldInit(S);while(S.l2.r<S.l2.fx.length)worldRound(99);while(S.ac.r<S.ac.fx.length)worldRound(99);S.l2final=l2Table().map(r=>r.id);S.acFinal=acTable().map(r=>r.id)}
-function promoteRelegate(){const S=G.S;worldClose();const order=S.final;const down=order.slice(-3);const l2o=S.l2final;const up=l2o.slice(0,3);
+function promoteRelegate(){const S=G.S;worldClose();const order=S.final;const down=order.slice(-3);const l2o=S.l2final;const out0=l2o.filter(x=>x!==G.club).slice(-4);const up=l2o.slice(0,3);
   if(G.rival)for(let i=0;i<3;i++)swapRival(down[i],up[i]);
-  const inA=S.acFinal.filter(id=>!G.clubs[id]).slice(0,2);
+  const inA=S.acFinal.filter(id=>!inLeague(id)&&!out0.includes(id)).slice(0,2);
   // pas assez d'académies libres : la place revient à l'équipe de district suivante de la Noushi League
   const inD=nouQualified(4-inA.length);
   const out=l2o.filter(x=>x!==G.club).slice(-(inD.length+inA.length));
   G.l1=G.l1.filter(x=>!down.includes(x)).concat(up);
-  for(const id of out){if(id===G.club)continue;const c=G.clubs[id];for(const p of squad(id)){if(G.track&&G.track[p.id]){p.club=null;p.orph=G.sn}else{archivePlayer(p,'Club relégué');delete G.players[p.id]}}if(c&&(c.origin==='district'||c.origin==='academie'))delete G.clubs[id];else if(c){c.pl=[];c.out=G.sn}}
+  // le club quitte la division mais reste le même club : effectif, stade, historique conservés
+  for(const id of out){if(id===G.club)continue;const c=G.clubs[id];if(c&&!['district','academie'].includes(c.origin))c.out=G.sn}
   const entrants=[...inD,...inA].map(k=>entrantClub(k).id);
   G.l2=G.l2.filter(x=>!up.includes(x)&&!out.includes(x)).concat(down,entrants);
-  while(G.l2.length<16){const k=nouQualified(8).find(k=>!G.clubs[k]);if(!k)break;G.l2.push(entrantClub(k).id)}l2Norm();
+  while(G.l2.length<16){const k=nouQualified(8).find(k=>!inLeague(k)&&!out.includes(k));if(!k)break;G.l2.push(entrantClub(k).id)}l2Norm();
   S.moves={down,up,out,inD,inA};
   newsAdd(`${up.map(x=>T(x).name).join(', ')} montent en Ligue des Pros. ${down.map(x=>T(x).name).join(', ')} descendent en Ligue 2.`,'league',true);
   newsAdd(`Ligue 2 : entrent ${inD.map(k=>T(k).name).join(' et ')} (Noushi League)${inA.length?`, ${inA.map(k=>ACADEMIES.find(a=>a.id===k).name).join(' et ')} (championnat des académies)`:''}. Quittent la division : ${out.map(x=>(T(x)||{}).name||x).join(', ')}.`,'league')}
@@ -1582,7 +1585,6 @@ function takeClub(id,role){const old=G.club,oc=G.clubs[old];try{if(id!==old)txCo
   G.u18=null;G.sponsor=null;G.board={conf:62,dlost:0};G.ferveur=35;G.sellOn=[];G.inv=[];
   G.fac={train:c.tier>=4?3:2,acad:c.tier>=4?2:1,proj:0};G.inf=null;migrate();
   G.cash=[0,35e6,60e6,120e6,220e6,400e6][c.tier]||30e6;G.rep.caf=[0,4,8,14,22,32][c.tier]||4;
-  if(oc&&oc.origin==='district'&&!G.l1.includes(old)&&!G.l2.includes(old)){for(const p of squad(old)){archivePlayer(p,'Reste au district');delete G.players[p.id]}delete G.clubs[old]}
   ensureRival()}
 function roleLine(){return G.role==='B'?`Coach de l'équipe B · ${me().name}`:G.role==='interim'?`Entraîneur intérimaire · ${me().name}`:''}
 
@@ -1860,7 +1862,7 @@ function finishPrologue(choice){const S=G.S;if(G.prologue!=='pending')return fal
   if(G.start!=='district'){if(S.nou&&S.nou.pro){S.nouPro=S.nou;delete S.nou}return false}
   const N=S.nou,dc=G.club,c=me();G.vacDone=1;
   if(choice==='stay'){G.role='head';G.distYear=(G.distYear||1)+1;newsAdd(`Le comité garde confiance : tu restes à ${c.name}. Nouvelle saison au district, puis une nouvelle chance en Noushi League.`,'club',true);
-    while(G.l2.length<16){const k=nouQualified(4).find(k=>!G.clubs[k]);if(!k)break;G.l2.push(entrantClub(k).id)}
+    while(G.l2.length<16){const k=nouQualified(4).find(k=>!inLeague(k));if(!k)break;G.l2.push(entrantClub(k).id)}
     G.skipWin=G.sn;newSeason();const S2=G.S;S2.steps=S2.steps.filter(x=>['md','cup','co','mondial'].includes(x.t)).concat([{t:'dseason',m:4,d:20},{t:'dyear',m:11,d:28}]).map((x,i)=>({x,i})).sort((a,b)=>(a.x.m-b.x.m)||(a.x.d-b.x.d)||(a.i-b.i)).map(o=>o.x);S2.si=0;
     G.prologue='pending';save();advance();if(!G.pending)go('home');return true}
   if(choice&&typeof choice==='object'){const grp=(G.u18||[]).slice(),fol=grp.filter(y=>(choice.follow||[]).includes(y.id)),dn=c.name;G.u18=null;takeClub(choice.club,choice.role);const nc=me();
@@ -1874,7 +1876,7 @@ function finishPrologue(choice){const S=G.S;if(G.prologue!=='pending')return fal
     const tgt=choice==='l1'?N.offerL1:(N&&N.offerB)||bOffer();takeClub(tgt,choice==='l1'?'head':'B');
     newsAdd(choice==='l1'?`${T(tgt).name} t'appelle directement en Ligue des Pros après ta Noushi League.`:`${T(tgt).name} te confie son équipe B en Ligue des Espoirs.`,'club',true)}
   }
-  while(G.l2.length<16){const k=nouQualified(4).find(k=>!G.clubs[k]);if(!k)break;G.l2.push(entrantClub(k).id)}l2Norm();
+  while(G.l2.length<16){const k=nouQualified(4).find(k=>!inLeague(k));if(!k)break;G.l2.push(entrantClub(k).id)}l2Norm();
   G.skipWin=G.sn;newSeason();save();advance();if(!G.pending)go('home');return true}
 
 /* --- équipe B, Ligue des Espoirs, intérim --- */
@@ -1951,7 +1953,15 @@ function distBase(k){return DISTRICTS.find(d=>d.id===String(k).replace(/_\d$/,''
 function distSpec(k){const d=distBase(k);if(!d)return null;const n=+((String(k).match(/_(\d)$/)||[])[1]||1)-1;if(!n)return d;
   const nm=[null,`Racing Club ${deVille(d.city)}`,`Union Sportive ${deVille(d.city)}`,`Étoile ${deVille(d.city)}`,`Jeunesse Club ${deVille(d.city)}`,`Avenir ${deVille(d.city)}`,`Espoir ${deVille(d.city)}`][n]||`${d.name} ${n+1}`;
   return{...d,id:k,name:nm,short:d.short.slice(0,2)+'RUEJAS'[(n-1)%6],c:[d.c[1],d.c[0],d.c[2]]}}
-function distKey(d){for(let n=1;n<=7;n++){const k=n===1?d.id:d.id+'_'+n;if(!G.clubs[k])return k}return d.id+'_7'}
+// identité permanente : un club n'est jamais supprimé et son identifiant n'est jamais attribué à un autre.
+// L'équipe d'un district est d'abord son club redescendu (même identifiant), sinon la première équipe pas encore créée.
+function distKey(d){let free=null;for(let n=1;n<=30;n++){const k=n===1?d.id:d.id+'_'+n;if(G.clubs[k]){if(k!==G.club&&!inLeague(k))return k}else if(!free)free=k}return free||d.id+'_30'}
+function inLeague(id){return G.l1.includes(id)||G.l2.includes(id)}
+// clubs conservés hors des deux divisions (retour au district ou au championnat des académies)
+function horsDiv(){return Object.keys(G.clubs).filter(id=>id!==G.club&&!inLeague(id))}
+function clubName(id){const c=id&&G&&G.clubs[id]||FX[id];if(c)return c.name;const d=distSpec(id);if(d)return d.name;const a=ACADEMIES.find(x=>x.id===id);return a?a.name:String(id||'')}
+// anciennes sauvegardes : remplace un identifiant brut (d_bas, d_bas_2, a_hor) par le nom du club
+function fixIds(t){return String(t).replace(/\b(d_[a-z]{3}(?:_\d+)?|a_[a-z]{3})\b/g,m=>clubName(m))}
 
 /* --- U20 du club --- */
 const U18_COMP={GB:2,DEF:6,MIL:6,ATT:4};
@@ -2023,8 +2033,8 @@ function nouRank(){const N=G.S.nou,pts={};N.groups.forEach((_,gi)=>nouGroupTable
   return N.teams.map((t,i)=>i).sort((a,b)=>(N.out[b]??0)-(N.out[a]??0)||pts[b].pts-pts[a].pts||(pts[b].bp-pts[b].bc)-(pts[a].bp-pts[a].bc)||nouStr(b)-nouStr(a))}
 function nouFinish(){const N=G.S.nou;if(N.fin)return;N.fin=1;
   const hasMe=N.me>=0,reach=hasMe?(N.out[N.me]??0):null,rk=nouRank();
-  const need=N.pro?2:4-Math.min(2,acTable().filter(r=>!G.clubs[r.id]).length);
-  N.qual=rk.filter(i=>{const t=N.teams[i];return t.isD||(t.kind==='dist'&&!G.clubs[t.k])}).slice(0,need).map(i=>N.teams[i].k);
+  const need=N.pro?2:4-Math.min(2,acTable().filter(r=>!inLeague(r.id)).length);
+  N.qual=rk.filter(i=>{const t=N.teams[i];return t.isD||(t.kind==='dist'&&!inLeague(t.k))}).slice(0,need).map(i=>N.teams[i].k);
   N.my={reach,rep:0,prize:0};N.grown=[];N.rev=[];N.signs=0;
   if(hasMe){const rep=[0,0,1,2,3,4,6][reach],prize=[0,0,1e6,2e6,4e6,6e6,10e6][reach];G.rep.form=clamp(G.rep.form+rep,0,100);if(prize){addMoney(prize,'pri');G.S.prize=(G.S.prize||0)+prize}N.my={reach,rep,prize};
     for(const y of nouPool()){const s=N.st[y.id];if(!s||s.apps<2)continue;const a=s.rs.reduce((x,v)=>x+v,0)/s.rs.length;if(a>=7&&y.ovr<y.pot){if(y.ref){const q=P(y.ref);if(q)q.ovr++}else y.ovr++;N.grown.push(y.id)}}
@@ -2036,7 +2046,7 @@ function nouFinish(){const N=G.S.nou;if(N.fin)return;N.fin=1;
   G.nouHist=G.nouHist||[];G.nouHist.push({yr:N.yr,champ:N.teams[N.champ].name,qual:N.qual.map(nouQName),my:reach});
   newsAdd(`Noushi League ${N.yr} : ${N.teams[N.champ].name} l'emporte. ${N.qual.map(nouQName).join(' et ')} montent en Ligue 2.${hasMe?` ${N.teams[N.me].name} : ${NOU_REACH[reach].toLowerCase()}.`:''}`,'scout',true)}
 function nouQualified(n){const S=G.S,N=S.nou,q=N&&N.qual?N.qual.slice(0,n):[];
-  if(q.length<n){G.dStr=G.dStr||{};const pool=DISTRICTS.map(d=>distKey(d)).filter(k=>!q.includes(k)&&!G.clubs[k]).sort((a,b)=>(G.dStr[b]??50)-(G.dStr[a]??50));while(q.length<n&&pool.length)q.push(pool.shift())}
+  if(q.length<n){G.dStr=G.dStr||{};const pool=DISTRICTS.map(d=>distKey(d)).filter(k=>!q.includes(k)&&k!==G.club&&!inLeague(k)).sort((a,b)=>(G.dStr[b]??50)-(G.dStr[a]??50));while(q.length<n&&pool.length)q.push(pool.shift())}
   return q}
 function nouSignU18(id){const N=G.S.nou,y=G.u18.find(x=>x.id===id);if(!y||N.signs>=3)return;
   const p=youthToPlayer(y,G.club,{ctr:3,sal:40000,origin:'academie'});me().pl.push(p.id);p.nou=N.st[id]||null;p.nouYr=N.yr;
@@ -2339,6 +2349,8 @@ function migrate(){try{if(G){for(const id in G.players){archInit(G.players[id]);
   if(!G.scoutMarket)G.scoutMarket=scoutCandidates();if(G.rep.coach==null)G.rep.coach=50;if(!G.guide)G.guide={};
   if(!G.inf){G.inf={};INFRA.forEach(x=>G.inf[x.k]=0);G.inf.terrain=clamp(G.fac.train-2,0,2);G.inf.muscu=G.fac.train>=5?1:0;syncTrain()}
   if(!G.track)G.track={};if(!G.youth)G.youth={signed:0,pro:0,abroad:0};
+  // v63 : identifiants bruts dans les actualités et noms de club vides dans les parcours (clubs supprimés par l'ancienne version)
+  if(!G.idV){G.idV=1;(G.news||[]).forEach(n=>{if(n&&n.t)n.t=fixIds(n.t)});const fixH=h=>{if(h&&!h.c&&h.cid)h.c=clubName(h.cid)};for(const id in G.players)(G.players[id].hs||[]).forEach(fixH);for(const id in G.gone||{})(G.gone[id].hs||[]).forEach(fixH)}
   for(const p of Object.values(G.players)){if(p.disc==null)p.disc=clamp(Math.round(62+gauss()*15),15,98);if(p.edu===undefined)p.edu=p.age<=21?clamp(Math.round(45+gauss()*20),5,95):null}if(!G.mgr)G.mgr={susp:false};if(G.refMood==null)G.refMood=0;if(!SPEEDS[G.pref.speed])G.pref.speed=2;
   if(G.S&&G.S.mara&&!G.S.mara.trials)G.S.mara.trials=G.S.mara.trial?[G.S.mara.trial]:[];
   // très anciennes sauvegardes : les offres de sponsor n'avaient pas de clauses
@@ -2346,7 +2358,7 @@ function migrate(){try{if(G){for(const id in G.players){archInit(G.players[id]);
   // sauvegardes d'avant la Ligue 2 à 16 clubs : on complète la division
   if(G.l2&&G.l2.length<16&&G.prologue!=='pending'){for(const a of L2_CLUBS){if(G.l2.length>=16)break;const id=a[0];if(G.l1.includes(id)||G.l2.includes(id))continue;
       if(!G.clubs[id]){const c=mkClub(a);c.origin='club';G.clubs[id]=c}const c=G.clubs[id];delete c.out;if(!c.pl.length)c.pl=genSquad(id,c.tier);G.l2.push(id)}
-    for(const k of ['d_mon','d_wor','a_hor','a_efa','d_sav','a_lsp','d_bas','a_suc']){if(G.l2.length>=16)break;if(!G.clubs[k])G.l2.push(entrantClub(k).id)}
+    for(const k of ['d_mon','d_wor','a_hor','a_efa','d_sav','a_lsp','d_bas','a_suc']){if(G.l2.length>=16)break;if(!inLeague(k)&&k!==G.club)G.l2.push(entrantClub(k).id)}
     if(G.S)delete G.S.l2}}
 function isDerby(a,b){return !!(G.rival&&G.rival[a]===b)}
 function derbyName(a,b){if(!a||!b||!T(a)||!T(b))return 'Derby';const k=[a,b].sort().join('-');if(k==='lag-yop')return 'Le Classique de la Lagune';
@@ -3150,7 +3162,7 @@ function vComp(el){const tab=VIEWARG||(G.S.div===2?'l2':'l1');const S=G.S;
     body=`<p class="muted" style="margin-top:0">16 clubs. Les 3 premiers montent en Ligue des Pros, les 4 derniers quittent la division. Entrent chaque saison : les 3 relégués de Ligue des Pros, les 2 meilleures équipes de district de la Noushi League et les 2 premières académies.</p>
      <div class="tw"><table><thead><tr><th>#</th><th>Club</th><th class="r">J</th><th class="r">Diff</th><th class="r">Pts</th></tr></thead><tbody>${tb.map((r,i)=>`<tr class="${r.id===G.club?'me':''}"><td><span class="zone ${i<3?'z-c1':i>=12?'z-rel':''}"></span>${i+1}</td><td style="white-space:normal">${teamCell(r.id,20)}${orig(r.id)?` <span class="muted" style="font-size:calc(12px*var(--tz))">${orig(r.id)}</span>`:''}</td><td class="r num">${r.J}</td><td class="r num">${r.bp-r.bc>0?'+':''}${r.bp-r.bc}</td><td class="r num"><b>${r.pts}</b></td></tr>`).join('')}</tbody></table></div>
      <div class="row" style="margin-top:10px;font-size:calc(14px*var(--tz))"><span class="row" style="gap:4px"><span class="zone z-c1"></span>Montée en Ligue des Pros</span><span class="row" style="gap:4px"><span class="zone z-rel"></span>Retour au district ou à l'académie</span></div>`}
-  else if(tab==='acad'){const tb=acTable(),A=id=>ACADEMIES.find(a=>a.id===id),elig=tb.filter(r=>!G.clubs[r.id]).slice(0,2).map(r=>r.id);
+  else if(tab==='acad'){const tb=acTable(),A=id=>ACADEMIES.find(a=>a.id===id),elig=tb.filter(r=>!inLeague(r.id)).slice(0,2).map(r=>r.id);
     body=`<div class="panel" style="margin-bottom:14px"><h3>Championnat des académies</h3><p class="muted" style="margin-top:0">Les 10 académies privées. En fin de saison, les 2 mieux classées dont le club n'est pas déjà en Ligue 2 ou en Ligue des Pros y font entrer leur équipe. Leurs meilleurs jeunes attirent les recruteurs.</p>
      <div class="tw"><table><thead><tr><th>#</th><th>Académie</th><th class="r">J</th><th class="r">Pts</th></tr></thead><tbody>${tb.map((r,i)=>`<tr><td><span class="zone ${elig.includes(r.id)?'z-c1':''}"></span>${i+1}</td><td style="white-space:normal"><b>${esc(A(r.id).name)}</b> <span class="muted" style="font-size:calc(12px*var(--tz))">${esc(A(r.id).city)}</span>${G.clubs[r.id]?` <span class="chip" style="font-size:calc(11px*var(--tz))">club en ${G.l1.includes(r.id)?'Ligue des Pros':'Ligue 2'}</span>`:''}</td><td class="r num">${r.J}</td><td class="r num"><b>${r.pts}</b></td></tr>`).join('')}</tbody></table></div></div>
      <p class="muted">Les équipes de district se qualifient pour la Ligue 2 par la Noushi League, du 25 juillet au 26 août. Voir l'onglet Noushi League.</p>`}
