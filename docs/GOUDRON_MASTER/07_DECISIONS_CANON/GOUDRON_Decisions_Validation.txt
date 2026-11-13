@@ -340,3 +340,7 @@ Points nouveaux par rapport aux entrées précédentes :
 - Un seul assistant modifie le code de GOUDRON (Claude), toujours avec l'accord de l'utilisateur.
 - Prochaine étape : concevoir le marché des entraîneurs, puis tester une première carrière sur papier.
 [DÉCIDÉ 13/11] Le dossier GOUDRON_MASTER est enregistré sur GitHub (dossier docs/, branche séparée), sans toucher au code du jeu.
+[DÉCIDÉ 13/11] Correctif « identité permanente des clubs » : branche fix/identite-clubs conservée sur GitHub (commits 91a728f, 2118586, d90831f avec tests et rapport). Non fusionnée dans main, cache hors ligne inchangé, jeu public en v62. Statut : v63 candidate, publication non autorisée.
+- Vérifié : club du joueur dans les 4 derniers de Ligue 2 (écran « Le club quitte la Ligue 2 » ; choix équipe B : ancien club conservé ; choix rejouer : club intact ; Ligue 2 à 16 clubs).
+- Limites acceptées provisoirement : clubs hors division sans matchs ; un seul club par district en Noushi League. À résoudre lors de la refonte des championnats territoriaux.
+- Non testé : club de District monté avec le joueur puis fini dans les 4 derniers (même code que l'académie testée).
