@@ -1,0 +1,5913 @@
+[
+ {
+  "nom": "Koné",
+  "porteurs": 852694,
+  "rang": 1,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.43,
+   "Centre": 0.14,
+   "Ouest": 0.15,
+   "Est": 0.12,
+   "Sud": 0.16
+  }
+ },
+ {
+  "nom": "Ouattara",
+  "porteurs": 774209,
+  "rang": 2,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Kouassi",
+  "porteurs": 736416,
+  "rang": 3,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.1,
+   "Centre": 0.45,
+   "Ouest": 0.12,
+   "Est": 0.15,
+   "Sud": 0.17
+  }
+ },
+ {
+  "nom": "Koffi",
+  "porteurs": 709367,
+  "rang": 4,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.1,
+   "Centre": 0.45,
+   "Ouest": 0.12,
+   "Est": 0.15,
+   "Sud": 0.17
+  }
+ },
+ {
+  "nom": "Kouadio",
+  "porteurs": 653384,
+  "rang": 5,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Kouamé",
+  "porteurs": 642007,
+  "rang": 6,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Yao",
+  "porteurs": 628973,
+  "rang": 7,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.1,
+   "Centre": 0.45,
+   "Ouest": 0.12,
+   "Est": 0.15,
+   "Sud": 0.17
+  }
+ },
+ {
+  "nom": "Coulibaly",
+  "porteurs": 617768,
+  "rang": 8,
+  "region": "Nord",
+  "zone": "gur",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [
+   "Koulibaly"
+  ],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.8,
+   "Centre": 0.05,
+   "Est": 0.05,
+   "Sud": 0.1
+  }
+ },
+ {
+  "nom": "Kouakou",
+  "porteurs": 586866,
+  "rang": 9,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Konan",
+  "porteurs": 517173,
+  "rang": 10,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "N'Guessan",
+  "porteurs": 407996,
+  "rang": 11,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Traoré",
+  "porteurs": 372695,
+  "rang": 12,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Soro",
+  "porteurs": 324041,
+  "rang": 13,
+  "region": "Nord",
+  "zone": "gur",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.8,
+   "Centre": 0.05,
+   "Est": 0.05,
+   "Sud": 0.1
+  }
+ },
+ {
+  "nom": "Bamba",
+  "porteurs": 294388,
+  "rang": 14,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.43,
+   "Centre": 0.14,
+   "Ouest": 0.15,
+   "Est": 0.12,
+   "Sud": 0.16
+  }
+ },
+ {
+  "nom": "Touré",
+  "porteurs": 248675,
+  "rang": 15,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Fofana",
+  "porteurs": 233415,
+  "rang": 16,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Yéo",
+  "porteurs": 206999,
+  "rang": 17,
+  "region": "Nord",
+  "zone": "gur",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.8,
+   "Centre": 0.05,
+   "Est": 0.05,
+   "Sud": 0.1
+  }
+ },
+ {
+  "nom": "Diomandé",
+  "porteurs": 195860,
+  "rang": 18,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Konaté",
+  "porteurs": 182838,
+  "rang": 19,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Silué",
+  "porteurs": 153235,
+  "rang": 20,
+  "region": "Nord",
+  "zone": "gur",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.59,
+   "Centre": 0.1,
+   "Ouest": 0.07,
+   "Est": 0.1,
+   "Sud": 0.14
+  }
+ },
+ {
+  "nom": "Doumbia",
+  "porteurs": 152022,
+  "rang": 21,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Brou",
+  "porteurs": 136276,
+  "rang": 22,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "N'Dri",
+  "porteurs": 133829,
+  "rang": 23,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Diarrassouba",
+  "porteurs": 125264,
+  "rang": 27,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [
+   "Diarassouba"
+  ],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.49,
+   "Centre": 0.12,
+   "Ouest": 0.14,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Sanogo",
+  "porteurs": 124572,
+  "rang": 24,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Cissé",
+  "porteurs": 112672,
+  "rang": 25,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Hien",
+  "porteurs": 107106,
+  "rang": 26,
+  "region": "Nord",
+  "zone": "gur",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.7,
+   "Centre": 0.05,
+   "Est": 0.15,
+   "Sud": 0.1
+  }
+ },
+ {
+  "nom": "Dosso",
+  "porteurs": 101324,
+  "rang": 28,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.49,
+   "Centre": 0.12,
+   "Ouest": 0.14,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "N'Goran",
+  "porteurs": 99186,
+  "rang": 29,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Sangaré",
+  "porteurs": 96057,
+  "rang": 30,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Soumahoro",
+  "porteurs": 95893,
+  "rang": 31,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Bakayoko",
+  "porteurs": 95088,
+  "rang": 32,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Aka",
+  "porteurs": 91383,
+  "rang": 33,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.07,
+   "Centre": 0.53,
+   "Ouest": 0.1,
+   "Est": 0.14,
+   "Sud": 0.17
+  }
+ },
+ {
+  "nom": "Amani",
+  "porteurs": 80478,
+  "rang": 34,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Sylla",
+  "porteurs": 80464,
+  "rang": 35,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Kra",
+  "porteurs": 78873,
+  "rang": 36,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.07,
+   "Centre": 0.53,
+   "Ouest": 0.1,
+   "Est": 0.14,
+   "Sud": 0.17
+  }
+ },
+ {
+  "nom": "Kambou",
+  "porteurs": 77017,
+  "rang": 37,
+  "region": "Nord",
+  "zone": "gur",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.7,
+   "Centre": 0.05,
+   "Est": 0.15,
+   "Sud": 0.1
+  }
+ },
+ {
+  "nom": "Diabaté",
+  "porteurs": 75789,
+  "rang": 38,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Dah",
+  "porteurs": 72826,
+  "rang": 39,
+  "region": "Nord",
+  "zone": "gur",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.53,
+   "Centre": 0.1,
+   "Ouest": 0.07,
+   "Est": 0.17,
+   "Sud": 0.14
+  }
+ },
+ {
+  "nom": "Tuo",
+  "porteurs": 71447,
+  "rang": 40,
+  "region": "Nord",
+  "zone": "gur",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.59,
+   "Centre": 0.1,
+   "Ouest": 0.07,
+   "Est": 0.1,
+   "Sud": 0.14
+  }
+ },
+ {
+  "nom": "Kamagaté",
+  "porteurs": 70325,
+  "rang": 41,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Camara",
+  "porteurs": 70321,
+  "rang": 42,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Oulaï",
+  "porteurs": 66099,
+  "rang": 43,
+  "region": "Ouest",
+  "zone": "krou",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.07,
+   "Centre": 0.1,
+   "Ouest": 0.56,
+   "Est": 0.07,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Djè",
+  "porteurs": 63245,
+  "rang": 44,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.07,
+   "Centre": 0.14,
+   "Ouest": 0.56,
+   "Est": 0.07,
+   "Sud": 0.17
+  }
+ },
+ {
+  "nom": "Sidibé",
+  "porteurs": 62219,
+  "rang": 45,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Adou",
+  "porteurs": 56628,
+  "rang": 46,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Sékongo",
+  "porteurs": 56416,
+  "rang": 47,
+  "region": "Nord",
+  "zone": "gur",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.8,
+   "Centre": 0.05,
+   "Est": 0.05,
+   "Sud": 0.1
+  }
+ },
+ {
+  "nom": "Irié",
+  "porteurs": 54017,
+  "rang": 48,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.07,
+   "Centre": 0.14,
+   "Ouest": 0.56,
+   "Est": 0.07,
+   "Sud": 0.17
+  }
+ },
+ {
+  "nom": "Yapo",
+  "porteurs": 53960,
+  "rang": 49,
+  "region": "Sud",
+  "zone": "akan_lag",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Est": 0.1,
+   "Sud": 0.8
+  }
+ },
+ {
+  "nom": "Palé",
+  "porteurs": 53674,
+  "rang": 50,
+  "region": "Nord",
+  "zone": "gur",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.53,
+   "Centre": 0.1,
+   "Ouest": 0.07,
+   "Est": 0.17,
+   "Sud": 0.14
+  }
+ },
+ {
+  "nom": "Kanga",
+  "porteurs": 52993,
+  "rang": 51,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.07,
+   "Centre": 0.53,
+   "Ouest": 0.1,
+   "Est": 0.14,
+   "Sud": 0.17
+  }
+ },
+ {
+  "nom": "Yapi",
+  "porteurs": 52617,
+  "rang": 52,
+  "region": "Sud",
+  "zone": "akan_lag",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.07,
+   "Centre": 0.14,
+   "Ouest": 0.07,
+   "Est": 0.14,
+   "Sud": 0.59
+  }
+ },
+ {
+  "nom": "Kambiré",
+  "porteurs": 52463,
+  "rang": 53,
+  "region": "Nord",
+  "zone": "gur",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.53,
+   "Centre": 0.1,
+   "Ouest": 0.07,
+   "Est": 0.17,
+   "Sud": 0.14
+  }
+ },
+ {
+  "nom": "Guéï",
+  "porteurs": 52066,
+  "rang": 54,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "N'Da",
+  "porteurs": 51152,
+  "rang": 55,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.07,
+   "Centre": 0.53,
+   "Ouest": 0.1,
+   "Est": 0.14,
+   "Sud": 0.17
+  }
+ },
+ {
+  "nom": "Keïta",
+  "porteurs": 50138,
+  "rang": 56,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Diarra",
+  "porteurs": 47768,
+  "rang": 57,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Diakité",
+  "porteurs": 47544,
+  "rang": 58,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.49,
+   "Centre": 0.12,
+   "Ouest": 0.14,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Gueu",
+  "porteurs": 45211,
+  "rang": 59,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Tra",
+  "porteurs": 45124,
+  "rang": 60,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.07,
+   "Centre": 0.14,
+   "Ouest": 0.56,
+   "Est": 0.07,
+   "Sud": 0.17
+  }
+ },
+ {
+  "nom": "Tanoh",
+  "porteurs": 42590,
+  "rang": 61,
+  "region": "Est",
+  "zone": "akan_est",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.15,
+   "Est": 0.7,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Diallo",
+  "porteurs": 42431,
+  "rang": 62,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Tano",
+  "porteurs": 41208,
+  "rang": 63,
+  "region": "Est",
+  "zone": "akan_est",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.15,
+   "Est": 0.7,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Assi",
+  "porteurs": 39017,
+  "rang": 64,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Karamoko",
+  "porteurs": 37460,
+  "rang": 65,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Bah",
+  "porteurs": 36517,
+  "rang": 66,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.07,
+   "Centre": 0.14,
+   "Ouest": 0.56,
+   "Est": 0.07,
+   "Sud": 0.17
+  }
+ },
+ {
+  "nom": "Yoboué",
+  "porteurs": 36447,
+  "rang": 67,
+  "region": "Est",
+  "zone": "akan_est",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "région décidée par toi",
+  "provenance": {
+   "Centre": 0.35,
+   "Est": 0.55,
+   "Sud": 0.1
+  }
+ },
+ {
+  "nom": "Diaby",
+  "porteurs": 36332,
+  "rang": 68,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.49,
+   "Centre": 0.12,
+   "Ouest": 0.14,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Mamadou",
+  "porteurs": 36132,
+  "rang": 69,
+  "region": "Nord",
+  "zone": "prenom",
+  "certitude": "bonne",
+  "usage": "réduit (prénom utilisé comme nom)",
+  "poids": 0.3,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.43,
+   "Centre": 0.14,
+   "Ouest": 0.14,
+   "Est": 0.1,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "N'Zi",
+  "porteurs": 35597,
+  "rang": 70,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.07,
+   "Centre": 0.53,
+   "Ouest": 0.1,
+   "Est": 0.14,
+   "Sud": 0.17
+  }
+ },
+ {
+  "nom": "Séri",
+  "porteurs": 34766,
+  "rang": 71,
+  "region": "Ouest",
+  "zone": "krou",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.07,
+   "Centre": 0.1,
+   "Ouest": 0.56,
+   "Est": 0.07,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Blé",
+  "porteurs": 34634,
+  "rang": 72,
+  "region": "Ouest",
+  "zone": "krou",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.07,
+   "Centre": 0.1,
+   "Ouest": 0.56,
+   "Est": 0.07,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Kacou",
+  "porteurs": 34627,
+  "rang": 73,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Dembélé",
+  "porteurs": 33701,
+  "rang": 74,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Tapé",
+  "porteurs": 32957,
+  "rang": 75,
+  "region": "Ouest",
+  "zone": "krou",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.07,
+   "Centre": 0.1,
+   "Ouest": 0.56,
+   "Est": 0.07,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Dagnogo",
+  "porteurs": 32915,
+  "rang": 76,
+  "region": "Nord",
+  "zone": "gur",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "région décidée par toi",
+  "provenance": {
+   "Nord": 0.8,
+   "Centre": 0.05,
+   "Est": 0.05,
+   "Sud": 0.1
+  }
+ },
+ {
+  "nom": "Koua",
+  "porteurs": 31993,
+  "rang": 77,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.07,
+   "Centre": 0.53,
+   "Ouest": 0.1,
+   "Est": 0.14,
+   "Sud": 0.17
+  }
+ },
+ {
+  "nom": "Tia",
+  "porteurs": 31503,
+  "rang": 78,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "région décidée par toi",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Komenan",
+  "porteurs": 31233,
+  "rang": 79,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.07,
+   "Centre": 0.53,
+   "Ouest": 0.1,
+   "Est": 0.14,
+   "Sud": 0.17
+  }
+ },
+ {
+  "nom": "Méité",
+  "porteurs": 31202,
+  "rang": 80,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.49,
+   "Centre": 0.12,
+   "Ouest": 0.14,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Kassi",
+  "porteurs": 30810,
+  "rang": 81,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Loukou",
+  "porteurs": 30462,
+  "rang": 82,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Diby",
+  "porteurs": 30273,
+  "rang": 83,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.07,
+   "Centre": 0.53,
+   "Ouest": 0.1,
+   "Est": 0.14,
+   "Sud": 0.17
+  }
+ },
+ {
+  "nom": "N'Cho",
+  "porteurs": 30146,
+  "rang": 84,
+  "region": "Sud",
+  "zone": "akan_lag",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Est": 0.1,
+   "Sud": 0.8
+  }
+ },
+ {
+  "nom": "Fanny",
+  "porteurs": 29984,
+  "rang": 85,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.49,
+   "Centre": 0.12,
+   "Ouest": 0.14,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Zamblé",
+  "porteurs": 29272,
+  "rang": 86,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Ballo",
+  "porteurs": 28790,
+  "rang": 87,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.49,
+   "Centre": 0.12,
+   "Ouest": 0.14,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Kobenan",
+  "porteurs": 28551,
+  "rang": 88,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.07,
+   "Centre": 0.53,
+   "Ouest": 0.1,
+   "Est": 0.14,
+   "Sud": 0.17
+  }
+ },
+ {
+  "nom": "Dao",
+  "porteurs": 27803,
+  "rang": 89,
+  "region": "Nord",
+  "zone": "gur",
+  "certitude": "faible",
+  "usage": "réduit (classement incertain)",
+  "poids": 0.5,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.59,
+   "Centre": 0.1,
+   "Ouest": 0.07,
+   "Est": 0.1,
+   "Sud": 0.14
+  }
+ },
+ {
+  "nom": "Séka",
+  "porteurs": 27524,
+  "rang": 90,
+  "region": "Sud",
+  "zone": "akan_lag",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.07,
+   "Centre": 0.14,
+   "Ouest": 0.07,
+   "Est": 0.14,
+   "Sud": 0.59
+  }
+ },
+ {
+  "nom": "Kakou",
+  "porteurs": 26328,
+  "rang": 91,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Séry",
+  "porteurs": 25084,
+  "rang": 92,
+  "region": "Ouest",
+  "zone": "krou",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.07,
+   "Centre": 0.1,
+   "Ouest": 0.56,
+   "Est": 0.07,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Dago",
+  "porteurs": 25043,
+  "rang": 93,
+  "region": "Ouest",
+  "zone": "krou",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.07,
+   "Centre": 0.1,
+   "Ouest": 0.56,
+   "Est": 0.07,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Beugré",
+  "porteurs": 24544,
+  "rang": 94,
+  "region": "Ouest",
+  "zone": "krou",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.07,
+   "Centre": 0.1,
+   "Ouest": 0.56,
+   "Est": 0.07,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Kouman",
+  "porteurs": 24176,
+  "rang": 95,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.07,
+   "Centre": 0.53,
+   "Ouest": 0.1,
+   "Est": 0.14,
+   "Sud": 0.17
+  }
+ },
+ {
+  "nom": "Diabagaté",
+  "porteurs": 24087,
+  "rang": 96,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.49,
+   "Centre": 0.12,
+   "Ouest": 0.14,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Djaha",
+  "porteurs": 23979,
+  "rang": 97,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "faible",
+  "usage": "réduit (classement incertain)",
+  "poids": 0.5,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.07,
+   "Centre": 0.53,
+   "Ouest": 0.1,
+   "Est": 0.14,
+   "Sud": 0.17
+  }
+ },
+ {
+  "nom": "Diarassouba",
+  "porteurs": 23918,
+  "rang": 98,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "variante de Diarrassouba",
+  "poids": 0,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.49,
+   "Centre": 0.12,
+   "Ouest": 0.14,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Alla",
+  "porteurs": 23533,
+  "rang": 99,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.07,
+   "Centre": 0.53,
+   "Ouest": 0.1,
+   "Est": 0.14,
+   "Sud": 0.17
+  }
+ },
+ {
+  "nom": "Adama",
+  "porteurs": 23516,
+  "rang": 100,
+  "region": "Nord",
+  "zone": "prenom",
+  "certitude": "bonne",
+  "usage": "réduit (prénom utilisé comme nom)",
+  "poids": 0.3,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "répandu dans plusieurs régions",
+  "provenance": {
+   "Nord": 0.43,
+   "Centre": 0.14,
+   "Ouest": 0.14,
+   "Est": 0.1,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Kpan",
+  "porteurs": 22275,
+  "rang": 101,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Guéhi",
+  "porteurs": 22119,
+  "rang": 102,
+  "region": "Ouest",
+  "zone": "krou",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.05,
+   "Ouest": 0.75,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Atsé",
+  "porteurs": 21944,
+  "rang": 103,
+  "region": "Sud",
+  "zone": "akan_lag",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Est": 0.1,
+   "Sud": 0.8
+  }
+ },
+ {
+  "nom": "Noufé",
+  "porteurs": 21687,
+  "rang": 104,
+  "region": "Ouest",
+  "zone": "krou",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.05,
+   "Ouest": 0.75,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Amon",
+  "porteurs": 21619,
+  "rang": 105,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Kouao",
+  "porteurs": 21565,
+  "rang": 106,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Boni",
+  "porteurs": 21387,
+  "rang": 107,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Zadi",
+  "porteurs": 21094,
+  "rang": 108,
+  "region": "Ouest",
+  "zone": "krou",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.05,
+   "Ouest": 0.75,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Doh",
+  "porteurs": 20917,
+  "rang": 109,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Dion",
+  "porteurs": 20914,
+  "rang": 110,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Moussa",
+  "porteurs": 20849,
+  "rang": 111,
+  "region": "Nord",
+  "zone": "prenom",
+  "certitude": "bonne",
+  "usage": "réduit (prénom utilisé comme nom)",
+  "poids": 0.3,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.55,
+   "Centre": 0.1,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Aké",
+  "porteurs": 20558,
+  "rang": 112,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Allou",
+  "porteurs": 19632,
+  "rang": 113,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Som",
+  "porteurs": 19396,
+  "rang": 114,
+  "region": "Nord",
+  "zone": "gur",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.7,
+   "Centre": 0.05,
+   "Est": 0.15,
+   "Sud": 0.1
+  }
+ },
+ {
+  "nom": "N'Guetta",
+  "porteurs": 19394,
+  "rang": 226,
+  "region": "Est",
+  "zone": "akan_est",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [
+   "N'Guettia"
+  ],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.15,
+   "Est": 0.7,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Bohoussou",
+  "porteurs": 18991,
+  "rang": 115,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Séa",
+  "porteurs": 18991,
+  "rang": 116,
+  "region": "Nord",
+  "zone": "incertain",
+  "certitude": "faible",
+  "usage": "réduit (classement incertain)",
+  "poids": 0.5,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.2,
+   "Centre": 0.2,
+   "Ouest": 0.2,
+   "Est": 0.2,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Berté",
+  "porteurs": 18861,
+  "rang": 117,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Youan",
+  "porteurs": 18711,
+  "rang": 118,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Kadjo",
+  "porteurs": 18638,
+  "rang": 119,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Dié",
+  "porteurs": 18630,
+  "rang": 120,
+  "region": "Nord",
+  "zone": "incertain",
+  "certitude": "faible",
+  "usage": "réduit (classement incertain)",
+  "poids": 0.5,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.2,
+   "Centre": 0.2,
+   "Ouest": 0.2,
+   "Est": 0.2,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Tiéné",
+  "porteurs": 18613,
+  "rang": 121,
+  "region": "Nord",
+  "zone": "gur",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.8,
+   "Centre": 0.05,
+   "Est": 0.05,
+   "Sud": 0.1
+  }
+ },
+ {
+  "nom": "Ya",
+  "porteurs": 18600,
+  "rang": 122,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "faible",
+  "usage": "réduit (classement incertain)",
+  "poids": 0.5,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Lago",
+  "porteurs": 18376,
+  "rang": 123,
+  "region": "Ouest",
+  "zone": "krou",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.05,
+   "Ouest": 0.75,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Kanaté",
+  "porteurs": 18243,
+  "rang": 124,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "N'Zué",
+  "porteurs": 18184,
+  "rang": 125,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Fatoumata",
+  "porteurs": 18169,
+  "rang": 126,
+  "region": "Nord",
+  "zone": "prenom",
+  "certitude": "bonne",
+  "usage": "exclu (prénom féminin)",
+  "poids": 0,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.55,
+   "Centre": 0.1,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Tiémoko",
+  "porteurs": 18066,
+  "rang": 127,
+  "region": "Nord",
+  "zone": "prenom",
+  "certitude": "bonne",
+  "usage": "réduit (prénom utilisé comme nom)",
+  "poids": 0.3,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.55,
+   "Centre": 0.1,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Kané",
+  "porteurs": 17977,
+  "rang": 128,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Niamien",
+  "porteurs": 17910,
+  "rang": 129,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Koko",
+  "porteurs": 17857,
+  "rang": 130,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "faible",
+  "usage": "réduit (classement incertain)",
+  "poids": 0.5,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Chérif",
+  "porteurs": 17756,
+  "rang": 131,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Djédjé",
+  "porteurs": 17695,
+  "rang": 132,
+  "region": "Ouest",
+  "zone": "krou",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.05,
+   "Ouest": 0.75,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "M'Bra",
+  "porteurs": 17671,
+  "rang": 133,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Ettien",
+  "porteurs": 17398,
+  "rang": 134,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Digbeu",
+  "porteurs": 16987,
+  "rang": 135,
+  "region": "Ouest",
+  "zone": "krou",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.05,
+   "Ouest": 0.75,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Doua",
+  "porteurs": 16932,
+  "rang": 136,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "faible",
+  "usage": "réduit (classement incertain)",
+  "poids": 0.5,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Atta",
+  "porteurs": 16914,
+  "rang": 137,
+  "region": "Sud",
+  "zone": "akan_lag",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Est": 0.1,
+   "Sud": 0.8
+  }
+ },
+ {
+  "nom": "Gnamien",
+  "porteurs": 16681,
+  "rang": 138,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Yoro",
+  "porteurs": 16601,
+  "rang": 139,
+  "region": "Nord",
+  "zone": "incertain",
+  "certitude": "faible",
+  "usage": "réduit (classement incertain)",
+  "poids": 0.5,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.2,
+   "Centre": 0.2,
+   "Ouest": 0.2,
+   "Est": 0.2,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Achi",
+  "porteurs": 16532,
+  "rang": 140,
+  "region": "Sud",
+  "zone": "akan_lag",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Est": 0.1,
+   "Sud": 0.8
+  }
+ },
+ {
+  "nom": "Dibi",
+  "porteurs": 16429,
+  "rang": 141,
+  "region": "Ouest",
+  "zone": "krou",
+  "certitude": "faible",
+  "usage": "réduit (classement incertain)",
+  "poids": 0.5,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.05,
+   "Ouest": 0.75,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Boua",
+  "porteurs": 16369,
+  "rang": 142,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "faible",
+  "usage": "réduit (classement incertain)",
+  "poids": 0.5,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Gondo",
+  "porteurs": 16367,
+  "rang": 143,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Aman",
+  "porteurs": 16342,
+  "rang": 144,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Goli",
+  "porteurs": 16184,
+  "rang": 145,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Koré",
+  "porteurs": 16171,
+  "rang": 146,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "faible",
+  "usage": "réduit (classement incertain)",
+  "poids": 0.5,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Karidioula",
+  "porteurs": 16162,
+  "rang": 147,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Kouyaté",
+  "porteurs": 16162,
+  "rang": 148,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Ekra",
+  "porteurs": 16099,
+  "rang": 149,
+  "region": "Sud",
+  "zone": "akan_lag",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Est": 0.1,
+   "Sud": 0.8
+  }
+ },
+ {
+  "nom": "Guédé",
+  "porteurs": 16083,
+  "rang": 150,
+  "region": "Ouest",
+  "zone": "krou",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.05,
+   "Ouest": 0.75,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Mahan",
+  "porteurs": 16082,
+  "rang": 151,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Oka",
+  "porteurs": 16052,
+  "rang": 152,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Kangah",
+  "porteurs": 16015,
+  "rang": 153,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Ehouman",
+  "porteurs": 15981,
+  "rang": 154,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Dongo",
+  "porteurs": 15886,
+  "rang": 155,
+  "region": "Nord",
+  "zone": "incertain",
+  "certitude": "faible",
+  "usage": "réduit (classement incertain)",
+  "poids": 0.5,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.2,
+   "Centre": 0.2,
+   "Ouest": 0.2,
+   "Est": 0.2,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Yobouët",
+  "porteurs": 15776,
+  "rang": 156,
+  "region": "Est",
+  "zone": "akan_est",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "région décidée par toi",
+  "provenance": {
+   "Centre": 0.35,
+   "Est": 0.55,
+   "Sud": 0.1
+  }
+ },
+ {
+  "nom": "Séhi",
+  "porteurs": 15743,
+  "rang": 157,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Mariam",
+  "porteurs": 15399,
+  "rang": 158,
+  "region": "Nord",
+  "zone": "prenom",
+  "certitude": "bonne",
+  "usage": "exclu (prénom féminin)",
+  "poids": 0,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.55,
+   "Centre": 0.1,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Adja",
+  "porteurs": 15112,
+  "rang": 159,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Gue",
+  "porteurs": 14491,
+  "rang": 160,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Kramo",
+  "porteurs": 14139,
+  "rang": 161,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Koudou",
+  "porteurs": 14124,
+  "rang": 162,
+  "region": "Ouest",
+  "zone": "krou",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.05,
+   "Ouest": 0.75,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Abou",
+  "porteurs": 14097,
+  "rang": 163,
+  "region": "Nord",
+  "zone": "prenom",
+  "certitude": "bonne",
+  "usage": "réduit (prénom utilisé comme nom)",
+  "poids": 0.3,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.55,
+   "Centre": 0.1,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Bleu",
+  "porteurs": 13875,
+  "rang": 164,
+  "region": "Ouest",
+  "zone": "krou",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.05,
+   "Ouest": 0.75,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Tokpa",
+  "porteurs": 13811,
+  "rang": 165,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Samaké",
+  "porteurs": 13771,
+  "rang": 166,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Amadou",
+  "porteurs": 13715,
+  "rang": 167,
+  "region": "Nord",
+  "zone": "prenom",
+  "certitude": "bonne",
+  "usage": "réduit (prénom utilisé comme nom)",
+  "poids": 0.3,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.55,
+   "Centre": 0.1,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Kossonou",
+  "porteurs": 13605,
+  "rang": 168,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Tah",
+  "porteurs": 13604,
+  "rang": 169,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Kanté",
+  "porteurs": 13313,
+  "rang": 170,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Kouacou",
+  "porteurs": 13270,
+  "rang": 171,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Adjé",
+  "porteurs": 13045,
+  "rang": 172,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Anoh",
+  "porteurs": 13017,
+  "rang": 173,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Toh",
+  "porteurs": 12959,
+  "rang": 174,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Sako",
+  "porteurs": 12875,
+  "rang": 175,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Gohi",
+  "porteurs": 12778,
+  "rang": 176,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Oussou",
+  "porteurs": 12768,
+  "rang": 177,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Goué",
+  "porteurs": 12764,
+  "rang": 178,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Akoua",
+  "porteurs": 12724,
+  "rang": 179,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "exclu (prénom féminin)",
+  "poids": 0,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Gnahoré",
+  "porteurs": 12616,
+  "rang": 180,
+  "region": "Ouest",
+  "zone": "krou",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.05,
+   "Ouest": 0.75,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Kablan",
+  "porteurs": 12564,
+  "rang": 181,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Maniga",
+  "porteurs": 12478,
+  "rang": 182,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "faible",
+  "usage": "réduit (classement incertain)",
+  "poids": 0.5,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Yéboué",
+  "porteurs": 12393,
+  "rang": 183,
+  "region": "Est",
+  "zone": "akan_est",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "région décidée par toi",
+  "provenance": {
+   "Centre": 0.35,
+   "Est": 0.55,
+   "Sud": 0.1
+  }
+ },
+ {
+  "nom": "Dan",
+  "porteurs": 12375,
+  "rang": 184,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "faible",
+  "usage": "réduit (classement incertain)",
+  "poids": 0.5,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Téhé",
+  "porteurs": 12366,
+  "rang": 185,
+  "region": "Ouest",
+  "zone": "krou",
+  "certitude": "faible",
+  "usage": "réduit (classement incertain)",
+  "poids": 0.5,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.05,
+   "Ouest": 0.75,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Siaka",
+  "porteurs": 12354,
+  "rang": 186,
+  "region": "Nord",
+  "zone": "prenom",
+  "certitude": "bonne",
+  "usage": "réduit (prénom utilisé comme nom)",
+  "poids": 0.3,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.55,
+   "Centre": 0.1,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Oula",
+  "porteurs": 12281,
+  "rang": 187,
+  "region": "Ouest",
+  "zone": "krou",
+  "certitude": "faible",
+  "usage": "réduit (classement incertain)",
+  "poids": 0.5,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.05,
+   "Ouest": 0.75,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Boti",
+  "porteurs": 12270,
+  "rang": null,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [
+   "Botti",
+   "Botty"
+  ],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Adjoumani",
+  "porteurs": 12233,
+  "rang": 188,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Gboko",
+  "porteurs": 12082,
+  "rang": 189,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "faible",
+  "usage": "réduit (classement incertain)",
+  "poids": 0.5,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Assié",
+  "porteurs": 12034,
+  "rang": 190,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Boli",
+  "porteurs": 12003,
+  "rang": 191,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Bakary",
+  "porteurs": 11988,
+  "rang": 192,
+  "region": "Nord",
+  "zone": "prenom",
+  "certitude": "bonne",
+  "usage": "réduit (prénom utilisé comme nom)",
+  "poids": 0.3,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.55,
+   "Centre": 0.1,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Assamoi",
+  "porteurs": 11946,
+  "rang": 193,
+  "region": "Sud",
+  "zone": "akan_lag",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Est": 0.1,
+   "Sud": 0.8
+  }
+ },
+ {
+  "nom": "Sib",
+  "porteurs": 11829,
+  "rang": 194,
+  "region": "Nord",
+  "zone": "gur",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.7,
+   "Centre": 0.05,
+   "Est": 0.15,
+   "Sud": 0.1
+  }
+ },
+ {
+  "nom": "Gogbé",
+  "porteurs": 11790,
+  "rang": 195,
+  "region": "Ouest",
+  "zone": "krou",
+  "certitude": "faible",
+  "usage": "réduit (classement incertain)",
+  "poids": 0.5,
+  "variantes": [],
+  "sources": [
+   "globalsurnames",
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.05,
+   "Ouest": 0.75,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Koué",
+  "porteurs": 11612,
+  "rang": 196,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Tié",
+  "porteurs": 11531,
+  "rang": 197,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Bolou",
+  "porteurs": 11477,
+  "rang": 198,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Loua",
+  "porteurs": 11374,
+  "rang": 199,
+  "region": "Ouest",
+  "zone": "mande_s",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "globalsurnames"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Bahi",
+  "porteurs": 11361,
+  "rang": 201,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Bini",
+  "porteurs": 11211,
+  "rang": 202,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Souleymane",
+  "porteurs": 10913,
+  "rang": 205,
+  "region": "Nord",
+  "zone": "prenom",
+  "certitude": "bonne",
+  "usage": "réduit (prénom utilisé comme nom)",
+  "poids": 0.3,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.55,
+   "Centre": 0.1,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Boka",
+  "porteurs": 10524,
+  "rang": 211,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Zouzou",
+  "porteurs": 10499,
+  "rang": 212,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Ahoua",
+  "porteurs": 10445,
+  "rang": 216,
+  "region": "Est",
+  "zone": "akan_est",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.15,
+   "Est": 0.7,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Tanou",
+  "porteurs": 10387,
+  "rang": 217,
+  "region": "Est",
+  "zone": "akan_est",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.15,
+   "Est": 0.7,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Abdoulaye",
+  "porteurs": 10314,
+  "rang": 219,
+  "region": "Nord",
+  "zone": "prenom",
+  "certitude": "bonne",
+  "usage": "réduit (prénom utilisé comme nom)",
+  "poids": 0.3,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.55,
+   "Centre": 0.1,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Bilé",
+  "porteurs": 9834,
+  "rang": 227,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Affoua",
+  "porteurs": 9633,
+  "rang": 236,
+  "region": "Est",
+  "zone": "akan_est",
+  "certitude": "bonne",
+  "usage": "exclu (prénom féminin)",
+  "poids": 0,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.15,
+   "Est": 0.7,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "N'Guettia",
+  "porteurs": 9522,
+  "rang": 239,
+  "region": "Est",
+  "zone": "akan_est",
+  "certitude": "bonne",
+  "usage": "variante de N'Guetta",
+  "poids": 0,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.15,
+   "Est": 0.7,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Ouédraogo",
+  "porteurs": 9206,
+  "rang": 249,
+  "region": "Nord",
+  "zone": "mossi",
+  "certitude": "bonne",
+  "usage": "réduit (origine burkinabè)",
+  "poids": 0.3,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.4,
+   "Centre": 0.2,
+   "Ouest": 0.15,
+   "Sud": 0.25
+  }
+ },
+ {
+  "nom": "Yacouba",
+  "porteurs": 8981,
+  "rang": 255,
+  "region": "Nord",
+  "zone": "prenom",
+  "certitude": "bonne",
+  "usage": "réduit (prénom utilisé comme nom)",
+  "poids": 0.3,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.55,
+   "Centre": 0.1,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Seydou",
+  "porteurs": 8549,
+  "rang": 265,
+  "region": "Nord",
+  "zone": "prenom",
+  "certitude": "bonne",
+  "usage": "réduit (prénom utilisé comme nom)",
+  "poids": 0.3,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.55,
+   "Centre": 0.1,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Comoé",
+  "porteurs": 8213,
+  "rang": 420,
+  "region": "Est",
+  "zone": "akan_est",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [
+   "Komoe"
+  ],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.15,
+   "Est": 0.7,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Haïdara",
+  "porteurs": 7890,
+  "rang": 286,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Lassina",
+  "porteurs": 7267,
+  "rang": 531,
+  "region": "Nord",
+  "zone": "prenom",
+  "certitude": "bonne",
+  "usage": "réduit (prénom utilisé comme nom)",
+  "poids": 0.3,
+  "variantes": [
+   "Lacina"
+  ],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.55,
+   "Centre": 0.1,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Ahou",
+  "porteurs": 6687,
+  "rang": 332,
+  "region": "Est",
+  "zone": "akan_est",
+  "certitude": "bonne",
+  "usage": "exclu (prénom féminin)",
+  "poids": 0,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.15,
+   "Est": 0.7,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Ahoutou",
+  "porteurs": 6576,
+  "rang": 337,
+  "region": "Est",
+  "zone": "akan_est",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.15,
+   "Est": 0.7,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "N'Doua",
+  "porteurs": 6571,
+  "rang": 338,
+  "region": "Est",
+  "zone": "akan_est",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.15,
+   "Est": 0.7,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Ibrahima",
+  "porteurs": 5458,
+  "rang": 398,
+  "region": "Nord",
+  "zone": "prenom",
+  "certitude": "bonne",
+  "usage": "réduit (prénom utilisé comme nom)",
+  "poids": 0.3,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.55,
+   "Centre": 0.1,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Zouzoua",
+  "porteurs": 5439,
+  "rang": 400,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "N'Gbesso",
+  "porteurs": 5382,
+  "rang": 403,
+  "region": "Est",
+  "zone": "akan_est",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.15,
+   "Est": 0.7,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Koulibaly",
+  "porteurs": 5297,
+  "rang": 405,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "variante de Coulibaly",
+  "poids": 0,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Gbe",
+  "porteurs": 5159,
+  "rang": 414,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Kouya",
+  "porteurs": 5131,
+  "rang": 415,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Kouaho",
+  "porteurs": 5125,
+  "rang": 416,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Ahoussi",
+  "porteurs": 5064,
+  "rang": 419,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Zogbé",
+  "porteurs": 4922,
+  "rang": 428,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Angaman",
+  "porteurs": 4919,
+  "rang": 429,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Gbalé",
+  "porteurs": 4818,
+  "rang": 435,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Gbah",
+  "porteurs": 4747,
+  "rang": 441,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Agnéro",
+  "porteurs": 4716,
+  "rang": 443,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Doffou",
+  "porteurs": 4608,
+  "rang": 451,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Gbéhé",
+  "porteurs": 4604,
+  "rang": 453,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Gogbeu",
+  "porteurs": 4573,
+  "rang": 456,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Bora",
+  "porteurs": 4571,
+  "rang": 457,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Dogo",
+  "porteurs": 4570,
+  "rang": 458,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Zon",
+  "porteurs": 4386,
+  "rang": 476,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Houphouët",
+  "porteurs": 4358,
+  "rang": 478,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "exclu (nom du président fondateur)",
+  "poids": 0,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Gbogou",
+  "porteurs": 4304,
+  "rang": 486,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Edoukou",
+  "porteurs": 4302,
+  "rang": 487,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Doudou",
+  "porteurs": 4290,
+  "rang": 489,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Kaboré",
+  "porteurs": 4165,
+  "rang": 511,
+  "region": "Nord",
+  "zone": "mossi",
+  "certitude": "bonne",
+  "usage": "réduit (origine burkinabè)",
+  "poids": 0.3,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.4,
+   "Centre": 0.2,
+   "Ouest": 0.15,
+   "Sud": 0.25
+  }
+ },
+ {
+  "nom": "Bony",
+  "porteurs": 4159,
+  "rang": 512,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Djézou",
+  "porteurs": 4109,
+  "rang": 518,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Sawadogo",
+  "porteurs": 4057,
+  "rang": 524,
+  "region": "Nord",
+  "zone": "mossi",
+  "certitude": "bonne",
+  "usage": "réduit (origine burkinabè)",
+  "poids": 0.3,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.4,
+   "Centre": 0.2,
+   "Ouest": 0.15,
+   "Sud": 0.25
+  }
+ },
+ {
+  "nom": "N'Doli",
+  "porteurs": 4023,
+  "rang": 530,
+  "region": "Est",
+  "zone": "akan_est",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.15,
+   "Est": 0.7,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Adjoua",
+  "porteurs": 3952,
+  "rang": 540,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "exclu (prénom féminin)",
+  "poids": 0,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Youssouf",
+  "porteurs": 3828,
+  "rang": 551,
+  "region": "Nord",
+  "zone": "prenom",
+  "certitude": "bonne",
+  "usage": "réduit (prénom utilisé comme nom)",
+  "poids": 0.3,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.55,
+   "Centre": 0.1,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Zran",
+  "porteurs": 3799,
+  "rang": 554,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Gbato",
+  "porteurs": 3690,
+  "rang": 563,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Djah",
+  "porteurs": 3642,
+  "rang": 567,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Gbohou",
+  "porteurs": 3575,
+  "rang": 578,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Gbocho",
+  "porteurs": 3574,
+  "rang": 579,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Ziao",
+  "porteurs": 3533,
+  "rang": 583,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Gbangbo",
+  "porteurs": 3520,
+  "rang": 587,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Daho",
+  "porteurs": 3502,
+  "rang": 590,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Gbaka",
+  "porteurs": 3490,
+  "rang": 591,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Botty",
+  "porteurs": 3488,
+  "rang": 592,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "variante de Boti",
+  "poids": 0,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Zingbé",
+  "porteurs": 3445,
+  "rang": 596,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Kouablan",
+  "porteurs": 3409,
+  "rang": 602,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "N'Dja",
+  "porteurs": 3363,
+  "rang": 606,
+  "region": "Est",
+  "zone": "akan_est",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.15,
+   "Est": 0.7,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Amalaman",
+  "porteurs": 3360,
+  "rang": 607,
+  "region": "Est",
+  "zone": "akan_est",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.15,
+   "Est": 0.7,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Bakari",
+  "porteurs": 3359,
+  "rang": 608,
+  "region": "Nord",
+  "zone": "prenom",
+  "certitude": "bonne",
+  "usage": "réduit (prénom utilisé comme nom)",
+  "poids": 0.3,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.55,
+   "Centre": 0.1,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Koumoin",
+  "porteurs": 3341,
+  "rang": 609,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Botti",
+  "porteurs": 3339,
+  "rang": 610,
+  "region": "Ouest",
+  "zone": "ouest",
+  "certitude": "moyenne",
+  "usage": "variante de Boti",
+  "poids": 0,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.1,
+   "Ouest": 0.75,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Tanon",
+  "porteurs": 3294,
+  "rang": 620,
+  "region": "Est",
+  "zone": "akan_est",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.15,
+   "Est": 0.7,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Issouf",
+  "porteurs": 3267,
+  "rang": 624,
+  "region": "Nord",
+  "zone": "prenom",
+  "certitude": "bonne",
+  "usage": "réduit (prénom utilisé comme nom)",
+  "poids": 0.3,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.55,
+   "Centre": 0.1,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.2
+  }
+ },
+ {
+  "nom": "Lacina",
+  "porteurs": 3255,
+  "rang": 626,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "variante de Lassina",
+  "poids": 0,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Tan",
+  "porteurs": 3190,
+  "rang": 633,
+  "region": "Est",
+  "zone": "akan_est",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.15,
+   "Est": 0.7,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Komoe",
+  "porteurs": 3156,
+  "rang": 636,
+  "region": "Est",
+  "zone": "akan_est",
+  "certitude": "bonne",
+  "usage": "variante de Comoé",
+  "poids": 0,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.15,
+   "Est": 0.7,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Amoin",
+  "porteurs": 3155,
+  "rang": 637,
+  "region": "Est",
+  "zone": "akan_est",
+  "certitude": "bonne",
+  "usage": "exclu (prénom féminin)",
+  "poids": 0,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.15,
+   "Est": 0.7,
+   "Sud": 0.15
+  }
+ },
+ {
+  "nom": "Maïga",
+  "porteurs": 3094,
+  "rang": 643,
+  "region": "Nord",
+  "zone": "mande_n",
+  "certitude": "bonne",
+  "usage": "réduit (origine malienne (songhaï))",
+  "poids": 0.3,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Nord": 0.65,
+   "Centre": 0.08,
+   "Ouest": 0.1,
+   "Est": 0.05,
+   "Sud": 0.12
+  }
+ },
+ {
+  "nom": "Amoikon",
+  "porteurs": 3076,
+  "rang": 646,
+  "region": "Centre",
+  "zone": "akan",
+  "certitude": "bonne",
+  "usage": "oui",
+  "poids": 1,
+  "variantes": [],
+  "sources": [
+   "pdf"
+  ],
+  "note": "",
+  "provenance": {
+   "Centre": 0.7,
+   "Ouest": 0.05,
+   "Est": 0.1,
+   "Sud": 0.15
+  }
+ }
+]

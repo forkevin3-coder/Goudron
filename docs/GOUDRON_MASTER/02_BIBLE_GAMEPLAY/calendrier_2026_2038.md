@@ -1,0 +1,159 @@
+# Calendrier 2026–2038 — généré par le code v43
+
+Les dates des matchs de championnat sont recalculées chaque saison (premier match début septembre, trêve de 2 semaines à la mi-saison). Les 4 « aléas » tombent à des dates tirées au hasard. Le même schéma se répète chaque année jusqu'en 2038.
+
+## Carrière District — saison d’ouverture (2026)
+
+- 2026-05-01 intro
+- 2026-05-02 drec
+- 2026-07-01 prep
+- 2026-07-25 nou:g0
+- 2026-07-29 nou:g1
+- 2026-08-02 nou:g2
+- 2026-08-08 nou:r16
+- 2026-08-13 nou:qf
+- 2026-08-19 nou:sf
+- 2026-08-26 nou:f
+- 2026-08-28 nou:bilan
+
+## Ligue des Pros — saison 1 (2026-2027)
+
+- 2026-05-01 intro
+- 2026-05-04 inv
+- 2026-06-20 mercato
+- 2026-07-01 pre
+- 2026-07-04 comite
+- 2026-07-08 prep
+- 2026-07-12 tournoi
+- 2026-07-18 mara3
+- 2026-07-25 nou:g0
+- 2026-07-29 nou:g1
+- 2026-08-02 nou:g2
+- 2026-08-08 nou:r16
+- 2026-08-13 nou:qf
+- 2026-08-19 nou:sf
+- 2026-08-26 nou:f
+- 2026-08-28 nou:bilan
+- 2026-09-06 md J1
+- 2026-09-13 md J2
+- 2026-09-20 md J3
+- 2026-09-22 co:prelim
+- 2026-09-27 md J4
+- 2026-09-30 cup tour1
+- 2026-10-04 md J5
+- 2026-10-09 alea
+- 2026-10-11 md J6
+- 2026-10-13 co:g0
+- 2026-10-18 md J7
+- 2026-10-25 md J8
+- 2026-10-27 co:g1
+- 2026-11-01 md J9
+- 2026-11-08 md J10
+- 2026-11-10 co:g2
+- 2026-11-15 md J11
+- 2026-11-18 cup tour2
+- 2026-11-20 alea
+- 2026-11-22 md J12
+- 2026-11-29 md J13
+- 2026-12-01 co:g3
+- 2026-12-06 md J14
+- 2026-12-12 mondial
+- 2026-12-13 md J15
+- 2026-12-15 co:g4
+- 2027-01-03 md J16
+- 2027-01-10 md J17
+- 2027-01-12 co:g5
+- 2027-01-17 md J18
+- 2027-01-20 cup tour3
+- 2027-01-24 md J19
+- 2027-01-31 md J20
+- 2027-02-02 co:qf
+- 2027-02-05 alea
+- 2027-02-07 md J21
+- 2027-02-14 md J22
+- 2027-02-21 md J23
+- 2027-02-23 co:sf
+- 2027-02-28 md J24
+- 2027-03-05 alea
+- 2027-03-07 md J25
+- 2027-03-10 cup tour4
+- 2027-03-14 md J26
+- 2027-03-21 md J27
+- 2027-03-23 co:f
+- 2027-03-28 md J28
+- 2027-04-04 md J29
+- 2027-04-11 md J30
+- 2027-04-26 end
+- 2027-04-30 review
+
+## Ligue des Pros — saison 2 et suivantes (2027-2028)
+
+- 2027-05-04 inv
+- 2027-05-12 mara1
+- 2027-05-26 mara2
+- 2027-06-09 mara3
+- 2027-06-20 mercato
+- 2027-07-01 pre
+- 2027-07-08 prep
+- 2027-07-25 nou:g0
+- 2027-07-29 nou:g1
+- 2027-08-02 nou:g2
+- 2027-08-08 nou:r16
+- 2027-08-13 nou:qf
+- 2027-08-19 nou:sf
+- 2027-08-26 nou:f
+- 2027-08-28 nou:bilan
+- 2027-09-06 md J1
+- 2027-09-13 md J2
+- 2027-09-20 md J3
+- 2027-09-22 co:prelim
+- 2027-09-27 md J4
+- 2027-09-30 cup tour1
+- 2027-10-02 alea
+- 2027-10-04 md J5
+- 2027-10-11 md J6
+- 2027-10-13 co:g0
+- 2027-10-18 md J7
+- 2027-10-25 md J8
+- 2027-10-27 co:g1
+- 2027-11-01 md J9
+- 2027-11-08 md J10
+- 2027-11-10 co:g2
+- 2027-11-15 md J11
+- 2027-11-18 cup tour2
+- 2027-11-20 alea
+- 2027-11-22 md J12
+- 2027-11-29 md J13
+- 2027-12-01 co:g3
+- 2027-12-06 md J14
+- 2027-12-12 mondial
+- 2027-12-13 md J15
+- 2027-12-15 co:g4
+- 2028-01-03 md J16
+- 2028-01-10 md J17
+- 2028-01-12 co:g5
+- 2028-01-17 md J18
+- 2028-01-20 cup tour3
+- 2028-01-24 md J19
+- 2028-01-31 md J20
+- 2028-02-02 co:qf
+- 2028-02-05 alea
+- 2028-02-07 md J21
+- 2028-02-14 md J22
+- 2028-02-21 md J23
+- 2028-02-23 co:sf
+- 2028-02-28 md J24
+- 2028-03-04 alea
+- 2028-03-06 md J25
+- 2028-03-09 cup tour4
+- 2028-03-13 md J26
+- 2028-03-20 md J27
+- 2028-03-22 co:f
+- 2028-03-27 md J28
+- 2028-04-03 md J29
+- 2028-04-10 md J30
+- 2028-04-26 end
+- 2028-04-30 review
+
+## Légende
+intro : présentation du club · drec : recrutement district · prep : préparation · nou : Noushi League · inv : investisseurs · mara1-3 : Maracana · mercato : mercato · pre : avant-saison · comite/tournoi : événements de la 1re saison · md : journée de championnat · cup : Coupe du Père Fondateur · co : coupe africaine · alea : événement imprévu · mondial : Mondial des clubs · end : fin de saison · review : bilan annuel

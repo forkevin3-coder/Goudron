@@ -1,0 +1,919 @@
+{
+ "ligue_des_pros": [
+  {
+   "id": "lag",
+   "nom": "Lagunaires FC",
+   "court": "LAG",
+   "ville": "Abidjan · Plateau",
+   "niveau": 5,
+   "couleur1": "#14365c",
+   "couleur2": "#e8b23a",
+   "motif": "stripes",
+   "stade": "Stade de la Lagune",
+   "capacite": 16000
+  },
+  {
+   "id": "yop",
+   "nom": "Étoile de Yopougon",
+   "court": "EYO",
+   "ville": "Abidjan · Yopougon",
+   "niveau": 4,
+   "couleur1": "#1f8a4c",
+   "couleur2": "#f4f1e8",
+   "motif": "hoops",
+   "stade": "Parc de Yopougon",
+   "capacite": 11000
+  },
+  {
+   "id": "tre",
+   "nom": "Treichville AC",
+   "court": "TAC",
+   "ville": "Abidjan · Treichville",
+   "niveau": 4,
+   "couleur1": "#b3202a",
+   "couleur2": "#f4f1e8",
+   "motif": "halves",
+   "stade": "Stade du Port",
+   "capacite": 10000
+  },
+  {
+   "id": "bou",
+   "nom": "Bouaké Union",
+   "court": "BOU",
+   "ville": "Bouaké",
+   "niveau": 4,
+   "couleur1": "#f2a41c",
+   "couleur2": "#1d1d1d",
+   "motif": "sash",
+   "stade": "Stade de la Vallée",
+   "capacite": 12000
+  },
+  {
+   "id": "spm",
+   "nom": "San-Pédro Marine",
+   "court": "SPM",
+   "ville": "San-Pédro",
+   "niveau": 4,
+   "couleur1": "#0f6fa8",
+   "couleur2": "#f4f1e8",
+   "motif": "chevron",
+   "stade": "Stade du Littoral",
+   "capacite": 9000
+  },
+  {
+   "id": "yam",
+   "nom": "Yamoussoukro Olympique",
+   "court": "YAO",
+   "ville": "Yamoussoukro",
+   "niveau": 3,
+   "couleur1": "#6b2d8f",
+   "couleur2": "#e8b23a",
+   "motif": "plain",
+   "stade": "Stade des Lacs",
+   "capacite": 8000
+  },
+  {
+   "id": "abo",
+   "nom": "Abobo Sporting",
+   "court": "ABS",
+   "ville": "Abidjan · Abobo",
+   "niveau": 3,
+   "couleur1": "#e2702f",
+   "couleur2": "#14365c",
+   "motif": "stripes",
+   "stade": "Terrain d'Abobo-Gare",
+   "capacite": 6000
+  },
+  {
+   "id": "pba",
+   "nom": "Port-Bouët Aviation",
+   "court": "PBA",
+   "ville": "Abidjan · Port-Bouët",
+   "niveau": 3,
+   "couleur1": "#3d8fd1",
+   "couleur2": "#f4f1e8",
+   "motif": "sash",
+   "stade": "Stade de l'Aéroport",
+   "capacite": 6000
+  },
+  {
+   "id": "gag",
+   "nom": "Gagnoa Cacao FC",
+   "court": "GCF",
+   "ville": "Gagnoa",
+   "niveau": 3,
+   "couleur1": "#6b3f22",
+   "couleur2": "#e8b23a",
+   "motif": "hoops",
+   "stade": "Stade des Planteurs",
+   "capacite": 7000
+  },
+  {
+   "id": "coc",
+   "nom": "Cocody Université FC",
+   "court": "CUF",
+   "ville": "Abidjan · Cocody",
+   "niveau": 2,
+   "couleur1": "#e9e6dc",
+   "couleur2": "#14365c",
+   "motif": "chevron",
+   "stade": "Stade Universitaire",
+   "capacite": 5000
+  },
+  {
+   "id": "kor",
+   "nom": "Korhogo Poro FC",
+   "court": "KPF",
+   "ville": "Korhogo",
+   "niveau": 2,
+   "couleur1": "#c9502b",
+   "couleur2": "#f4f1e8",
+   "motif": "stripes",
+   "stade": "Stade du Poro",
+   "capacite": 6000
+  },
+  {
+   "id": "dal",
+   "nom": "Daloa Sporting",
+   "court": "DSP",
+   "ville": "Daloa",
+   "niveau": 2,
+   "couleur1": "#2f7a3a",
+   "couleur2": "#e8b23a",
+   "motif": "halves",
+   "stade": "Stade du Haut-Sassandra",
+   "capacite": 5000
+  },
+  {
+   "id": "man",
+   "nom": "Man Montagne FC",
+   "court": "MMF",
+   "ville": "Man",
+   "niveau": 2,
+   "couleur1": "#3b4a5e",
+   "couleur2": "#7fc4a4",
+   "motif": "plain",
+   "stade": "Stade de la Dent",
+   "capacite": 4500
+  },
+  {
+   "id": "div",
+   "nom": "Divo Espoir",
+   "court": "DIV",
+   "ville": "Divo",
+   "niveau": 1,
+   "couleur1": "#d8c23a",
+   "couleur2": "#1f8a4c",
+   "motif": "hoops",
+   "stade": "Stade de Divo",
+   "capacite": 3500
+  },
+  {
+   "id": "bdk",
+   "nom": "Bondoukou Kolongo FC",
+   "court": "BKF",
+   "ville": "Bondoukou",
+   "niveau": 1,
+   "couleur1": "#8a1c3c",
+   "couleur2": "#f4f1e8",
+   "motif": "sash",
+   "stade": "Stade du Kolongo",
+   "capacite": 3500
+  },
+  {
+   "id": "sas",
+   "nom": "Sassandra Pirogue",
+   "court": "SAP",
+   "ville": "Sassandra",
+   "niveau": 1,
+   "couleur1": "#127a7a",
+   "couleur2": "#f2a41c",
+   "motif": "chevron",
+   "stade": "Stade de la Baie",
+   "capacite": 3000
+  }
+ ],
+ "promus_jouables": [
+  "div",
+  "bdk",
+  "sas",
+  "man"
+ ],
+ "ligue2": [
+  [
+   "odi",
+   "Odienné Savane FC",
+   "OSF",
+   "Odienné",
+   1,
+   "#a0522d",
+   "#f4f1e8",
+   "plain",
+   "Stade de la Savane",
+   3000
+  ],
+  [
+   "abg",
+   "Abengourou Royal FC",
+   "ARF",
+   "Abengourou",
+   1,
+   "#5b2a86",
+   "#f2c14e",
+   "stripes",
+   "Stade Royal",
+   3500
+  ],
+  [
+   "dim",
+   "Dimbokro Nzi Club",
+   "DNC",
+   "Dimbokro",
+   1,
+   "#20639b",
+   "#f6d55c",
+   "hoops",
+   "Stade du Nzi",
+   3000
+  ],
+  [
+   "agb",
+   "Agboville Espoir",
+   "AGE",
+   "Agboville",
+   1,
+   "#3caea3",
+   "#173f5f",
+   "halves",
+   "Stade d'Agboville",
+   3000
+  ],
+  [
+   "seg",
+   "Séguéla Diamant",
+   "SGD",
+   "Séguéla",
+   1,
+   "#d9d9d9",
+   "#1d1d1d",
+   "sash",
+   "Stade du Worodougou",
+   3000
+  ],
+  [
+   "kat",
+   "Katiola Potiers FC",
+   "KPT",
+   "Katiola",
+   1,
+   "#b5651d",
+   "#2f2f2f",
+   "chevron",
+   "Stade des Potiers",
+   3000
+  ],
+  [
+   "sou",
+   "Soubré Cacao Sport",
+   "SCS",
+   "Soubré",
+   1,
+   "#6b3f22",
+   "#f2c14e",
+   "hoops",
+   "Stade du Nawa",
+   3000
+  ],
+  [
+   "gba",
+   "Grand-Bassam Phare FC",
+   "GBP",
+   "Grand-Bassam",
+   1,
+   "#f4f1e8",
+   "#14365c",
+   "stripes",
+   "Stade du Phare",
+   3500
+  ],
+  [
+   "fer",
+   "Ferkessédougou Coton FC",
+   "FCF",
+   "Ferkessédougou",
+   1,
+   "#f4f1e8",
+   "#1f8a4c",
+   "sash",
+   "Stade du Coton",
+   3000
+  ],
+  [
+   "sin",
+   "Sinfra Kuya FC",
+   "SKF",
+   "Sinfra",
+   1,
+   "#8a1c3c",
+   "#f2c14e",
+   "halves",
+   "Stade de Sinfra",
+   2500
+  ],
+  [
+   "bnd",
+   "Boundiali Sporting",
+   "BDS",
+   "Boundiali",
+   1,
+   "#c9502b",
+   "#1d1d1d",
+   "plain",
+   "Stade de la Bagoué",
+   2500
+  ],
+  [
+   "tia",
+   "Tiassalé Bandama FC",
+   "TBF",
+   "Tiassalé",
+   1,
+   "#127a7a",
+   "#f4f1e8",
+   "chevron",
+   "Stade du Fleuve",
+   2500
+  ]
+ ],
+ "academies": [
+  {
+   "id": "a_hor",
+   "name": "Académie Horizon",
+   "short": "HOR",
+   "city": "Abidjan · Cocody",
+   "c": [
+    "#14365c",
+    "#f4f1e8",
+    "plain"
+   ]
+  },
+  {
+   "id": "a_lsp",
+   "name": "Académie Lagune Sport",
+   "short": "ALS",
+   "city": "Abidjan · Marcory",
+   "c": [
+    "#3caea3",
+    "#f4f1e8",
+    "stripes"
+   ]
+  },
+  {
+   "id": "a_efa",
+   "name": "Elite Foot Academy",
+   "short": "EFA",
+   "city": "Abidjan · Plateau",
+   "c": [
+    "#1d1d1d",
+    "#e2b15a",
+    "sash"
+   ]
+  },
+  {
+   "id": "a_dpl",
+   "name": "Académie des Deux Plateaux",
+   "short": "ADP",
+   "city": "Abidjan · Deux Plateaux",
+   "c": [
+    "#f4f1e8",
+    "#c9502b",
+    "chevron"
+   ]
+  },
+  {
+   "id": "a_suc",
+   "name": "Académie Sud-Comoé",
+   "short": "ASC",
+   "city": "Aboisso",
+   "c": [
+    "#2f7a3a",
+    "#f2c14e",
+    "hoops"
+   ]
+  },
+  {
+   "id": "a_bin",
+   "name": "Académie Bingerville Talents",
+   "short": "ABT",
+   "city": "Bingerville",
+   "c": [
+    "#8a1c3c",
+    "#f4f1e8",
+    "halves"
+   ]
+  },
+  {
+   "id": "a_mar",
+   "name": "Centre Jeunesse de Marcory",
+   "short": "CJM",
+   "city": "Abidjan · Marcory",
+   "c": [
+    "#f2a41c",
+    "#1d1d1d",
+    "stripes"
+   ]
+  },
+  {
+   "id": "a_gbm",
+   "name": "Académie de Grand-Bassam",
+   "short": "AGB",
+   "city": "Grand-Bassam",
+   "c": [
+    "#0f6fa8",
+    "#f4f1e8",
+    "sash"
+   ]
+  },
+  {
+   "id": "a_sbr",
+   "name": "Académie Soubré Espoirs",
+   "short": "ASE",
+   "city": "Soubré",
+   "c": [
+    "#6b3f22",
+    "#e2b15a",
+    "plain"
+   ]
+  },
+  {
+   "id": "a_bdm",
+   "name": "Académie du Bandama",
+   "short": "ABD",
+   "city": "Bouaké",
+   "c": [
+    "#c9502b",
+    "#f4f1e8",
+    "chevron"
+   ]
+  }
+ ],
+ "etrangers": [
+  [
+   "casb",
+   "Casbah Athletic",
+   "CAS",
+   "Maroc",
+   "nord",
+   81,
+   "#0e7a3d",
+   "#f4f1e8",
+   "stripes"
+  ],
+  [
+   "atla",
+   "Atlas Union",
+   "ATU",
+   "Maroc",
+   "nord",
+   78,
+   "#b3202a",
+   "#1d1d1d",
+   "hoops"
+  ],
+  [
+   "nils",
+   "Nil Sporting",
+   "NIL",
+   "Égypte",
+   "nord",
+   82,
+   "#a3171f",
+   "#f4f1e8",
+   "plain"
+  ],
+  [
+   "delt",
+   "Delta Club",
+   "DEL",
+   "Égypte",
+   "nord",
+   77,
+   "#f4f1e8",
+   "#a3171f",
+   "sash"
+  ],
+  [
+   "cart",
+   "Carthage Olympique",
+   "CTO",
+   "Tunisie",
+   "nord",
+   79,
+   "#c8102e",
+   "#f2c14e",
+   "stripes"
+  ],
+  [
+   "medi",
+   "Médina FC",
+   "MED",
+   "Tunisie",
+   "nord",
+   75,
+   "#1d1d1d",
+   "#f4f1e8",
+   "halves"
+  ],
+  [
+   "high",
+   "Highveld United",
+   "HVU",
+   "Afrique du Sud",
+   "sud",
+   83,
+   "#f2c14e",
+   "#0a6b38",
+   "chevron"
+  ],
+  [
+   "cape",
+   "Cape Diamonds",
+   "CPD",
+   "Afrique du Sud",
+   "sud",
+   77,
+   "#14365c",
+   "#f4f1e8",
+   "plain"
+  ],
+  [
+   "limp",
+   "Limpopo Stars",
+   "LMS",
+   "Afrique du Sud",
+   "sud",
+   74,
+   "#e2702f",
+   "#1d1d1d",
+   "hoops"
+  ],
+  [
+   "kinf",
+   "Kinshasa Fleuve",
+   "KIF",
+   "RD Congo",
+   "sud",
+   78,
+   "#1d1d1d",
+   "#f2c14e",
+   "stripes"
+  ],
+  [
+   "lusa",
+   "Lusaka Copper",
+   "LUC",
+   "Zambie",
+   "sud",
+   72,
+   "#b87333",
+   "#f4f1e8",
+   "sash"
+  ],
+  [
+   "dars",
+   "Dar Bahari FC",
+   "DBF",
+   "Tanzanie",
+   "sud",
+   74,
+   "#c8102e",
+   "#f4f1e8",
+   "halves"
+  ],
+  [
+   "tera",
+   "Téranga FC",
+   "TER",
+   "Sénégal",
+   "ouest",
+   74,
+   "#0e7a3d",
+   "#f2c14e",
+   "plain"
+  ],
+  [
+   "lago",
+   "Lagos Harbour",
+   "LGH",
+   "Nigeria",
+   "ouest",
+   73,
+   "#0e7a3d",
+   "#f4f1e8",
+   "stripes"
+  ],
+  [
+   "accr",
+   "Accra Coastal",
+   "ACC",
+   "Ghana",
+   "ouest",
+   72,
+   "#f2c14e",
+   "#1d1d1d",
+   "hoops"
+  ],
+  [
+   "bamf",
+   "Bamako Fleuve",
+   "BMF",
+   "Mali",
+   "ouest",
+   71,
+   "#c8102e",
+   "#f2c14e",
+   "sash"
+  ],
+  [
+   "ouag",
+   "Ouaga Faso FC",
+   "OFF",
+   "Burkina Faso",
+   "ouest",
+   69,
+   "#c8102e",
+   "#0e7a3d",
+   "halves"
+  ],
+  [
+   "cona",
+   "Conakry Atlantique",
+   "CNA",
+   "Guinée",
+   "ouest",
+   70,
+   "#f4f1e8",
+   "#c8102e",
+   "chevron"
+  ],
+  [
+   "yaou",
+   "Yaoundé Lions",
+   "YAL",
+   "Cameroun",
+   "autres",
+   75,
+   "#0e7a3d",
+   "#c8102e",
+   "stripes"
+  ],
+  [
+   "doua",
+   "Douala Port",
+   "DPO",
+   "Cameroun",
+   "autres",
+   73,
+   "#14365c",
+   "#f2c14e",
+   "hoops"
+  ],
+  [
+   "oran",
+   "Oran Corniche",
+   "ORC",
+   "Algérie",
+   "autres",
+   77,
+   "#0e7a3d",
+   "#f4f1e8",
+   "halves"
+  ],
+  [
+   "beng",
+   "Benghazi Cyrène",
+   "BCY",
+   "Libye",
+   "autres",
+   72,
+   "#c8102e",
+   "#1d1d1d",
+   "plain"
+  ],
+  [
+   "luan",
+   "Luanda Atlântico",
+   "LUA",
+   "Angola",
+   "autres",
+   74,
+   "#c8102e",
+   "#f2c14e",
+   "sash"
+  ],
+  [
+   "kamp",
+   "Kampala Lake FC",
+   "KLF",
+   "Ouganda",
+   "autres",
+   71,
+   "#f2c14e",
+   "#1d1d1d",
+   "chevron"
+  ],
+  [
+   "nair",
+   "Nairobi Rift",
+   "NRF",
+   "Kenya",
+   "autres",
+   70,
+   "#0e7a3d",
+   "#c8102e",
+   "stripes"
+  ],
+  [
+   "addi",
+   "Addis Highlands",
+   "ADH",
+   "Éthiopie",
+   "autres",
+   69,
+   "#f2c14e",
+   "#0e7a3d",
+   "hoops"
+  ],
+  [
+   "libr",
+   "Libreville Océan",
+   "LOC",
+   "Gabon",
+   "autres",
+   68,
+   "#3d8fd1",
+   "#f2c14e",
+   "plain"
+  ],
+  [
+   "mapu",
+   "Maputo Marés",
+   "MMR",
+   "Mozambique",
+   "autres",
+   68,
+   "#c8102e",
+   "#f4f1e8",
+   "halves"
+  ]
+ ],
+ "outsiders": [
+  [
+   "cotp",
+   "Cotonou Port FC",
+   "CPF",
+   "Bénin",
+   65,
+   "#0e7a3d",
+   "#f2c14e",
+   "plain"
+  ],
+  [
+   "niam",
+   "Niamey Sahel",
+   "NSA",
+   "Niger",
+   62,
+   "#e2702f",
+   "#f4f1e8",
+   "stripes"
+  ],
+  [
+   "lome",
+   "Lomé Côtière",
+   "LMC",
+   "Togo",
+   64,
+   "#f2c14e",
+   "#0e7a3d",
+   "hoops"
+  ],
+  [
+   "monr",
+   "Monrovia Coast",
+   "MRC",
+   "Libéria",
+   61,
+   "#14365c",
+   "#c8102e",
+   "sash"
+  ],
+  [
+   "free",
+   "Freetown City",
+   "FTC",
+   "Sierra Leone",
+   62,
+   "#3d8fd1",
+   "#f4f1e8",
+   "halves"
+  ],
+  [
+   "nouk",
+   "Nouakchott Dunes",
+   "NKD",
+   "Mauritanie",
+   63,
+   "#0e7a3d",
+   "#f2c14e",
+   "chevron"
+  ],
+  [
+   "banj",
+   "Banjul River",
+   "BJR",
+   "Gambie",
+   60,
+   "#c8102e",
+   "#14365c",
+   "plain"
+  ],
+  [
+   "biss",
+   "Bissau Atlântico",
+   "BSA",
+   "Guinée-Bissau",
+   60,
+   "#f2c14e",
+   "#c8102e",
+   "stripes"
+  ]
+ ],
+ "maracanas": [
+  {
+   "id": "krg",
+   "city": "Korhogo",
+   "name": "Tournoi du Poro",
+   "place": "place du marché",
+   "teams": 16,
+   "prize": 200000,
+   "prof": "physique",
+   "spread": 1.5,
+   "lvl": 1,
+   "base": 0,
+   "desc": "Peu observé. Les potentiels sont les plus incertains, dans les deux sens."
+  },
+  {
+   "id": "spd",
+   "city": "San-Pédro",
+   "name": "Coupe du Port",
+   "place": "esplanade du port",
+   "teams": 20,
+   "prize": 250000,
+   "prof": "vitesse",
+   "spread": 1.1,
+   "lvl": 1,
+   "base": 0,
+   "desc": "Joueurs rapides, souvent bruts techniquement."
+  },
+  {
+   "id": "bke",
+   "city": "Bouaké",
+   "name": "Maracana de la Vallée",
+   "place": "terrain du quartier Commerce",
+   "teams": 24,
+   "prize": 300000,
+   "prof": "equilibre",
+   "spread": 1,
+   "lvl": 2,
+   "base": 1,
+   "desc": "Profils complets. Il faut un recruteur connu pour entrer dans les vestiaires."
+  },
+  {
+   "id": "abj",
+   "city": "Abidjan",
+   "name": "Tournoi des Quartiers",
+   "place": "goudron de Yopougon",
+   "teams": 32,
+   "prize": 500000,
+   "prof": "technique",
+   "spread": 1,
+   "lvl": 2,
+   "base": 1.5,
+   "desc": "Le plus gros vivier. Beaucoup de technique, beaucoup de bruit autour des noms."
+  },
+  {
+   "id": "nuit",
+   "city": "Treichville",
+   "name": "Nuit du Goudron",
+   "place": "sous les projecteurs de Treichville",
+   "teams": 12,
+   "prize": 1000000,
+   "prof": "technique",
+   "spread": 1.2,
+   "lvl": 3,
+   "base": 3,
+   "desc": "Le tournoi réputé, sur invitation. Seuls les vrais Vieux Pères y ont leurs entrées."
+  }
+ ]
+}

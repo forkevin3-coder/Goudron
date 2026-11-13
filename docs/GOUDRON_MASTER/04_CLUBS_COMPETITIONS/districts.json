@@ -1,0 +1,213 @@
+[
+ {
+  "id": "d_bas",
+  "name": "Bas-Sassandra FC",
+  "short": "BAS",
+  "city": "San-Pédro",
+  "dist": "Bas-Sassandra",
+  "prof": "vitesse",
+  "c": [
+   "#0f6fa8",
+   "#f2c14e",
+   "hoops"
+  ]
+ },
+ {
+  "id": "d_com",
+  "name": "Comoé Indénié FC",
+  "short": "COM",
+  "city": "Abengourou",
+  "dist": "Comoé",
+  "prof": "equilibre",
+  "c": [
+   "#5b2a86",
+   "#f4f1e8",
+   "stripes"
+  ]
+ },
+ {
+  "id": "d_den",
+  "name": "Denguélé Kabadougou FC",
+  "short": "DEN",
+  "city": "Odienné",
+  "dist": "Denguélé",
+  "prof": "physique",
+  "c": [
+   "#a0522d",
+   "#f2c14e",
+   "sash"
+  ]
+ },
+ {
+  "id": "d_goh",
+  "name": "Gôh-Djiboua FC",
+  "short": "GOH",
+  "city": "Gagnoa",
+  "dist": "Gôh-Djiboua",
+  "prof": "equilibre",
+  "c": [
+   "#6b3f22",
+   "#f4f1e8",
+   "halves"
+  ]
+ },
+ {
+  "id": "d_lac",
+  "name": "Lacs Nzi FC",
+  "short": "LAC",
+  "city": "Dimbokro",
+  "dist": "Lacs",
+  "prof": "technique",
+  "c": [
+   "#20639b",
+   "#f4f1e8",
+   "chevron"
+  ]
+ },
+ {
+  "id": "d_lag",
+  "name": "Lagunes Dabou FC",
+  "short": "LGN",
+  "city": "Dabou",
+  "dist": "Lagunes",
+  "prof": "technique",
+  "c": [
+   "#3caea3",
+   "#14365c",
+   "plain"
+  ]
+ },
+ {
+  "id": "d_mon",
+  "name": "Montagnes Tonkpi FC",
+  "short": "MON",
+  "city": "Man",
+  "dist": "Montagnes",
+  "prof": "physique",
+  "c": [
+   "#3b4a5e",
+   "#f2c14e",
+   "stripes"
+  ]
+ },
+ {
+  "id": "d_sma",
+  "name": "Haut-Sassandra Marahoué FC",
+  "short": "SMA",
+  "city": "Daloa",
+  "dist": "Sassandra-Marahoué",
+  "prof": "vitesse",
+  "c": [
+   "#2f7a3a",
+   "#f4f1e8",
+   "hoops"
+  ]
+ },
+ {
+  "id": "d_sav",
+  "name": "Savanes Poro FC",
+  "short": "SAV",
+  "city": "Korhogo",
+  "dist": "Savanes",
+  "prof": "physique",
+  "c": [
+   "#d8c23a",
+   "#1d1d1d",
+   "sash"
+  ]
+ },
+ {
+  "id": "d_val",
+  "name": "Vallée du Bandama FC",
+  "short": "VAL",
+  "city": "Bouaké",
+  "dist": "Vallée du Bandama",
+  "prof": "equilibre",
+  "c": [
+   "#f2a41c",
+   "#14365c",
+   "halves"
+  ]
+ },
+ {
+  "id": "d_wor",
+  "name": "Woroba Worodougou FC",
+  "short": "WOR",
+  "city": "Séguéla",
+  "dist": "Woroba",
+  "prof": "vitesse",
+  "c": [
+   "#d9d9d9",
+   "#c9502b",
+   "chevron"
+  ]
+ },
+ {
+  "id": "d_zan",
+  "name": "Zanzan Gontougo FC",
+  "short": "ZAN",
+  "city": "Bondoukou",
+  "dist": "Zanzan",
+  "prof": "physique",
+  "c": [
+   "#8a1c3c",
+   "#f2c14e",
+   "plain"
+  ]
+ },
+ {
+  "id": "d_abv",
+  "name": "Abidjan District FC",
+  "short": "ABV",
+  "city": "Abidjan",
+  "dist": "District autonome d'Abidjan",
+  "prof": "technique",
+  "c": [
+   "#e2702f",
+   "#f4f1e8",
+   "stripes"
+  ]
+ },
+ {
+  "id": "d_abp",
+  "name": "Riviera Stars FC",
+  "short": "RIV",
+  "city": "Abidjan · Riviera",
+  "dist": "District autonome d'Abidjan (club privé)",
+  "prof": "technique",
+  "c": [
+   "#14365c",
+   "#e2b15a",
+   "sash"
+  ],
+  "priv": true
+ },
+ {
+  "id": "d_yav",
+  "name": "Yamoussoukro District FC",
+  "short": "YAV",
+  "city": "Yamoussoukro",
+  "dist": "District autonome de Yamoussoukro",
+  "prof": "equilibre",
+  "c": [
+   "#6b2d8f",
+   "#f4f1e8",
+   "hoops"
+  ],
+  "priv": false
+ },
+ {
+  "id": "d_yap",
+  "name": "Kossou Sporting",
+  "short": "KOS",
+  "city": "Yamoussoukro · Kossou",
+  "dist": "District autonome de Yamoussoukro (club privé)",
+  "prof": "equilibre",
+  "c": [
+   "#127a7a",
+   "#f2c14e",
+   "halves"
+  ],
+  "priv": true
+ }
+]

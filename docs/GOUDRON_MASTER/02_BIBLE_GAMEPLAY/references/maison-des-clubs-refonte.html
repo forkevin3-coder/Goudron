@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maison des Clubs — refonte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,680&family=Outfit:wght@380;460;560;650&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #10140f;
+    --bg2: #171c15;
+    --card: #1c2319;
+    --card2: #232b1f;
+    --line: rgba(232, 220, 196, 0.08);
+    --ink: #f4efe4;
+    --muted: #a39b8c;
+    --faint: #6f6a60;
+    --orange: #e36a1e;
+    --orange2: #ff8a3d;
+    --green: #8fb56a;
+    --green2: #c6e2a4;
+    --pitch: #2f6a3a;
+    --pitch2: #275c32;
+    --danger: #d4654a;
+    --gold: #e2b15a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #070806; color: var(--ink); font-family: Outfit, sans-serif; }
+  body { min-height: 100vh; display: flex; justify-content: center; padding: 28px 16px 48px; }
+  .stage { width: min(1100px, 100%); }
+  .top {
+    display: flex; justify-content: space-between; align-items: flex-end; gap: 16px;
+    margin-bottom: 18px;
+  }
+  .brand { font-family: Fraunces, serif; font-size: 28px; letter-spacing: -0.04em; line-height: 0.95; }
+  .brand span { color: var(--orange2); }
+  .brand small { display: block; margin-top: 6px; font-family: Outfit, sans-serif; font-size: 13px; color: var(--muted); font-weight: 460; letter-spacing: 0; }
+  .pills { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+  .pill {
+    border: 1px solid var(--line); background: #141910; color: var(--muted);
+    border-radius: 999px; padding: 8px 12px; font-size: 12px; cursor: pointer;
+  }
+  .pill.on { color: var(--ink); border-color: rgba(227,106,30,.7); background: #2a1c12; }
+  .row { display: flex; gap: 22px; align-items: flex-start; justify-content: center; flex-wrap: wrap; }
+  .phone {
+    width: 390px; height: 844px; background: var(--bg); border-radius: 36px;
+    border: 1px solid #2a3126; overflow: hidden; position: relative;
+    box-shadow: 0 30px 80px rgba(0,0,0,.45);
+  }
+  .status {
+    height: 46px; display: flex; align-items: flex-end; justify-content: space-between;
+    padding: 0 22px 8px; font-size: 12px; color: var(--ink); font-weight: 650;
+  }
+  .appbar {
+    height: 52px; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 16px;
+  }
+  .back, .iconbtn {
+    width: 34px; height: 34px; border-radius: 17px; background: #1a2018;
+    display: grid; place-items: center; color: var(--ink); font-size: 16px;
+  }
+  .appbar h1 { font-size: 16px; font-weight: 650; margin: 0; letter-spacing: -0.02em; }
+  .phase {
+    height: 4px; display: flex; gap: 3px; padding: 0 16px;
+  }
+  .phase i { flex: 1; height: 4px; border-radius: 4px; background: #2c3428; }
+  .phase i.on { background: var(--orange); }
+  .phase i.done { background: var(--green); }
+  .screen { height: 688px; overflow: auto; padding: 12px 16px 88px; }
+  .screen::-webkit-scrollbar { width: 0; }
+  .clubline { display: flex; gap: 12px; align-items: center; margin: 8px 0 14px; }
+  .crest {
+    width: 46px; height: 46px; border-radius: 12px; background:
+      linear-gradient(160deg, #f7f1e4, #d9d0be);
+    display: grid; place-items: center; position: relative;
+  }
+  .crest em {
+    width: 28px; height: 22px; border-radius: 4px 4px 8px 8px; background: #f4efe6;
+    border: 2px solid #243024; position: relative; font-style: normal;
+  }
+  .crest em:before {
+    content: ""; position: absolute; left: 4px; right: 4px; top: 6px; height: 8px;
+    background: #1d4e86; clip-path: polygon(0 0, 100% 0, 50% 100%);
+  }
+  .clubline h2 { margin: 0; font-size: 18px; letter-spacing: -0.03em; }
+  .clubline p { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+  .meta { display: flex; gap: 8px; margin-bottom: 12px; }
+  .meta .box {
+    flex: 1; background: var(--card); border-radius: 14px; padding: 10px 12px;
+    border: 1px solid var(--line);
+  }
+  .k { font-size: 10px; letter-spacing: .12em; color: var(--faint); font-weight: 650; }
+  .v { margin-top: 3px; font-size: 16px; font-weight: 650; letter-spacing: -0.03em; }
+  .v small { font-size: 12px; color: var(--muted); font-weight: 460; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+    padding: 14px; margin-bottom: 12px;
+  }
+  .card h3 { margin: 0 0 4px; font-size: 16px; letter-spacing: -0.03em; }
+  .sub { color: var(--muted); font-size: 13px; line-height: 1.35; margin: 0 0 12px; }
+  .conf { display: flex; justify-content: space-between; align-items: baseline; }
+  .bar { height: 8px; background: #2a3126; border-radius: 8px; margin: 8px 0 6px; overflow: hidden; }
+  .bar span { display: block; height: 100%; width: 60%; background: linear-gradient(90deg, #c9842a, #e2b15a); }
+  .hint { color: var(--faint); font-size: 12px; }
+  .mission { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; border-top: 1px solid var(--line); }
+  .mission:first-of-type { border-top: 0; }
+  .dot { width: 18px; height: 18px; border-radius: 9px; border: 1.5px solid #4a4338; margin-top: 1px; flex: none; }
+  .dot.live { border-color: var(--gold); box-shadow: inset 0 0 0 4px #2a2114; }
+  .mission b { display: block; font-size: 14px; font-weight: 560; }
+  .mission span { color: var(--muted); font-size: 12px; }
+  .tag { margin-left: auto; color: var(--gold); font-size: 12px; white-space: nowrap; }
+  .btn {
+    width: 100%; border: 0; border-radius: 14px; background: var(--orange); color: #1a0d05;
+    font-weight: 650; font-size: 15px; padding: 14px; font-family: inherit; cursor: pointer;
+  }
+  .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+  .tabs {
+    position: absolute; left: 12px; right: 12px; bottom: 12px; height: 62px;
+    background: #1a2018ee; border: 1px solid var(--line); border-radius: 20px;
+    display: flex; backdrop-filter: blur(8px);
+  }
+  .tabs button {
+    flex: 1; background: none; border: 0; color: var(--faint); font-family: inherit; font-size: 11px; cursor: pointer;
+  }
+  .tabs button.on { color: var(--orange2); }
+  .choice {
+    display: flex; gap: 10px; align-items: center; padding: 12px; border-radius: 14px;
+    background: var(--card2); border: 1px solid var(--line); margin-bottom: 8px; cursor: pointer;
+  }
+  .choice.on { border-color: var(--orange); background: #2a1c12; }
+  .choice .mark { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; font-size: 12px; font-weight: 650; }
+  .choice b { display: block; font-size: 14px; }
+  .choice span { color: var(--muted); font-size: 12px; }
+  .pitch {
+    background: linear-gradient(180deg, var(--pitch), var(--pitch2));
+    border-radius: 16px; padding: 14px 10px 16px; position: relative; min-height: 250px;
+  }
+  .pitch:before {
+    content: ""; position: absolute; inset: 10px; border: 1px solid rgba(255,255,255,.18); border-radius: 8px;
+  }
+  .lineup { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 16px; }
+  .lane { display: flex; justify-content: space-around; }
+  .pl { text-align: center; width: 70px; }
+  .pl i {
+    display: grid; place-items: center; width: 34px; height: 34px; margin: 0 auto 4px;
+    border-radius: 17px; background: #f4efe4; color: #1b2418; font-style: normal; font-size: 11px; font-weight: 650;
+  }
+  .pl b { display: block; font-size: 11px; font-weight: 560; }
+  .segs { display: flex; gap: 6px; margin-bottom: 10px; }
+  .segs button, .tacs button {
+    flex: 1; background: #141910; color: var(--muted); border: 1px solid var(--line);
+    border-radius: 12px; padding: 8px 2px; font-family: inherit; font-size: 11px; cursor: pointer;
+  }
+  .segs button.on, .tacs button.on { color: #1a0d05; background: var(--orange2); border-color: transparent; font-weight: 650; }
+  .tacs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+  .tacs button { flex: none; padding: 8px 10px; }
+  .note { font-size: 12px; color: var(--muted); line-height: 1.4; }
+  .player {
+    display: grid; grid-template-columns: 28px 42px 1fr auto; gap: 8px; align-items: center;
+    padding: 8px 0; border-top: 1px solid var(--line); font-size: 13px;
+  }
+  .pos { font-size: 10px; font-weight: 650; letter-spacing: .04em; background: #243024; color: var(--green2); border-radius: 7px; text-align: center; padding: 4px 0; }
+  .pos.gb { background: #3a2e14; color: var(--gold); }
+  .pos.at { background: #3a2218; color: #f0b09a; }
+  .rating { font-weight: 650; }
+  .empty {
+    border: 1px dashed rgba(232,220,196,.2); border-radius: 16px; padding: 16px; text-align: left;
+  }
+  .empty b { display: block; margin-bottom: 4px; }
+  .scout { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+  .who { font-size: 13px; }
+  .who b { display: block; }
+  .who span { color: var(--muted); font-size: 12px; }
+  .legend { margin-top: 18px; color: var(--muted); font-size: 13px; line-height: 1.45; max-width: 390px; }
+  .hide { display: none; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="top">
+    <div class="brand">Maison <span>des Clubs</span><small>Refonte · Cocody Université FC · août 2026</small></div>
+    <div class="pills">
+      <button class="pill on" data-go="home">Accueil</button>
+      <button class="pill" data-go="open">Ouvrir</button>
+      <button class="pill" data-go="team">Équipe</button>
+      <button class="pill" data-go="youth">Jeunes</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="phone" id="phone">
+      <div class="status"><span>21:41</span><span>4G · 58</span></div>
+      <div class="appbar">
+        <div class="back">‹</div>
+        <h1>Maison des Clubs</h1>
+        <div class="iconbtn">⌂</div>
+      </div>
+      <div class="phase"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+
+      <div class="screen" id="home">
+        <div class="clubline">
+          <div class="crest"><em></em></div>
+          <div>
+            <h2>Cocody Université FC</h2>
+            <p>Abidjan · Cocody · saison 1 / 12</p>
+          </div>
+        </div>
+        <div class="meta">
+          <div class="box"><div class="k">TRÉSORERIE</div><div class="v">201 M <small>FCFA</small></div></div>
+          <div class="box"><div class="k">MASSE / MOIS</div><div class="v">5,6 <small>/ 7,6 M</small></div></div>
+        </div>
+        <div class="card">
+          <div class="conf"><div class="k">CONFIANCE DU PRÉSIDENT</div><b>60 / 100</b></div>
+          <div class="bar"><span></span></div>
+          <div class="hint">Tombe si tu perds le derby, finis hors top 12, ou passes la masse dans le rouge.</div>
+        </div>
+        <div class="card">
+          <div class="k">DÉCISION DU MOIS · AOÛT</div>
+          <h3>Ouvrir la saison</h3>
+          <p class="sub">Choisis le sponsor maillot. Les objectifs sont déjà sur la table : maintien, derby, un formé au club.</p>
+          <button class="btn" data-go="open">Choisir le sponsor</button>
+        </div>
+        <div class="card">
+          <h3>Mission</h3>
+          <div class="mission"><div class="dot"></div><div><b>Finir top 12</b><span>Championnat pas commencé</span></div><div class="tag">saison</div></div>
+          <div class="mission"><div class="dot live"></div><div><b>Ne pas perdre contre Port-Bouët</b><span>Derby · date à venir</span></div><div class="tag">1 match</div></div>
+          <div class="mission"><div class="dot live"></div><div><b>Yapi, 10 matchs</b><span>Formé au club · 0 / 10</span></div><div class="tag">jeunes</div></div>
+          <div class="mission"><div class="dot live"></div><div><b>Caisse dans le vert</b><span>201 M aujourd’hui · se rejoue chaque mois</span></div><div class="tag">en cours</div></div>
+        </div>
+      </div>
+
+      <div class="screen hide" id="open">
+        <div class="k">AOÛT 2026 · OUVERTURE</div>
+        <h2 style="margin:6px 0 4px; letter-spacing:-.03em;">Sponsor maillot</h2>
+        <p class="sub">Un seul contrat. L’argent entre en septembre. La durée compte plus que le plus gros chèque.</p>
+        <div class="choice on" data-sponsor="lagune">
+          <div class="mark" style="background:#1d4e86;color:#fff;">LB</div>
+          <div><b>Lagune Boissons</b><span>18 M FCFA / an · 2 ans · stable</span></div>
+        </div>
+        <div class="choice" data-sponsor="campus">
+          <div class="mark" style="background:#e2b15a;color:#1a0d05;">CU</div>
+          <div><b>Campus Université</b><span>11 M FCFA / an · 3 ans · image jeunes</span></div>
+        </div>
+        <div class="choice" data-sponsor="express">
+          <div class="mark" style="background:#d4654a;color:#fff;">NX</div>
+          <div><b>Nouchi Express</b><span>26 M FCFA · 6 mois · repart en janvier</span></div>
+        </div>
+        <div class="card">
+          <div class="k">CE QUE LE PRÉSIDENT RETIENT</div>
+          <p class="sub" style="margin-top:8px;">Top 12. Nul ou mieux contre Port-Bouët Aviation. Dix matchs pour un formé au club. Pas de mois dans le rouge.</p>
+          <div class="hint">Recommandé : Lagune Boissons. Le chèque court de Nouchi Express gonfle août et te laisse nu au mercato d’hiver.</div>
+        </div>
+        <button class="btn">Signer Lagune · ouvrir la saison</button>
+      </div>
+
+      <div class="screen hide" id="team">
+        <div class="conf"><h2 style="margin:0; font-size:20px;">Équipe</h2><span class="hint">18 joueurs</span></div>
+        <p class="sub">Note unique, sur 99. Valeur en FCFA. Yapi est verrouillé : c’est le formé au club.</p>
+        <div class="segs">
+          <button>4-3-3</button><button class="on">4-4-2</button><button>3-5-2</button><button>5-3-2</button>
+        </div>
+        <div class="pitch">
+          <div class="lineup">
+            <div class="lane">
+              <div class="pl"><i>64</i><b>I. Adjé</b></div>
+              <div class="pl"><i>66</i><b>Ehui</b></div>
+            </div>
+            <div class="lane">
+              <div class="pl"><i>62</i><b>Amani</b></div>
+              <div class="pl"><i>70</i><b>Gnahoré</b></div>
+              <div class="pl"><i>64</i><b>Gogoua</b></div>
+              <div class="pl"><i>66</i><b>Yéo</b></div>
+            </div>
+            <div class="lane">
+              <div class="pl"><i>64</i><b>Z. Koua</b></div>
+              <div class="pl"><i>65</i><b>A. Adjé</b></div>
+              <div class="pl"><i>70</i><b>W. Koua</b></div>
+              <div class="pl"><i>63</i><b>Ouattara</b></div>
+            </div>
+            <div class="lane"><div class="pl"><i>63</i><b>Yapi</b></div></div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:12px;">
+          <div class="k">PLAN PAR DÉFAUT</div>
+          <div class="tacs" style="margin-top:8px;">
+            <button>Bloc bas</button>
+            <button class="on">Équilibré</button>
+            <button>Pressing</button>
+          </div>
+          <div class="note">Pressing : plus d’occasions, plus de buts encaissés. À sortir seulement à Cocody, contre un bas de tableau. Derby : bloc bas.</div>
+        </div>
+        <div class="player"><span></span><span class="pos gb">GB</span><span>Franck Yapi · 18 · formé ici</span><b class="rating">63</b></div>
+        <div class="player"><span></span><span class="pos">DEF</span><span>Wilfried Koua · 26 · 42 M</span><b class="rating">70</b></div>
+        <div class="player"><span></span><span class="pos">MIL</span><span>Landry Gnahoré · 30 · 98 M</span><b class="rating">70</b></div>
+        <div class="player"><span></span><span class="pos at">ATT</span><span>Issa Adjé · 24 · 110 M</span><b class="rating">64</b></div>
+        <p class="hint">Valeurs en FCFA. Plus de colonne en euros.</p>
+      </div>
+
+      <div class="screen hide" id="youth">
+        <div class="k">FORMATION · AOÛT</div>
+        <h2 style="margin:6px 0 4px;">Jeunes de Cocody</h2>
+        <p class="sub">Pas un onglet vide. Le comité existe avant le premier match. Tu n’as encore signé personne.</p>
+        <div class="card">
+          <div class="scout">
+            <div class="who"><b>Adjoint · Koné</b><span>Libre cette semaine</span></div>
+            <div class="who" style="text-align:right;"><b>Scout · Bamba</b><span>Pas encore envoyé</span></div>
+          </div>
+        </div>
+        <div class="empty">
+          <b>Comité de vacances · Cocody</b>
+          <span class="note">48 gamins inscrits. Tournoi de quartier dans 9 jours, terrain de l’université. Envoie Bamba : il revient avec 3 noms, pas une liste de 40.</span>
+        </div>
+        <div style="height:10px;"></div>
+        <button class="btn">Envoyer Bamba à Cocody</button>
+        <div style="height:8px;"></div>
+        <button class="btn ghost">Ajouter Yopougon · coûte 1 semaine</button>
+        <div class="card" style="margin-top:12px;">
+          <div class="k">DÉJÀ AU CLUB</div>
+          <div class="player" style="border:0;"><span class="pos gb">GB</span><span>Franck Yapi · 18</span><b>0/10</b></div>
+          <div class="hint">Titulaire verrouillé jusqu’au 10e match. Après, tu décides s’il garde la cage.</div>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="on" data-go="home">Accueil</button>
+        <button data-go="team">Équipe</button>
+        <button data-go="youth">Jeunes</button>
+        <button data-go="open">Saison</button>
+      </div>
+    </div>
+    <div class="legend">
+      <b style="color:#f4efe4;">Ce qui change</b><br>
+      Une décision par mois, dans la carte, pas dans une barre qui cache le XI.<br>
+      Confiance du président en or, pas en vert : 60, c’est fragile.<br>
+      La caisse n’est plus cochée d’avance. Elle se rejoue chaque mois.<br>
+      Yapi a un prénom sur le terrain. Une note. Une monnaie.<br>
+      Jeunes ouvert en août : un scout, un comité, trois noms.
+    </div>
+  </div>
+</div>
+<script>
+  function show(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.add('hide'));
+    document.getElementById(id).classList.remove('hide');
+    document.querySelectorAll('[data-go]').forEach(b => b.classList.toggle('on', b.dataset.go === id));
+  }
+  document.body.addEventListener('click', e => {
+    const t = e.target.closest('[data-go]');
+    if (t) show(t.dataset.go);
+    const c = e.target.closest('[data-sponsor]');
+    if (c) {
+      document.querySelectorAll('[data-sponsor]').forEach(x => x.classList.remove('on'));
+      c.classList.add('on');
+    }
+  });
+</script>
+</body>
+</html>

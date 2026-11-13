@@ -1,0 +1,346 @@
+{
+ "INFRA": [
+  {
+   "k": "terrain",
+   "n": "Terrain d'entraînement",
+   "lv": [
+    "Latérite",
+    "Synthétique",
+    "Pelouse hybride"
+   ],
+   "cost": [
+    0,
+    80000000,
+    260000000
+   ],
+   "up": 7000000,
+   "fx": "Les joueurs progressent plus vite et se blessent moins à l'entraînement."
+  },
+  {
+   "k": "medical",
+   "n": "Centre médical",
+   "lv": [
+    "Trousse de secours",
+    "Kiné et infirmerie",
+    "Médecin du sport",
+    "Imagerie et récupération"
+   ],
+   "cost": [
+    0,
+    35000000,
+    120000000,
+    320000000
+   ],
+   "up": 6000000,
+   "fx": "Moins de blessures, retours plus rapides, meilleure récupération entre les matchs."
+  },
+  {
+   "k": "muscu",
+   "n": "Préparation physique",
+   "lv": [
+    "Aucune",
+    "Salle de musculation",
+    "Centre de préparation"
+   ],
+   "cost": [
+    0,
+    25000000,
+    70000000
+   ],
+   "up": 3000000,
+   "fx": "Le physique progresse chaque saison et les joueurs se fatiguent moins en match."
+  },
+  {
+   "k": "video",
+   "n": "Cellule vidéo et data",
+   "lv": [
+    "Aucune",
+    "Analyse vidéo",
+    "Data scouting"
+   ],
+   "cost": [
+    0,
+    60000000,
+    240000000
+   ],
+   "up": 9000000,
+   "fx": "Rapports de recrutement plus fiables. Niveau 1 : accès au showcase des académies. Niveau 2 : une base de données de joueurs chaque juin."
+  },
+  {
+   "k": "dortoir",
+   "n": "Dortoir et cantine",
+   "lv": [
+    "Aucun",
+    "Dortoir",
+    "Internat complet"
+   ],
+   "cost": [
+    0,
+    55000000,
+    160000000
+   ],
+   "up": 5000000,
+   "fx": "Les moins de 20 ans progressent plus vite, et les familles font davantage confiance au club."
+  },
+  {
+   "k": "ecole",
+   "n": "Partenariat scolaire",
+   "lv": [
+    "Aucun",
+    "Cours du soir",
+    "Lycée partenaire"
+   ],
+   "cost": [
+    0,
+    15000000,
+    40000000
+   ],
+   "up": 3000000,
+   "fx": "Le niveau scolaire des jeunes monte : meilleure adaptation à l'étranger, et un plan B pour ceux qui ne passeront pas pro."
+  },
+  {
+   "k": "eclairage",
+   "n": "Éclairage du stade",
+   "lv": [
+    "Aucun",
+    "Projecteurs LED"
+   ],
+   "cost": [
+    0,
+    90000000
+   ],
+   "up": 4000000,
+   "fx": "Matchs en soirée : plus de spectateurs, sponsors plus intéressés."
+  },
+  {
+   "k": "bus",
+   "n": "Bus du club",
+   "lv": [
+    "Location",
+    "Bus du club"
+   ],
+   "cost": [
+    0,
+    35000000
+   ],
+   "up": 2000000,
+   "fx": "Voyages moins fatigants et meilleures performances à l'extérieur."
+  }
+ ],
+ "MOD_LEVELS": [
+  "Football de quartier",
+  "Club structuré",
+  "Centre performant",
+  "Analyse vidéo",
+  "Data et excellence"
+ ],
+ "GOALS": {
+  "conf": {
+   "l": "Se qualifier pour la Coupe des Confédérations",
+   "h": "Finir 3e ou remporter la Coupe du Père Fondateur. Une place en C1 Afrique compte aussi.",
+   "win": 15,
+   "lose": -6,
+   "prime": 15000000
+  },
+  "cup": {
+   "l": "Remporter la Coupe du Père Fondateur",
+   "h": "Quatre tours à élimination directe. Un seul faux pas suffit.",
+   "win": 15,
+   "lose": -4,
+   "prime": 10000000
+  },
+  "star": {
+   "l": "Recruter un jeune superstar",
+   "h": "Signer en juin un jeune dont le potentiel estimé atteint 80 ou plus.",
+   "win": 10,
+   "lose": -5,
+   "prime": 5000000
+  },
+  "montee": {
+   "l": "Monter en Ligue des Pros",
+   "h": "Finir dans les 3 premiers de Ligue 2.",
+   "win": 15,
+   "lose": -6,
+   "prime": 10000000
+  }
+ },
+ "SCOUT_LVL": [
+  "",
+  "Débutant",
+  "Connu des quartiers",
+  "Vieux Père respecté"
+ ],
+ "SHOP_PRICE": [
+  [
+   3000,
+   "Populaire",
+   1.35
+  ],
+  [
+   5000,
+   "Standard",
+   1
+  ],
+  [
+   10000,
+   "Premium",
+   0.55
+  ]
+ ],
+ "LEDGER": {
+  "sub": "Subvention fédérale",
+  "tv": "Droits TV",
+  "spo": "Sponsors",
+  "bil": "Billetterie",
+  "mer": "Maillots vendus",
+  "sta": "Staff de recrutement",
+  "pri": "Primes sportives",
+  "tra": "Ventes de joueurs",
+  "sal": "Salaires",
+  "ins": "Installations",
+  "rec": "Recrutement",
+  "div": "Divers",
+  "act": "Apport des actionnaires",
+  "divi": "Dividendes",
+  "nl": "Ligue des Espoirs"
+ },
+ "PRIZES": {
+  "c1": {
+   "prelim": 100000,
+   "group": 700000,
+   "qf": 900000,
+   "sf": 1200000,
+   "final": 2000000,
+   "win": 6000000
+  },
+  "c2": {
+   "prelim": 60000,
+   "group": 400000,
+   "qf": 550000,
+   "sf": 750000,
+   "final": 1250000,
+   "win": 4000000
+  }
+ },
+ "CO_SK": [
+  [
+   "tac",
+   "Tactique"
+  ],
+  [
+   "for",
+   "Formation"
+  ],
+  [
+   "mot",
+   "Motivation"
+  ],
+  [
+   "rec",
+   "Recrutement"
+  ],
+  [
+   "ges",
+   "Gestion"
+  ]
+ ],
+ "MGR_TR": {
+  "form": [
+   "Le Formateur",
+   "Les jeunes progressent plus vite avec toi.",
+   "Progression des moins de 21 ans +15 %. Chaque U18 signé gagne 1 point de potentiel."
+  ],
+  "tact": [
+   "Le Tacticien",
+   "Tu lis le jeu mieux que personne.",
+   "Ton équipe gagne un bonus de force à chaque match."
+  ],
+  "nego": [
+   "Le Négociateur",
+   "Tu sais parler aux familles et aux présidents.",
+   "Les familles demandent 12 % de moins et sont plus patientes."
+  ],
+  "rass": [
+   "Le Rassembleur",
+   "Le vestiaire te suit les yeux fermés.",
+   "Le moral démarre à « Confiant » et ne descend jamais sous « Inquiet »."
+  ],
+  "vieux": [
+   "Le Vieux Père du quartier",
+   "Des Maracanas aux comités, tout Abidjan te connaît.",
+   "Tes recruteurs trouvent un joueur de plus par semaine et le connaissent mieux."
+  ]
+ },
+ "MGR_NAT": [
+  [
+   "ci",
+   "🇨🇮",
+   "Côte d'Ivoire"
+  ],
+  [
+   "ml",
+   "🇲🇱",
+   "Mali"
+  ],
+  [
+   "bf",
+   "🇧🇫",
+   "Burkina Faso"
+  ],
+  [
+   "gh",
+   "🇬🇭",
+   "Ghana"
+  ],
+  [
+   "gn",
+   "🇬🇳",
+   "Guinée"
+  ],
+  [
+   "sn",
+   "🇸🇳",
+   "Sénégal"
+  ],
+  [
+   "cm",
+   "🇨🇲",
+   "Cameroun"
+  ],
+  [
+   "ng",
+   "🇳🇬",
+   "Nigeria"
+  ],
+  [
+   "tg",
+   "🇹🇬",
+   "Togo"
+  ],
+  [
+   "bj",
+   "🇧🇯",
+   "Bénin"
+  ],
+  [
+   "lr",
+   "🇱🇷",
+   "Libéria"
+  ],
+  [
+   "ma",
+   "🇲🇦",
+   "Maroc"
+  ],
+  [
+   "fr",
+   "🇫🇷",
+   "France"
+  ],
+  [
+   "be",
+   "🇧🇪",
+   "Belgique"
+  ]
+ ]
+}

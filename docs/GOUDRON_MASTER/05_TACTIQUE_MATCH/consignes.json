@@ -1,0 +1,431 @@
+{
+ "TACTICS": {
+  "bloc": {
+   "l": "Bloc bas",
+   "f": 0.71,
+   "a": 0.65
+  },
+  "equi": {
+   "l": "Équilibré",
+   "f": 1,
+   "a": 1
+  },
+  "press": {
+   "l": "Pressing haut",
+   "f": 1.23,
+   "a": 1.26
+  },
+  "tout": {
+   "l": "Tout pour l'attaque",
+   "f": 1.37,
+   "a": 1.41
+  }
+ },
+ "STYLES": {
+  "equi": {
+   "n": "Équilibré",
+   "d": "Ni trop haut, ni trop bas. Une équipe compacte.",
+   "k": [
+    "pas",
+    "def"
+   ],
+   "build": "equi",
+   "def": "equi",
+   "r": {
+    "GB": [
+     "gb"
+    ],
+    "DEF": [
+     "stop",
+     "rel",
+     "stop",
+     "lat",
+     "lat"
+    ],
+    "MIL": [
+     "rec",
+     "b2b",
+     "men",
+     "mof",
+     "b2b"
+    ],
+    "ATT": [
+     "ail",
+     "ac",
+     "ail"
+    ]
+   },
+   "pro": [
+    "Équipe compacte",
+    "Peu de déchet"
+   ],
+   "con": [
+    "Pas de point fort marqué"
+   ]
+  },
+  "taka": {
+   "n": "Tiki-taka de quartier",
+   "d": "Passes courtes, on confisque le ballon.",
+   "k": [
+    "pas",
+    "tec"
+   ],
+   "build": "court",
+   "def": "equi",
+   "r": {
+    "GB": [
+     "gbl"
+    ],
+    "DEF": [
+     "rel",
+     "stop",
+     "rel",
+     "lat",
+     "lat"
+    ],
+    "MIL": [
+     "men",
+     "b2b",
+     "mof",
+     "men",
+     "b2b"
+    ],
+    "ATT": [
+     "ail",
+     "f9",
+     "ail"
+    ]
+   },
+   "pro": [
+    "Construction patiente",
+    "Garde le ballon"
+   ],
+   "con": [
+    "Manque parfois de profondeur"
+   ]
+  },
+  "contre": {
+   "n": "Contre éclair",
+   "d": "On défend ensemble et on part vite vers l'avant.",
+   "k": [
+    "vit",
+    "def"
+   ],
+   "build": "contre",
+   "def": "bloc",
+   "r": {
+    "GB": [
+     "gb"
+    ],
+    "DEF": [
+     "stop",
+     "stop",
+     "rug",
+     "lat",
+     "lat"
+    ],
+    "MIL": [
+     "rec",
+     "b2b",
+     "b2b",
+     "rec",
+     "b2b"
+    ],
+    "ATT": [
+     "ail",
+     "ac",
+     "ail"
+    ]
+   },
+   "pro": [
+    "Dangereux en contre-attaque",
+    "Solide derrière"
+   ],
+   "con": [
+    "Laisse le ballon à l'adversaire"
+   ]
+  },
+  "press": {
+   "n": "Pressing tout terrain",
+   "d": "On harcèle l'adversaire dès sa surface.",
+   "k": [
+    "phy",
+    "vit"
+   ],
+   "build": "equi",
+   "def": "press",
+   "r": {
+    "GB": [
+     "gbl"
+    ],
+    "DEF": [
+     "stop",
+     "rel",
+     "stop",
+     "lat",
+     "lat"
+    ],
+    "MIL": [
+     "b2b",
+     "rec",
+     "b2b",
+     "b2b",
+     "rec"
+    ],
+    "ATT": [
+     "ail",
+     "ren",
+     "ail"
+    ]
+   },
+   "pro": [
+    "Récupère le ballon haut",
+    "Étouffe les équipes techniques"
+   ],
+   "con": [
+    "Fatigue en fin de match",
+    "Espaces dans le dos"
+   ]
+  },
+  "direct": {
+   "n": "Jeu direct",
+   "d": "Ballons longs vers un attaquant costaud.",
+   "k": [
+    "phy",
+    "fin"
+   ],
+   "build": "long",
+   "def": "equi",
+   "r": {
+    "GB": [
+     "gb"
+    ],
+    "DEF": [
+     "stop",
+     "rug",
+     "stop",
+     "stop",
+     "lat"
+    ],
+    "MIL": [
+     "rec",
+     "b2b",
+     "b2b",
+     "rec",
+     "mof"
+    ],
+    "ATT": [
+     "ac",
+     "ren",
+     "ac"
+    ]
+   },
+   "pro": [
+    "Efficace dans les airs",
+    "Simple et rapide"
+   ],
+   "con": [
+    "Jeu prévisible"
+   ]
+  },
+  "rue": {
+   "n": "Football de rue",
+   "d": "Dribbles, gestes techniques, on se fait plaisir.",
+   "k": [
+    "tec",
+    "vit"
+   ],
+   "build": "court",
+   "def": "tout",
+   "r": {
+    "GB": [
+     "gb"
+    ],
+    "DEF": [
+     "rel",
+     "stop",
+     "lat",
+     "lat",
+     "stop"
+    ],
+    "MIL": [
+     "mof",
+     "men",
+     "b2b",
+     "mof",
+     "men"
+    ],
+    "ATT": [
+     "ail",
+     "f9",
+     "ail"
+    ]
+   },
+   "pro": [
+    "Imprévisible",
+    "Le public adore"
+   ],
+   "con": [
+    "Fragile derrière"
+   ]
+  }
+ },
+ "ROLES": {
+  "gb": {
+   "pos": "GB",
+   "n": "Gardien classique",
+   "k": [
+    "def",
+    "men"
+   ]
+  },
+  "gbl": {
+   "pos": "GB",
+   "n": "Gardien libéro",
+   "k": [
+    "pas",
+    "vit"
+   ]
+  },
+  "stop": {
+   "pos": "DEF",
+   "n": "Stoppeur",
+   "k": [
+    "def",
+    "phy"
+   ]
+  },
+  "rel": {
+   "pos": "DEF",
+   "n": "Défenseur relanceur",
+   "k": [
+    "pas",
+    "def"
+   ]
+  },
+  "lat": {
+   "pos": "DEF",
+   "n": "Latéral offensif",
+   "k": [
+    "vit",
+    "pas"
+   ]
+  },
+  "rug": {
+   "pos": "DEF",
+   "n": "Défenseur rugueux",
+   "k": [
+    "phy",
+    "men"
+   ]
+  },
+  "rec": {
+   "pos": "MIL",
+   "n": "Récupérateur",
+   "k": [
+    "def",
+    "phy"
+   ]
+  },
+  "men": {
+   "pos": "MIL",
+   "n": "Meneur de jeu",
+   "k": [
+    "pas",
+    "tec"
+   ]
+  },
+  "b2b": {
+   "pos": "MIL",
+   "n": "Box-to-box",
+   "k": [
+    "phy",
+    "vit",
+    "pas"
+   ]
+  },
+  "mof": {
+   "pos": "MIL",
+   "n": "Milieu offensif",
+   "k": [
+    "tec",
+    "fin"
+   ]
+  },
+  "ac": {
+   "pos": "ATT",
+   "n": "Avant-centre pivot",
+   "k": [
+    "phy",
+    "fin"
+   ]
+  },
+  "f9": {
+   "pos": "ATT",
+   "n": "Faux 9",
+   "k": [
+    "pas",
+    "tec"
+   ]
+  },
+  "ail": {
+   "pos": "ATT",
+   "n": "Ailier rapide",
+   "k": [
+    "vit",
+    "tec"
+   ]
+  },
+  "ren": {
+   "pos": "ATT",
+   "n": "Renard des surfaces",
+   "k": [
+    "fin",
+    "men"
+   ]
+  }
+ },
+ "BUILD": {
+  "court": "Jeu court",
+  "equi": "Équilibré",
+  "long": "Jeu long",
+  "contre": "Contre rapide"
+ },
+ "NOU_PLAN": {
+  "simple": {
+   "l": "Jouer simple",
+   "d": "Chacun à son poste, pas de risque inutile.",
+   "f": 1,
+   "a": 1,
+   "show": 0
+  },
+  "talents": {
+   "l": "Laisser jouer les talents",
+   "d": "Plus de buts des deux côtés. Les pépites se montrent aux recruteurs.",
+   "f": 1.2,
+   "a": 1.18,
+   "show": 0.35
+  },
+  "bloc": {
+   "l": "Bloc et contre",
+   "d": "On ferme et on attend l'erreur. Moins de buts des deux côtés.",
+   "f": 0.8,
+   "a": 0.74,
+   "show": -0.15
+  }
+ },
+ "SPEEDS": {
+  "1": {
+   "r": 30,
+   "l": "Lent · 3 min"
+  },
+  "2": {
+   "r": 60,
+   "l": "Normal · 90 s"
+  },
+  "4": {
+   "r": 120,
+   "l": "Rapide · 45 s"
+  }
+ }
+}

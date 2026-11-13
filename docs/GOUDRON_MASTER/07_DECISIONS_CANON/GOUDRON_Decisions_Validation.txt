@@ -1,0 +1,342 @@
+GOUDRON — DÉCISIONS CANON ET VALIDATIONS
+Version reconstruite le 12/11/2026 (voir l'avertissement ci-dessous).
+Statuts :
+  [FAIT vXX]   présent dans le jeu, version indiquée
+  [PARTIEL vXX] une partie existe, le reste est à faire
+  [À FAIRE]    décidé, pas encore codé
+  [EN ATTENTE] la décision elle-même n'est pas encore validée
+  [PROVISOIRE vXX] codé pour avancer, mais le format attend ta validation
+
+=== PRINCIPES ===
+- Jeu de management ivoirien original. Pas de copie de FIFA, EA FC ou Football Manager. Aucune marque, aucun logo, aucun sponsor réel, aucune personne réelle.
+- Public : 16-50 ans. Ton sérieux et respectueux, pas enfantin.
+- Mobile d'abord, en français. Palette : #0A2418, #F8F1E1, #F15A1A.
+- Pas de noms d'équipes ethniques.
+- Phase actuelle : AUDITER → CONSOLIDER → CORRIGER → APPROFONDIR LE GAMEPLAY. Ne pas empiler de nouvelles fonctionnalités.
+- Priorités : 1) les acteurs (modèle joueur) ; 2) le moteur de match ; 3) la Carrière District.
+- Aucune modification du jeu sans accord explicite. Ne jamais annoncer une publication sans avoir vérifié le commit et le déploiement. Ne pas inventer d'avancement.
+- [EN ATTENTE] Périmètre exact du MVP. Proposition actuelle : Carrière District de la reprise du club (1er mai 2026) jusqu'à la fin de la Noushi League, avec les suites de carrière ; la Ligue des Pros continue de fonctionner sans nouveau développement.
+
+=== INTERFACE ===
+- [FAIT v44] Bandeau permanent « Prochaine étape » supprimé. La progression se fait depuis l'Accueil.
+- [PARTIEL v44] Tout ce qui ressemble à un bouton est cliquable : noms de joueurs, clubs, entraîneurs et compétitions ouvrent leur fiche ; tuiles reliées à leur écran ou à une explication. Reste à vérifier liste par liste (voir JOUEURS : clic vers la fiche).
+- [FAIT v47] Le bilan de l'équipe est dans Équipe › Analyse.
+- [FAIT v41] Style sobre, calendrier daté jour par jour, présentation du club.
+- [FAIT v42] Maillots numérotés à la place des silhouettes, carte d'accréditation de l'entraîneur.
+- [FAIT v43] Entraîneurs : profils, compétences, contrats, adjoint, écran Entraîneurs.
+
+=== CARRIÈRE DISTRICT ===
+- Le club existe avant l'arrivée du manager, avec un effectif et un parcours régional. [FAIT v45 : histoire du club, effectif existant, parcours dans le tournoi régional]
+- Rôle du joueur : renforcer l'équipe avec les meilleurs talents de sa région. Le joueur explore librement le club.
+- [EN ATTENTE] Format exact du tournoi régional de qualification.
+    [PROVISOIRE v45] Ce qui est codé : 32 clubs, tirage en 4 chapeaux, 8 groupes de 4, les 2 premiers de chaque groupe (16 clubs) qualifiés pour la Noushi League, puis élimination directe pour le titre régional. Joué en mars-avril 2026, avant l'arrivée du manager, une seule fois (pas rejoué les saisons suivantes).
+    À valider : nombre de groupes, qualifiés par groupe, tournoi avant ou pendant la carrière, rejoué chaque saison ou non.
+- [FAIT v41] Mai à fin juin : recruter un groupe de 23. Date limite 30 juin. Après la date limite, seuls restent disponibles les joueurs libres et d'anciens internationaux en fin de carrière, encore expérimentés mais à l'endurance faible. L'endurance compte.
+- [FAIT] Noushi League du 25 juillet au 26 août.
+- [EN ATTENTE] Architecture de la Noushi League (voir la question en fin de fichier).
+- [EN ATTENTE] Options de carrière après un échec en Noushi League. Pistes évoquées : rejouer le championnat de district, prendre l'équipe B d'un club de Ligue des Pros, prendre un club de Ligue 2. À valider : lesquelles, à quelles conditions, choix libre ou proposé.
+- [FAIT v46] Matchs de Noushi League jouables en direct avec le groupe U18.
+
+=== LIGUE DES PROS ===
+- Miser sur les U18 et les pépites du championnat.
+- [FAIT] Résultats par groupe, au jour le jour, du 01/05/2026 au 01/06/2038.
+
+=== MATCH ===
+- Pas besoin de contrôler directement les 11 joueurs. Le manager intervient pendant le match.
+- [FAIT v46] Match en direct, durée choisie : 3, 4 ou 5 minutes. Pas d'accélération ; bouton « Simuler la fin ».
+- [FAIT v46] Barre du coach sous le terrain : Collectif, Individuel, Recadrer / encourager, Changer.
+- [FAIT v46] 5 changements.
+- [FAIT v46] Consigne individuelle : chaque joueur a deux options propres à son poste (gardien : relancer court / dégager long ; défenseur : rester en couverture / sortir sur le porteur ; milieu : se projeter / rester en soutien ; attaquant : provoquer / jouer simple). Toucher la même option une seconde fois ramène au jeu normal.
+- [FAIT v46] Recadrage et encouragement selon le caractère (professionnel, normal, sensible, fier, tête brûlée). Certains joueurs peuvent désobéir et ne plus défendre.
+- [FAIT v46] Causerie de mi-temps facultative, utile quand c'est crucial pour gagner ou passer un message.
+- [FAIT v46] Concentration du groupe et lectures de l'adjoint (couloirs, pressing, bloc trop bas, fatigue, doute, adversaire qui se découvre ou recule). Ne pas réagir coûte ; bien réagir donne un avantage. Mesuré sur 1 500 matchs simulés : 1,28 pt/match sans réaction, 1,44 en résultat immédiat, 1,52 en lisant le match.
+- [À FAIRE] Changement de formation et de structure en direct (la mentalité et les consignes changent déjà en direct ; la formation non).
+- [À FAIRE] Effet des tactiques dépendant des capacités réelles des joueurs (exemple : un pressing haut demande vitesse et physique ; sans eux, il doit coûter plus qu'il ne rapporte).
+- [PARTIEL v46] Distinction relance / dégagement du gardien : existe comme consigne individuelle ; à distinguer aussi dans les actions et le récit du match.
+- [À FAIRE] Ajouts au moteur : piège du hors-jeu, agressivité, type de tacle, sorties du gardien, plongeon du gardien, centres, passes en profondeur, jeu court / jeu direct détaillé, longs ballons, dribbles, tirs / tirs puissants, poussette et duels physiques.
+- 3D souhaitée, capacité à confirmer (formats et budgets transmis pour l'IA de rendu).
+
+=== JOUEURS ===
+- [À FAIRE] Identité permanente : un joueur garde le même identifiant, nom, visage, origine et caractère toute sa carrière, quel que soit son club ou sa catégorie (U18 → pro → étranger).
+- [À FAIRE] Historique saison par saison (matchs, buts, passes, note, club, catégorie). Aujourd'hui les statistiques repartent à zéro chaque saison.
+- [PARTIEL v44] Clic vers la fiche depuis toutes les listes. Les noms sont reliés automatiquement ; il reste des listes et des écrans à vérifier un par un (adversaires générés, récits de match, terrain du direct).
+- [À FAIRE] U18 + U20, visage permanent, nationalité (aujourd'hui jamais remplie), moral, taille, morphologie, coiffure.
+- [FAIT] Fiche cliquable, blessure, condition, contrat, valeur, potentiel, parcours (partiel).
+- [FAIT v46] Caractère utilisé en match (dérivé de la discipline et de la personnalité).
+
+=== VISAGES ===
+- Visages fictifs U18/U20 uniquement. Yeux, nez et structure osseuse distincts : la coiffure, la barbe ou la peau ne doivent jamais suffire à différencier deux joueurs.
+- [À FAIRE] Cohérence entre le visage et l'âge : un visage U18 pour un joueur de 16 ans, il vieillit avec lui ; pas de visage adulte sur un joueur jeune.
+- [FAIT] 49 visages validés ; G047 en réserve ; G022 et G072 rejetés ; G029 et G059 ne reviennent pas ; G087 et G088 gardés.
+- Corrections HD : G004 sans bouc et mâchoire légèrement rajeunie ; G091 sans bouc.
+- [EN ATTENTE] Validation des nouveaux visages N01–N07.
+- Aucun portrait HD (512×512) avant validation des nouveaux visages.
+
+=== NOMS ===
+- Sources : globalsurnames.com (199 noms) et noms_par_region.pdf.
+- [FAIT] Fusion : 276 noms, 261 utilisés. Exclus : prénoms féminins, Houphouët, variantes d'orthographe regroupées.
+- Décisions : Yoboué = des deux régions mais surtout l'Est ; Dagnogo = Nord ; Tia = Ouest.
+- Un nom n'appartient pas strictement à une région : il a une probabilité de provenance.
+- [FAIT v44] Les noms servent à tous les joueurs générés.
+
+=== QUESTION OUVERTE : ARCHITECTURE DE LA NOUSHI LEAGUE ===
+L'ancienne formule « Adversaires en Noushi League : U18 » est ambiguë. Elle est retirée du canon.
+Ce que fait le code aujourd'hui (v47) :
+  - 32 équipes : les équipes U18 des 16 clubs de Ligue des Pros + 16 clubs de district.
+  - Le club de district du joueur joue avec un groupe de jeunes de 15 à 18 ans (son effectif existant, plus ses recrues).
+  - Les autres clubs de district ont seulement un niveau global, sans effectif détaillé.
+  - Les 2 meilleurs clubs de district montent en Ligue 2.
+Options à trancher :
+  A. Tout le monde en U18 : les clubs de district alignent aussi une équipe U18 (formule actuelle).
+  B. Clubs de district en seniors, contre les U18 des clubs pros.
+  C. Clubs de district avec une sélection U20 (ou U18 + quelques joueurs plus âgés), contre les U18 des clubs pros.
+Cette question décide de l'âge des joueurs recrutés en mai-juin, du niveau des matchs et de ce que devient le groupe en cas de montée en Ligue 2.
+
+=== AVERTISSEMENT (12/11/2026) ===
+Le fichier de travail complet a été perdu lors du remplacement de la machine de Claude.
+Ce journal est reconstruit à partir de trois sources :
+  1. la version du 13/10 fournie par l'utilisateur (tout ce qui précède) ;
+  2. un relevé des lignes du 15/10 au 18/10 retrouvé dans l'historique de la conversation. Ces lignes sont parfois coupées : la marque […] signale une ligne tronquée ;
+  3. les ajouts complets du 18/10 au 21/10, retrouvés dans l'historique.
+Les entrées du 13/10 au 15/10 qui ne figurent dans aucune de ces sources sont manquantes (lots v48 à v62, notamment).
+
+=== ENTRÉES DU 15/10 AU 18/10 (RELEVÉ, PARFOIS TRONQUÉ) ===
+=== BASE DE RÉFÉRENCE ET DÉCISIONS DU 15/10/2026 ===
+=== DIRECTION DU JEU — 15/10/2026 (paroles de l'utilisateur) ===
+- [DÉCIDÉ] Identité : « GOUDRON Career Manager ». Modèle : le mode Carrière Manager de FIFA, « avec l'idée de s'ancrer dans les réalités ivoiriennes ». « Revoir FIFA et créer le même jeu. »
+- [DÉCIDÉ] Deux départs : Commencer par le District / Commencer par la Ligue des Pros.
+- [DÉCIDÉ] Parcours District : qualification à la Noushi League d'office → préparation de la Noushi League → jouer la Noushi League → passer en D2 → jouer la D2 → etc.
+- [DÉCIDÉ] « Les transferts ou détection sont des éléments qui complètent chaque étape. »
+- [EN ATTENTE] Qualification d'office chaque saison, ou la 1re seulement (la v61 fait une qualification régionale après un échec).
+- [DÉCIDÉ 15/10/2026] Qualification d'office à la Noushi League : la 1re saison seulement (comme la v61). Ensuite, qualification régionale.
+- [DÉCIDÉ] Version FIFA de référence : « la plus intéressante », choix laissé à Claude. Choix : le cœur du mode Carrière Manager commun à EA FC 24 et EA FC 25 (Central + « Avancer », boîte de réception, rôles et temps de jeu, moral, plans 
+- [DÉCIDÉ] Alléger, choix laissé à Claude (détail dans GOUDRON_Career_Manager.md § 7).
+- [DÉCIDÉ 15/10/2026, corrections de l'utilisateur]
+=== 16/10/2026 ===
+- [DÉCIDÉ] Dividendes : 50 % du bénéfice distribuable, au prorata des participations ; les apports des actionnaires ne sont jamais un bénéfice. Règles exactes proposées dans 06_ECONOMIE_CARRIERE/Propositions_dividendes_et_charges_District.md (optio
+- [DÉCIDÉ] District : charges de fonctionnement réalistes et modestes, indemnités éventuelles, pas de salaires pros automatiques. Barème proposé dans le même fichier. Rien de codé.
+- [EN ATTENTE] L2 et tous les autres lots : nouvel accord obligatoire.
+- [DÉCIDÉ 16/10/2026] Principe créatif : « Retrouver le plaisir immédiat d'un mode Carrière familier, mais vivre une histoire de football qu'on ne trouve que dans GOUDRON. » Reprendre les bonnes conventions d'EA FC 24 (navigation intuitive, progress
+- [DÉCIDÉ 16/10/2026] Processus de développement en 6 phases (paroles de l'utilisateur, résumées) :
+- [DÉCIDÉ 16/10/2026] Rôles :
+- [DÉCIDÉ 16/10/2026] Direction de développement : sensations familières du mode Carrière d'EA Sports FC 24 + identité ivoirienne forte et originale ; aucun élément protégé d'EA (s'inspirer de la qualité de l'expérience, pas des ressources). M�
+=== 17/10/2026 ===
+- [DÉCIDÉ] Refonte de l'expérience sans jeter le moteur : direction de jeu (les 10 premières minutes) ; parcours jouable (choix du club, rencontre des dirigeants, découverte de l'effectif, première décision, première conséquence) ; direction artis
+- [DÉCIDÉ] Négociation : cibles étrangères fictives (Ivoiriens de l'étranger, internationaux de pays voisins) avec des motivations différentes (argent, temps de jeu, relance) ; promesses au District à conséquences progressives (discussion → pert
+- [DÉCIDÉ] N1 : préparer, ne pas coder.
+- [DÉCIDÉ] D1 : visages dès la maquette (les personnages doivent donner vie aux réunions, négociations et vestiaires).
+- [DÉCIDÉ] D2 : pas d'« une action par jour ». Plusieurs événements possibles par semaine ; seules les décisions importantes sont présentées au joueur (les autres sont réglées selon ses consignes et résumées).
+- [DÉCIDÉ] D5 : étape M1 lancée (planches visuelles validées avant toute intégration).
+- [DÉCIDÉ] D6 : direction artistique et visuels par toi ; intégration par Claude.
+- [DÉCIDÉ] D7 : 4 parcours professionnels, à définir précisément. Ils modifient la réputation initiale et les relations, sans garantir de résultat sportif. Définition proposée : cahier, section 14.
+- [DÉCIDÉ] D8 : Ligue des Pros visible mais non jouable dans la première maquette District. Ne pas laisser croire qu'une fonction existe.
+- [DÉCIDÉ] D9 : un président distinct par club (3 pour le prototype, 16 ensuite).
+- [DÉCIDÉ] D2 précisé : pas de jeu où l'on clique sur « Jour suivant ». Le calendrier fait vivre le club ; certaines journées contiennent plusieurs événements, d'autres passent vite. Seule l'importance d'une décision interrompt le joueur, jamais
+- [DÉCIDÉ] Répartition du travail : direction artistique, personnages, décors, maquettes visuelles, cohérence visuelle et validation mobile côté direction artistique ; architecture, logique, programmation, intégration des éléments validés et tes
+- [DÉCIDÉ] Seule l'étape M1 (conception visuelle) est autorisée. Aucune modification du jeu.
+- [DÉCIDÉ] Écran 1 « Crée ton manager » : 4 parcours D7 validés, en 4 cartes explicites à la place des 3 listes ; effets sur les 6 relations affichés avant de continuer ; parcours définitif au lancement de la carrière ; au moins 5 portraits fict
+- [DÉCIDÉ] Principe : ne pas confondre le passé, la personnalité et les compétences du manager. Fonctions différentes. Proposition (D10 à D14) : cahier, section 17.
+- [DÉCIDÉ] Règle fondamentale : « Le parcours ouvre ou complique des portes ; il ne fabrique pas des victoires. » Le parcours influence seulement la perception initiale par les 6 groupes (comité, vestiaire, familles, académies, supporters, médias).
+- [DÉCIDÉ] Le caractère peut influencer la manière de travailler et les compétences. Ses bonus existants (dont +15 % de progression des moins de 21 ans) seront audités et équilibrés : ni supprimés en silence, ni cumulés avec des avantages de parc
+- [DÉCIDÉ] Le caractère va dans une rubrique facultative « Spécialité » sur l'écran 1. L'étape 4 est réservée à l'acceptation du poste.
+- [DÉCIDÉ] La maquette illustre les 4 parcours et les 5 portraits, dont 2 féminins.
+- [DÉCIDÉ] Carte du District : corriger Séguéla et Kossou ; Abidjan District FC et Riviera Stars FC partagent la même zone, avec deux marqueurs ; Yamoussoukro District FC et Kossou Sporting proches, chacun à sa localisation ; titre « 16 clubs · 14 
+- [DÉCIDÉ] Couleurs officielles des clubs = couleurs des maillots déjà présentes dans le jeu.
+- [DÉCIDÉ] Écussons : identités originales cohérentes avec les maillots, validées une par une ; un fichier distinct par club, intégré après validation. Références (couleurs, noms de fichiers) : Visuels_M1_liste_et_regles.md, section 8.
+- [DÉCIDÉ] 4 corrections géographiques et « 16 clubs · 14 districts » validées. La carte distingue les territoires (districts) et les marqueurs de clubs. Couleurs = maillots de la v62 : la direction artistique s'adapte aux données du jeu, pas l'inv
+- [DÉCIDÉ DA, sous réserve] Couleurs officielles = identité du club, appliquées à l'écusson et aux maillots. Retenus : Montagnes (ardoise/jaune), Bas-Sassandra (bleu océan/jaune), Kossou (bleu canard/jaune), Gôh-Djiboua (bordeaux/crème, cabosse c
+- [DÉCIDÉ DA] Identités chromatiques des 16 clubs du District (tableau du 17/10, avec les codes proposés) : Identites_chromatiques_District.md. Points restants R1 (Riviera/Lagunes, deux marines), R2 (Savanes/Woroba, deux noirs), R3 (maillot domicile de
+- [DÉCIDÉ] Pas d'obligation de 16 couleurs exclusives : distinction par teinte, motif et tenue extérieure. Écussons : direction commune, écusson complet + symbole simplifié, 2 PNG transparents par club. Maillots harmonisés avec les couleurs officiel
+- [DÉCIDÉ] 16 identités chromatiques conservées. Directives pour les 6 confrontations sensibles. Priorité au contraste global maillot + short + chaussettes en situation de match. Ordre : écussons, puis maillots, puis contrôle par Claude. Écusson : 
+- [DÉCIDÉ 18/10] Yamoussoukro District et Woroba Worodougou conservés tels quels. Les 16 écussons du District (32 fichiers) sont validés : écussons_District_v1/ = version de référence. Production d'écussons terminée. Étape suivante : harmonisati
+- [DÉCIDÉ DA 18/10] Montagnes Tonkpi : domicile ardoise et extérieur jaune validés sous réserve du test de match ; gardien vert fluo #a6ff00 + noir #1d1d1d (variante si conflit) ; « Z » supprimé, aucun logo d'équipementier par défaut. Production 
+- [DÉCIDÉ DA 18/10] Gardiens : une couleur fluo principale différente par club (16), tenue complète propre, distincte des joueurs de champ ; nuances proches différenciées par motif et couleur secondaire. Montagnes : vert fluo #a6ff00 ; Bas-Sassandra 
+- [DÉCIDÉ 18/10] Les noms des clubs de Ligue des Pros ne doivent pas ressembler à ceux du District. Ordre confirmé : finir d'abord les maillots du District.
+- [DÉCIDÉ 18/10] Gardien de Gôh-Djiboua : violet fluo (à la place de l'orange).
+- [DÉCIDÉ 18/10] Lacs Nzi validé sous réserve des tests (gardien magenta conservé). Règle générale : chaque gardien garde son identité ; une tenue de gardien alternative est choisie en cas de conflit dans une confrontation.
+[DÉCIDÉ 18/10] Vallée du Bandama validé sous réserve des tests. Domicile ambre #f2a41c (maillot, short, chaussettes), finitions marine #14365c. Extérieur marine #14365c, finitions ambre #f2a41c. Gardien vert menthe fluo #00ff85 (maillot, short, chaus
+
+=== ENTRÉES DU 18/10 AU 21/10 (TEXTE COMPLET) ===
+[DÉCIDÉ 18/10] Vallée du Bandama validé sous réserve des tests. Domicile ambre #f2a41c (maillot, short, chaussettes), finitions marine #14365c. Extérieur marine #14365c, finitions ambre #f2a41c. Gardien vert menthe fluo #00ff85 (maillot, short, chaussettes), finitions marine #14365c ; chevron conservé.
+[DÉCIDÉ 18/10] Gardiens : 16 identités distinctes (couleur + motif + finitions), pas 16 teintes qui ne se ressemblent jamais. Variantes possibles en match. Ne pas répéter systématiquement le même chevron pour les clubs suivants. Le moteur choisira à chaque match une combinaison lisible entre les deux équipes et les deux gardiens (tenue de remplacement si besoin). Rien n'est codé pour l'instant.
+[DÉCIDÉ 18/10] Zanzan Gontougo validé sous réserve des tests (option A). Domicile or #e2b15a (maillot, short, chaussettes), finitions bordeaux #8a1c3c. Extérieur bordeaux #8a1c3c, finitions or #e2b15a. Gardien bleu électrique #0060ff (maillot, short, chaussettes), finitions marine #0d2a6b : le bleu fait partie de l'identité du gardien. Tenue de gardien de remplacement pour les confrontations contre des maillots bleus (couleurs à définir). On ne refait pas un maillot réussi quand le conflit peut être géré.
+[DÉCIDÉ 18/10] Zanzan : décision finale. Les données du jeu utilisent le code nominal du gardien #0060ff (le #1870f8 mesuré n'est qu'une variation visuelle du fichier). Tenue de gardien de remplacement proposée : argent clair #e8edf2 avec larges éléments noirs #1d1d1d, réservée aux matchs où le bleu manque de contraste ; à tester d'abord contre Bas-Sassandra, Montagnes Tonkpi, Lacs Nzi, Riviera Stars et Vallée du Bandama ; pas encore de fichier. Crêtes rocheuses et soleil conservés. Tenues principales validées artistiquement.
+[PRINCIPE 18/10] Pour les données du jeu, on garde les codes nominaux fournis par la DA, pas les couleurs mesurées sur les images (ombres et dégradés).
+[DÉCIDÉ 19/10] Abidjan District : tenues de champ conservées (domicile orange #e2702f, finitions crème ; extérieur crème #f4f1e8, finitions orange). Gardien à corriger (tenue principale, pas une variante) : corail #ff3157 conservé comme couleur signature, noir #1d1d1d dominant (larges épaules et panneaux latéraux noirs, corail au centre, double chevron conservé), short et chaussettes noirs avec petites finitions corail, finitions corail et crème. Non conforme avant contrôle contre les joueurs d'Abidjan, Woroba, Savanes et les tenues foncées. Statut 8/16 en cours de validation.
+[DÉCIDÉ 19/10] Abidjan District, gardien corrigé : noir #1d1d1d (épaules, manches, panneaux latéraux, short, chaussettes) ; corail #ff3157 en grand panneau central visible sur le torse + double chevron ; crème #f4f1e8 en liserés fins seulement ; écusson officiel, sans équipementier. Pas de variante avant le test visuel du nouveau maillot (conflit Savanes noir jugé sérieux). Ordre : gardien corrigé → contrôle Claude → Riviera Stars (9/16).
+[DÉCIDÉ 19/10] Riviera Stars (v3, dessin plat) validé sous réserve des tests. Domicile marine #14365c, finitions or #e2b15a ; extérieur crème #f4f1e8, finitions marine. Gardien turquoise fluo conservé (option A, mesuré #00f0c8, code nominal à confirmer), panneaux latéraux marine. Tenue de gardien de remplacement contre Lagunes domicile ; duels de gardiens à vérifier contre Comoé et Vallée. Codes short et chaussettes à fournir.
+[DÉCIDÉ 19/10] Riviera Stars, fiche définitive : domicile maillot/short/chaussettes marine #14365c, finitions or #e2b15a ; extérieur maillot crème #f4f1e8, short marine #14365c, chaussettes crème, finitions marine et or ; gardien maillot turquoise fluo #00f0c8, short marine #14365c, chaussettes turquoise #00f0c8, finitions marine.
+[DÉCIDÉ DA 19/10] District 16/16 : pas encore de validation définitive. Correction des écussons validée dans son principe ; les fichiers sont à voir. Yamoussoukro : option A (vert #1f6b3a conservé, crème majeur : épaules, manches, structure sur le torse ; crocodile et écusson inchangés). Les 7 gardiens sont à redessiner, sans gabarit à panneaux latéraux (pirogue, écailles, fromager, antilope, rochers, crocodile, crochets), couleurs conservées. Tenues de remplacement ciblées confirmées. Aucun fichier du jeu ne sera modifié avant validation des visuels.
+[DÉCIDÉ DA 19/10] Écussons des 21 maillots validés techniquement (copie corrigée). Haut-Sassandra et Yamoussoukro : option A obligatoire (verts conservés ; crème et brun renforcés ; short et chaussettes crème), objectif ≥ 60 % de la silhouette visible sur #2f6a3a et #275c32. Les 7 gardiens v2 sont validés en orientation (planches et petite taille à confirmer). Tenues de remplacement : le principe est validé pour 13 clubs ; objectif d'écart ≥ 22 ; dans un duel, le gardien visiteur change, à condition que sa variante soit distincte des deux équipes. Statut : 16/16 produits, validation finale en attente du contrôle ciblé.
+[CONTRÔLE 19/10] Résultats : objectif de 60 % atteint (Haut-Sassandra v2 : 69 à 99 % ; Yamoussoukro v3 : 63 à 68 %) ; 13 variantes ≥ 22 (Savanes : 31,0) ; 21/21 PNG conformes. Points ouverts pour la DA : 3e tenue brune de Haut-Sassandra contre Yamoussoukro (sinon conflit), exception Zanzan en bordeaux quand il reçoit Abidjan, short et chaussettes des gardiens des deux clubs verts.
+[DÉCIDÉ DA 19/10] Arbitrage final.
+- 3e tenue brune de Haut-Sassandra (#9a6a3a, finitions crème, cornes d'antilope crème), uniquement contre Yamoussoukro ; validation provisoire, en attente du contrôle à 30 px.
+- Exception Zanzan–Abidjan : Zanzan en bordeaux dans les deux matchs.
+- Gardiens : short et chaussettes cyan #00e5ff pour Haut-Sassandra, rose #ff2d95 pour Yamoussoukro.
+- Couleurs des 13 variantes validées ; chaque variante doit garder un élément graphique du club.
+- Validés : 21 maillots principaux, écussons corrigés, Haut-Sassandra v2, Yamoussoukro v3, 7 gardiens v2.
+[LIVRÉ 19/10] Dossier GOUDRON_tenues_District_integration.
+- 62 PNG, fiche CSV consolidée, règles JSON, sélection des 240 matchs, planches.
+- Contrôle : 240/240 matchs ≥ 22 entre joueurs de champ ; variantes entre 25,0 et 41,9 ; 3e tenue à 33,4 (30 px) et 22,1 (grande taille), visible à 100 % sur les 4 pelouses.
+- Produits par Claude, à valider : dessins des 13 variantes et gardien principal de Montagnes. Logo « Z » de Montagnes effacé. Aucun fichier du jeu modifié.
+[DÉCIDÉ DA 19/10] Validés : 3e tenue brune de Haut-Sassandra (uniquement contre Yamoussoukro, restriction à conserver), shorts et chaussettes cyan / rose des gardiens verts, exception Zanzan–Abidjan, suppression du « Z », 13 variantes, gardien lime de Montagnes. Shorts et chaussettes de Montagnes, Bas, Gôh et Lacs : couleur dominante du maillot, décision artistique nouvelle et provisoire (pas une donnée historique). Le seuil de confort de 22 s'applique aussi aux gardiens principaux, en utilisant d'abord les 13 variantes existantes.
+[CONTRÔLE 19/10] Seuil de 22 sur les gardiens : matchs sous 22 ramenés de 103 à 15 (valeurs de 18,6 à 21,8), mais variantes portées dans 110 matchs (avant : 19). Savanes 27/30 et Lagunes 25/30 : leur gardien principal est sous 22 face à ses propres joueurs. Décision DA attendue : corriger le gardien principal de ces deux clubs, ou garder la variante quasi permanente ; seuil gardien contre gardien à 22 ou à 15.
+[DÉCIDÉ DA 19/10] Gardiens de Savanes et de Lagunes corrigés à la source. Savanes : orange #ff7a00 dominant, fromager en traits noirs fins, short et chaussettes orange. Lagunes : violet #a90bfa dominant, courbes de pirogue en traits marine fins, short et chaussettes violets, finitions marine.
+[CONTRÔLE 19/10] Gardiens v3 (copie de travail) : écart face à leurs propres joueurs de 31,4 à 54,0. Matchs sous 22 : de 15 à 8 (Zanzan–Woroba 19,9 ; Riviera–Lagunes 21,0 ; Montagnes–Abidjan 21,5 ; Vallée–Woroba 21,8, aller et retour). Variantes portées : de 110 à 78 matchs.
+[DÉCIDÉ DA 20/10] Gardiens v3 de Savanes et de Lagunes conservés comme candidats finaux (validation visuelle à faire sur la planche). Couleurs des gardiens de Woroba et d'Abidjan inchangées. Les 8 matchs sous 22 ne sont pas validés automatiquement : contrôle visuel final à 30 px demandé.
+[CONTRÔLE 20/10] Planche des 8 matchs livrée : écarts de 19,9 à 21,8, aucun sous 15. Les gardiens de Gôh, Vallée et Zanzan sont désormais mesurés sur leurs fichiers ; valeurs inchangées ; variantes portées dans 68 matchs. Décision DA attendue : accepter ces 8 matchs comme exceptions documentées.
+[DÉCIDÉ DA 21/10] CLÔTURE DE LA DIRECTION ARTISTIQUE DES TENUES DU DISTRICT.
+- 8 matchs acceptés comme exceptions documentées : Zanzan–Woroba 19,9 et Riviera–Lagunes 21,0 (surveillance prioritaire), Montagnes–Abidjan 21,5, Vallée–Woroba 21,8, aller et retour. Le seuil de 22 reste la règle générale.
+- Gardiens v3 de Savanes et de Lagunes : versions officielles. Les v2 sont archivées et inactives.
+[LIVRÉ 21/10] Dossier d'intégration final consolidé : 62 PNG actifs, fiche CSV, règles JSON, sélection des 240 matchs, planches. Aucun fichier du jeu modifié ; l'intégration technique attend un accord séparé.
+[ARCHIVÉ 21/10] Sélections précédentes (avant seuil 22 gardiens ; avant gardiens v3) conservées dans archive_inactif/selections_precedentes. Phase de création et de validation artistique des tenues du District terminée. Aucune modification du code de GOUDRON autorisée par cette décision.
+[DÉCIDÉ 21/10] Dossier GOUDRON_tenues_District_integration = référence des tenues des 16 clubs du District. Clôture artistique confirmée par l'utilisateur. Intégration technique recommandée par la DA en lot distinct ; NON autorisée à ce jour (décision explicite de l'utilisateur requise).
+
+=== 12/11/2026 ===
+[DÉCIDÉ 12/11] Direction du jeu (paroles de l'utilisateur) : « Le jeu se veut immersif donc profond afin que le joueur ne voie pas le temps passer. »
+- Objectif : l'addiction du mode Carrière de FIFA. La préparation du match et le match décident si le joueur continue.
+- Principe : profond là où le joueur décide ou ressent une émotion (pépites, préparation, match, progression, histoire du club) ; léger et automatique partout ailleurs.
+- Question de tri pour chaque nouvelle idée : « est-ce que ça donne au joueur une décision intéressante, ou une émotion ? »
+- [PROPOSÉ 12/11, à valider] Règle d'interface : « Le joueur doit comprendre ce qu'il peut faire en quelques secondes, mais avoir envie de jouer pendant des heures. » Exemple : un écran d'avant-match unique (Composition, Tactique, État des joueurs, Remplaçants, Lancer le match).
+- [EN ATTENTE] 3 ou 4 niveaux de difficulté (le jeu en a 3 depuis la v49 : Facile, Difficile, Expert).
+
+[DÉCIDÉ 12/11] Entrée en carrière par candidature (conception du mode Carrière Manager ; aucune modification de la v62 autorisée) :
+- Le joueur constitue son profil d'entraîneur et définit son projet de jeu.
+- Il sélectionne 1 à 3 clubs par vague de candidatures.
+- Les clubs étudient le dossier selon leur philosophie, leurs besoins et les compétences du candidat.
+- Réponses possibles : acceptation, refus, proposition conditionnelle (exemple : reprendre une équipe U20 en difficulté et assurer son maintien).
+- Après des refus, il peut postuler auprès d'autres clubs.
+- Un club finit toujours par lui offrir une opportunité, par exemple une équipe en difficulté en Noushi League. Cette garantie reste discrète : l'offre doit paraître crédible, pas automatique.
+- Démarrer avec une équipe en difficulté est une vraie option : redresser l'équipe, révéler des pépites ou dépasser l'objectif fixé.
+- Réputation : un sauvetage réussi doit rapporter plus qu'un titre facile avec le favori. La difficulté initiale compte dans l'évaluation.
+- Pas de fin de carrière automatique après un échec (confirmé).
+[EN ATTENTE] Objectifs fixés par les dirigeants en Noushi League (titre pour un favori, maintien et progression des jeunes pour un club en difficulté, etc.).
+
+=== 13/11/2026 ===
+[DÉCIDÉ 13/11] Identité de la Noushi League : « le berceau des pépites ». Compétition nationale U20, grand marché des talents émergents, observée par les clubs nationaux et étrangers. Le joueur doit savoir reconnaître les pépites, les développer et les exposer aux recruteurs.
+[DÉCIDÉ 13/11] Format officiel :
+- 32 équipes : 16 équipes territoriales (District) et 16 équipes juniors de clubs professionnels ;
+- 8 groupes de 4 ; les 2 premiers de chaque groupe se qualifient ;
+- élimination directe en un match : huitièmes, quarts, demi-finales, finale ;
+- 48 matchs de groupes, 15 matchs éliminatoires, 63 au total ; au moins 3 matchs par équipe, 7 pour le champion ;
+- tirage : 2 équipes territoriales et 2 équipes professionnelles par groupe.
+- Résout la question ouverte « architecture de la Noushi League » : tout le monde en U20.
+[DÉCIDÉ 13/11] Cinq mécanismes de la Noushi League : recruteurs présents toute la saison ; potentiel jamais entièrement connu ; concurrence entre clubs pour les pépites (offres, contre-offres) ; réputation de formateur ; les carrières des joueurs continuent après leur transfert.
+[DÉCIDÉ 13/11] La réussite en Noushi League ne se mesure pas qu'aux trophées : révéler des talents rapporte des offres d'emploi, surtout pour un poste de formateur. Le joueur peut continuer à y recruter en Ligue 2 et en Ligue des Pros.
+[À VÉRIFIER] La v62 a déjà 16 équipes de District + les U20 des 16 clubs de Ligue des Pros, 8 poules de 4 puis élimination directe ; les 2 meilleures équipes de District montent en Ligue 2. Reste à vérifier : le tirage 2 + 2 par groupe.
+[EN ATTENTE] Qualifications territoriales et professionnelles ; montée en Ligue 2 d'une équipe U20 ; définition du « maintien ».
+[ATTENTION 13/11] L'image d'exemple de la pépite montre un maillot de club réel avec des logos de marques, et peut-être une personne réelle. Elle sert seulement d'illustration de conception et ne doit jamais entrer dans le jeu (canon : aucune marque, aucun logo, aucune personne réelle, visages fictifs).
+[DÉCIDÉ 13/11] Règles sportives des jeunes :
+- Championnats des districts : chaque district organise sa compétition junior. Les meilleures équipes se qualifient pour la Noushi League selon des quotas à définir.
+- Championnat U20 D1 + D2 : les jeunes des clubs professionnels s'affrontent toute la saison, indépendamment du classement de leur équipe première.
+- Noushi League : les 32 qualifiés. Les deux filières ne se rencontrent qu'à ce stade.
+- Chaque saison, les qualifications recommencent. Aucun club ne garde automatiquement sa place. (Annule la proposition de Claude « les huitièmes donnent la qualification d'office ».)
+- Un club de Ligue 2 peut avoir l'une des meilleures équipes U20 du pays, même si son équipe première lutte pour le maintien.
+[DÉCIDÉ 13/11] Carrière : l'entraîneur recruté par une académie régionale joue le championnat de son district ; celui recruté par un club pro pour ses U20 joue le championnat U20 D1 + D2. Dans les deux cas, le premier grand objectif est de se qualifier pour la Noushi League. En cas d'échec, pas de fin de partie : il peut rester au club si les dirigeants le gardent, et préparer la saison suivante.
+[À CLARIFIER] Conflit avec la décision du 15/10 « qualification d'office pour la Noushi League la 1re saison ». Avec les nouvelles règles, la qualification se joue dès la 1re saison.
+[PROPOSÉ 13/11 par l'utilisateur] Répartition des 16 places territoriales : un champion par district (14), plus 2 places attribuées par barrage. Distinguer les 14 districts (territoires organisateurs) des 16 clubs de District existants.
+[DÉCIDÉ 13/11 — brief de conception « Noushi League & parcours Carrière Manager »]
+- La Noushi League est une compétition nationale U20, vitrine des pépites. Ce n'est pas une division senior : elle ne donne pas accès à la Ligue 2. (Remplace la règle de la v62 « les 2 meilleures équipes de District montent en Ligue 2 ».)
+- Architecture : filière territoriale (16 qualifiés des championnats juniors des 14 districts) et filière professionnelle (16 qualifiés du championnat U20 commun D1 et D2). Les deux filières ne se rencontrent qu'en Noushi League.
+- Places territoriales :
+  - Abidjan (2 places) : le champion, plus le vainqueur d'un barrage ;
+  - Yamoussoukro (2 places) : le champion, plus le vainqueur d'un barrage ;
+  - les 12 autres districts (12 places) : le champion est qualifié directement ;
+  - barrage, à Abidjan et Yamoussoukro seulement : 2e contre 5e, 3e contre 4e, puis finale, en matchs uniques ; les champions ne jouent pas le barrage.
+- Format : 32 équipes, 8 groupes de 4, les 2 premiers qualifiés, puis huitièmes, quarts, demi-finales et finale (champion national U20). Au moins 3 matchs par équipe, 7 pour le champion. Aucune qualification automatique d'une saison à l'autre, même pour le champion sortant.
+- Début de carrière : candidature (3 clubs maximum par vague, au moins un club garanti). Deux filières :
+  - territoriale : académie ou club junior régional ;
+  - professionnelle : U20 d'un club de D1 ou de D2.
+- Échec : rester au club si la direction le veut. Un licenciement ne met pas fin à la carrière.
+- Réussite : offres d'un club de Ligue 2 ou des U20 d'un club de Ligue des Pros (assez fréquentes) ; offre de l'équipe première d'un club de D1 (rare, après un résultat exceptionnel) ; continuer avec son club (toujours possible si le contrat le permet). La réputation dépend aussi de la capacité à révéler des talents.
+- À long terme : créer son propre club, sans mécanisme défini pour l'instant.
+- Conservés : les 16 identités de clubs du District et leurs tenues. Leur place dans les championnats juniors reste à établir.
+[CHANTIERS DE CONCEPTION 13/11] Nombre de clubs du championnat U20 D1/D2 ; sa formule et l'attribution de ses 16 billets ; nombre et identité des académies par championnat territorial ; calendrier des qualifications et de la phase finale ; détection, recrutement et transfert des pépites ; évaluation des entraîneurs et offres de carrière. Prochaine séance recommandée : le championnat U20 D1/D2.
+[ÉTAT 13/11] Conception sportive arrêtée. Jeu v62 inchangé.
+[CORRIGÉ 13/11] Abidjan ne compte pas 6 équipes en tout : Claude avait mal compris. L'utilisateur veut de nombreuses équipes, réparties dans les communes (Abobo, Adjamé, Marcory, Cocody, Yopougon, Treichville, etc.), de trois types : académie, centre de formation, club privé.
+[À PRÉCISER] Nombre d'équipes par commune (6 ?) ; organisation du championnat d'Abidjan (phase communale, puis phase de district ?) ; même principe pour Yamoussoukro et les autres districts ?
+[DÉCIDÉ 13/11] District d'Abidjan : 13 communes, 6 équipes par commune (2 académies, 2 centres de formation, 2 clubs privés), répartition identique partout ; 78 équipes au total. Chaque commune organise son championnat ; ses 13 champions jouent la phase finale du District d'Abidjan. Billets inchangés : le champion du District, plus le vainqueur du barrage entre les 2e et 5e. Identité : « De la rue au stade », une pyramide du football de quartier. Remplace la proposition précédente de 93 équipes.
+[PRINCIPE 13/11] La richesse du football local ne doit pas rendre la carrière interminable ni compliquer le jeu.
+[À DÉFINIR] Formule de la phase finale à 13 équipes, et classement de la 2e à la 5e place pour le barrage ; même principe à Yamoussoukro et dans les autres districts ?
+[DÉCIDÉ 13/11 — brief « Qualifications territoriales »]
+- Chaque championnat local compte 6 équipes : 2 académies, 2 centres de formation et 2 clubs privés. Cela vaut pour les communes d'Abidjan et de Yamoussoukro, et pour les départements des 12 autres districts.
+- Le champion local accède à la phase finale de son district.
+- Abidjan : 13 championnats communaux, 78 équipes.
+- Yamoussoukro : championnats communaux de 6 équipes ; le nombre de communes ou de secteurs et la formule de la phase finale restent à préciser.
+- Abidjan et Yamoussoukro : le champion de district est qualifié ; barrage entre le 2e et le 5e pour le 2e billet (2e contre 5e, 3e contre 4e, puis finale, en matchs uniques).
+- 12 autres districts (Bas-Sassandra, Comoé, Denguélé, Gôh-Djiboua, Lacs, Lagunes, Montagnes, Sassandra-Marahoué, Savanes, Vallée du Bandama, Woroba, Zanzan) : un championnat par département ; les champions de département jouent la phase finale du district ; le champion du district obtient l'unique billet ; pas de barrage.
+- Total de la filière territoriale : 2 + 2 + 12 = 16 billets.
+- Points restant à définir : formule des phases finales de district (dont les 13 champions communaux d'Abidjan), découpage de Yamoussoukro, liste des départements, calendriers, modalités de simulation des matchs.
+- Statut : document de conception uniquement. Aucune modification de la v62.
+[PROPOSÉ 13/11 par l'utilisateur] Ouverture de la carrière : le joueur commence sans emploi, en mai, quand les clubs terminent leur saison, évaluent leurs entraîneurs et préparent leurs objectifs. Premier défi : trouver un club, gagner sa confiance, construire sa carrière.
+[À DÉFINIR] Calendrier annuel complet : candidatures, championnats locaux, phases finales de district, barrages, Noushi League.
+[DÉCIDÉ 13/11] Début de carrière et échecs :
+- Le joueur commence en mai, sans emploi. Il peut rejoindre un club encore en barrages : objectif, décrocher une place en Noushi League.
+- Élimination en barrages : la carrière continue, sans recommencer. Option A : rester au club, reconstruire l'effectif et préparer la saison suivante. Option B : rejoindre une équipe qualifiée (souvent en difficulté) qui cherche un entraîneur.
+- Le joueur participe à la Noushi League s'il dirige un club encore en compétition. La Noushi League continue de vivre sans lui : le calendrier ne s'arrête pas pour attendre ses décisions.
+- Anti-abus : on ne change pas de club à volonté. Les offres dépendent des postes réellement vacants, de la réputation, des besoins et ambitions du club, du calendrier et du stade de la compétition. Un club n'est jamais obligé d'accepter le joueur.
+- Recommencer : jamais après une élimination en barrages. Seulement après un parcours médiocre en Noushi League, sous forme de proposition, sans obligation. Jamais de remise à zéro automatique.
+[CONSÉQUENCE] Calendrier : les barrages se jouent en mai, au moment où le joueur arrive. Remplace la proposition de Claude (qualifications de septembre à avril, première Noushi League observée sans jouer).
+[À DÉFINIR] Définition d'un « parcours médiocre » ; contenu d'un nouveau départ ; nombre de changements de club par saison ; à quels moments de la Noushi League un club peut changer d'entraîneur.
+[DÉCIDÉ 13/11] Prise de poste pendant la Noushi League :
+- Un club peut recruter le joueur pendant ou après sa 2e journée de groupe, tant que la qualification reste mathématiquement possible et que la 3e journée n'a pas commencé. À partir de la J3, le recrutement est fermé.
+- Le joueur hérite des résultats, de l'effectif et de la situation du club. Aucun match n'est rejoué.
+- Sans club engagé, il suit la Noushi League en simulation et tente de recruter des pépites, qui acceptent ou refusent.
+- Son objectif est de préparer son équipe et de la qualifier pour la Noushi League.
+- En cas d'échec : il est licencié ; ou, si le club veut le garder, il peut choisir de démissionner. Dans tous les cas, la carrière continue.
+- Le jeu ne donne jamais artificiellement une qualification.
+[REMPLACE] La proposition de Claude « changement d'entraîneur seulement après la phase de groupes ».
+[DÉCIDÉ 13/11] Cycle de carrière (tableau validé) :
+- Défaite en barrages : la carrière continue.
+- Club qualifié en difficulté : candidature possible avant la J3, si la qualification est encore possible.
+- Aucune opportunité en Noushi League : mode observateur et recruteur. Le joueur suit la Noushi League simulée, consulte les performances et repère des talents pour son futur effectif. Les jeunes n'acceptent pas automatiquement : leur choix dépend du projet sportif, du temps de jeu promis et de l'intérêt d'autres clubs.
+- Saison suivante : objectif annuel, la qualification (observer, renforcer, développer, jouer le championnat local, gagner la phase finale de district). La qualification n'est jamais garantie.
+- Échec, confiance perdue : licenciement, retour sur le marché des entraîneurs, avec une réputation qui reflète ses résultats.
+- Échec, confiance maintenue : le joueur choisit de rester et reconstruire, ou de démissionner.
+- La décision de la direction dépend de l'objectif du contrat, des résultats, du développement des talents et de la confiance du club. Une élimination serrée n'entraîne pas automatiquement un licenciement.
+[PROCHAINE ÉTAPE] Offres d'emploi et contrats d'objectifs (quand un club recrute, conserve ou licencie son entraîneur).
+[DÉCIDÉ 13/11] Un entraîneur sans club ne peut jamais recruter. Le recrutement de pépites pendant la Noushi League n'est possible que pour un entraîneur qui a un club (par exemple, resté dans son club après un barrage perdu). Corrige le « mode observateur et recruteur » pour l'entraîneur sans emploi.
+[DÉCIDÉ 13/11] Entraîneur éliminé en barrages mais gardé par son club : il suit la Noushi League, repère des talents et peut tenter de les recruter pour la saison suivante. Entraîneur licencié ou démissionnaire : il peut continuer à observer les pépites, mais ne peut pas les recruter tant qu'il n'a pas signé dans un nouveau club.
+[PRINCIPE 13/11] Un entraîneur sans club peut préparer sa carrière, mais ne peut pas agir sur le marché des joueurs au nom d'un club.
+[PROPOSÉ 13/11] Marché des entraîneurs et contrats d'objectifs (propositions, pas encore validées) :
+- Le joueur commence sans club en mai (« Trouver votre premier poste »). Il postule à 3 clubs maximum par vague. Il peut être refusé, mais une première opportunité accessible finit toujours par apparaître.
+- Trois types de mission :
+  - Noushi League : club qualifié sans entraîneur, contrat court, objectif immédiat (atteindre un tour, redresser les résultats) ;
+  - reconstruction : club éliminé ou en difficulté, objectif de qualification pour la prochaine Noushi League ;
+  - développement : académie ou centre de formation, révéler des jeunes, ambition sportive adaptée aux moyens.
+- Contrat simple : durée, objectif principal, objectif secondaire, moyens du club ; boutons « Négocier » et « Signer ».
+- Évaluation : résultats 50 %, talents formés 30 %, gestion du club 20 % (indicatif, poids variable selon le club).
+- Conséquences du bilan : objectifs atteints → prolongation, meilleure réputation, nouvelles offres ; résultats mitigés → maintien sous conditions ou avertissement ; échec important → licenciement si la direction perd confiance ; club qui veut le garder → rester ou démissionner. La carrière continue toujours.
+- Durée des contrats : préférence pour une durée selon la mission (quelques semaines pour une campagne de Noushi League, 1 à 2 saisons pour reconstruire une académie). À confirmer.
+[DÉCIDÉ 13/11] Contrats : le principe de la durée variable selon la mission est validé ; les fourchettes de durée restent des paramètres proposés. Un contrat court peut devenir plus long si l'entraîneur convainc sa direction.
+[DÉCIDÉ 13/11] Identité des clubs : plus de noms génériques (« Académie de Duékoué » est une description, pas un nom). Références de style : « Académie Nouvelle Dynamique de Man » (académie), « CF Lion de Soubré » (centre de formation), « AFPJE Divo » (club privé ; le sigle a un sens). Ces exemples ne sont pas encore des clubs du jeu.
+- Construction d'un nom : une identité (Nouvelle Dynamique, Lion, Espoir, Étoile, Héritage, Renaissance…), une structure (Académie, CF, Sporting, FC, Association sportive, ou un sigle), un ancrage local (commune, département, quartier, référence culturelle), parfois une histoire (fondateur, ancien joueur ou personnalité fictive).
+- Ne pas réutiliser les mêmes combinaisons d'une ville à l'autre ; noms distinctifs ; sigles avec une signification.
+- Les 16 clubs du District déjà créés sont conservés ; les autres clubs locaux sont générés.
+[PROPOSÉ 13/11] Personnalité sportive cachée de chaque club (formateur, ambitieux, patient, exigeant), perceptible pendant la carrière : deux offres de même niveau ne représentent pas le même défi.
+[PROPOSÉ 13/11, recommandé] Noms des clubs générés permanents d'une saison à l'autre (nom, histoire, rivalités).
+[ATTENTION 13/11] Tout nom portant un nom de personne (fondateur, ancien joueur) doit être fictif, et vérifié pour ne pas correspondre à une académie ou une personne réelle (canon : aucune personne réelle).
+[DÉCIDÉ 13/11] Permanence des clubs, pour les clubs territoriaux comme professionnels : chaque club reçoit à sa création une identité qui ne change pas (nom officiel et sigle, commune ou département d'origine, écusson et couleurs, historique des saisons et palmarès, rivalités locales, personnalité sportive). Les 16 clubs du District déjà validés gardent leur identité.
+- Règle technique : chaque club a un identifiant unique et permanent. Compétitions, promotions, relégations, contrats et statistiques utilisent cet identifiant, jamais un nom généré à nouveau.
+[DÉCIDÉ 13/11] Quatre personnalités de club, qui remplacent les pourcentages d'évaluation : formateur (talents révélés, grande patience), ambitieux (résultats immédiats et qualifications, faible patience), patient (progrès d'une saison à l'autre, très grande patience), exigeant (résultats et gestion du club, faible patience). Le joueur ne voit pas forcément l'étiquette : il la découvre par les objectifs, les messages et les réactions de la direction. Même résultat sportif, conséquences différentes.
+[PROPOSÉ 13/11] Les rivalités sont enregistrées dans la sauvegarde ; elles persistent même si les clubs ne se rencontrent plus pendant plusieurs saisons ; leurs retrouvailles deviennent un événement.
+[PROCHAINE ÉTAPE] Le premier entretien d'embauche : comment le joueur présente son projet, comment la direction juge la candidature, pourquoi elle accepte ou refuse.
+[RÉFÉRENCE 13/11] Brief de conception consolidé « De la structure du football U20 à la première victoire de l'entraîneur » (02_BIBLE_GAMEPLAY/briefs_13-11/). Il fait foi pour la conception de la carrière et de la Noushi League.
+Points nouveaux par rapport aux entrées précédentes :
+- Aucun diplôme exigé du joueur.
+- CV sportif construit automatiquement (postes, résultats, palmarès, jeunes révélés, réputation, philosophie). Pas de rédaction de CV ni de lettre.
+- Entretien court et contextuel : le dirigeant expose un besoin, le joueur propose un projet. La cohérence globale compte plus qu'une « bonne réponse ». Un projet crédible peut perdre face à un candidat plus expérimenté.
+- Petites victoires : candidature examinée, entretien obtenu, projet apprécié, offre reçue, contrat signé. Petits échecs : refus motivé, concurrence plus forte, projet mal adapté.
+- Aucun refus obligatoire ni défaite scénarisée : un projet cohérent peut convaincre dès la première tentative.
+- Chemins de carrière : U20 territorial, U20 professionnel, senior plus tard. Ce sont des possibilités, pas une échelle obligatoire.
+- Rythme : les événements suivent les dates et les saisons, pas des déclencheurs arbitraires. Les championnats non joués sont simulés. Pas d'avantage artificiel pour l'IA. Interface simple, sans écrans denses.
+- Voie professionnelle : piste de deux poules équilibrées, 8 qualifiés par poule (non définitive).
+[PROCHAINE ÉTAPE 13/11] Concevoir le marché vivant des entraîneurs (candidats concurrents, postes vacants, calendrier des entretiens, décisions des présidents, raisons des refus), puis tester sur papier une première carrière de mai au premier contrat, avant de programmer.
+[DÉCIDÉ 13/11] Méthode :
+- Pas de correction de la v62 sur les équipes de remplacement du District (mécanisme appelé à disparaître : la Noushi League ne fait plus monter en Ligue 2). La règle de l'identifiant permanent s'applique directement dans le nouveau système.
+- Première version réduite : 2 ou 3 communes d'Abidjan (club du joueur détaillé, autres clubs en fiche légère), voie pro simulée, reste du pays sous forme de qualifiés tirés chaque saison. Élargissement district par district ensuite.
+- Exemple « AFPJE Divo » : ne garder que la forme ; fondateur fictif tiré de la liste de noms du jeu.
+- Démo Unreal (scène d'entretien) : projet séparé, plus tard.
+- Un seul assistant modifie le code de GOUDRON (Claude), toujours avec l'accord de l'utilisateur.
+- Prochaine étape : concevoir le marché des entraîneurs, puis tester une première carrière sur papier.
+[DÉCIDÉ 13/11] Le dossier GOUDRON_MASTER est enregistré sur GitHub (dossier docs/, branche séparée), sans toucher au code du jeu.
